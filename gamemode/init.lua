@@ -7,6 +7,7 @@ AddCSLuaFile("custom_scoreboard.lua")
 include("shared.lua")
 include("concommands.lua")
 include("init_spawns.lua")
+include("sv_stash.lua")
 
 --Player stats.
 

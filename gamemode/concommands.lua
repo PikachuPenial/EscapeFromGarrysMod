@@ -161,3 +161,121 @@ function buyGun(ply, cmd, args)
 	end
 end
 concommand.Add("buy_gun", buyGun)
+
+
+
+function ResetIndividualProgress(ply, cmd, args)
+
+    ply:SetNWInt("playerLvl", 1)
+
+    ply:SetNWInt("playerExp", 0)
+
+    ply:SetNWInt("playerMoney", 10000)
+
+end
+concommand.Add("efgm_reset_progress", ResetIndividualProgress)
+
+function ResetIndividualStats(ply, cmd, args)
+
+    ply:SetNWInt("playerKills", 0)
+
+    ply:SetNWInt("playerDeaths", 0)
+
+    ply:SetNWInt("playerKDR", 1)
+	
+    ply:SetNWInt("playerTotalEarned", 0)
+	
+    ply:SetNWInt("playerTotalEarnedKill", 0)
+	
+    ply:SetNWInt("playerTotalEarnedSell", 0)
+	
+    ply:SetNWInt("playerTotalXpEarned", 0)
+	
+    ply:SetNWInt("playerTotalXpEarnedKill", 0)
+	
+    ply:SetNWInt("playerTotalXpEarnedExplore", 0)
+	
+    ply:SetNWInt("playerTotalMoneySpent", 0)
+	
+    ply:SetNWInt("playerTotalMoneySpentWep", 0)
+	
+    ply:SetNWInt("playerTotalMoneySpentItem", 0)
+	
+    ply:SetNWInt("playerDeathsSuicide", 0)
+	
+    ply:SetNWInt("playerDamageGiven", 0)
+
+    ply:SetNWInt("playerDamageRecieved", 0)
+	
+    ply:SetNWInt("playerDamageHealed", 0)
+	
+    ply:SetNWInt("playerItemsPickedUp", 0)
+	
+    ply:SetNWInt("playerDistance", 0)
+
+end
+concommand.Add("efgm_reset_stats", ResetIndividualStats)
+
+function ResetIndividualAll(ply, cmd, args)
+
+    ply:SetNWInt("playerKills", 0)
+
+    ply:SetNWInt("playerDeaths", 0)
+
+    ply:SetNWInt("playerKDR", 1)
+	
+    ply:SetNWInt("playerTotalEarned", 0)
+	
+    ply:SetNWInt("playerTotalEarnedKill", 0)
+	
+    ply:SetNWInt("playerTotalEarnedSell", 0)
+	
+    ply:SetNWInt("playerTotalXpEarned", 0)
+	
+    ply:SetNWInt("playerTotalXpEarnedKill", 0)
+	
+    ply:SetNWInt("playerTotalXpEarnedExplore", 0)
+	
+    ply:SetNWInt("playerTotalMoneySpent", 0)
+	
+    ply:SetNWInt("playerTotalMoneySpentWep", 0)
+	
+    ply:SetNWInt("playerTotalMoneySpentItem", 0)
+	
+    ply:SetNWInt("playerDeathsSuicide", 0)
+	
+    ply:SetNWInt("playerDamageGiven", 0)
+
+    ply:SetNWInt("playerDamageRecieved", 0)
+	
+    ply:SetNWInt("playerDamageHealed", 0)
+	
+    ply:SetNWInt("playerItemsPickedUp", 0)
+	
+    ply:SetNWInt("playerDistance", 0)
+
+end
+concommand.Add("efgm_reset_everything", ResetIndividualAll)
+
+
+function CheckExtracts(ply, cmd, args)
+
+	local extractNames = RaidTimeLeft().."\nYour available extract locations are:"
+
+	for k, v in pairs( ents.FindByClass("efgm_trigger_extract") ) do
+
+		if v.ExtractGroup == "All" or v.ExtractGroup == CheckSpawnGroup(ply) then
+			extractNames = extractNames.."\n"..v.ExtractName
+
+			if v.Available == 1 then
+				extractNames = extractNames.." (Status: Unknown)"
+			else
+				extractNames = extractNames.." (Status: Available)"
+			end
+		end
+	end
+
+	ply:PrintMessage(HUD_PRINTTALK, extractNames)
+
+end
+concommand.Add("efgm_extract_list", CheckExtracts)

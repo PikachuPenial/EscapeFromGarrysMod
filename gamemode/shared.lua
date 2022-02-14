@@ -57,18 +57,3 @@ RunConsoleCommand("cl_vmanip_pickups_halo", "1")
 --Forcing bullet penetration
 
 RunConsoleCommand("sv_tfa_bullet_penetration", "1")
-
---Blacklist for the inventory system
-
-RunConsoleCommand("gws_blacklist_add", "swep_inventory")
-RunConsoleCommand("gws_blacklist_add", "weapon_swep_inventory")
-RunConsoleCommand("gws_blacklist_add", "fas2_bandage")
-RunConsoleCommand("gws_blacklist_add", "fas2_ifak")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_melee_knife")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_bowie")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_butterfly")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_t")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_karambit")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_m9bayonet")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_ct")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_stiletto")

@@ -4,10 +4,6 @@ local isSellMenu
 local clientPlayer
 local seller
 
-local stashClient
-
-local stashTable
-
 net.Receive("SellMenuTable",function (len, ply)
 
 	tempTable = net.ReadTable()
@@ -17,34 +13,6 @@ net.Receive("SellMenuTable",function (len, ply)
 	
 end)
 
-net.Receive("OpenStashGUI",function (len, ply)
-
-	print("got message to open stash")
-
-	tempTable = net.ReadTable()
-
-	stashClient = tempTable[1]
-
-	MenuInit()
-	DoInventory()
-
-end)
-
-net.Receive("CloseStashGUI",function (len, ply)
-
-	StashMenu:Close()
-	
-end)
-
-net.Receive("SendStash",function (len, ply)
-
-	stashTable = net.ReadTable()
-
-	ShowStashTable()
-
-end)
-
-net.Receive("StashMenuReload", function (len, ply) ResetMenu() end)
 
 -- This sets the percent of money you will earn from selling a weapon.
 -- Just because you can set it above 1, does not mean you should.
@@ -141,14 +109,14 @@ function GM:Initialize()
 	tempWeaponsArray[74] = {"models/weapons/arccw_go/v_smg_mp5.mdl", "arccw_go_mp5", "MP5A2", 8240, "7"}
 	tempWeaponsArray[75] = {"models/weapons/arccw_go/v_smg_mp7.mdl", "arccw_go_mp7", "MP7A2", 8590, "7"}
 	tempWeaponsArray[76] = {"models/weapons/arccw_go/v_smg_mp9.mdl", "arccw_go_mp9", "MP9N", 8590, "8"}
-	tempWeaponsArray[77] = {"models/weapons/arccw_go/v_smg_p90.mdl", "arccw_go_p90", "P90 TR", 10010, "10"}
+	tempWeaponsArray[77] = {"models/weapons/arccw_go/v_smg_p90.mdl", "arccw_go_p90", "P90 TR", 14990, "10"}
 	tempWeaponsArray[78] = {"models/weapons/arccw_go/v_smg_bizon.mdl", "arccw_go_bizon", "PP-19 Bizon-2", 8750, "8"}
 	tempWeaponsArray[79] = {"models/weapons/arccw_go/v_smg_ump45.mdl", "arccw_go_ump", "UMP-9mm", 9360, "9"}
 	tempWeaponsArray[80] = {"models/weapons/arccw/midnightwolf/arccw_midnightwolf_acr.mdl", "arccw_midnightwolf_acr", "ACR", 16420, "14"}
 	tempWeaponsArray[81] = {"models/weapons/arccw/c_xm8.mdl", "midnights_gso_xm8", "HK XM8", 18920, "17"}
 	tempWeaponsArray[82] = {"models/weapons/arccw/midnightwolf/type20.mdl", "arccw_midnightwolf_type20", "Type 20", 17880, "15"}
 	tempWeaponsArray[83] = {"models/viper/mw/weapons/w_725_mammaledition.mdl", "arccw_725", "Citori 725 SG", 8950, "7"}
-	tempWeaponsArray[84] = {"models/weapons/cod_mw2019/c_g36k_mammaledition.mdl", "arccw_g36mw19", "G36K", 14445, "13"}
+	tempWeaponsArray[84] = {"models/weapons/arccw/mifl/fas2/c_g36c.mdl", "arccw_mifl_fas2_g36c", "G36c", 14445, "13"}
 	tempWeaponsArray[85] = {"models/viper/mw/weapons/kilo433_mammaledition.mdl", "arccw_kilo141", "HK433", 15690, "14"}
 	tempWeaponsArray[86] = {"models/weapons/w_mcxvirtus.mdl", "arccw_mcx", "MCX Virtus SBR", 17180, "15"}
 	tempWeaponsArray[87] = {"models/weapons/arccw/fml/mw19/w_mk2_k.mdl", "arccw_fml_mk2k", "MK2-K DMR", 11050, "8"}
@@ -161,6 +129,22 @@ function GM:Initialize()
 	tempWeaponsArray[94] = {"models/weapons/arccw/c_ud_870.mdl", "arccw_ud_870", "Remington 870", 10240, "9"}
 	tempWeaponsArray[95] = {"models/weapons/arccw/c_ud_uzi.mdl", "arccw_ud_uzi", "Uzi", 11040, "8"}
 	tempWeaponsArray[96] = {"models/weapons/arccw/w_arccw_smg0818.mdl", "arccw_ww1_smg0818", "Maxim SMG LMG", 27500, "22"}
+	tempWeaponsArray[97] = {"models/weapons/arccw/mifl/fas2/c_ak47.mdl", "arccw_mifl_fas2_ak47", "AKM", 17005, "15"}
+	tempWeaponsArray[98] = {"models/weapons/arccw/mifl/fas2/c_famas.mdl", "arccw_mifl_fas2_famas", "FAMAS", 16990, "14"}
+	tempWeaponsArray[99] = {"models/weapons/arccw/mifl/fas2/c_g3.mdl", "arccw_mifl_fas2_g3", "G3A3", 16310, "14"}
+	tempWeaponsArray[100] = {"models/weapons/arccw/mifl/fas2/c_ks23.mdl", "arccw_mifl_fas2_ks23", "KS-23", 13005, "13"}
+	tempWeaponsArray[101] = {"models/weapons/arccw/mifl/fas2/c_m24.mdl", "arccw_mifl_fas2_m24", "M24 SR", 18900, "15"}
+	tempWeaponsArray[102] = {"models/weapons/arccw/mifl/fas2/c_m3s90.mdl", "arccw_mifl_fas2_m3", "M3 Super 90", 14505, "14"}
+	tempWeaponsArray[103] = {"models/weapons/arccw/mifl/fas2/c_m82.mdl", "arccw_mifl_fas2_m82", "M82 SR", 20999, "20"}
+	tempWeaponsArray[104] = {"models/weapons/arccw/mifl/fas2/c_mac11.mdl", "arccw_mifl_fas2_mac11", "MAC-11", 8100, "6"}
+	tempWeaponsArray[105] = {"models/weapons/arccw/mifl/fas2_custom/c_m26.mdl", "arccw_fml_fas2_custom_mass26", "MASS-26 SG", 14895, "15"}
+	tempWeaponsArray[106] = {"models/weapons/arccw/mifl/fas2/c_minimi.mdl", "arccw_mifl_fas2_minimi", "Minimi", 19995, "20"}
+	tempWeaponsArray[107] = {"models/weapons/arccw/mifl/fas2/c_ragingbull.mdl", "arccw_mifl_fas2_ragingbull", "Raging Bull Revolver", 7020, "7"}
+	tempWeaponsArray[108] = {"models/weapons/arccw/mifl/fas2/c_rpk.mdl", "arccw_mifl_fas2_rpk", "RPK47", 14765, "14"}
+	tempWeaponsArray[109] = {"models/weapons/arccw/mifl/fas2/c_sg552.mdl", "arccw_mifl_fas2_sg55x", "SG552", 15490, "14"}
+	tempWeaponsArray[110] = {"models/weapons/arccw/mifl/fas2/c_sr25.mdl", "arccw_mifl_fas2_sr25", "SR-25", 17420, "16"}
+	tempWeaponsArray[111] = {"models/weapons/arccw/mifl/fas2/c_toz34.mdl", "arccw_mifl_fas2_toz34", "TOZ-34", 12690, "12"}
+	tempWeaponsArray[112] = {"models/weapons/arccw/c_claymorelungemine.mdl", "arccw_claymorelungemine", "Claymore Lunge Mine", 5555, "5"}
 
 	local tempArmorArray = {}
 
@@ -227,26 +211,15 @@ function GM:Initialize()
 
 	-- Any weapon in this array cannot be sold. Put any starting equipment here.
 
-	sellBlacklist[1] = {"arccw_eap_lebedev"}
-	sellBlacklist[2] = {"arccw_eap_vp70"}
-	sellBlacklist[3] = {"arccw_eft_1911"}
-	sellBlacklist[4] = {"arccw_go_glock"}
-	sellBlacklist[5] = {"arccw_go_cz75"}
-	sellBlacklist[6] = {"arccw_go_fiveseven"}
-	sellBlacklist[7] = {"arccw_go_usp"}
-	sellBlacklist[8] = {"arccw_go_tec9"}
-	sellBlacklist[9] = {"arccw_go_p2000"}
-	sellBlacklist[10] = {"arccw_go_p250"}
-	sellBlacklist[11] = {"arccw_go_m9"}
-	sellBlacklist[12] = {"arccw_go_melee_knife"}
-	sellBlacklist[13] = {"arccw_go_knife_bowie"}
-	sellBlacklist[14] = {"arccw_go_knife_butterfly"}
-	sellBlacklist[15] = {"arccw_go_knife_t"}
-	sellBlacklist[16] = {"arccw_go_knife_karambit"}
-	sellBlacklist[17] = {"arccw_go_knife_m9bayonet"}
-	sellBlacklist[18] = {"arccw_go_knife_ct"}
-	sellBlacklist[19] = {"arccw_go_knife_stiletto"}
-	sellBlacklist[20] = {"weapon_concussion_nade"}
+	sellBlacklist[1] = {"arccw_go_melee_knife"}
+	sellBlacklist[2] = {"arccw_go_knife_bowie"}
+	sellBlacklist[3] = {"arccw_go_knife_butterfly"}
+	sellBlacklist[4] = {"arccw_go_knife_t"}
+	sellBlacklist[5] = {"arccw_go_knife_karambit"}
+	sellBlacklist[6] = {"arccw_go_knife_m9bayonet"}
+	sellBlacklist[7] = {"arccw_go_knife_ct"}
+	sellBlacklist[8] = {"arccw_go_knife_stiletto"}
+	sellBlacklist[9] = {"weapon_concussion_nade"}
 
 	-- Temporary array created. This next section will sort the guns by cost, so guns higher to the top will hopefully be better. This is convenient.
 	-- The sort function takes the fourth value of all tempWeaponsArray indexes (the rouble count) and sorts by them from greatest to lowest.
@@ -345,6 +318,11 @@ function addButtons(Menu, sellMenuBool, ply)
 			surface.SetTextPos(5, 0)
 			surface.DrawText(LocalPlayer():GetName())
 			
+			-- Stats Text
+			surface.SetFont("Trebuchet24")
+			surface.SetTextPos(5, 320)
+			surface.DrawText("Your Stats")
+			
 			-- Player EXP and level
 			local expToLevel = (LocalPlayer():GetNWInt("playerLvl") * 110) * 5.15
 			
@@ -362,6 +340,96 @@ function addButtons(Menu, sellMenuBool, ply)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Roubles/Balance: "..LocalPlayer():GetNWInt("playerMoney"))
 			
+			-- Stats (Kills)
+			surface.SetTextPos(8, 350)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Total Kills: "..LocalPlayer():GetNWInt("playerKills"))
+			
+			-- Stats (Deaths)
+			surface.SetTextPos(8, 370)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Total Deaths: "..LocalPlayer():GetNWInt("playerDeaths"))
+			
+			-- Stats (KDR)
+			surface.SetTextPos(8, 390)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Kill/Death Ratio: "..LocalPlayer():GetNWInt("playerKDR"))
+			
+			-- Stats (Total Earned)
+			surface.SetTextPos(8, 410)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Total Roubles Earned: "..LocalPlayer():GetNWInt("playerTotalEarned"))
+			
+			-- Stats (Total Roubles From Kills)
+			surface.SetTextPos(8, 430)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Total Roubles Earned From Kills: "..LocalPlayer():GetNWInt("playerTotalEarnedKill"))
+			
+			-- Stats (Total Roubles From Selling)
+			surface.SetTextPos(8, 450)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Total Roubles Earned From Selling: "..LocalPlayer():GetNWInt("playerTotalEarnedSell"))
+			
+			-- Stats (Total Experience Gained)
+			surface.SetTextPos(252, 350)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Total Experience Gained: "..LocalPlayer():GetNWInt("playerTotalXpEarned"))
+			
+			-- Stats (Total Experience Gained From Killing)
+			surface.SetTextPos(252, 370)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Total Experience Gained From Kills: "..LocalPlayer():GetNWInt("playerTotalXpEarnedKill"))
+			
+			-- Stats (Total Experience Gained From Exploration)
+			surface.SetTextPos(252, 390)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Total Experience Gained From Exploration: "..LocalPlayer():GetNWInt("playerTotalXpEarnedExplore"))
+			
+			-- Stats (Total Money Spent)
+			surface.SetTextPos(252, 410)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Total Money Spent: "..LocalPlayer():GetNWInt("playerTotalMoneySpent"))
+			
+			-- Stats (Total Money Spent On Weapons)
+			surface.SetTextPos(252, 430)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Total Money Spent On Weapons: "..LocalPlayer():GetNWInt("playerTotalMoneySpentWep"))
+			
+			-- Stats (Total Money Spent On Ammo/Armor)
+			surface.SetTextPos(252, 450)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Total Money Spent On Ammo/Armor: "..LocalPlayer():GetNWInt("playerTotalMoneySpentItem"))
+			
+			-- Stats (Deaths By Suicide)
+			surface.SetTextPos(496, 350)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Total Deaths By Suicide: "..LocalPlayer():GetNWInt("playerDeathsSuicide"))
+			
+			-- Stats (Damage Given)
+			surface.SetTextPos(496, 370)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Damage Given: "..LocalPlayer():GetNWInt("playerDamageGiven"))
+			
+			-- Stats (Damage Recieved)
+			surface.SetTextPos(496, 390)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Damage Recieved: "..LocalPlayer():GetNWInt("playerDamageRecieved"))
+			
+			-- Stats (Damage Healed)
+			surface.SetTextPos(496, 410)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Damage Healed: "..LocalPlayer():GetNWInt("playerDamageHealed"))
+			
+			-- Stats (Items Picked Up)
+			surface.SetTextPos(496, 430)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Weapons Picked Up: "..LocalPlayer():GetNWInt("playerItemsPickedUp"))
+			
+			-- Stats (Distance Travelled)
+			surface.SetTextPos(496, 450)
+			surface.SetTextColor(255, 0, 220, 255)
+			surface.DrawText("Distance Travelled: "..LocalPlayer():GetNWInt("playerDistance"))
+			
 			-- Help Section
 			surface.SetTextPos(8, 85)
 			surface.SetTextColor(155, 255, 0, 255)
@@ -377,32 +445,32 @@ function addButtons(Menu, sellMenuBool, ply)
 			surface.SetTextColor(255, 255, 255, 255)
 			surface.DrawText("can either fight others or spend time looting and building up your EXP and roubles.")
 			
-			-- Help Text Two
+			-- Help Text Three
 			surface.SetTextPos(8, 130)
 			surface.SetTextColor(255, 255, 255, 255)
 			surface.DrawText("In most POI's, you can find a variety of weapons, armor, and spending cash to buy these items yourself.")
 			
-			-- Help Text Two
+			-- Help Text Four
 			surface.SetTextPos(8, 140)
 			surface.SetTextColor(255, 255, 255, 255)
 			surface.DrawText("When you die, you will drop all of your loot, but keep your EXP and lose no money. Each kill gives you")
 			
-			-- Help Text Two
+			-- Help Text Five
 			surface.SetTextPos(8, 150)
 			surface.SetTextColor(255, 255, 255, 255)
 			surface.DrawText("a chunk of experience and 1000 roubles. Levels will unlock certain items in the shop while roubles")
 			
-			-- Help Text Two
+			-- Help Text Six
 			surface.SetTextPos(8, 160)
 			surface.SetTextColor(255, 255, 255, 255)
 			surface.DrawText("are used to purchased these items.")
 			
-			-- Help Text Two
+			-- Help Text Seven
 			surface.SetTextPos(8, 180)
 			surface.SetTextColor(255, 255, 255, 255)
 			surface.DrawText("All projectile based weapons will have bullet drop, bullet velocity, penetration, and richochet mechanics.")
 			
-			-- Help Text Two
+			-- Help Text Eight
 			surface.SetTextPos(8, 190)
 			surface.SetTextColor(255, 255, 255, 255)
 			surface.DrawText("You can press your menu bind (default = x) to customize attachments and change the feel of the gun!")
@@ -447,7 +515,7 @@ function addButtons(Menu, sellMenuBool, ply)
 			-- entityCategory:SetPos(0, 0)
 			-- entityCategory:SetSize(shopPanel:GetWide(), 100)
 			entityCategory:Dock( TOP )
-			entityCategory:SetLabel("Armor")
+			entityCategory:SetLabel("Ammo/Armor/Crates")
 
 			entityList = vgui.Create("DIconLayout", entityCategory)
 			-- entityList:SetPos(0, 20)
@@ -548,13 +616,7 @@ function addButtons(Menu, sellMenuBool, ply)
                 local icon = vgui.Create("SpawnIcon", entityList)
 
                 icon:SetModel(v["Model"])
-
-				if(v["Cost"] != nil) then
-					icon:SetToolTip(v["PrintName"].."\nCost: "..v["Cost"])
-				else
-					icon:SetToolTip(v["PrintName"].."\nCost: nil")
-				end
-
+                icon:SetToolTip(v["PrintName"].."\nCost: "..v["Cost"])
                 entityList:Add(icon)
 
                 icon.DoClick = function(icon)
@@ -585,7 +647,7 @@ end
 PANEL = {} --Creates empty panel
 
 function PANEL:Init() -- initializes the panel
-	self:SetSize(760, 250)
+	self:SetSize(760, 1080)
 	self:SetPos(100, 25)
 end
 
@@ -614,228 +676,3 @@ end
 vgui.Register("ShopPanel", PANEL, "Panel")
 
 --End shop panel
-
-function MenuInit()
-
-	StashMenu = vgui.Create("DFrame")
-	StashMenu:SetSize(ScrW(), ScrH())
-	StashMenu:Center()
-	StashMenu:SetTitle("Stash Inventory")
-	StashMenu:SetDraggable(false)
-	StashMenu:ShowCloseButton(true)
-	StashMenu:SetDeleteOnClose(false)
-	StashMenu.Paint = function()
-		surface.SetDrawColor(30, 30, 30, 255)
-		surface.DrawRect(0, 0, StashMenu:GetWide(), StashMenu:GetTall())
-	end
-
-	gui.EnableScreenClicker(true)
-
-	StashMenu.OnClose = function()
-		gui.EnableScreenClicker(false)
-	end
-
-	inventoryTable = stashClient:GetWeapons()
-
-	local playerInventoryPanel = vgui.Create("DPanel", StashMenu)
-	playerInventoryPanel:Dock( LEFT )
-	playerInventoryPanel:SetSize(96, 0)
-
-	function playerInventoryPanel:Paint(w, h)
-
-		draw.RoundedBox(0, 0, 0, w, h, Color( 120, 120, 120, 255 ))
-
-	end
-
-	local ammoInventoryPanel = vgui.Create("DPanel", StashMenu)
-	ammoInventoryPanel:Dock( LEFT )
-	ammoInventoryPanel:SetSize(96, 0)
-
-	function ammoInventoryPanel:Paint(w, h)
-
-		draw.RoundedBox(0, 0, 0, w, h, Color( 120, 120, 120, 255 ))
-
-	end
-
-	local separatePanel = vgui.Create("DPanel", StashMenu)
-	separatePanel:Dock( LEFT )
-	separatePanel:SetSize(20, 0)
-
-	function separatePanel:Paint(w, h)
-
-		draw.RoundedBox(0, 0, 0, w, h, Color( 30, 30, 30, 255 ))
-
-	end
-
-	local stashPanel = vgui.Create("DPanel", StashMenu)
-	stashPanel:Dock( FILL )
-	
-	function stashPanel:Paint(w, h)
-
-		draw.RoundedBox(0, 0, 0, w, h, Color( 120, 120, 120, 255 ))
-
-	end
-
-
-	local stashIconLayout = vgui.Create("DIconLayout", stashPanel)
-	stashIconLayout:Dock( FILL )
-	stashIconLayout:SetSpaceY(5)
-	stashIconLayout:SetSpaceX(5)
-
-	local inventoryIconLayout = vgui.Create("DIconLayout", playerInventoryPanel)
-	inventoryIconLayout:Dock( FILL )
-	inventoryIconLayout:SetSpaceY(5)
-	inventoryIconLayout:SetSpaceX(5)
-
-	local ammoIconLayout = vgui.Create("DIconLayout", ammoInventoryPanel)
-	ammoIconLayout:Dock( FILL )
-	ammoIconLayout:SetSpaceY(5)
-	ammoIconLayout:SetSpaceX(5)
-
-	function DoInventory()
-
-		print("doing inventory")
-
-		for k, v in pairs(stashClient:GetWeapons()) do
-			-- Creates buttons for the weapons
-
-			if weapons.Get( v:GetClass() ) == nil then return end
-
-			local weaponInfo = weapons.Get( v:GetClass() )
-
-			-- PrintTable(stashClient:GetWeapons())
-
-			local wepName
-
-			if weaponInfo["TrueName"] == nil then wepName = weaponInfo["PrintName"] else wepName = weaponInfo["TrueName"] end
-
-			local icon = vgui.Create("SpawnIcon", stashIconLayout)
-			icon:SetModel(weaponInfo["WorldModel"])
-			icon:SetToolTip(wepName)
-			icon:SetSize(96, 96)
-
-			function icon:Paint(w, h)
-				
-				draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
-				draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
-				draw.SimpleText(wepName, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
-
-			end
-
-			inventoryIconLayout:Add(icon)
-			
-			icon.DoClick = function(icon)
-
-				net.Start("PutWepInStash")
-				net.WriteString(v:GetClass())
-				net.SendToServer()
-
-				icon:Remove()
-
-			end
-		end
-
-		PrintTable(LocalPlayer():GetAmmo())
-
-		-- for k, v in pairs(LocalPlayer():GetAmmo()) do
-		-- 	-- Creates buttons for the weapons
-
-		-- 	if v == nil then print("ammo is nil") return end
-
-		-- 	local ammoName = game.GetAmmoName(v)
-		-- 	local ammoAmount = LocalPlayer():GetAmmoCount(v)
-
-		-- 	if ammoName == nil then print("cannot find ammo name") return end
-
-		-- 	print("starting on ammo icon")
-
-		-- 	local icon = vgui.Create("SpawnIcon", ammoIconLayout)
-		-- 	--icon:SetModel(ammoName["WorldModel"])
-		-- 	icon:SetToolTip(ammoName)
-		-- 	icon:SetSize(96, 96)
-
-		-- 	function icon:Paint(w, h)
-				
-		-- 		draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
-		-- 		draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
-		-- 		draw.SimpleText(ammoName.." x"..ammoAmount, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
-
-		-- 	end
-
-		-- 	print("adding ammo to ammo icon layout")
-		-- 	ammoIconLayout:Add(icon)
-			
-		-- 	-- icon.DoClick = function(icon)
-
-		-- 	-- end
-
-		-- end
-
-		print("sending message to server to fetch stash")
-
-		net.Start( "RequestStash" )
-		net.SendToServer()
-
-		function ShowStashTable()
-
-			for k, v in pairs(stashTable) do
-
-				if v["ItemOwner"] != LocalPlayer():SteamID64() then	print(LocalPlayer():SteamID64() .. " does not equal " .. v["ItemOwner"])	return end
-				if v["ItemType"] != "wep" then						print("ammo bad")															return end
-	
-				print("Initializing Stash Contents, gun class is " .. v["ItemName"])
-				
-				local weaponInfo = weapons.Get( v["ItemName"] )
-
-				local wepName
-	
-				if weaponInfo["TrueName"] == nil then wepName = weaponInfo["PrintName"] else wepName = weaponInfo["TrueName"] end
-	
-				local icon = vgui.Create("SpawnIcon", stashIconLayout)
-				icon:SetModel(weaponInfo["WorldModel"])
-				icon:SetToolTip(wepName)
-				icon:SetSize(96, 96)
-	
-				function icon:Paint(w, h)
-					
-					draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
-					draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
-					draw.SimpleText(wepName, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
-	
-				end
-	
-				stashIconLayout:Add(icon)
-
-				icon.DoClick = function(icon)
-	
-					if LocalPlayer():HasWeapon( v["ItemName"] ) == false then
-
-						net.Start("TakeFromStash")
-						net.WriteString(v["ItemName"])
-						net.SendToServer()
-
-					else
-
-						surface.PlaySound( "common/wpn_denyselect.wav" )
-
-					end
-
-				end
-	
-			end
-
-		end
-
-		function ResetMenu()
-
-			stashIconLayout:Clear()
-			inventoryIconLayout:Clear()
-			ammoIconLayout:Clear()
-
-			DoInventory()
-
-		end
-
-	end
-
-end

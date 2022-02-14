@@ -62,6 +62,10 @@ function ItemSell(ply, weapon, value, weaponName)
 	elseif ply:HasWeapon(weapon) then
 		
 		ply:SetNWInt("playerMoney", ply:GetNWInt("playerMoney") + value)
+		
+		ply:SetNWInt("playerTotalEarned", ply:GetNWInt("playerTotalEarned") + value)
+		
+		ply:SetNWInt("playerTotalEarnedSell", ply:GetNWInt("playerTotalEarnedSell") + value)
 
 		ply:StripWeapon(weapon)
 

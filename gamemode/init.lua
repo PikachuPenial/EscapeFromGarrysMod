@@ -7,15 +7,14 @@ AddCSLuaFile("custom_scoreboard.lua")
 include("shared.lua")
 include("concommands.lua")
 include("init_spawns.lua")
-include("sv_stash.lua")
 
 --Player stats.
 
 function GM:PlayerSpawn(ply)
   ply:SetGravity(.72)
   ply:SetMaxHealth(100)
-  ply:SetRunSpeed(200)
-  ply:SetWalkSpeed(125)
+  ply:SetRunSpeed(205)
+  ply:SetWalkSpeed(130)
   ply:SetJumpPower(124)
   
   local playerModels = {"models/player/eft/pmc/eft_bear/models/eft_bear_pm_summer.mdl", "models/player/eft/pmc/eft_bear/models/eft_bear_pm_redux.mdl"}
@@ -55,21 +54,129 @@ function GM:PlayerInitialSpawn(ply)
 	else
 		ply:SetNWInt("playerMoney", tonumber(ply:GetPData("playerMoney")))
 	end
+	
+		if(ply:GetPData("playerKills") == nil) then
+		ply:SetNWInt("playerKills", 0)
+	else
+		ply:SetNWInt("playerKills", tonumber(ply:GetPData("playerKills")))
+	end
+	
+		if(ply:GetPData("playerDeaths") == nil) then
+		ply:SetNWInt("playerDeaths", 0)
+	else
+		ply:SetNWInt("playerDeaths", tonumber(ply:GetPData("playerDeaths")))
+	end
+	
+		if(ply:GetPData("playerKDR") == nil) then
+		ply:SetNWInt("playerKDR", 1)
+	else
+		ply:SetNWInt("playerKDR", tonumber(ply:GetPData("playerKDR")))
+	end
+	
+		if(ply:GetPData("playerTotalEarned") == nil) then
+		ply:SetNWInt("playerTotalEarned", 0)
+	else
+		ply:SetNWInt("playerTotalEarned", tonumber(ply:GetPData("playerTotalEarned")))
+	end
+	
+		if(ply:GetPData("playerTotalEarnedKill") == nil) then
+		ply:SetNWInt("playerTotalEarnedKill", 0)
+	else
+		ply:SetNWInt("playerTotalEarnedKill", tonumber(ply:GetPData("playerTotalEarnedKill")))
+	end
+	
+		if(ply:GetPData("playerTotalEarnedSell") == nil) then
+		ply:SetNWInt("playerTotalEarnedSell", 0)
+	else
+		ply:SetNWInt("playerTotalEarnedSell", tonumber(ply:GetPData("playerTotalEarnedSell")))
+	end
+	
+		if(ply:GetPData("playerDeathsSuicide") == nil) then
+		ply:SetNWInt("playerDeathsSuicide", 0)
+	else
+		ply:SetNWInt("playerDeathsSuicide", tonumber(ply:GetPData("playerDeathsSuicide")))
+	end
+	
+		if(ply:GetPData("playerDamageGiven") == nil) then
+		ply:SetNWInt("playerDamageGiven", 0)
+	else
+		ply:SetNWInt("playerDamageGiven", tonumber(ply:GetPData("playerDamageGiven")))
+	end
+	
+		if(ply:GetPData("playerDamageRecieved") == nil) then
+		ply:SetNWInt("playerDamageRecieved", 0)
+	else
+		ply:SetNWInt("playerDamageRecieved", tonumber(ply:GetPData("playerDamageRecieved")))
+	end
+	
+		if(ply:GetPData("playerDamageHealed") == nil) then
+		ply:SetNWInt("playerDamageHealed", 0)
+	else
+		ply:SetNWInt("playerDamageHealed", tonumber(ply:GetPData("playerDamageHealed")))
+	end
+
+		if(ply:GetPData("playerItemsPickedUp") == nil) then
+		ply:SetNWInt("playerItemsPickedUp", 0)
+	else
+		ply:SetNWInt("playerItemsPickedUp", tonumber(ply:GetPData("playerItemsPickedUp")))
+	end
+	
+		if(ply:GetPData("playerDistance") == nil) then
+		ply:SetNWInt("playerDistance", 0)
+	else
+		ply:SetNWInt("playerDistance", tonumber(ply:GetPData("playerDistance")))
+	end
 end
 
 function GM:PlayerDeath(victim, inflictor, attacker)
-    if(attacker == victim) then return end
+    if(attacker == victim) then		
+		victim:SetNWInt("playerDeathsSuicide", victim:GetNWInt("playerDeathsSuicide") + 1)
+		
+		victim:SetNWInt("playerKDR", victim:GetNWInt("playerKills") / victim:GetNWInt("playerDeaths"))
+	else
+		local moneyGained = math.random(1000, 3000)
 	
-	local moneyGained = math.random(1000, 3000)
+		local expGained = math.random(425, 675)
 	
-	local expGained = math.random(425, 675)
+		local killGained = (1)
+	
+		local deathGained = (1)
 
-    attacker:SetNWInt("playerMoney", attacker:GetNWInt("playerMoney") + moneyGained)
+		attacker:SetNWInt("playerMoney", attacker:GetNWInt("playerMoney") + moneyGained)
 
-    attacker:SetNWInt("playerExp", attacker:GetNWInt("playerExp") + expGained)
+		attacker:SetNWInt("playerExp", attacker:GetNWInt("playerExp") + expGained)
 	
-	checkForLevel(attacker)
+		attacker:SetNWInt("playerKills", attacker:GetNWInt("playerKills") + killGained)
+	
+		victim:SetNWInt("playerDeaths", victim:GetNWInt("playerDeaths") + deathGained)
+	
+		victim:SetNWInt("playerKDR", victim:GetNWInt("playerKills") / victim:GetNWInt("playerDeaths"))
+	
+		attacker:SetNWInt("playerKDR", attacker:GetNWInt("playerKills") / attacker:GetNWInt("playerDeaths"))
+	
+		attacker:SetNWInt("playerTotalEarned", attacker:GetNWInt("playerTotalEarned") + moneyGained)
+	
+		attacker:SetNWInt("playerTotalXpEarned", attacker:GetNWInt("playerTotalXpEarned") + expGained)
+	
+		attacker:SetNWInt("playerTotalEarnedKill", attacker:GetNWInt("playerTotalEarnedKill") + moneyGained)
+	
+		checkForLevel(attacker)
+	end
 end
+
+hook.Add("PlayerHurt", "playerDamage", function(victim, attacker, remainingHealth, dmgTaken)
+
+    attacker:SetNWInt("playerDamageGiven", attacker:GetNWInt("playerDamageGiven") + math.Round(dmgTaken, 0))
+	
+	victim:SetNWInt("playerDamageRecieved", victim:GetNWInt("playerDamageRecieved") + math.Round(dmgTaken, 0))
+
+end)
+
+hook.Add("HUDWeaponPickedUp", "WeaponPickedUp", function(weapon)
+	
+	ply:SetNWInt("playerItemsPickedUp", ply:GetNWInt("playerItemsPickedUp") + 1)
+	
+end )
 
 function checkForLevel(ply)
     local expToLevel = (ply:GetNWInt("playerLvl") * 110) * 5.15
@@ -94,6 +201,24 @@ function GM:PlayerDisconnected(ply)
 	ply:SetPData("playerLvl", ply:GetNWInt("playerLvl"))
 	ply:SetPData("playerExp", ply:GetNWInt("playerExp"))
 	ply:SetPData("playerMoney", ply:GetNWInt("playerMoney"))
+	ply:SetPData("playerKills", ply:GetNWInt("playerKills"))
+	ply:SetPData("playerDeaths", ply:GetNWInt("playerDeaths"))
+	ply:SetPData("playerKDR", ply:GetNWInt("playerKDR"))
+	ply:SetPData("playerTotalEarned", ply:GetNWInt("playerTotalEarned"))
+	ply:SetPData("playerTotalEarnedKill", ply:GetNWInt("playerTotalEarnedKill"))
+	ply:SetPData("playerTotalEarnedSell", ply:GetNWInt("playerTotalEarnedSell"))
+	ply:SetPData("playerTotalXpEarned", ply:GetNWInt("playerTotalXpEarned"))
+	ply:SetPData("playerTotalXpEarnedKill", ply:GetNWInt("playerTotalXpEarnedKill"))
+	ply:SetPData("playerTotalXpEarnedExplore", ply:GetNWInt("playerTotalXpEarnedExplore"))
+	ply:SetPData("playerTotalMoneySpent", ply:GetNWInt("playerTotalMoneySpent"))
+	ply:SetPData("playerTotalMoneySpentWep", ply:GetNWInt("playerTotalMoneySpentWep"))
+	ply:SetPData("playerTotalMoneySpentItem", ply:GetNWInt("playerTotalMoneySpentItem"))
+	ply:SetPData("playerDeathsSuicide", ply:GetNWInt("playerDeathsSuicide"))
+	ply:SetPData("playerDamageGiven", ply:GetNWInt("playerDamageGiven"))
+	ply:SetPData("playerDamageRecieved", ply:GetNWInt("playerDamageRecieved"))
+	ply:SetPData("playerDamageHealed", ply:GetNWInt("playerDamageHealed"))
+	ply:SetPData("playerItemsPickedUp", ply:GetNWInt("playerItemsPickedUp"))
+	ply:SetPData("playerDistance", ply:GetNWInt("playerDistance"))
 end
 
 function GM:ShutDown()
@@ -101,6 +226,24 @@ function GM:ShutDown()
 		v:SetPData("playerLvl", v:GetNWInt("playerLvl"))
 		v:SetPData("playerExp", v:GetNWInt("playerExp"))
 		v:SetPData("playerMoney", v:GetNWInt("playerMoney"))
+		v:SetPData("playerKills", v:GetNWInt("playerKills"))
+		v:SetPData("playerDeaths", v:GetNWInt("playerDeaths"))
+		v:SetPData("playerKDR", v:GetNWInt("playerKDR"))
+		v:SetPData("playerTotalEarned", v:GetNWInt("playerTotalEarned"))
+		v:SetPData("playerTotalEarnedKill", v:GetNWInt("playerTotalEarnedKill"))
+		v:SetPData("playerTotalEarnedSell", v:GetNWInt("playerTotalEarnedSell"))
+		v:SetPData("playerTotalXpEarned", v:GetNWInt("playerTotalXpEarned"))
+		v:SetPData("playerTotalXpEarnedKill", v:GetNWInt("playerTotalXpEarnedKill"))
+		v:SetPData("playerTotalXpEarnedExplore", v:GetNWInt("playerTotalXpEarnedExplore"))
+		v:SetPData("playerTotalMoneySpent", v:GetNWInt("playerTotalMoneySpent"))
+		v:SetPData("playerTotalMoneySpentWep", v:GetNWInt("playerTotalMoneySpentWep"))
+		v:SetPData("playerTotalMoneySpentItem", v:GetNWInt("playerTotalMoneySpentItem"))
+		v:SetPData("playerDeathsSuicide", v:GetNWInt("playerDeathsSuicide"))
+		v:SetPData("playerDamageGiven", v:GetNWInt("playerDamageGiven"))
+		v:SetPData("playerDamageRecieved", v:GetNWInt("playerDamageRecieved"))
+		v:SetPData("playerDamageHealed", v:GetNWInt("playerDamageHealed"))
+		v:SetPData("playerItemsPickedUp", v:GetNWInt("playerItemsPickedUp"))
+		v:SetPData("playerDistance", v:GetNWInt("playerDistance"))
 	end
 end
 

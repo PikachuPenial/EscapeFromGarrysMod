@@ -22,6 +22,8 @@ function buyEntity(ply, cmd, args)
 					ent:Activate()
 					
 					ply:SetNWInt("playerMoney", balance - ent.Cost)
+					ply:SetNWInt("playerTotalMoneySpent", ply:GetNWInt("playerTotalMoneySpent") + ent.Cost)
+					ply:SetNWInt("playerTotalMoneySpentItem", ply:GetNWInt("playerTotalMoneySpentItem") + ent.Cost)
 					ply:SetNWInt(ClassName.."count", entCount + 1)
 
 					return ent
@@ -116,14 +118,14 @@ function buyGun(ply, cmd, args)
 	weaponPrices[74] = {"arccw_go_mp5", "8240", "7"}
 	weaponPrices[75] = {"arccw_go_mp7", "8590", "7"}
 	weaponPrices[76] = {"arccw_go_mp9", "8590", "8"}
-	weaponPrices[77] = {"arccw_go_p90", "10010", "10"}
+	weaponPrices[77] = {"arccw_go_p90", "14990", "10"}
 	weaponPrices[78] = {"arccw_go_bizon", "8750", "8"}
 	weaponPrices[79] = {"arccw_go_ump", "9360", "9"}
 	weaponPrices[80] = {"arccw_midnightwolf_acr", "16420", "14"}
 	weaponPrices[81] = {"midnights_gso_xm8", "18920", "17"}
 	weaponPrices[82] = {"arccw_midnightwolf_type20", "17880", "15"}
 	weaponPrices[83] = {"arccw_725", "8950", "7"}
-	weaponPrices[84] = {"arccw_g36mw19", "14445", "13"}
+	weaponPrices[84] = {"arccw_mifl_fas2_g36c", "14445", "13"}
 	weaponPrices[85] = {"arccw_kilo141", "15690", "14"}
 	weaponPrices[86] = {"arccw_mcx", "17180", "15"}
 	weaponPrices[87] = {"arccw_fml_mk2k", "11050", "8"}
@@ -136,6 +138,22 @@ function buyGun(ply, cmd, args)
 	weaponPrices[94] = {"arccw_ud_870", "10240", "9"}
 	weaponPrices[95] = {"arccw_ud_uzi", "11040", "8"}
 	weaponPrices[96] = {"arccw_ww1_smg0818", "27500", "22"}
+	weaponPrices[97] = {"arccw_mifl_fas2_ak47", "17005", "15"}
+	weaponPrices[98] = {"arccw_mifl_fas2_famas", "16990", "14"}
+	weaponPrices[99] = {"arccw_mifl_fas2_g3", "16310", "14"}
+	weaponPrices[100] = {"arccw_mifl_fas2_ks23", "13005", "13"}
+	weaponPrices[101] = {"arccw_mifl_fas2_m24", "18900", "15"}
+	weaponPrices[102] = {"arccw_mifl_fas2_m3", "14505", "14"}
+	weaponPrices[103] = {"arccw_mifl_fas2_m82", "20999", "20"}
+	weaponPrices[104] = {"arccw_mifl_fas2_mac11", "8100", "6"}
+	weaponPrices[105] = {"arccw_fml_fas2_custom_mass26", "14895", "15"}
+	weaponPrices[106] = {"arccw_mifl_fas2_minimi", "19995", "20"}
+	weaponPrices[107] = {"arccw_mifl_fas2_ragingbull", "7020", "7"}
+	weaponPrices[108] = {"arccw_mifl_fas2_rpk", "14765", "14"}
+	weaponPrices[109] = {"arccw_mifl_fas2_sg55x", "15490", "14"}
+	weaponPrices[110] = {"arccw_mifl_fas2_sr25", "17420", "16"}
+	weaponPrices[111] = {"arccw_mifl_fas2_toz34", "12690", "12"}
+	weaponPrices[112] = {"arccw_claymorelungemine", "5555", "5"}
 	
 	for k, v in pairs(weaponPrices) do
 		if(args[1] == v[1]) then
@@ -147,6 +165,8 @@ function buyGun(ply, cmd, args)
 			if (playerLvl >= levelReq) then
 				if (balance >= gunCost) then
 					ply:SetNWInt("playerMoney", balance - gunCost)
+					ply:SetNWInt("playerTotalMoneySpent", ply:GetNWInt("playerTotalMoneySpent") + gunCost)
+					pply:SetNWInt("playerTotalMoneySpentWep", ply:GetNWInt("playerTotalMoneySpentWep") + gunCost)
 					ply:Give(args[1])
 					ply:GiveAmmo(30, ply:GetWeapon(args[1]):GetPrimaryAmmoType(), false)
 				else
@@ -162,8 +182,6 @@ function buyGun(ply, cmd, args)
 end
 concommand.Add("buy_gun", buyGun)
 
-
-
 function ResetIndividualProgress(ply, cmd, args)
 
     ply:SetNWInt("playerLvl", 1)
@@ -176,6 +194,12 @@ end
 concommand.Add("efgm_reset_progress", ResetIndividualProgress)
 
 function ResetIndividualStats(ply, cmd, args)
+
+    ply:SetNWInt("playerLvl", 1)
+
+    ply:SetNWInt("playerExp", 0)
+
+    ply:SetNWInt("playerMoney", 10000)
 
     ply:SetNWInt("playerKills", 0)
 
@@ -256,26 +280,3 @@ function ResetIndividualAll(ply, cmd, args)
 
 end
 concommand.Add("efgm_reset_everything", ResetIndividualAll)
-
-
-function CheckExtracts(ply, cmd, args)
-
-	local extractNames = RaidTimeLeft().."\nYour available extract locations are:"
-
-	for k, v in pairs( ents.FindByClass("efgm_trigger_extract") ) do
-
-		if v.ExtractGroup == "All" or v.ExtractGroup == CheckSpawnGroup(ply) then
-			extractNames = extractNames.."\n"..v.ExtractName
-
-			if v.Available == 1 then
-				extractNames = extractNames.." (Status: Unknown)"
-			else
-				extractNames = extractNames.." (Status: Available)"
-			end
-		end
-	end
-
-	ply:PrintMessage(HUD_PRINTTALK, extractNames)
-
-end
-concommand.Add("efgm_extract_list", CheckExtracts)

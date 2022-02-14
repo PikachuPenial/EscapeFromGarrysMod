@@ -15,7 +15,6 @@ net.Receive("StripWeapon",function (len, ply)
 	ply = tempTable[1]
 	wep = tempTable[2]
 
-	print(wep:GetClass())
 	ply:StripWeapon(wep:GetClass())
 	
 end)
@@ -27,7 +26,6 @@ net.Receive("GiveWeapon",function (len, ply)
 	ply = tempTable[1]
 	wep = tempTable[2]
 
-	print(wep)
 	ply:Give(wep, true)
 	
 end)

@@ -120,11 +120,11 @@ function RaidTimeLeft()
 	end
 end
 
--- function ENT:Think()
--- 	net.Start("RaidTimeLeft")
--- 		net.WriteString(RaidTimeLeft())
--- 	net.Broadcast()
--- end
+function ENT:Think()
+	net.Start("RaidTimeLeft")
+		net.WriteString(RaidTimeLeft())
+	net.Broadcast()
+end
 
 function ENT:EndRaid()
 

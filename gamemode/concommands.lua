@@ -280,3 +280,25 @@ function ResetIndividualAll(ply, cmd, args)
 
 end
 concommand.Add("efgm_reset_everything", ResetIndividualAll)
+
+function CheckExtracts(ply, cmd, args)
+
+	local extractNames = RaidTimeLeft().."\nYour available extract locations are:"
+
+	for k, v in pairs( ents.FindByClass("efgm_trigger_extract") ) do
+
+		if v.ExtractGroup == "All" or v.ExtractGroup == CheckSpawnGroup(ply) then
+			extractNames = extractNames.."\n"..v.ExtractName
+
+			if v.Available == 1 then
+				extractNames = extractNames.." (Status: Unknown)"
+			else
+				extractNames = extractNames.." (Status: Available)"
+			end
+		end
+	end
+
+	ply:PrintMessage(HUD_PRINTTALK, extractNames)
+
+end
+concommand.Add("efgm_extract_list", CheckExtracts)

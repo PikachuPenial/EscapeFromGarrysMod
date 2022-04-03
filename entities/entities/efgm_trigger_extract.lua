@@ -95,8 +95,6 @@ function ENT:CheckForPlayers()
 
 							SetPlayerStatus(ply, nil, "NotInRaid")
 
-							ply:GodEnable()
-
 						end)
 					end
 

@@ -319,6 +319,20 @@ hook.Add("PlayerInitialSpawn", "PlayerFirstSpawn", function(ply)
 
 end)
 
+hook.Add( "PlayerShouldTakeDamage", "AntiLobbyKill", function( ply, attacker )
+	
+	for k, v in pairs(playerStatusTable) do
+		if v[1] == ply then
+			if v[3] == noClass then
+				return false
+			else
+				return true
+			end
+		end
+	end
+
+end )
+
 function AssignTeam(ply, cmd, args)
 
 	local teamName = args[1]

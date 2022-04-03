@@ -14,7 +14,7 @@ include("sv_stash.lua")
 function GM:PlayerSpawn(ply)
   ply:SetGravity(.72)
   ply:SetMaxHealth(100)
-  ply:SetRunSpeed(205)
+  ply:SetRunSpeed(215)
   ply:SetWalkSpeed(130)
   ply:SetJumpPower(124)
   

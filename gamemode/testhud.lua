@@ -1,3 +1,11 @@
+local raidTimeLeft = "Raid is over!"
+
+net.Receive("RaidTimeLeft",function (len, ply)
+
+	raidTimeLeft = net.ReadString()
+
+end)
+
 function HUD()
   local client = LocalPlayer()
 
@@ -24,6 +32,10 @@ function HUD()
 	draw.SimpleText("EFGM BETA Testing / made by Penial & Porty", "DermaDefaultBold", 375, ScrH() - 22, Color(85, 0, 255, 255), 0)
 	draw.SimpleText("Press F3 to access your inventory", "DermaDefaultBold", 170, ScrH() - 38, Color(255, 166, 0, 255), 0)
 	draw.SimpleText("Press F4 for shop, stats, and help", "DermaDefaultBold", 170, ScrH() - 22, Color(255, 166, 0, 255), 0)
+
+	-- timer
+
+	draw.SimpleText(raidTimeLeft, "DermaLarge", 50, ScrH() - 38, Color(255, 255, 255, 255), 0)
 
 	--avatar:SetSize(42, 42)
 	--avatar:SetPos(4, 1035)

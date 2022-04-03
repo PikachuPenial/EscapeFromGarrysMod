@@ -173,8 +173,8 @@ hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
         PrintMessage(HUD_PRINTCENTER, "You committed suicide.")
     else
 		local weaponInfo = weapons.Get( attacker:GetActiveWeapon():GetClass() )
-        PrintMessage(HUD_PRINTCENTER, attacker:Name() .. " killed you.")
-		PrintMessage(HUD_PRINTCENTER, "They had an " .. weaponInfo["PrintName"]  .. ".")
+        victim:PrintMessage(HUD_PRINTCENTER, attacker:Name() .. " killed you.")
+		victim:PrintMessage(HUD_PRINTCENTER, "They had an " .. weaponInfo["PrintName"]  .. ".")
     end
 end )
 

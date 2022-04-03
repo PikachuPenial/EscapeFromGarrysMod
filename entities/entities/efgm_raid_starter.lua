@@ -8,6 +8,7 @@ local pmcClass = "PMC"
 local playerScavClass = "PlayerScav"
 local noClass = "NotInRaid"
 
+knownRaidTime
 
 -- Classes: "PMC", "PlayerScav", "NotInRaid"
 
@@ -109,9 +110,19 @@ function RaidTimeLeft()
 		return "Raid is over!"
 	end
 
-	minsLeft = math.Truncate(raidTimeLeft / 60, 0)
-	secsLeft = math.Truncate(raidTimeLeft - (minsLeft * 60), 0)
-	timeLeftClean = tostring(minsLeft..":"..secsLeft)
+	local minsLeft = math.Truncate(raidTimeLeft / 60, 0)
+
+	local secsLeft = math.Truncate(raidTimeLeft - (minsLeft * 60), 0)
+
+	local secondsText
+
+	if secsLeft < 10 then
+		secondsText = "0" .. secsLeft
+	else
+		secondsText = secsLeft
+	end
+
+	local timeLeftClean = tostring(minsLeft..":"..secondsText)
 
 	if raidTimeLeft == 0 or raidTimeLeft == nil then
 		return "Raid is over!"
@@ -121,9 +132,15 @@ function RaidTimeLeft()
 end
 
 function ENT:Think()
-	net.Start("RaidTimeLeft")
+
+	if timer.TimeLeft("RaidTimer") != knownRaidTime then
+
+		net.Start("RaidTimeLeft")
 		net.WriteString(RaidTimeLeft())
-	net.Broadcast()
+		net.Broadcast()
+
+		knownRaidTime = timer.TimeLeft("RaidTimer")
+	end
 end
 
 function ENT:EndRaid()
@@ -177,6 +194,8 @@ function ENT:InitializeRaid()
 	self.RaidStarted = true
 
 	timer.Create("RaidTimer", self.RaidTime, 1, function() self:EndRaid() end)
+
+	knownRaidTime = self.RaidTime
 
 	print("A new raid has started, good luck!")
 

@@ -325,9 +325,7 @@ hook.Add( "PlayerShouldTakeDamage", "AntiLobbyKill", function( ply, attacker )
 		if v[1] == ply then
 			if v[3] == noClass then
 				return false
-			elseif v[3] == pmcClass then
-				return true
-			elseif v[3] == playerScavClass then
+			elseif v[3] != noClass then
 				return true
 			end
 		end

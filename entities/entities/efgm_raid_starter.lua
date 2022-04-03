@@ -14,6 +14,8 @@ local knownRaidTime
 
 local raidStartSpawnTable = {}
 
+local isRaidEnded = false
+
 -- Classes: "PMC", "PlayerScav", "NotInRaid"
 
 -- {player, spawnGroup, class}
@@ -141,6 +143,7 @@ function ENT:Think()
 
 		net.Start("RaidTimeLeft")
 		net.WriteString(RaidTimeLeft())
+		net.WriteBool(isRaidEnded)
 		net.Broadcast()
 
 		knownRaidTime = timer.TimeLeft("RaidTimer")
@@ -148,6 +151,8 @@ function ENT:Think()
 end
 
 function ENT:EndRaid()
+
+	isRaidEnded = true
 
 	for k, v in pairs(playerStatusTable) do
 
@@ -161,11 +166,19 @@ function ENT:EndRaid()
 
 	for k, v in pairs( player.GetHumans() ) do
 
-		v:PrintMessage( HUD_PRINTCENTER, "The raid is over!\nIf you did not exit the raid in time, you have lost everything you brough in.\nPlease vote for a new map." )
+		v:PrintMessage( HUD_PRINTCENTER, "The raid is over!\nIf you did not exit the raid in time, you have lost everything you brought in." )
 
 	end
 
 	self:TriggerOutput("OnRaidEnd", self, nil)
+
+	timer.Create("RaidTimer", 120, 1, function()
+	
+		local mapName = game.GetMap()
+
+		RunConsoleCommand("map", mapName)
+	
+	end)
 
 end
 
@@ -317,6 +330,9 @@ concommand.Add("efgm_join_team", AssignTeam)
 
 function ENT:AcceptInput(name, ply, caller, data)
 	if name == "StartRaid" then
+
+		if isRaidEnded == true then return end
+
 		if self.RaidStarted == false then
 
 			self:InitializeRaid()

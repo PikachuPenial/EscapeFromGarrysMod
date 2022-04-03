@@ -1,8 +1,10 @@
 local raidTimeLeft = "Raid is over!"
+local timerRed = false
 
 net.Receive("RaidTimeLeft",function (len, ply)
 
 	raidTimeLeft = net.ReadString()
+	timerRed = net.ReadBool()
 
 end)
 
@@ -35,8 +37,26 @@ function HUD()
 
 	-- timer
 
-	draw.SimpleText(raidTimeLeft, "DermaLarge", 28, ScrH() - 305, Color(255, 255, 255, 255), 0)
-	draw.SimpleText("Time Remaining", "DermaDefaultBold", 28, ScrH() - 275, Color(255, 255, 255, 255), 0)
+	local colorBlack = Color(255, 255, 255, 255)
+	local colorRed = Color(255, 0, 0, 255)
+
+	local timerColor = Color(255, 255, 255, 255)
+
+	if timerRed == false then
+		timerColor = colorBlack
+	else
+		timerColor = colorRed
+	end
+
+	local timeText = "Time Remaining"
+	local mapSwitchText = "Time Until Map Switches"
+
+	if timerRed == true then
+		timeText = mapSwitchText
+	end
+
+	draw.SimpleText(raidTimeLeft, "DermaLarge", 28, ScrH() - 305, timerColor, 0)
+	draw.SimpleText(timeText, "DermaDefaultBold", 28, ScrH() - 275, timerColor, 0)
 
 	--avatar:SetSize(42, 42)
 	--avatar:SetPos(4, 1035)

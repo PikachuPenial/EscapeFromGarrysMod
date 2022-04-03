@@ -15,6 +15,8 @@ function ENT:Initialize()
 	
 	if (IsValid(phys)) then
 		phys:Wake()
+
+		self:SetValue(1000)
 	end
 end
 
@@ -28,8 +30,6 @@ function ENT:SpawnFunction(ply, tr, ClassName)
 	local trace = util.TraceLine(tr)
 	
 	local ent = ents.Create(ClassName)
-	
-	ent:SetValue(1000)
 	
 	ent:SetPos(trace.HitPos)
 	ent:Spawn()

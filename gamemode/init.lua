@@ -130,7 +130,7 @@ function GM:PlayerInitialSpawn(ply)
 end
 
 function GM:PlayerDeath(victim, inflictor, attacker)
-    if(attacker == victim) then		
+    if(victim == attacker) then		
 		victim:SetNWInt("playerDeathsSuicide", victim:GetNWInt("playerDeathsSuicide") + 1)
 		
 		victim:SetNWInt("playerKDR", victim:GetNWInt("playerKills") / victim:GetNWInt("playerDeaths"))
@@ -164,6 +164,14 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 		checkForLevel(attacker)
 	end
 end
+
+hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
+    if (victim == attacker) then
+        PrintMessage(HUD_PRINTCENTER, "You committed suicide.")
+    else
+        PrintMessage(HUD_PRINTCENTER, attacker:Name() .. "killed you with a" .. attacker:GetActiveWeapon() .. ".")
+    end
+end )
 
 hook.Add("PlayerHurt", "playerDamage", function(victim, attacker, remainingHealth, dmgTaken)
 

@@ -1,7 +1,7 @@
 "escapefromgarrysmod"
 {
 	"base"		"base"
-	"title"		"Escape From Garry's Mod ARC"
+	"title"		"Escape From Garry's Mod"
 	"maps"		"^efgm_"
 	"menusystem"	"1"
 }

@@ -788,6 +788,12 @@ function MenuInit()
 
 	function DoInventory()
 
+		local avatar = vgui.Create("AvatarImage")
+
+		avatar:SetSize(96, 96)
+		avatar:SetPos(101, 635)
+		avatar:SetPlayer(LocalPlayer(), 96)
+
 		print("doing inventory")
 
 		for k, v in pairs(stashClient:GetWeapons()) do

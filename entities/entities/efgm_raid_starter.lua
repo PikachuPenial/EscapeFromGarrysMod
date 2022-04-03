@@ -4,11 +4,15 @@ ENT.Base = "base_point"
 ENT.RaidStarted = false
 ENT.RaidTime = 1200
 
+local isRaidJoinTime = false
+
 local pmcClass = "PMC"
 local playerScavClass = "PlayerScav"
 local noClass = "NotInRaid"
 
 local knownRaidTime
+
+local raidStartSpawnTable = {}
 
 -- Classes: "PMC", "PlayerScav", "NotInRaid"
 
@@ -168,26 +172,25 @@ end
 function ENT:InitializeRaid()
 
 	local baseSpawnTable = ents.FindByClass( "efgm_raid_spawn" )
-	local spawnTable = {}
 
 	for k, v in pairs(baseSpawnTable) do
 		if v.SpawnType != 1 then
 
-			table.insert(spawnTable, v)
+			table.insert(raidStartSpawnTable, v)
 
 		end
 	end
 
 	for k, v in pairs( player.GetHumans() ) do
 
-		local randomSpawnInt = math.random(#spawnTable)
+		local randomSpawnInt = math.random(#raidStartSpawnTable)
 
-		v:SetPos(spawnTable[randomSpawnInt]:GetPos())
-		v:SetAngles(spawnTable[randomSpawnInt]:GetAngles())
+		v:SetPos(raidStartSpawnTable[randomSpawnInt]:GetPos())
+		v:SetAngles(raidStartSpawnTable[randomSpawnInt]:GetAngles())
 
-		SetPlayerStatus(v, spawnTable[randomSpawnInt].SpawnGroup, pmcClass)
+		SetPlayerStatus(v, raidStartSpawnTable[randomSpawnInt].SpawnGroup, pmcClass)
 
-		table.remove(spawnTable, randomSpawnInt)
+		table.remove(raidStartSpawnTable, randomSpawnInt)
 
 	end
 
@@ -236,13 +239,25 @@ function ENT:DetermineSpawnTable(class)
 
 end
 
-function ENT:IndividualSpawn(ply, class)
+function ENT:IndividualSpawn(ply, class, raidHasStarted)
 
 	spawnTable = self:DetermineSpawnTable(class)
 
 	local randomSpawn = spawnTable[math.random(#spawnTable)]
 
-	self:SpawnPlayer(ply, randomSpawn.SpawnGroup, class, randomSpawn:GetPos(), randomSpawn:GetAngles())
+	if raidHasStarted == true then
+
+		local playerSpawnInt = math.random(#raidStartSpawnTable)
+
+		SpawnPlayer(ply, raidStartSpawnTable[playerSpawnInt].SpawnGroup, class, raidStartSpawnTable[playerSpawnInt]:GetPos(), raidStartSpawnTable[playerSpawnInt]:GetAngles())
+
+		table.remove(raidStartSpawnTable, playerSpawnInt)
+
+	else
+
+		SpawnPlayer(ply, randomSpawn.SpawnGroup, class, randomSpawn:GetPos(), randomSpawn:GetAngles())
+
+	end
 
 end
 
@@ -267,7 +282,7 @@ function ENT:PartySpawn(players, class)
 
 		local spawnInt = math.random(#teamSpawnTable)
 
-		self:SpawnPlayer(v, mainSpawn.SpawnGroup, class, teamSpawnTable[spawnInt]:GetPos(), teamSpawnTable[spawnInt]:GetAngles())
+		SpawnPlayer(v, mainSpawn.SpawnGroup, class, teamSpawnTable[spawnInt]:GetPos(), teamSpawnTable[spawnInt]:GetAngles())
 
 		table.remove(teamSpawnTable, spawnInt)
 
@@ -303,9 +318,17 @@ concommand.Add("efgm_join_team", AssignTeam)
 function ENT:AcceptInput(name, ply, caller, data)
 	if name == "StartRaid" then
 		if self.RaidStarted == false then
+
 			self:InitializeRaid()
-		elseif self.RaidStarted == true then
-			self:IndividualSpawn(ply, "PMC")
+
+			self:IndividualSpawn(ply, "PMC", false)
+
+		else
+
+			self:IndividualSpawn(ply, "PMC", false)
+
 		end
+
+		
 	end
 end

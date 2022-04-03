@@ -505,7 +505,7 @@ function addButtons(Menu, sellMenuBool, ply)
 			-- Help Text Eight
 			surface.SetTextPos(8, 190)
 			surface.SetTextColor(255, 255, 255, 255)
-			surface.DrawText("You can press your menu bind (default = x) to customize attachments and change the feel of the gun!")
+			surface.DrawText("You can press your menu bind (default key is C) to customize attachments and change the feel of the gun!")
 
 		end
 	end

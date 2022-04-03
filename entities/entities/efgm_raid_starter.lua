@@ -257,7 +257,7 @@ function ENT:PartySpawn(players, class)
 
 	for k, v in pairs(ents.FindByClass( "efgm_team_spawn" )) do
 
-		if v.MainSpawnName = spawnName then
+		if v.MainSpawnName == spawnName then
 			table.insert(teamSpawnTable, v)
 		end
 
@@ -295,7 +295,7 @@ function AssignTeam(ply, cmd, args)
 
 	local teamName = args[1]
 
-	ply:SetNWString("playerTeam", tostring(teamName)
+	ply:SetNWString("playerTeam", tostring(teamName))
 
 end
 concommand.Add("efgm_join_team", AssignTeam)

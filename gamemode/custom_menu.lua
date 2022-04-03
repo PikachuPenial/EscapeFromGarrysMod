@@ -788,11 +788,11 @@ function MenuInit()
 
 	function DoInventory()
 
-		local avatar = vgui.Create("AvatarImage")
+		--local avatar = vgui.Create("AvatarImage")
 
-		avatar:SetSize(96, 96)
-		avatar:SetPos(101, 635)
-		avatar:SetPlayer(LocalPlayer(), 96)
+		--avatar:SetSize(96, 96)
+		--avatar:SetPos(101, 635)
+		--avatar:SetPlayer(LocalPlayer(), 96)
 
 		print("doing inventory")
 

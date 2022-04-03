@@ -35,7 +35,8 @@ function HUD()
 
 	-- timer
 
-	draw.SimpleText(raidTimeLeft, "DermaLarge", 50, ScrH() - 38, Color(255, 255, 255, 255), 0)
+	draw.SimpleText(raidTimeLeft, "DermaLarge", 28, ScrH() - 305, Color(255, 255, 255, 255), 0)
+	draw.SimpleText("Time Remaining", "DermaDefaultBold", 28, ScrH() - 275, Color(255, 255, 255, 255), 0)
 
 	--avatar:SetSize(42, 42)
 	--avatar:SetPos(4, 1035)

@@ -19,6 +19,15 @@ RunConsoleCommand("vk_enabled", "1")
 RunConsoleCommand("vk_suppressor", "1")
 RunConsoleCommand("vk_speedlimit", "1")
 
+--Day/Night System
+
+RunConsoleCommand("atmos_dnc_length_day", "300")
+RunConsoleCommand("atmos_dnc_length_night", "300")
+RunConsoleCommand("atmos_weather_length", "300")
+RunConsoleCommand("atmos_weather_chance", "20")
+RunConsoleCommand("atmos_weather_delay", "300")
+RunConsoleCommand("atmos_weather_lighting", "1")
+
 --Compass Configuration
 
 RunConsoleCommand("mcompass_enabled", "1")

@@ -38,6 +38,9 @@ function GM:PlayerSpawn(ply)
 end
 
 function GM:PlayerInitialSpawn(ply)
+
+	ply:SetNWString("playerTeam", "")
+
 	if(ply:GetPData("playerLvl") == nil) then
 		ply:SetNWInt("playerLvl", 1)
 	else

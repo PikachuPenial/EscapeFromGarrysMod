@@ -3,6 +3,7 @@ ENT.Base = "base_point"
 
 ENT.SpawnType = 0
 ENT.SpawnGroup = ""
+ENT.SpawnName = ""
 
 function ENT:KeyValue(key, value)
 
@@ -12,6 +13,10 @@ function ENT:KeyValue(key, value)
 
     if key == "spawn_group" then
         self.SpawnGroup = tostring(value)
+    end
+
+    if key == "targetname" then
+        self.SpawnName = tostring(value)
     end
 
 end

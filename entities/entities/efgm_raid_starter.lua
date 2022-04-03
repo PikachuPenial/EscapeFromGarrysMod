@@ -182,38 +182,77 @@ function ENT:InitializeRaid()
 
 end
 
-function ENT:ScavSpawn(ply)
+function ENT:DetermineSpawnTable(class)
 
 	local baseSpawnTable = ents.FindByClass( "efgm_raid_spawn" )
 	local spawnTable = {}
 
 	for k, v in pairs(baseSpawnTable) do
 
+		-- 0 is universal, 1 is a PMC spawn, 2 is a Player Scav spawn.
+
+		if class == "PMC" then
+
+			if v.SpawnType != 2 then
+
+				table.insert(spawnTable, v)
+	
+			end
+
+		end
+
+		if class == "PlayerScav" then
+
+			if v.SpawnType != 1 then
+
+				table.insert(spawnTable, v)
+	
+			end
+
+		end
+
 	end
 
-	local randomSpawn = spawnTable[math.random(#spawnTable)]
-
-	SpawnPlayer(ply, randomSpawn.SpawnGroup, playerScavClass, randomSpawn:GetPos(), randomSpawn:GetAngles())
+	return spawnTable
 
 end
 
-function ENT:PMCSpawn(ply)
+function ENT:IndividualSpawn(ply, class)
 
-	local baseSpawnTable = ents.FindByClass( "efgm_raid_spawn" )
-	local spawnTable = {}
-
-	for k, v in pairs(baseSpawnTable) do
-		if v.SpawnType != 2 then
-
-			table.insert(spawnTable, v)
-
-		end
-	end
+	spawnTable = self:DetermineSpawnTable(class)
 
 	local randomSpawn = spawnTable[math.random(#spawnTable)]
 
-	SpawnPlayer(ply, randomSpawn.SpawnGroup, pmcClass, randomSpawn:GetPos(), randomSpawn:GetAngles())
+	self:SpawnPlayer(ply, randomSpawn.SpawnGroup, class, randomSpawn:GetPos(), randomSpawn:GetAngles())
 
+end
+
+function ENT:PartySpawn(players, class)
+
+	spawnTable = self:DetermineSpawnTable(class)
+	teamSpawnTable = {}
+
+	local mainSpawn = spawnTable[math.random(#spawnTable)]
+
+	local spawnName = mainSpawn.SpawnName
+
+	for k, v in pairs(ents.FindByClass( "efgm_team_spawn" )) do
+
+		if v.MainSpawnName = spawnName then
+			table.insert(teamSpawnTable, v)
+		end
+
+	end
+
+	for k, v in pairs(players) do
+
+		local spawnInt = math.random(#teamSpawnTable)
+
+		self:SpawnPlayer(v, mainSpawn.SpawnGroup, class, teamSpawnTable[spawnInt]:GetPos(), teamSpawnTable[spawnInt]:GetAngles())
+
+		table.remove(teamSpawnTable, spawnInt)
+
+	end
 end
 
 hook.Add("PlayerDisconnected", "PlayerLeave", function(ply) RemoveFromTable(ply) end)
@@ -233,12 +272,21 @@ hook.Add("PlayerInitialSpawn", "PlayerFirstSpawn", function(ply)
 
 end)
 
+function AssignTeam(ply, cmd, args)
+
+	local teamName = args[1]
+
+	ply:SetNWString("playerTeam", tostring(teamName)
+
+end
+concommand.Add("efgm_join_team", AssignTeam)
+
 function ENT:AcceptInput(name, ply, caller, data)
 	if name == "StartRaid" then
 		if self.RaidStarted == false then
 			self:InitializeRaid()
 		elseif self.RaidStarted == true then
-			self:PMCSpawn(ply)
+			self:IndividualSpawn(ply, "PMC")
 		end
 	end
 end

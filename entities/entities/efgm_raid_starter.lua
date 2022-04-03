@@ -8,7 +8,7 @@ local pmcClass = "PMC"
 local playerScavClass = "PlayerScav"
 local noClass = "NotInRaid"
 
-knownRaidTime
+local knownRaidTime
 
 -- Classes: "PMC", "PlayerScav", "NotInRaid"
 

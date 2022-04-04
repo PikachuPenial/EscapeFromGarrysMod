@@ -39,7 +39,7 @@ end
 
 function GM:PlayerInitialSpawn(ply)
 
-	victim:PrintMessage(HUD_PRINTCENTER, "If you have NOT PLAYED before, please press (F4) and check out the HELP section!")
+	ply:PrintMessage(HUD_PRINTCENTER, "If you have NOT PLAYED before, please press (F4) and check out the HELP section!")
 
 	ply:SetNWString("playerTeam", "")
 	ply:SetNWBool("inRaid", false)

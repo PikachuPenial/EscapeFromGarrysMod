@@ -252,6 +252,23 @@ function GM:Initialize()
 	sellBlacklist[7] = {"arccw_go_knife_ct"}
 	sellBlacklist[8] = {"arccw_go_knife_stiletto"}
 	sellBlacklist[9] = {"weapon_concussion_nade"}
+	sellBlacklist[10] = {"arccw_eap_lebedev"}
+	sellBlacklist[11] = {"arccw_eap_vp70"}
+	sellBlacklist[12] = {"arccw_eft_1911"}
+	sellBlacklist[13] = {"arccw_go_glock"}
+	sellBlacklist[14] = {"arccw_go_cz75"}
+	sellBlacklist[15] = {"arccw_go_fiveseven"}
+	sellBlacklist[16] = {"arccw_go_usp"}
+	sellBlacklist[17] = {"arccw_go_tec9"}
+	sellBlacklist[18] = {"arccw_go_p2000"}
+	sellBlacklist[19] = {"arccw_go_p250"}
+	sellBlacklist[20] = {"arccw_go_m9"}
+	sellBlacklist[21] = {"arccw_go_nade_incendiary"}
+	sellBlacklist[22] = {"arccw_go_nade_frag"}
+	sellBlacklist[23] = {"arccw_go_nade_flash"}
+	sellBlacklist[24] = {"arccw_go_nade_smoke"}
+	sellBlacklist[25] = {"arccw_go_nade_molotov"}
+	sellBlacklist[26] = {"arccw_go_nade_knife"}
 
 	-- Temporary array created. This next section will sort the guns by cost, so guns higher to the top will hopefully be better. This is convenient.
 	-- The sort function takes the fourth value of all tempWeaponsArray indexes (the rouble count) and sorts by them from greatest to lowest.
@@ -552,11 +569,6 @@ function addButtons(Menu, sellMenuBool, ply)
 			surface.SetTextPos(5, 120)
 			surface.DrawText("bind e +alt2    (Let's you lean to the right.)")
 
-			-- Help Text Four
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 150)
-			surface.DrawText("bind o efgm_extract_list    (Check available extract locations.)")
-
 			-- Help Text Five
 			surface.SetFont("DermaLarge")
 			surface.SetTextPos(5, 200)
@@ -615,7 +627,7 @@ function addButtons(Menu, sellMenuBool, ply)
 			-- Help Text Fifteen
 			surface.SetFont("DermaLarge")
 			surface.SetTextPos(5, 600)
-			surface.DrawText("Press (O) if you have the bind to check your list of extracts.")
+			surface.DrawText("Press your spawn menu key to check your list of extracts.")
 
 			-- Help Text Sixteen
 			surface.SetFont("DermaLarge")

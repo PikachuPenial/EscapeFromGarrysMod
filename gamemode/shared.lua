@@ -54,6 +54,12 @@ RunConsoleCommand("tarkovhud_blur_neardeath", "1")
 
 RunConsoleCommand("mp_falldamage", "1")
 
+--Damage Slow Config
+
+RunConsoleCommand("stoppower_dmg_mult", "0.025")
+RunConsoleCommand("stoppower_minimum_speed_mult", "0.2")
+RunConsoleCommand("stoppower_recovery_delay", "0.25")
+
 --Disabling NoClip/Tinnitus
 
 RunConsoleCommand("sbox_noclip", "0")

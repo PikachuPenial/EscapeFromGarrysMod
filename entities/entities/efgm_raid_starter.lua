@@ -62,6 +62,8 @@ end
 
 function SpawnPlayer(player, spawnGroup, status, pos, angles)
 
+	player:SetNWBool("inRaid", true)
+
 	player:SetPos(pos)
 	player:SetAngles(angles)
 
@@ -307,6 +309,8 @@ hook.Add("PlayerDisconnected", "PlayerLeave", function(ply) RemoveFromTable(ply)
 hook.Add( "PlayerDeath", "PlayerDie", function( victim, inflictor, attacker )
 
 	SetPlayerStatus(victim, nil, noClass)
+
+	victim:SetNWBool("inRaid", false)
 
 end )
 

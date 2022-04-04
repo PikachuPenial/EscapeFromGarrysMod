@@ -40,6 +40,7 @@ end
 function GM:PlayerInitialSpawn(ply)
 
 	ply:SetNWString("playerTeam", "")
+	ply:SetNWBool("inRaid", false)
 
 	if(ply:GetPData("playerLvl") == nil) then
 		ply:SetNWInt("playerLvl", 1)
@@ -208,7 +209,9 @@ function checkForLevel(ply)
 end
 
 function GM:ShowSpare2(ply)
-	ply:ConCommand("open_game_menu")
+	if ply:GetNWBool("inRaid") == false then
+		ply:ConCommand("open_game_menu")
+	end
 end
 
 function GM:PlayerDisconnected(ply)

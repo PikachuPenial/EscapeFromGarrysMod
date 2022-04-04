@@ -95,6 +95,8 @@ function ENT:CheckForPlayers()
 
 							SetPlayerStatus(ply, nil, "NotInRaid")
 
+							ply:SetNWBool("inRaid", false)
+
 						end)
 					end
 

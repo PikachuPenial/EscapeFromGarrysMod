@@ -276,6 +276,9 @@ function GM:Initialize()
 	sellBlacklist[24] = {"arccw_go_nade_smoke"}
 	sellBlacklist[25] = {"arccw_go_nade_molotov"}
 	sellBlacklist[26] = {"arccw_go_nade_knife"}
+	sellBlacklist[27] = {"micro_uzi"}
+	sellBlacklist[28] = {"arccw_eft_usp"}
+	sellBlacklist[29] = {"arccw_ud_glock"}
 
 	-- Temporary array created. This next section will sort the guns by cost, so guns higher to the top will hopefully be better. This is convenient.
 	-- The sort function takes the fourth value of all tempWeaponsArray indexes (the rouble count) and sorts by them from greatest to lowest.

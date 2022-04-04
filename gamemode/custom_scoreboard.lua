@@ -34,8 +34,8 @@ function GM:ScoreboardShow()
 				draw.RoundedBox(0, 0, 0, PlayerPanel:GetWide(), PlayerPanel:GetTall(), Color(35, 35, 35, 255))
 				draw.RoundedBox(0, 0, 49, PlayerPanel:GetWide(), 1, Color(35, 35, 35, 255))
 				
-				draw.SimpleText(v:GetName().." - Level "..v:GetNWInt("playerLvl"), "DermaDefault", 20, 10, Color(255, 255, 255))
-				draw.SimpleText("₽"..v:GetNWInt("playerMoney"), "DermaDefault", 20, 25, Color(255, 195, 0))
+				draw.SimpleText(v:GetName().." - "..v:Ping().."ms", "DermaDefault", 20, 10, Color(255, 255, 255))
+				draw.SimpleText("Level "..v:GetNWInt("playerLvl"), "DermaDefault", 20, 25, Color(255, 195, 0))
 			end
 		end
 	

@@ -54,7 +54,7 @@ function HUD()
 	if timerRed == true then
 		timeText = mapSwitchText
 
-		draw.SimpleText("RAID IS ENDING: TRANSFER ANYTHING YOU WANT TO KEEP INTO YOUR STASH.", "DermaLarge", ScrW() / 2, 50, colorRed, 1)
+		draw.SimpleText("MAP IS RESETING: TRANSFER ANYTHING YOU WANT TO KEEP INTO YOUR STASH, OR YOU WILL LOSE YOUR ITEMS.", "DermaLarge", ScrW() / 2, 50, colorRed, 1)
 	end
 
 	draw.SimpleText(raidTimeLeft, "DermaLarge", 28, ScrH() - 305, timerColor, 0)

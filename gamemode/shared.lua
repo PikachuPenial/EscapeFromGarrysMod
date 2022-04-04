@@ -13,6 +13,11 @@ function GM:ContextMenuOpen()
   return false
 end
 
+function GM:SpawnMenuOpen()
+  RunConsoleCommand("efgm_extract_list")
+  return false
+end
+
 --Anti-Bunnyhopping
 
 RunConsoleCommand("vk_enabled", "1")

@@ -154,6 +154,13 @@ function buyGun(ply, cmd, args)
 	weaponPrices[110] = {"arccw_mifl_fas2_sr25", "17420", "16"}
 	weaponPrices[111] = {"arccw_mifl_fas2_toz34", "12690", "12"}
 	weaponPrices[112] = {"arccw_claymorelungemine", "5555", "5"}
+	weaponPrices[113] = {"arccw_eft_usp", "5555", "5"}
+	weaponPrices[114] = {"arccw_eft_mp153", "15005", "13"}
+	weaponPrices[115] = {"arccw_eft_mp155", "14005", "12"}
+	weaponPrices[116] = {"arccw_eft_scarh", "17090", "15"}
+	weaponPrices[117] = {"arccw_eft_scarl", "15995", "14"}
+	weaponPrices[118] = {"arccw_fml_mw_fo12", "20999", "18"}
+	weaponPrices[119] = {"arccw_oden", "18505", "16"}
 	
 	for k, v in pairs(weaponPrices) do
 		if(args[1] == v[1]) then
@@ -166,7 +173,7 @@ function buyGun(ply, cmd, args)
 				if (balance >= gunCost) then
 					ply:SetNWInt("playerMoney", balance - gunCost)
 					ply:SetNWInt("playerTotalMoneySpent", ply:GetNWInt("playerTotalMoneySpent") + gunCost)
-					pply:SetNWInt("playerTotalMoneySpentWep", ply:GetNWInt("playerTotalMoneySpentWep") + gunCost)
+					ply:SetNWInt("playerTotalMoneySpentWep", ply:GetNWInt("playerTotalMoneySpentWep") + gunCost)
 					ply:Give(args[1])
 					ply:GiveAmmo(30, ply:GetWeapon(args[1]):GetPrimaryAmmoType(), false)
 				else

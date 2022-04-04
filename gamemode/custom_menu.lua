@@ -148,7 +148,7 @@ function GM:Initialize()
 	tempWeaponsArray[81] = {"models/weapons/arccw/c_xm8.mdl", "midnights_gso_xm8", "HK XM8", 18920, "17"}
 	tempWeaponsArray[82] = {"models/weapons/arccw/midnightwolf/type20.mdl", "arccw_midnightwolf_type20", "Type 20", 17880, "15"}
 	tempWeaponsArray[83] = {"models/viper/mw/weapons/w_725_mammaledition.mdl", "arccw_725", "Citori 725 SG", 8950, "7"}
-	tempWeaponsArray[84] = {"models/weapons/arccw/mifl/fas2/c_g36c.mdl", "arccw_mifl_fas2_g36c", "G36c", 14445, "13"}
+	tempWeaponsArray[84] = {"models/weapons/cod_mw2019/w_g36k_mammaledition.mdl", "arccw_g36mw19", "G36K", 14445, "13"}
 	tempWeaponsArray[85] = {"models/viper/mw/weapons/kilo433_mammaledition.mdl", "arccw_kilo141", "HK433", 15690, "14"}
 	tempWeaponsArray[86] = {"models/weapons/w_mcxvirtus.mdl", "arccw_mcx", "MCX Virtus SBR", 17180, "15"}
 	tempWeaponsArray[87] = {"models/weapons/arccw/fml/mw19/w_mk2_k.mdl", "arccw_fml_mk2k", "MK2-K DMR", 11050, "8"}
@@ -177,6 +177,13 @@ function GM:Initialize()
 	tempWeaponsArray[110] = {"models/weapons/arccw/mifl/fas2/c_sr25.mdl", "arccw_mifl_fas2_sr25", "SR-25", 17420, "16"}
 	tempWeaponsArray[111] = {"models/weapons/arccw/mifl/fas2/c_toz34.mdl", "arccw_mifl_fas2_toz34", "TOZ-34", 12690, "12"}
 	tempWeaponsArray[112] = {"models/weapons/arccw/c_claymorelungemine.mdl", "arccw_claymorelungemine", "Claymore Lunge Mine", 5555, "5"}
+	tempWeaponsArray[113] = {"models/weapons/arc_eft_usp/c_eft_usp.mdl", "arccw_eft_usp", "HK USP .45", 5555, "5"}
+	tempWeaponsArray[114] = {"models/weapons/arccw/darsu_eft/c_mp153.mdl", "arccw_eft_mp153", "MP-153", 15005, "13"}
+	tempWeaponsArray[115] = {"models/weapons/arccw/darsu_eft/c_mp153.mdl", "arccw_eft_mp155", "MP-155", 14005, "12"}
+	tempWeaponsArray[116] = {"models/weapons/arc_eft_scarl/c_eft_scarh.mdl", "arccw_eft_scarh", "SCAR-H", 17090, "15"}
+	tempWeaponsArray[117] = {"models/weapons/arc_eft_scarl/c_eft_scarl.mdl", "arccw_eft_scarl", "SCAR-L", 15995, "14"}
+	tempWeaponsArray[118] = {"models/weapons/arccw/fml/w_fo12_mw.mdl", "arccw_fml_mw_fo12", "FO-12 Shotgun", 20999, "18"}
+	tempWeaponsArray[119] = {"models/weapons/cod_mw2019/w_oden_mammaledition.mdl", "arccw_oden", "VLK Oden", 18505, "16"}
 
 	local tempArmorArray = {}
 

@@ -26,7 +26,7 @@ RunConsoleCommand("atmos_dnc_length_night", "300")
 RunConsoleCommand("atmos_weather_length", "300")
 RunConsoleCommand("atmos_weather_chance", "20")
 RunConsoleCommand("atmos_weather_delay", "300")
-RunConsoleCommand("atmos_weather_lighting", "1")
+RunConsoleCommand("atmos_weather_lighting", "0")
 
 --Compass Configuration
 
@@ -38,6 +38,7 @@ RunConsoleCommand("mcompass_ratio", "1.75")
 RunConsoleCommand("mcompass_spacing", "5")
 
 --Tarkov Hud Configuration
+
 RunConsoleCommand("tarkovhud_hp_colored", "1")
 RunConsoleCommand("tarkovhud_autohide_hp", "0")
 RunConsoleCommand("tarkovhud_autohide_stamina", "0")
@@ -45,9 +46,11 @@ RunConsoleCommand("tarkovhud_blur", "1")
 RunConsoleCommand("tarkovhud_blur_neardeath", "1")
 
 --Realistic Fall Damage
+
 RunConsoleCommand("mp_falldamage", "1")
 
 --Disabling NoClip/Tinnitus
+
 RunConsoleCommand("sbox_noclip", "0")
 RunConsoleCommand("dsp_off", "1")
 
@@ -56,6 +59,10 @@ RunConsoleCommand("dsp_off", "1")
 RunConsoleCommand("sv_autorespawn_enabled", "1")
 RunConsoleCommand("sv_respawntime", "15")
 RunConsoleCommand("cl_drawownshadow", "1")
+
+--Death Screen Settings
+
+RunConsoleCommand("cl_pomer_text", "(You Died)")
 
 --Loot Rings/Attachment Menu Configuration
 
@@ -66,6 +73,21 @@ RunConsoleCommand("cl_vmanip_pickups_halo", "1")
 RunConsoleCommand("sv_ec2_dynamicheight", "0")
 RunConsoleCommand("sv_ec2_dynamicheight_min", "42")
 RunConsoleCommand("sv_ec2_dynamicheight_max", "64")
+
+--Inventory Blacklist
+
+RunConsoleCommand("gws_blacklist_add", "swep_inventory")
+RunConsoleCommand("gws_blacklist_add", "weapon_swep_inventory")
+RunConsoleCommand("gws_blacklist_add", "fas2_bandage")
+RunConsoleCommand("gws_blacklist_add", "fas2_ifak")
+RunConsoleCommand("gws_blacklist_add", "arccw_go_melee_knife")
+RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_bowie")
+RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_butterfly")
+RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_t")
+RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_karambit")
+RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_m9bayonet")
+RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_ct")
+RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_stiletto")
 
 --ARC CW Stuff
 

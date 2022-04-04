@@ -39,6 +39,8 @@ end
 
 function GM:PlayerInitialSpawn(ply)
 
+	victim:PrintMessage(HUD_PRINTCENTER, "If you have NOT PLAYED before, please press (F4) and check out the HELP section!")
+
 	ply:SetNWString("playerTeam", "")
 
 	if(ply:GetPData("playerLvl") == nil) then
@@ -170,7 +172,7 @@ end
 
 hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
     if (victim == attacker) then
-        PrintMessage(HUD_PRINTCENTER, "You committed suicide.")
+        victim:PrintMessage(HUD_PRINTCENTER, "You committed suicide.")
     else
 		local weaponInfo = weapons.Get( attacker:GetActiveWeapon():GetClass() )
         victim:PrintMessage(HUD_PRINTCENTER, attacker:Name() .. " killed you.")

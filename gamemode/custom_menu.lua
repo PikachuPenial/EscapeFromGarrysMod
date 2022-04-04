@@ -509,6 +509,176 @@ function addButtons(Menu, sellMenuBool, ply)
 
 		end
 	end
+
+	local playerButton = vgui.Create("DButton")
+	playerButton:SetParent(Menu)
+	playerButton:SetText("")
+	playerButton:SetSize(100, 300)
+	playerButton:SetPos(0, 150)
+	playerButton.Paint = function()
+		--Color of entire button
+		surface.SetDrawColor(50, 50, 50, 255)
+		surface.DrawRect(0, 0, playerButton:GetWide(), playerButton:GetTall())
+	
+		
+		--Draw/write text
+		draw.DrawText("HELP", "DermaLarge", playerButton:GetWide() / 2.1, 125, Color(80, 255, 255, 255), 1)
+	end
+	playerButton.DoClick = function(playerButton)
+		local playerPanel = Menu:Add("PlayerPanel")
+		
+		playerPanel.Paint = function()
+			surface.SetDrawColor(50, 50, 50, 255)
+			surface.DrawRect(0, 0, playerPanel:GetWide(), playerPanel:GetTall())
+			surface.SetTextColor(255, 255, 255, 255)
+			
+			-- Player Name
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 0)
+			surface.DrawText("Welcome to Escape From Garry's Mod!")
+
+			-- Help Text One
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 50)
+			surface.DrawText("For the best experience, input these into your console.")
+
+			-- Help Text Two
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 90)
+			surface.DrawText("bind q +alt1    (Let's you lean to the left.)")
+
+			-- Help Text Three
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 120)
+			surface.DrawText("bind e +alt2    (Let's you lean to the right.)")
+
+			-- Help Text Four
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 150)
+			surface.DrawText("bind o efgm_extract_list    (Check available extract locations.)")
+
+			-- Help Text Five
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 200)
+			surface.DrawText("The button on the table at the end of the lobby will put you into")
+
+			-- Help Text Six
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 225)
+			surface.DrawText("the raid, if one is ongoing. If no raid is found, one will start.")
+
+			-- Help Text Seven
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 275)
+			surface.DrawText("The buttons on the computer terminals will let you access your")
+
+			-- Help Text Eight
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 300)
+			surface.DrawText("stash, you can store your weapons/items here safely.")
+
+			-- Help Text Nine
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 350)
+			surface.DrawText("The buttons on the wall near the spawn let you sell gear.")
+
+			-- Help Text Ten
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 400)
+			surface.DrawText("While in the lobby, press (F4) to access the shop!")
+
+			-- Help Text Eleven
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 425)
+			surface.DrawText("You can buy guns, ammo, armor, and other goodies from here!")
+
+			-- Help Text Twelve
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 475)
+			surface.DrawText("Your goal in raid is to go in, get loot, fight others, and get out.")
+
+			-- Help Text Thirteen
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 500)
+			surface.DrawText("You will lose any gear that you had if you die in a raid.")
+
+			-- Help Text Fourteen
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 525)
+			surface.DrawText("You can find loot anywhere around the map.")
+
+			-- Help Text Fifteen
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 575)
+			surface.DrawText("To exit a raid and stay alive, you need to find an extract.")
+
+			-- Help Text Fifteen
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 600)
+			surface.DrawText("Press (O) if you have the bind to check your list of extracts.")
+
+			-- Help Text Sixteen
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 625)
+			surface.DrawText("If you can extract from a raid, you can then put the loot you")
+				
+			-- Help Text Seventeen
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 650)
+			surface.DrawText("found in your stash, or sell it for even more money.")
+
+			-- Help Text Eighteen
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 700)
+			surface.DrawText("Raids will last a total of 30 minutes, and you need to get out by")
+
+			-- Help Text Ninteen
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 725)
+			surface.DrawText("the end of the raid to survive! Anyone still in the raid when it")
+
+			-- Help Text Twenty
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 750)
+			surface.DrawText("ends will be killed, and will lose anything they had.")
+
+			-- Help Text Twenty One
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 800)
+			surface.DrawText("Most maps have special events that can be triggered by doing")
+
+			-- Help Text Twenty One
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 825)
+			surface.DrawText("specific things around the map!")
+
+			-- Help Text Twenty Two
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 875)
+			surface.DrawText("And while teaming is allowed, be aware that you can be")
+
+			-- Help Text Twenty Three
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 900)
+			surface.DrawText("betrayed at any time!")
+
+			-- Help Text Twenty Four
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 950)
+			surface.DrawText("EFGM is currently in BETA, and we appreciate you for")
+
+			-- Help Text Twenty Five
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 975)
+			surface.DrawText("trying it out, if you have any issues, contact us on discord.")
+
+			-- Help Text Twenty Six
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(5, 1020)
+			surface.DrawText("          Penial#3298                                          Portator#6582")
+
+		end
+	end
 	
 	local shopButton = vgui.Create("DButton")
 	shopButton:SetParent(Menu)

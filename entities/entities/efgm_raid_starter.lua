@@ -178,7 +178,7 @@ function ENT:EndRaid()
 	
 		local mapName = game.GetMap()
 
-		RunConsoleCommand("map", mapName)
+		RunConsoleCommand("changelevel", mapName)
 	
 	end)
 

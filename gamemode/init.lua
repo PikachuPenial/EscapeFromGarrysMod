@@ -33,7 +33,7 @@ function GM:PlayerSpawn(ply)
   ply:Give("fas2_ifak")
   ply:RemoveAmmo(2, "grenade")
   print(chosenPlayerModel)
-  
+
   return true
 end
 

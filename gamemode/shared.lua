@@ -13,11 +13,6 @@ function GM:ContextMenuOpen()
   return false
 end
 
-function GM:SpawnMenuOpen()
-  RunConsoleCommand("efgm_extract_list")
-  return false
-end
-
 --Anti-Bunnyhopping
 
 RunConsoleCommand("vk_enabled", "1")
@@ -78,6 +73,10 @@ RunConsoleCommand("cl_vmanip_pickups_halo", "1")
 RunConsoleCommand("sv_ec2_dynamicheight", "0")
 RunConsoleCommand("sv_ec2_dynamicheight_min", "42")
 RunConsoleCommand("sv_ec2_dynamicheight_max", "64")
+
+--GWS Config
+
+RunConsoleCommand("sv_drop_loot_on_death", "1")
 
 --Inventory Blacklist
 

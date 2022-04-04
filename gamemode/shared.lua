@@ -26,7 +26,7 @@ RunConsoleCommand("atmos_dnc_length_night", "300")
 RunConsoleCommand("atmos_weather_length", "300")
 RunConsoleCommand("atmos_weather_chance", "20")
 RunConsoleCommand("atmos_weather_delay", "300")
-RunConsoleCommand("atmos_weather_lighting", "0")
+RunConsoleCommand("atmos_weather_lighting", "1")
 
 --Compass Configuration
 

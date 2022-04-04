@@ -13,6 +13,11 @@ function GM:ContextMenuOpen()
   return false
 end
 
+function GM:SpawnMenuOpen()
+  RunConsoleCommand("efgm_extract_list")
+  return false
+end
+
 --Anti-Bunnyhopping
 
 RunConsoleCommand("vk_enabled", "1")
@@ -57,7 +62,7 @@ RunConsoleCommand("dsp_off", "1")
 --Auto Respawning
 
 RunConsoleCommand("sv_autorespawn_enabled", "1")
-RunConsoleCommand("sv_respawntime", "15")
+RunConsoleCommand("sv_respawntime", "10")
 RunConsoleCommand("cl_drawownshadow", "1")
 
 --Death Screen Settings
@@ -92,6 +97,8 @@ RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_karambit")
 RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_m9bayonet")
 RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_ct")
 RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_stiletto")
+RunConsoleCommand("gws_blacklist_save")
+RunConsoleCommand("gws_blacklist_load")
 
 --ARC CW Stuff
 

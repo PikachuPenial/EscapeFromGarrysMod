@@ -60,7 +60,7 @@ local debug1 = {
 
 local taskList = {taskStartup, taskBlueprint, debug1}
 
-function AssignStartingTasks(player)
+function AssignStartingTasks(ply)
 
     if ply:IsAdmin() == false then return end
 

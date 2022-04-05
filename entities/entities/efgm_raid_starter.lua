@@ -16,6 +16,8 @@ local raidStartSpawnTable = {}
 
 local isRaidEnded = false
 
+local mapPool = {"efgm_concrete", "efgm_factory"}
+
 -- Classes: "PMC", "PlayerScav", "NotInRaid"
 
 -- {player, spawnGroup, class}
@@ -176,9 +178,15 @@ function ENT:EndRaid()
 
 	timer.Create("RaidTimer", 120, 1, function()
 	
-		local mapName = game.GetMap()
+		local newMap
 
-		RunConsoleCommand("changelevel", mapName)
+		for k, v in pairs(mapPool) do
+			if game.GetMap() != v then
+				newMap = v
+			end
+		end
+
+		RunConsoleCommand("changelevel", newMap)
 	
 	end)
 

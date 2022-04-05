@@ -62,6 +62,8 @@ local taskList = {taskStartup, taskBlueprint, debug1}
 
 function AssignStartingTasks(player)
 
+    if ply:IsAdmin() == false then return end
+
     sql.Query( "INSERT INTO TaskTable ( TaskUser, TaskID, TaskObjectives ) VALUES( " .. SQLStr( player:SteamID64() ) .. ", " .. 3 .. ", " .. SQLStr( "i i" ) .. " )" )
 
     print("Last SQL Error = " .. tostring(sql.LastError()))

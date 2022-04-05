@@ -97,6 +97,8 @@ function ENT:CheckForPlayers()
 
 							ply:SetNWBool("inRaid", false)
 
+							hook.Run("PlayerExtract", ply, self.ExtractName)
+
 						end)
 					end
 

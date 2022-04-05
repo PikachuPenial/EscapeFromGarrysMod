@@ -8,6 +8,7 @@ include("shared.lua")
 include("concommands.lua")
 include("init_spawns.lua")
 include("sv_stash.lua")
+include("sv_tasks.lua")
 
 --Player stats.
 
@@ -43,6 +44,15 @@ function GM:PlayerInitialSpawn(ply)
 
 	ply:SetNWString("playerTeam", "")
 	ply:SetNWBool("inRaid", false)
+
+	-- tasks hehe
+
+	if ply:GetPData("PlayerStartedTasks") == false then
+
+		AssignStartingTasks(ply)
+		ply:SetPData("PlayerStartedTasks", true)
+
+	end
 
 	if(ply:GetPData("playerLvl") == nil) then
 		ply:SetNWInt("playerLvl", 1)

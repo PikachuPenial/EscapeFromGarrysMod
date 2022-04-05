@@ -189,7 +189,7 @@ function ENT:InitializeRaid()
 	local baseSpawnTable = ents.FindByClass( "efgm_raid_spawn" )
 
 	for k, v in pairs(baseSpawnTable) do
-		if v.SpawnType != 1 then
+		if v.SpawnType != 2 then
 
 			table.insert(raidStartSpawnTable, v)
 

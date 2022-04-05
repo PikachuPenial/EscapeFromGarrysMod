@@ -31,7 +31,7 @@ function GM:PlayerSpawn(ply)
   ply:Give(spawningMelee[math.random(#spawningMelee)])
   ply:Give(spawningGrenade[math.random(#spawningGrenade)])
   ply:Give("fas2_ifak")
-  ply:RemoveAmmo(2, "grenade")
+  ply:RemoveAmmo(3, "grenade")
   print(chosenPlayerModel)
 
   return true

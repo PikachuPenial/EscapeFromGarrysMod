@@ -290,7 +290,7 @@ concommand.Add("efgm_reset_everything", ResetIndividualAll)
 
 function CheckExtracts(ply, cmd, args)
 
-	local extractNames = RaidTimeLeft().."\nYour available extract locations are:"
+	local extractNames = "\nYour available extract locations are:"
 
 	for k, v in pairs( ents.FindByClass("efgm_trigger_extract") ) do
 
@@ -305,7 +305,7 @@ function CheckExtracts(ply, cmd, args)
 		end
 	end
 
-	ply:PrintMessage(HUD_PRINTTALK, extractNames)
+	ply:PrintMessage(HUD_PRINTCENTER, extractNames)
 
 end
 concommand.Add("efgm_extract_list", CheckExtracts)

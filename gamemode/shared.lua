@@ -57,9 +57,9 @@ RunConsoleCommand("mp_falldamage", "1")
 --Damage Slow Config
 
 RunConsoleCommand("stoppower_dmg_mult", "0.05")
-RunConsoleCommand("stoppower_minimum_speed_mult", "0.2")
-RunConsoleCommand("stoppower_recovery_speed", "0.85")
-RunConsoleCommand("stoppower_recovery_delay", "0.10")
+RunConsoleCommand("stoppower_minimum_speed_mult", "0.40")
+RunConsoleCommand("stoppower_recovery_speed", "0.66")
+RunConsoleCommand("stoppower_recovery_delay", "0.25")
 
 --Disabling NoClip/Tinnitus
 
@@ -89,6 +89,11 @@ RunConsoleCommand("sv_ec2_dynamicheight_max", "64")
 --GWS Config
 
 RunConsoleCommand("sv_drop_loot_on_death", "1")
+RunConsoleCommand("sv_gws_flashlight_disable", "1")
+
+--Proximity Voice Chat
+
+RunConsoleCommand("sv_maxVoiceAudible", "850")
 
 --Inventory Blacklist
 
@@ -104,7 +109,6 @@ RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_karambit")
 RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_m9bayonet")
 RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_ct")
 RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_stiletto")
-RunConsoleCommand("gws_blacklist_save")
 RunConsoleCommand("gws_blacklist_load")
 
 --ARC CW Stuff

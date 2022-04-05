@@ -81,11 +81,11 @@ function ENT:CheckForPlayers()
 
 					if timer.Exists(ply:GetName()..self.ExtractName.."_timer") == false then
 
-						ply:PrintMessage( HUD_PRINTTALK, "You will extract in "..self.ExtractTime.." seconds through "..self.ExtractName.."!" )
+						ply:PrintMessage( HUD_PRINTCENTER, "You will extract in "..self.ExtractTime.." seconds through "..self.ExtractName.."!" )
 
 						timer.Create( ply:GetName()..self.ExtractName.."_timer" , self.ExtractTime, 1, function()
 
-							ply:PrintMessage( HUD_PRINTTALK, "You have extracted from the raid through "..self.ExtractName.."! Good job!" )
+							ply:PrintMessage( HUD_PRINTCENTER, "You have extracted from the raid through "..self.ExtractName.."! Good job!" )
 
 							local lobbySpawns = ents.FindByName( "lobby_spawns" )
 							local chosenSpawn = lobbySpawns[math.random(#lobbySpawns)]
@@ -115,7 +115,7 @@ function ENT:CheckForPlayers()
 
 					if timer.Exists(ply:GetName()..self.ExtractName.."_timer") == true then
 
-						ply:PrintMessage( HUD_PRINTTALK, "You have left the "..self.ExtractName.." extract!" )
+						ply:PrintMessage( HUD_PRINTCENTER, "You have left the "..self.ExtractName.." extract!" )
 
 						timer.Remove( ply:GetName()..self.ExtractName.."_timer" )
 					end

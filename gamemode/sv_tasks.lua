@@ -120,6 +120,11 @@ local function FindPlayerTaskIDs(player)
 
     local taskIDs = sql.Query( "SELECT TaskID FROM TaskTable WHERE TaskUser = " .. SQLStr( player:SteamID64() ) .. ";" )
 
+    print("Last SQL Error = " .. tostring(sql.LastError()))
+
+    if taskIDs == false then return nil end
+    if taskIDs == nil then return nil end
+
     local actualTaskIDs = {}
 
     for k, v in pairs(taskIDs) do
@@ -149,6 +154,8 @@ hook.Add( "Initialize", "CreateTaskList", function()
 end )
 
 hook.Add( "PlayerExtract", "PlayerExtracted", function(ply)
+
+    if FindPlayerTaskIDs(ply) == nil then return end
 
 	for k, v in pairs(FindPlayerTaskIDs(ply)) do
         if v == tostring(3) then

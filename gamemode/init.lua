@@ -20,7 +20,7 @@ function GM:PlayerSpawn(ply)
   ply:SetJumpPower(124)
   
   local playerModels = {"models/player/eft/pmc/eft_bear/models/eft_bear_pm_summer.mdl", "models/player/eft/pmc/eft_bear/models/eft_bear_pm_redux.mdl"}
-  local spawningWeapon = {"arccw_eap_lebedev", "arccw_eap_vp70", "arccw_eft_1911", "arccw_go_glock", "arccw_go_cz75", "arccw_go_fiveseven", "arccw_go_usp", "arccw_go_tec9", "arccw_go_p2000", "arccw_go_p250", "arccw_go_m9", "micro_uzi", "arccw_eft_usp", "arccw_ud_glock"}
+  local spawningWeapon = {"arccw_eap_lebedev", "arccw_eap_vp70", "arccw_eft_1911", "arccw_go_glock", "arccw_go_cz75", "arccw_go_fiveseven", "arccw_go_usp", "arccw_go_tec9", "arccw_go_p2000", "arccw_go_p250", "arccw_go_m9"}
   local spawningMelee = {"arccw_go_melee_knife", "arccw_go_knife_bowie", "arccw_go_knife_butterfly", "arccw_go_knife_t", "arccw_go_knife_karambit", "arccw_go_knife_m9bayonet", "arccw_go_knife_ct", "arccw_go_knife_stiletto"}
   local spawningGrenade = {"arccw_go_nade_incendiary", "arccw_go_nade_frag", "arccw_go_nade_flash", "arccw_go_nade_smoke", "arccw_go_nade_molotov", "arccw_go_nade_knife"}
   local chosenPlayerModel = playerModels[math.random(#playerModels)]

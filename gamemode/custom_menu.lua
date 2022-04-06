@@ -50,7 +50,7 @@ net.Receive("StashMenuReload", function (len, ply) ResetMenu() end)
 -- Just because you can set it above 1, does not mean you should.
 -- 0.6 seems like a good starting point.
 
-local sellPriceMultiplier = 0.40
+local sellPriceMultiplier = 0.50
 
 weaponsArr = {}
 entsArr = {}
@@ -276,9 +276,6 @@ function GM:Initialize()
 	sellBlacklist[24] = {"arccw_go_nade_smoke"}
 	sellBlacklist[25] = {"arccw_go_nade_molotov"}
 	sellBlacklist[26] = {"arccw_go_nade_knife"}
-	sellBlacklist[27] = {"micro_uzi"}
-	sellBlacklist[28] = {"arccw_eft_usp"}
-	sellBlacklist[29] = {"arccw_ud_glock"}
 
 	-- Temporary array created. This next section will sort the guns by cost, so guns higher to the top will hopefully be better. This is convenient.
 	-- The sort function takes the fourth value of all tempWeaponsArray indexes (the rouble count) and sorts by them from greatest to lowest.
@@ -315,24 +312,26 @@ function gameShopMenu()
 		Menu:SetSize(860, 1080)
 		Menu:Center()
 		Menu:SetTitle("Escape From Garry's Mod Menu")
-		Menu:SetDraggable(false)
+		Menu:SetDraggable(true)
 		Menu:ShowCloseButton(false)
 		Menu:SetDeleteOnClose(false)
 		Menu.Paint = function()
-			surface.SetDrawColor(90, 90, 90, 255)
+			surface.SetDrawColor(90, 90, 90, 50)
 			surface.DrawRect(0, 0, Menu:GetWide(), Menu:GetTall())
 			
-			surface.SetDrawColor(40, 40, 40, 255)
+			surface.SetDrawColor(40, 40, 40, 50)
 			surface.DrawRect(0, 24, Menu:GetWide(), 1)
 		end
 	
 		addButtons(Menu, isSellMenu, clientPlayer)
 
 		gui.EnableScreenClicker(true)
+		surface.PlaySound( "common/wpn_select.wav" )
 	else
 		Menu:Remove()
 		Menu = nil
 		gui.EnableScreenClicker(false)
+		surface.PlaySound( "common/wpn_denyselect.wav" )
 
 		clientPlayer = nil
 		isSellMenu = false
@@ -916,9 +915,11 @@ function MenuInit()
 	end
 
 	gui.EnableScreenClicker(true)
+	surface.PlaySound( "common/wpn_select.wav" )
 
 	StashMenu.OnClose = function()
 		gui.EnableScreenClicker(false)
+		surface.PlaySound( "common/wpn_denyselect.wav" )
 	end
 
 	inventoryTable = stashClient:GetWeapons()
@@ -1022,6 +1023,8 @@ function MenuInit()
 				net.WriteString(v:GetClass())
 				net.SendToServer()
 
+				surface.PlaySound( "UI/buttonclick.wav" )
+
 				icon:Remove()
 
 			end
@@ -1079,6 +1082,8 @@ function MenuInit()
 				
 				local weaponInfo = weapons.Get( v["ItemName"] )
 
+				local weaponSell = ("95959")
+
 				local wepName
 	
 				if weaponInfo["TrueName"] == nil then wepName = weaponInfo["PrintName"] else wepName = weaponInfo["TrueName"] end
@@ -1089,11 +1094,20 @@ function MenuInit()
 				icon:SetSize(96, 96)
 	
 				function icon:Paint(w, h)
-					
+
+					-- Weapon Name
 					draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
 					draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
 					draw.SimpleText(wepName, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
-	
+
+					-- Weapon Sell Price
+					draw.SimpleText("₽ ", "DermaDefault", w/15, 0, Color(255, 255, 0, 255), 1)
+					draw.SimpleText(weaponSell, "DermaDefault", w/3.8, 0, Color(255, 255, 255, 255), 1)
+
+					-- Weapon Tier
+					--draw.SimpleText("LOW", "DermaDefault", w/1.15, 0, Color(255, 0, 0, 255), 1)
+					--draw.SimpleText("MID", "DermaDefault", w/1.15, 0, Color(255, 255, 0, 255), 1)
+					draw.SimpleText("HIGH", "DermaDefault", w/1.15, 0, Color(0, 255, 0, 255), 1)
 				end
 	
 				stashIconLayout:Add(icon)

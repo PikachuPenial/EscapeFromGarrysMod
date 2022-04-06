@@ -9,13 +9,13 @@ util.AddNetworkString( "StashMenuReload" )
 
 local function SendStashToClient(player)
 
-    local value = sql.Query( "SELECT * FROM stash_table WHERE ItemOwner = " .. player:SteamID64() .. ";" )
+    local value = sql.Query( "SELECT * FROM stash_table WHERE ItemOwner = " .. player:SteamID64() .. " ORDER BY ItemName;" )
 
     print("stash request received")
 
     if value != nil then
 
-        PrintTable(value)
+        -- PrintTable(value)
 
         net.Start( "SendStash" )
         net.WriteTable( value )
@@ -40,14 +40,8 @@ net.Receive("PutWepInStash",function (len, ply)
 
     if ply:HasWeapon( item ) == false then print("Player does not have " .. item .. "!") return end
 
-    local highestID = sql.QueryValue( "SELECT MAX(UniqueID) FROM stash_table;" )
-
-    if highestID == "NULL" then highestID = 1 end
-
-    print("The highest ID found in stash_table is " .. highestID)
-
-    sql.Query( "INSERT INTO stash_table ( ItemName, ItemCount, ItemType, ItemOwner, UniqueID ) VALUES( " .. SQLStr(item, false) .. ", " .. count .. ", " .. type .. ", " .. ply:SteamID64() .. ", " .. highestID + 1 ..")" )
-    print("Added into SQL Table (stash_table): " .. SQLStr(item, false) .. " " .. count .. " " .. type .. " " .. ply:SteamID64() .. " ".. highestID + 1 .."!")
+    sql.Query( "INSERT INTO stash_table ( ItemName, ItemCount, ItemType, ItemOwner ) VALUES( " .. SQLStr(item, false) .. ", " .. count .. ", " .. type .. ", " .. ply:SteamID64() .. ")" )
+    print("Added into SQL Table (stash_table): " .. SQLStr(item, false) .. " " .. count .. " " .. type .. " " .. ply:SteamID64() .. "!")
     print("Last SQL Error = " .. tostring(sql.LastError()))
 
     ply:StripWeapon( item )
@@ -60,19 +54,32 @@ end)
 net.Receive("TakeFromStash",function (len, ply)
 
     requestedItemName = net.ReadString()
-    stashItemName = sql.QueryValue( "SELECT ItemName FROM stash_table WHERE ItemName = " .. sql.SQLStr(requestedItemName) .. ";" )
+    stashItemName = sql.QueryValue( "SELECT ItemName FROM stash_table WHERE ItemName = " .. sql.SQLStr(requestedItemName) .. " AND ItemOwner = " .. ply:SteamID64() .. ";" )
     
     if(stashItemName != nil) then
 
-        local lowestID = sql.QueryValue( "SELECT UniqueID FROM stash_table WHERE ItemName = " .. sql.SQLStr(stashItemName) .. " AND ItemOwner = " .. ply:SteamID64() .. " AND UniqueID = ( SELECT MIN(UniqueID) FROM stash_table WHERE ItemName = " .. sql.SQLStr(stashItemName) .. ");" )
-        print("The lowest ID found in stash_table is" .. lowestID)
+        local items = sql.Query( "SELECT ItemName FROM stash_table WHERE ItemName = " .. sql.SQLStr(requestedItemName) .. " AND ItemOwner = " .. ply:SteamID64() .. ";" )
 
-        sql.Query( "DELETE FROM stash_table WHERE UniqueID = " .. lowestID .. ";" )
+        local amountOfItems = #items
+
+        local amountOfItemsMinusOne = amountOfItems - 1
+
+        print("Amount of items matching is " .. amountOfItems)
+
+        sql.Query( "DELETE FROM stash_table WHERE ItemName = " .. sql.SQLStr(stashItemName) .. " AND ItemOwner = " .. ply:SteamID64() .. ";" )
+        print("Last SQL Error = " .. tostring(sql.LastError()))
+
+        for i=1, amountOfItemsMinusOne do 
+
+            sql.Query( "INSERT INTO stash_table ( ItemName, ItemCount, ItemType, ItemOwner ) VALUES( " .. SQLStr(requestedItemName, false) .. ", " .. 1 .. ", " .. SQLStr( "wep" ) .. ", " .. ply:SteamID64() .. ")" )
+
+        end
 
         ply:Give(stashItemName, true)
 
         net.Start( "StashMenuReload" )
         net.Send(ply)
+
     end
 
 end)
@@ -103,7 +110,7 @@ end)
 
 local function CreateTable(ply)
 
-    sql.Query( "CREATE TABLE IF NOT EXISTS stash_table ( ItemName TEXT, ItemCount INTEGER, ItemType TEXT, ItemOwner INTEGER, UniqueID INTEGER )" )
+    sql.Query( "CREATE TABLE IF NOT EXISTS stash_table ( ItemName TEXT, ItemCount INTEGER, ItemType TEXT, ItemOwner INTEGER )" )
     
 end
 
@@ -131,13 +138,7 @@ local function ConsoleWriteStashContents(ply, cmd, args)
     local count = args[2]
     local type = SQLStr(args[3], false)
 
-    local highestID = sql.QueryValue( "SELECT MAX(UniqueID) FROM stash_table;" )
-
-    if highestID == "NULL" then highestID = 1 end
-
-    print("The highest ID found in stash_table is" .. highestID)
-
-    sql.Query( "INSERT INTO stash_table ( ItemName, ItemCount, ItemType, ItemOwner, UniqueID ) VALUES( " .. item .. ", " .. count .. ", " .. type .. ", " .. ply:SteamID64() .. ", " .. highestID + 1 ..")" )
+    sql.Query( "INSERT INTO stash_table ( ItemName, ItemCount, ItemType, ItemOwner ) VALUES( " .. item .. ", " .. count .. ", " .. type .. ", " .. ply:SteamID64() .. ")" )
     print("Last SQL Error = " .. tostring(sql.LastError()))
 
 end

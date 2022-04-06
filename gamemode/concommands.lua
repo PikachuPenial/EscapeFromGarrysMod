@@ -90,7 +90,7 @@ function buyGun(ply, cmd, args)
 	weaponPrices[46] = {"arccw_go_negev", "12000", "10"}
 	weaponPrices[47] = {"arccw_go_nova", "11250", "10"}
 	weaponPrices[48] = {"arccw_go_cz75", "4790", "4"}
-	weaponPrices[49] = {"arccw_go_deagle", "6005", "5"}
+	weaponPrices[49] = {"arccw_ur_deagle", "6005", "5"}
 	weaponPrices[50] = {"arccw_go_fiveseven", "4250", "3"}
 	weaponPrices[51] = {"arccw_go_glock", "4700", "4"}
 	weaponPrices[52] = {"arccw_go_m9", "4250", "3"}
@@ -138,7 +138,7 @@ function buyGun(ply, cmd, args)
 	weaponPrices[94] = {"arccw_ud_870", "10240", "9"}
 	weaponPrices[95] = {"arccw_ud_uzi", "11040", "8"}
 	weaponPrices[96] = {"arccw_ww1_smg0818", "27500", "22"}
-	weaponPrices[97] = {"arccw_mifl_fas2_ak47", "17005", "15"}
+	weaponPrices[97] = {"arccw_ur_ak", "17005", "15"}
 	weaponPrices[98] = {"arccw_mifl_fas2_famas", "16990", "14"}
 	weaponPrices[99] = {"arccw_mifl_fas2_g3", "16310", "14"}
 	weaponPrices[100] = {"arccw_mifl_fas2_ks23", "13005", "13"}
@@ -161,7 +161,11 @@ function buyGun(ply, cmd, args)
 	weaponPrices[117] = {"arccw_eft_scarl", "15995", "14"}
 	weaponPrices[118] = {"arccw_fml_mw_fo12", "20999", "18"}
 	weaponPrices[119] = {"arccw_oden", "18505", "16"}
-	
+	weaponPrices[120] = {"micro_uzi", "6995", "7"}
+	weaponPrices[121] = {"arccw_ur_mp5", "10005", "8"}
+	weaponPrices[122] = {"arccw_ur_aw", "13095", "12"}
+	weaponPrices[123] = {"arccw_sov_tkb011", "16000", "14"}
+
 	for k, v in pairs(weaponPrices) do
 		if(args[1] == v[1]) then
 			local balance = (ply:GetNWInt("playerMoney"))

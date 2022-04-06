@@ -113,7 +113,7 @@ function GM:Initialize()
 	tempWeaponsArray[46] = {"models/weapons/arccw_go/v_mach_negev.mdl", "arccw_go_negev", "Negev LMG", 12000, "10"}
 	tempWeaponsArray[47] = {"models/weapons/arccw_go/v_shot_nova.mdl", "arccw_go_nova", "Supernova SG", 11250, "10"}
 	tempWeaponsArray[48] = {"models/weapons/arccw_go/v_pist_cz75.mdl", "arccw_go_cz75", "CZ-75", 4790, "4"}
-	tempWeaponsArray[49] = {"models/weapons/arccw_go/v_pist_deagle.mdl", "arccw_go_deagle", "Desert Eagle", 6005, "5"}
+	tempWeaponsArray[49] = {"models/weapons/arccw_go/v_pist_deagle.mdl", "arccw_ur_deagle", "Desert Eagle", 6005, "5"}
 	tempWeaponsArray[50] = {"models/weapons/arccw_go/v_pist_fiveseven.mdl", "arccw_go_fiveseven", "Five-seveN", 4250, "3"}
 	tempWeaponsArray[51] = {"models/weapons/arccw_go/v_pist_glock.mdl", "arccw_go_glock", "Glock 17", 4700, "4"}
 	tempWeaponsArray[52] = {"models/weapons/arccw_go/v_pist_m9.mdl", "arccw_go_m9", "M92FS", 4250, "3"}
@@ -161,7 +161,7 @@ function GM:Initialize()
 	tempWeaponsArray[94] = {"models/weapons/arccw/c_ud_870.mdl", "arccw_ud_870", "Remington 870", 10240, "9"}
 	tempWeaponsArray[95] = {"models/weapons/arccw/c_ud_uzi.mdl", "arccw_ud_uzi", "Uzi", 11040, "8"}
 	tempWeaponsArray[96] = {"models/weapons/arccw/w_arccw_smg0818.mdl", "arccw_ww1_smg0818", "Maxim SMG LMG", 27500, "22"}
-	tempWeaponsArray[97] = {"models/weapons/arccw/mifl/fas2/c_ak47.mdl", "arccw_mifl_fas2_ak47", "AKM", 17005, "15"}
+	tempWeaponsArray[97] = {"models/weapons/arccw/mifl/fas2/c_ak47.mdl", "arccw_ur_ak", "AKM", 17005, "15"}
 	tempWeaponsArray[98] = {"models/weapons/arccw/mifl/fas2/c_famas.mdl", "arccw_mifl_fas2_famas", "FAMAS", 16990, "14"}
 	tempWeaponsArray[99] = {"models/weapons/arccw/mifl/fas2/c_g3.mdl", "arccw_mifl_fas2_g3", "G3A3", 16310, "14"}
 	tempWeaponsArray[100] = {"models/weapons/arccw/mifl/fas2/c_ks23.mdl", "arccw_mifl_fas2_ks23", "KS-23", 13005, "13"}
@@ -184,6 +184,10 @@ function GM:Initialize()
 	tempWeaponsArray[117] = {"models/weapons/arc_eft_scarl/c_eft_scarl.mdl", "arccw_eft_scarl", "SCAR-L", 15995, "14"}
 	tempWeaponsArray[118] = {"models/weapons/arccw/fml/w_fo12_mw.mdl", "arccw_fml_mw_fo12", "FO-12 Shotgun", 20999, "18"}
 	tempWeaponsArray[119] = {"models/weapons/cod_mw2019/w_oden_mammaledition.mdl", "arccw_oden", "VLK Oden", 18505, "16"}
+	tempWeaponsArray[120] = {"models/weapons/arccw/clancy/micro_uzi_w.mdl", "micro_uzi", "Micro Uzi", 6995, "7"}
+	tempWeaponsArray[121] = {"models/weapons/arccw_go/v_smg_mp5.mdl", "arccw_ur_mp5", "MP5A4", 10005, "8"}
+	tempWeaponsArray[122] = {"models/weapons/arccw_go/v_snip_awp.mdl", "arccw_ur_aw", "AWM SR", 13095, "12"}
+	tempWeaponsArray[123] = {"models/weapons/arccw_sov/v_tkb011.mdl", "arccw_sov_tkb011", "TKB-011", 16000, "14"}
 
 	local tempArmorArray = {}
 

@@ -57,7 +57,7 @@ RunConsoleCommand("mp_falldamage", "1")
 --Damage Slow Config
 
 RunConsoleCommand("stoppower_dmg_mult", "0.05")
-RunConsoleCommand("stoppower_minimum_speed_mult", "0.40")
+RunConsoleCommand("stoppower_minimum_speed_mult", "0.70")
 RunConsoleCommand("stoppower_recovery_speed", "0.66")
 RunConsoleCommand("stoppower_recovery_delay", "0.25")
 
@@ -69,7 +69,7 @@ RunConsoleCommand("dsp_off", "1")
 --Auto Respawning
 
 RunConsoleCommand("sv_autorespawn_enabled", "1")
-RunConsoleCommand("sv_respawntime", "10")
+RunConsoleCommand("sv_respawntime", "15")
 RunConsoleCommand("cl_drawownshadow", "1")
 
 --Death Screen Settings
@@ -90,25 +90,15 @@ RunConsoleCommand("sv_ec2_dynamicheight_max", "64")
 
 RunConsoleCommand("sv_drop_loot_on_death", "1")
 RunConsoleCommand("sv_gws_flashlight_disable", "1")
+RunConsoleCommand("sv_gws_adventure_mod", "0")
+RunConsoleCommand("sv_spawns_deathtimer", "15")
 
 --Proximity Voice Chat
 
-RunConsoleCommand("sv_maxVoiceAudible", "850")
+RunConsoleCommand("sv_maxVoiceAudible", "1500")
 
 --Inventory Blacklist
 
-RunConsoleCommand("gws_blacklist_add", "swep_inventory")
-RunConsoleCommand("gws_blacklist_add", "weapon_swep_inventory")
-RunConsoleCommand("gws_blacklist_add", "fas2_bandage")
-RunConsoleCommand("gws_blacklist_add", "fas2_ifak")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_melee_knife")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_bowie")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_butterfly")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_t")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_karambit")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_m9bayonet")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_ct")
-RunConsoleCommand("gws_blacklist_add", "arccw_go_knife_stiletto")
 RunConsoleCommand("gws_blacklist_load")
 
 --ARC CW Stuff
@@ -126,7 +116,7 @@ RunConsoleCommand("arccw_ammo_autopickup", "1")
 RunConsoleCommand("arccw_att_showground", "1")
 RunConsoleCommand("arccw_att_showothers", "1")
 RunConsoleCommand("arccw_attinv_free", "0")
-RunConsoleCommand("arccw_attinv_giveonspawn", "100")
+RunConsoleCommand("arccw_attinv_giveonspawn", "200")
 RunConsoleCommand("arccw_attinv_loseondie", "2")
 RunConsoleCommand("arccw_blur", "0")
 RunConsoleCommand("arccw_blur_toytown", "0")

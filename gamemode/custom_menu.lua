@@ -262,24 +262,23 @@ function GM:Initialize()
 	sellBlacklist[6] = {"arccw_go_knife_m9bayonet"}
 	sellBlacklist[7] = {"arccw_go_knife_ct"}
 	sellBlacklist[8] = {"arccw_go_knife_stiletto"}
-	sellBlacklist[9] = {"weapon_concussion_nade"}
-	sellBlacklist[10] = {"arccw_eap_lebedev"}
-	sellBlacklist[11] = {"arccw_eap_vp70"}
-	sellBlacklist[12] = {"arccw_eft_1911"}
-	sellBlacklist[13] = {"arccw_go_glock"}
-	sellBlacklist[14] = {"arccw_go_cz75"}
-	sellBlacklist[15] = {"arccw_go_fiveseven"}
-	sellBlacklist[16] = {"arccw_go_usp"}
-	sellBlacklist[17] = {"arccw_go_tec9"}
-	sellBlacklist[18] = {"arccw_go_p2000"}
-	sellBlacklist[19] = {"arccw_go_p250"}
-	sellBlacklist[20] = {"arccw_go_m9"}
-	sellBlacklist[21] = {"arccw_go_nade_incendiary"}
-	sellBlacklist[22] = {"arccw_go_nade_frag"}
-	sellBlacklist[23] = {"arccw_go_nade_flash"}
-	sellBlacklist[24] = {"arccw_go_nade_smoke"}
-	sellBlacklist[25] = {"arccw_go_nade_molotov"}
-	sellBlacklist[26] = {"arccw_go_nade_knife"}
+	sellBlacklist[9] = {"arccw_eap_lebedev"}
+	sellBlacklist[10] = {"arccw_eap_vp70"}
+	sellBlacklist[11] = {"arccw_eft_1911"}
+	sellBlacklist[12] = {"arccw_go_glock"}
+	sellBlacklist[13] = {"arccw_go_cz75"}
+	sellBlacklist[14] = {"arccw_go_fiveseven"}
+	sellBlacklist[15] = {"arccw_go_usp"}
+	sellBlacklist[16] = {"arccw_go_tec9"}
+	sellBlacklist[17] = {"arccw_go_p2000"}
+	sellBlacklist[18] = {"arccw_go_p250"}
+	sellBlacklist[19] = {"arccw_go_m9"}
+	sellBlacklist[20] = {"arccw_go_nade_incendiary"}
+	sellBlacklist[21] = {"arccw_go_nade_frag"}
+	sellBlacklist[22] = {"arccw_go_nade_flash"}
+	sellBlacklist[23] = {"arccw_go_nade_smoke"}
+	sellBlacklist[24] = {"arccw_go_nade_molotov"}
+	sellBlacklist[25] = {"arccw_go_nade_knife"}
 
 	-- Temporary array created. This next section will sort the guns by cost, so guns higher to the top will hopefully be better. This is convenient.
 	-- The sort function takes the fourth value of all tempWeaponsArray indexes (the rouble count) and sorts by them from greatest to lowest.

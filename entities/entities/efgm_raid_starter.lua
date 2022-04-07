@@ -194,28 +194,28 @@ end
 
 function ENT:InitializeRaid()
 
-	local baseSpawnTable = ents.FindByClass( "efgm_raid_spawn" )
+	-- local baseSpawnTable = ents.FindByClass( "efgm_raid_spawn" )
 
-	for k, v in pairs(baseSpawnTable) do
-		if v.SpawnType != 2 then
+	-- for k, v in pairs(baseSpawnTable) do
+	-- 	if v.SpawnType != 2 then
 
-			table.insert(raidStartSpawnTable, v)
+	-- 		table.insert(raidStartSpawnTable, v)
 
-		end
-	end
+	-- 	end
+	-- end
 
-	for k, v in pairs( player.GetHumans() ) do
+	-- for k, v in pairs( player.GetHumans() ) do
 
-		local randomSpawnInt = math.random(#raidStartSpawnTable)
+	-- 	local randomSpawnInt = math.random(#raidStartSpawnTable)
 
-		v:SetPos(raidStartSpawnTable[randomSpawnInt]:GetPos())
-		v:SetAngles(raidStartSpawnTable[randomSpawnInt]:GetAngles())
+	-- 	v:SetPos(raidStartSpawnTable[randomSpawnInt]:GetPos())
+	-- 	v:SetAngles(raidStartSpawnTable[randomSpawnInt]:GetAngles())
 
-		SetPlayerStatus(v, raidStartSpawnTable[randomSpawnInt].SpawnGroup, pmcClass)
+	-- 	SetPlayerStatus(v, raidStartSpawnTable[randomSpawnInt].SpawnGroup, pmcClass)
 
-		table.remove(raidStartSpawnTable, randomSpawnInt)
+	-- 	table.remove(raidStartSpawnTable, randomSpawnInt)
 
-	end
+	-- end
 
 	self.RaidStarted = true
 

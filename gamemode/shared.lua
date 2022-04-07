@@ -53,14 +53,14 @@ function GM:Initialize()
 	tempWeaponsArray[31] = {"models/weapons/arccw/mifl/sketchfab/c_msd9.mdl", "arccw_mifl_mds9", "MDS-9", 6200, "5", "LOW"}
 	tempWeaponsArray[32] = {"models/weapons/w_rif_pindadss2.mdl", "arccw_blast_pindadss2", "Pindad SS2-V1", 18200, "14", "HIGH"}
 	tempWeaponsArray[33] = {"models/weapons/arccw/fml/w_scar_sd.mdl", "arccw_fml_scarsd", "SCAR-SD", 23105, "17", "HIGH"}
-	tempWeaponsArray[34] = {"models/weapons/arccw_go/v_eq_taser.mdl", "arccw_go_taser", "Advanced Taser M26", 3333, "3", "LOW"}
-	tempWeaponsArray[35] = {"models/weapons/arccw_go/v_eq_incendiarygrenade.mdl", "arccw_go_nade_incendiary", "AN/M14 Thermite Grenade", 2500, "3", "LOW"}
-	tempWeaponsArray[36] = {"models/weapons/arccw_go/v_eq_fraggrenade.mdl", "arccw_go_nade_frag", "M67 Frag Grenade", 2500, "3", "LOW"}
-	tempWeaponsArray[37] = {"models/weapons/arccw_go/v_eq_flashbang.mdl", "arccw_go_nade_flash", "M84 Stun Grenade", 2500, "3", "LOW"}
-	tempWeaponsArray[38] = {"models/weapons/arccw_go/v_eq_smokegrenade.mdl", "arccw_go_nade_smoke", "M5210 Smoke Grenade", 2500, "3", "LOW"}
-	tempWeaponsArray[39] = {"models/weapons/arccw_go/v_eq_molotov.mdl", "arccw_go_nade_molotov", "Molotov Cocktail", 2500, "3", "LOW"}
-	tempWeaponsArray[40] = {"models/weapons/arccw_go/v_eq_throwingknife.mdl", "arccw_go_nade_knife", "Throwing Knife", 2500, "3", "LOW"}
-	tempWeaponsArray[41] = {"models/weapons/c_csgo_flashbang.mdl", "weapon_csgo_flashbang", "M84 MK2 Flash Grenade", 2500, "3", "LOW"}
+	tempWeaponsArray[34] = {"models/weapons/arccw_go/v_eq_taser.mdl", "arccw_go_taser", "Advanced Taser M26", 3333, "3", "UTIL"}
+	tempWeaponsArray[35] = {"models/weapons/arccw_go/v_eq_incendiarygrenade.mdl", "arccw_go_nade_incendiary", "AN/M14 Thermite Grenade", 2500, "3", "UTIL"}
+	tempWeaponsArray[36] = {"models/weapons/arccw_go/v_eq_fraggrenade.mdl", "arccw_go_nade_frag", "M67 Frag Grenade", 2500, "3", "UTIL"}
+	tempWeaponsArray[37] = {"models/weapons/arccw_go/v_eq_flashbang.mdl", "arccw_go_nade_flash", "M84 Stun Grenade", 2500, "3", "UTIL"}
+	tempWeaponsArray[38] = {"models/weapons/arccw_go/v_eq_smokegrenade.mdl", "arccw_go_nade_smoke", "M5210 Smoke Grenade", 2500, "3", "UTIL"}
+	tempWeaponsArray[39] = {"models/weapons/arccw_go/v_eq_molotov.mdl", "arccw_go_nade_molotov", "Molotov Cocktail", 2500, "3", "UTIL"}
+	tempWeaponsArray[40] = {"models/weapons/arccw_go/v_eq_throwingknife.mdl", "arccw_go_nade_knife", "Throwing Knife", 2500, "3", "UTIL"}
+	tempWeaponsArray[41] = {"models/weapons/c_csgo_flashbang.mdl", "weapon_csgo_flashbang", "M84 MK2 Flash Grenade", 2500, "3", "UTIL"}
 	tempWeaponsArray[42] = {"models/weapons/arccw_go/v_shot_m1014.mdl", "arccw_go_m1014", "M1014 SG", 11510, "10", "MID"}
 	tempWeaponsArray[43] = {"models/weapons/arccw_go/v_mach_m249para.mdl", "arccw_go_m249para", "M249 SAW LMG", 14000, "12", "HIGH"}
 	tempWeaponsArray[44] = {"models/weapons/arccw_go/v_shot_mag7.mdl", "arccw_go_mag7", "MAG-7 SG", 13333, "13", "HIGH"}
@@ -131,7 +131,7 @@ function GM:Initialize()
 	tempWeaponsArray[109] = {"models/weapons/arccw/mifl/fas2/c_sg552.mdl", "arccw_mifl_fas2_sg55x", "SG552", 15490, "14", "MID"}
 	tempWeaponsArray[110] = {"models/weapons/arccw/mifl/fas2/c_sr25.mdl", "arccw_mifl_fas2_sr25", "SR-25", 17420, "16", "HIGH"}
 	tempWeaponsArray[111] = {"models/weapons/arccw/mifl/fas2/c_toz34.mdl", "arccw_mifl_fas2_toz34", "TOZ-34", 12690, "12", "LOW"}
-	tempWeaponsArray[112] = {"models/weapons/arccw/c_claymorelungemine.mdl", "arccw_claymorelungemine", "Claymore Lunge Mine", 5555, "5", "LOW"}
+	tempWeaponsArray[112] = {"models/weapons/arccw/c_claymorelungemine.mdl", "arccw_claymorelungemine", "Claymore Lunge Mine", 5555, "5", "UTIL"}
 	tempWeaponsArray[113] = {"models/weapons/arc_eft_usp/c_eft_usp.mdl", "arccw_eft_usp", "HK USP .45", 5555, "5", "LOW"}
 	tempWeaponsArray[114] = {"models/weapons/arccw/darsu_eft/c_mp153.mdl", "arccw_eft_mp153", "MP-153", 15005, "13", "MID"}
 	tempWeaponsArray[115] = {"models/weapons/arccw/darsu_eft/c_mp153.mdl", "arccw_eft_mp155", "MP-155", 14005, "12", "MID"}
@@ -143,6 +143,8 @@ function GM:Initialize()
 	tempWeaponsArray[121] = {"models/weapons/arccw_go/v_smg_mp5.mdl", "arccw_ur_mp5", "MP5A4", 10005, "8", "LOW"}
 	tempWeaponsArray[122] = {"models/weapons/arccw_go/v_snip_awp.mdl", "arccw_ur_aw", "AWM SR", 13095, "12", "MID"}
 	tempWeaponsArray[123] = {"models/weapons/arccw_sov/v_tkb011.mdl", "arccw_sov_tkb011", "TKB-011", 16000, "14", "HIGH"}
+	tempWeaponsArray[124] = {"models/weapons/arccw/c_type89.mdl", "midnights_gso_type89", "Howa Type 89", 18005, "15", "HIGH"}
+	tempWeaponsArray[125] = {"models/weapons/bordelzio/arccw/sviinfinity/wmodel/w_svi_infinity.mdl", "arccwsviinfinite", "SVI Infinity", 5555, "5", "LOW"}
 
 	local tempArmorArray = {}
 
@@ -313,14 +315,18 @@ function GM:Initialize()
 
 end
 
+-- Disable the context menu.
 function GM:ContextMenuOpen()
   return false
 end
 
-function GM:SpawnMenuOpen()
-  RunConsoleCommand("efgm_extract_list")
-  return false
-end
+-- Disable Spawn Menu and show the extract list when the bind is pressed.
+--function GM:SpawnMenuOpen()
+  --RunConsoleCommand("efgm_extract_list")
+  --return false
+--end
+
+-- This is where the console commands are ran when a client joins a game running the gamemode.
 
 --Anti-Bunnyhopping
 

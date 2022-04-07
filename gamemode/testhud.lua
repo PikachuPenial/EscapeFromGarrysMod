@@ -21,9 +21,10 @@ function HUD()
 		if (client:GetActiveWeapon():GetPrintName() != nil) then
 			draw.SimpleText("Holding: " .. client:GetActiveWeapon():GetPrintName(), "DermaDefaultBold", 205, ScrH() - 58, Color(255, 255, 255, 255), 0, 0)
 
-			--draw.SimpleText("[LOW Tier]", "DermaDefault", 230, 0, Color(255, 0, 0, 255), 1)
-			--draw.SimpleText("[MID Tier]", "DermaDefault", 230, 0, Color(255, 255, 0, 255), 1)
-			draw.SimpleText("[HIGH Tier]", "DermaDefault", 232, ScrH() - 72, Color(0, 255, 0, 255), 1)
+			--draw.SimpleText("[LOW Tier]", "DermaDefault", 230, ScrH() - 72, Color(255, 0, 0, 255), 1)
+			--draw.SimpleText("[MID Tier]", "DermaDefault", 230, ScrH() - 72, Color(255, 255, 0, 255), 1)
+			--draw.SimpleText("[HIGH Tier]", "DermaDefault", 232, ScrH() - 72, Color(0, 255, 0, 255), 1)
+			--draw.SimpleText("[UTIL Tier]", "DermaDefault", 232, ScrH() - 72, Color(0, 0, 255, 255), 1)
 		end
 	end
 --Money And Or XP Hud	

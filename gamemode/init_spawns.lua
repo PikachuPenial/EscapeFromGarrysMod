@@ -6,7 +6,7 @@ lowWeps		= {"arccw_eft_mp5", "arccw_eft_mp5sd", "arccw_eft_aks74u", "arccw_eft_p
 	
 -- Mid Tier Spawns
 
-midWeps		= {"arccw_eft_mp7", "arccw_eap_csls5", "arccw_eap_fmg9", "arccw_eap_groza", "arccw_eap_spectre", "arccw_eap_stg44", "arccw_go_m1014", "arccw_go_negev", "arccw_go_nova", "arccw_go_ak47", "arccw_go_ar15", "arccw_go_aug", "arccw_go_famas", "arccw_go_m16a2", "arccw_go_ssg08", "arccw_go_p90", "arccw_go_bizon", "arccw_kilo141", "arccw_fml_mk2k", "arccw_ud_m1014", "arccw_ud_m16", "arccw_ud_mini14", "arccw_ud_870", "arccw_mifl_fas2_famas", "arccw_mifl_fas2_g3", "arccw_mifl_fas2_ks23", "arccw_mifl_fas2_m3", "arccw_mifl_fas2_rpk", "arccw_mifl_fas2_sg55x", "arccw_g36mw19", "arccw_eft_mp153", "arccw_eft_mp155", "arccw_eft_scarl", "arccw_oden", "arccw_mcx", "arccw_dmi_b92f_auto", "arccw_ur_aw", "arccw_grau"}
+midWeps		= {"arccw_eft_mp7", "arccw_eap_csls5", "arccw_eap_fmg9", "arccw_eap_groza", "arccw_eap_spectre", "arccw_eap_stg44", "arccw_go_m1014", "arccw_go_negev", "arccw_go_nova", "arccw_go_ak47", "arccw_go_ar15", "arccw_go_aug", "arccw_go_famas", "arccw_go_m16a2", "arccw_go_ssg08", "arccw_go_p90", "arccw_go_bizon", "arccw_kilo141", "arccw_fml_mk2k", "arccw_ud_m1014", "arccw_ud_m16", "arccw_ud_mini14", "arccw_ud_870", "arccw_mifl_fas2_famas", "arccw_mifl_fas2_g3", "arccw_mifl_fas2_ks23", "arccw_mifl_fas2_m3", "arccw_mifl_fas2_rpk", "arccw_mifl_fas2_sg55x", "arccw_g36mw19", "arccw_eft_mp153", "arccw_eft_mp155", "arccw_eft_scarl", "arccw_oden", "arccw_mcx", "arccw_dmi_b92f_auto", "arccw_ur_aw"}
 midVests	= {"vest_3m", "vest_6b5", "vest_6b23_1", "vest_bnti_kirasa", "vest_paca", "vest_untar", "vest_zhuk3"}
 midHelmets	= {"helmet_6b47", "helmet_6b47_2", "helmet_kiver", "helmet_lzsh", "helmet_psh97", "helmet_shpm", "helmet_untar"}
 

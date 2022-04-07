@@ -861,6 +861,7 @@ function MenuInit()
 					draw.SimpleText(wepName, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
 
 					local currentItemPrice = nil
+					local currentItemTier = nil
 
 					print(v.ItemName)
 
@@ -870,6 +871,7 @@ function MenuInit()
 						if b[2] == v.ItemName then
 
 							currentItemPrice = tostring(b[4])
+							currentItemTier = tostring(b[5])
 
 							break
 
@@ -882,11 +884,19 @@ function MenuInit()
 						draw.SimpleText("₽", "DermaDefault", 5, 0, Color(255, 255, 0, 255), 0)
 						draw.SimpleText(currentItemPrice, "DermaDefault", 15, 0, Color(255, 255, 255, 255), 0)
 					end
+
+					if currentItemTier != nil then
+						draw.SimpleText("LOW", "DermaDefault", w/1.15, 0, Color(255, 0, 0, 255), 2)
+					end
+
+					if currentItemTier == "MID" then
+						draw.SimpleText("MID", "DermaDefault", w/1.15, 0, Color(255, 255, 0, 255), 2)
+					end
 					
-					-- Weapon Tier
-					--draw.SimpleText("LOW", "DermaDefault", w/1.15, 0, Color(255, 0, 0, 255), 2)
-					--draw.SimpleText("MID", "DermaDefault", w/1.15, 0, Color(255, 255, 0, 255), 2)
-					--draw.SimpleText("HIGH", "DermaDefault", w/1.15, 0, Color(0, 255, 0, 255), 2)
+					if currentItemTier == "HIGH" then
+						draw.SimpleText("HIGH", "DermaDefault", w/1.15, 0, Color(0, 255, 0, 255), 2)
+					end
+
 				end
 	
 				stashIconLayout:Add(icon)

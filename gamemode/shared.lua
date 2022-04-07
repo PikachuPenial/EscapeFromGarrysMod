@@ -5,7 +5,7 @@ GM.Website = "https://github.com/PikachuPenial"
 
 DeriveGamemode("sandbox")
 
-sellPriceMultiplier = 0.50
+sellPriceMultiplier = 0.35
 
 weaponsArr = {}
 entsArr = {}

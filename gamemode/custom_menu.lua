@@ -541,7 +541,7 @@ function addButtons(Menu, sellMenuBool, ply)
 
 				local icon = vgui.Create("SpawnIcon", weaponList)
 				icon:SetModel(v[1])
-				icon:SetToolTip(v[3].."\nSell Price: "..math.Round(v[4]*sellPriceMultiplier, 0))
+			icon:SetToolTip(v[3].."\nCategory: "..v[7].."\nRarity: "..v[6].."\nSell Price: "..math.Round(v[4]*sellPriceMultiplier, 0))
 
 				-- this lets players visually distinguish items they can sell
 
@@ -615,7 +615,7 @@ function addButtons(Menu, sellMenuBool, ply)
 	
 				local icon = vgui.Create("SpawnIcon", weaponList)
 				icon:SetModel(v[1])
-				icon:SetToolTip(v[3].."\nCost: "..v[4].."\nLevel Req: "..v[5])
+				icon:SetToolTip(v[3].."\nCategory: "..v[7].."\nRarity: "..v[6].."\nCost: "..v[4].."\nLevel Req: "..v[5])
 				weaponList:Add(icon)
 	
 				icon.DoClick = function(icon)
@@ -776,7 +776,10 @@ function MenuInit()
 				draw.SimpleText(wepName, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
 
 				local currentItemPrice = nil
+				local currentItemLevel = nil
 				local currentItemTier = nil
+				local currentItemCategory = nil
+
 				local currentItemSellPrice = nil
 
 				for l, b in pairs(weaponsArr) do
@@ -785,7 +788,9 @@ function MenuInit()
 					if b[2] == v.ItemName then
 
 						currentItemPrice = tostring(b[4])
+						currentItemLevel = tostring(b[5])
 						currentItemTier = tostring(b[6])
+						currentItemCategory = tostring(b[7])
 
 						currentItemSellPrice = (currentItemPrice * sellPriceMultiplier)
 
@@ -906,22 +911,23 @@ function MenuInit()
 					draw.SimpleText(wepName, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
 
 					local currentItemPrice = nil
+					local currentItemLevel = nil
 					local currentItemTier = nil
+					local currentItemCategory = nil
+	
 					local currentItemSellPrice = nil
-
-					print(v.ItemName)
-
+	
 					for l, b in pairs(weaponsArr) do
-
+	
 						-- if names match (v.ItemName is same as v["ItemName"])
 						if b[2] == v.ItemName then
-
+	
 							currentItemPrice = tostring(b[4])
+							currentItemLevel = tostring(b[5])
 							currentItemTier = tostring(b[6])
-
+							currentItemCategory = tostring(b[7])
+	
 							currentItemSellPrice = (currentItemPrice * sellPriceMultiplier)
-
-							break
 
 						end
 
@@ -931,6 +937,7 @@ function MenuInit()
 						-- Weapon Sell Price
 						draw.SimpleText("₽", "DermaDefault", 5, 0, Color(255, 255, 0, 255), 0)
 						draw.SimpleText(currentItemSellPrice, "DermaDefault", 15, 0, Color(255, 255, 255, 255), 0)
+						draw.SimpleText(currentItemCategory, "HudHintTextSmall", 5, 64, Color(255, 255, 255, 255), 0)
 
 						draw.SimpleText("Sell Price", "HudHintTextSmall", 5, 10, Color(255, 255, 255, 255), 0)
 						draw.SimpleText("Rarity", "HudHintTextSmall", w/1.05, 10, Color(255, 255, 255, 255), 2)

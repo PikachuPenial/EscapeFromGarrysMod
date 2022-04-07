@@ -185,7 +185,9 @@ hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
         victim:PrintMessage(HUD_PRINTCENTER, "You committed suicide.")
     else
 		local weaponInfo = weapons.Get( attacker:GetActiveWeapon():GetClass() )
-        victim:PrintMessage(HUD_PRINTCENTER, attacker:Name() .. " killed you.")
+		local distance = victim:GetPos():Distance(attacker:GetPos())
+		
+        victim:PrintMessage(HUD_PRINTCENTER, attacker:Name() .. " killed you from " .. distance .. "m away.")
 		victim:PrintMessage(HUD_PRINTCENTER, "They had an " .. weaponInfo["PrintName"]  .. ".")
     end
 end )

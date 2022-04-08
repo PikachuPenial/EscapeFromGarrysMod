@@ -1,120 +1,107 @@
--- Task should be layed out like this
+-- Each task should be layed out like this
 
--- ["TaskName"] =          "Name shown to the player",
--- ["TaskDescription"] =   "Description shown to the player",
--- ["TaskObjectives"] =    "Objectives shown to the player, seperated by |",
+-- ["TaskName"] =                       "Name shown to the player"
+-- ["TaskDescription"] =                "Description shown to the player"
+-- ["TaskObjectives"] =                 "Objectives shown to the player, seperated by |"
 
--- ["TaskGiver"] =         "Name of the person or trader who gave the task",
--- ["TaskNextName"] =      "Exact name of next task, must be exact and the task must exist, if it leads to no task simply put nil",
+-- ["TaskGiver"] =                      "Name of the person or trader who gave the task"
+-- ["TaskNextName"] =                   "Exact name of next task, must be exact and the task must exist, if it leads to no task simply put nil"
 
--- ["TaskRewards"] =       "Rewards shown to the player, seperated by |"
+-- ["TaskRewards"] =                    "Rewards shown to the player, seperated by |"
+
+-- ["TaskMap"] =                        "map task needs to be completed on"
+
+-- ["TaskInternalConditions"] =         "Possible conditions include: resetondeath_true. These complicate the task, for example if reset on death is set to true, the player will lose all progress if they die. Think Bunker Part 2 levels of bs."
+-- ["TaskInternalObjectives"] =         "Possible objectives include: extract_<mapname>, locate_<triggername>. Space out each task with a space so it can be FUCKING EXPLODED easier." (god i love lua)
+-- ["TaskInternalObjectiveCount"] =     2
 
 -- Current tasks are not permanent, and mostly for debugging
 
-local subtaskIncompleteText =   "i"
-local subtaskCompleteText =     "c"
+local subtaskIncompleteText =   "incomplete"
+local subtaskCompleteText =     "complete"
 
 local taskPossibleObjectives = {"locate", "find", "extract"}
 
-local taskStartup = {
-    ["TaskName"] =          "Startup",
-    ["TaskDescription"] =   "Get these fucking PMCs out of concrete, please for the love of god ple-",
-    ["TaskObjectives"] =    "Kill 3 PMCs in concrete|Extract from concrete",
-
-    ["TaskGiver"] =         "Gunner",
-    ["TaskNextName"] =      "Fetch Mission",
-
-    ["TaskRewards"] =       "5000 Roubles|AK-47",
-
-    ["TaskMap"] =           "efgm_concrete"
-}
-
-local taskBlueprint = {
-    ["TaskName"] =          "Fetch Mission",
-    ["TaskDescription"] =   "Get a blueprint from concrete, in that yellow building with the fancy wooden doors, idk why its important trust me!11!1",
-    ["TaskObjectives"] =    "Retrieve the Warehouse Blueprint|Extract from concrete",
-
-    ["TaskGiver"] =         "Gunner",
-    ["TaskNextName"] =      nil,
-
-    ["TaskRewards"] =       "8000 Roubles|M4A1",
-
-    ["TaskMap"] =           "efgm_concrete"
-}
+local taskDaily = {}
 
 local debug1 = {
-    ["TaskName"] =                  "Debug - Part 1",
-    ["TaskDescription"] =           "Do the shit i dare you",
-    ["TaskObjectives"] =            "Locate special area and extract from tasktest",
+    ["TaskName"] =                      "Debug - Part 1",
+    ["TaskDescription"] =               "Do the shit i dare you",
+    ["TaskObjectives"] =                "Locate special area 1, locate special area 2, locate special area 3, and extract from tasktest",
 
-    ["TaskGiver"] =                 "Gunner",
-    ["TaskNextName"] =              nil,
+    ["TaskGiver"] =                     "Gunner",
+    ["TaskNextID"] =                    3,
 
-    ["TaskRewards"] =               "5000 Roubles|AK-47",
+    ["TaskRewards"] =                   "5000 Roubles|AK-47",
 
-    ["TaskMap"] =                   "efgm_tasktest",
+    ["TaskMap"] =                       "efgm_tasktest",
 
-    ["TaskInternalConditions"] =     "resetondeath_true",
-    ["TaskInternalObjectiveCount"] = 2
+    ["TaskInternalConditions"] =        "resetondeath_true",
+    ["TaskInternalObjectives"] =       "locate_SpecialSpot01 locate_SpecialSpot02 locate_SpecialSpot03 extract_tasktest",
+    ["TaskInternalObjectiveCount"] =    4,
+    ["TaskInternalObjectiveLayout"] =   "incomplete incomplete incomplete incomplete"
 }
 
-local taskList = {taskStartup, taskBlueprint, debug1}
+local debug2 = {
+    ["TaskName"] =                      "Debug - Part 2",
+    ["TaskDescription"] =               "Holy shit, you did the shit, ong impressive, kill shit now i gotta test more shit",
+    ["TaskObjectives"] =                "Kill 5 People",
 
-function AssignStartingTasks(ply)
+    ["TaskGiver"] =                     "Gunner",
+    ["TaskNextID"] =                    nil,
 
-    if ply:IsAdmin() == false then return end
+    ["TaskRewards"] =                   "7500 Roubles|AK-47",
 
-    sql.Query( "INSERT INTO TaskTable ( TaskUser, TaskID, TaskObjectives ) VALUES( " .. SQLStr( player:SteamID64() ) .. ", " .. 3 .. ", " .. SQLStr( "i i" ) .. " )" )
+    ["TaskMap"] =                       "efgm_tasktest",
 
-    print("Last SQL Error = " .. tostring(sql.LastError()))
+    ["TaskInternalConditions"] =        "resetondeath_true",
+    ["TaskInternalObjectives"] =       "kill_5",
+    ["TaskInternalObjectiveCount"] =    1,
+    ["TaskInternalObjectiveLayout"] =   "0/5"
+}
 
-end
-concommand.Add("efgm_assign_tasks", AssignStartingTasks)
+local taskList = {taskDaily, debug1, debug2}
 
-function CompleteSubtask(player, taskID, taskObjective)
 
-    -- figure out which subtask to mark as complete
+util.AddNetworkString("SendTaskInfo")
+util.AddNetworkString("RequestTaskInfo")
 
-    local objectives = tostring( sql.QueryValue( "SELECT TaskObjectives FROM TaskTable WHERE TaskUser = " .. SQLStr( player:SteamID64() ) .. " AND TaskID = " .. SQLStr( taskID ) .. ";" ) )
+net.Receive("RequestTaskInfo",function (len, ply)
 
-    -- print("Last SQL Error = " .. tostring(sql.LastError()))
+    if sql.Query( "SELECT TaskID FROM TaskTable WHERE TaskUser = " .. SQLStr( ply:SteamID64() ) .. ";" ) == nil then return end
 
-    -- print(objectives)
+	net.Start("SendTaskInfo")
 
-    -- write the subtask as complete
+    local tasks = sql.Query( "SELECT TaskID FROM TaskTable WHERE TaskUser = " .. SQLStr( ply:SteamID64() ) .. ";" )
 
-    local explodedObjectives = string.Explode( " ", objectives )
+    local numberOfTasks = #tasks
 
-    explodedObjectives[taskObjective] = subtaskCompleteText
+    print(numberOfTasks.." tasks active!")
 
-    implodedObjectives = string.Implode( " ", explodedObjectives )
+    local taskTable = {}
 
-    print( "imploded objectives: "..implodedObjectives )
+    PrintTable(tasks)
+    
+    for k, v in pairs(tasks) do
 
-    -- set the subtask as completed
+        local taskID = tonumber( v.TaskID )
 
-    sql.Query( "UPDATE TaskTable SET TaskObjectives = " .. SQLStr( implodedObjectives ) .. " WHERE TaskUser = " .. SQLStr( player:SteamID64() ) .. " AND TaskID = " .. SQLStr( taskID ) .. ";" )
+        PrintTable(taskList[taskID])
 
-    local numberOfSubtasks = taskList[tonumber( taskID )].TaskInternalObjectiveCount
-    print(numberOfSubtasks)
+        local tempTable = {taskList[taskID].TaskName, taskList[taskID].TaskDescription, taskList[taskID].TaskObjectives, taskList[taskID].TaskGiver, taskList[taskID].TaskRewards, taskID}
 
-    local numberOfCompletedSubtasks = 0
+        -- task name, description, objectives, giver, rewards, id
 
-    for k, v in pairs(explodedObjectives) do
-
-        if v == "c" then
-            numberOfCompletedSubtasks = numberOfCompletedSubtasks + 1
-        end
+        table.insert(taskTable, tempTable)
 
     end
 
-    print(numberOfCompletedSubtasks .. " out of " .. numberOfSubtasks)
+    net.WriteTable(taskTable)
 
-    if numberOfCompletedSubtasks == numberOfSubtasks then
-        print("YOU COMPLETED THE TASK HOLY SHIT IM A GOD")
-    end
+    net.Send(ply)
+	
+end)
 
-end
 
 local function FindPlayerTaskIDs(player)
 
@@ -139,9 +126,155 @@ local function FindPlayerTaskIDs(player)
 
 end
 
+function FinishTask(ply, cmd, args)
+
+    local taskID = tonumber(args[1])
+    local nextTaskId = taskList[taskID].TaskNextID
+
+    task = tonumber( sql.QueryValue( "SELECT TaskCompleted FROM TaskTable WHERE TaskUser = " .. SQLStr( ply:SteamID64() ) .. " AND TaskID = " .. taskID .. ";" ) )
+
+    if task == 1 then
+        sql.Query( "DELETE FROM TaskTable WHERE TaskID = " .. taskID .. " AND TaskUser = " .. ply:SteamID64() .. ";" )
+
+        if taskList[taskID].TaskNextID != nil then
+
+            sql.Query( "INSERT INTO TaskTable ( TaskUser, TaskID, TaskObjectives, TaskCompleted ) VALUES( " .. ply:SteamID64() .. ", " .. nextTaskId .. ", " .. SQLStr( taskList[nextTaskId].TaskInternalObjectiveLayout ) .. ", " .. 0 .. " )" )
+
+            print("Last SQL Error = " .. tostring(sql.LastError()))
+
+        end
+
+    else
+
+        print("Task isnt completed you fucking donut")
+
+    end
+
+end
+concommand.Add("efgm_complete_task", FinishTask)
+
+function AssignStartingTasks(ply)
+
+    if ply:IsAdmin() == false then return end
+
+    sql.Query( "INSERT INTO TaskTable ( TaskUser, TaskID, TaskObjectives, TaskCompleted ) VALUES( " .. ply:SteamID64() .. ", " .. 2 .. ", " .. SQLStr( taskList[2].TaskInternalObjectiveLayout ) .. ", " .. 0 .. " )" )
+
+    print("Last SQL Error = " .. tostring(sql.LastError()))
+
+end
+concommand.Add("efgm_assign_tasks", AssignStartingTasks)
+
+local function CheckIfTaskComplete(player, taskID)
+
+    local objectives = tostring( sql.QueryValue( "SELECT TaskObjectives FROM TaskTable WHERE TaskUser = " .. SQLStr( player:SteamID64() ) .. " AND TaskID = " .. SQLStr( tostring( taskID ) ) .. ";" ) )
+
+    local numberOfObjectives = taskList[tonumber(taskID)].TaskInternalObjectiveCount
+    local numberOfCompletedObjectives = 0
+
+    local explodedObjectives = string.Explode(" ", objectives)
+
+    for k, v in pairs(explodedObjectives) do
+
+        print(v)
+
+        if v == subtaskCompleteText then
+            numberOfCompletedObjectives = numberOfCompletedObjectives + 1
+        end
+
+        
+
+    end
+
+    if numberOfCompletedObjectives == numberOfObjectives then
+
+        print("YOU COMPLETED THE TASK HOLY SHIT IM A GOD")
+
+        player:PrintMessage( HUD_PRINTTALK, taskList[ taskID ].TaskName.." Ready for Completion.")
+
+        sql.Query( "UPDATE TaskTable SET TaskCompleted = " .. SQLStr( 1 ) .. " WHERE TaskUser = " .. SQLStr( player:SteamID64() ) .. " AND TaskID = " .. SQLStr( tostring( taskID ) ) .. ";" )
+
+    end
+
+end
+
+function AddKillSubtask(player, taskID, taskObjective)
+
+    if FindPlayerTaskIDs(player) == nil then return end
+
+    local objectives = tostring( sql.QueryValue( "SELECT TaskObjectives FROM TaskTable WHERE TaskUser = " .. SQLStr( player:SteamID64() ) .. " AND TaskID = " .. SQLStr( tostring( taskID ) ) .. ";" ) )
+
+    -- print("Task objectives are: "..objectives)
+
+    local explodedObjectives = string.Explode(" ", objectives)
+
+    local killCount = explodedObjectives[ taskObjective ]
+
+    print("Kill count is: "..killCount)
+
+    local explodedKillCount = string.Explode("/", killCount)
+
+    -- currentKills = explodedKillCount[1]
+    -- neededKills = explodedKillCount[2]
+
+    explodedKillCount[1] = explodedKillCount[1] + 1
+
+    implodedKillCount = string.Implode("/", explodedKillCount)
+
+    explodedObjectives[ taskObjective ] = implodedKillCount
+
+    implodedObjectives = string.Implode(" ", explodedObjectives)
+
+    print("Imploded Kill Count (New) = "..implodedKillCount)
+
+    if tonumber( explodedKillCount[1] ) == tonumber( explodedKillCount[2] ) then
+
+        player:PrintMessage( HUD_PRINTTALK, taskList[ taskID ].TaskName.." Subtask Completed.")
+
+        sql.Query( "UPDATE TaskTable SET TaskObjectives = " .. SQLStr( subtaskCompleteText ) .. " WHERE TaskUser = " .. SQLStr( player:SteamID64() ) .. " AND TaskID = " .. SQLStr( tostring( taskID ) ) .. ";" )
+
+        CheckIfTaskComplete(player, taskID)
+
+    else
+
+        print(explodedKillCount[1].." != "..explodedKillCount[2])
+
+        sql.Query( "UPDATE TaskTable SET TaskObjectives = " .. SQLStr( implodedObjectives ) .. " WHERE TaskUser = " .. SQLStr( player:SteamID64() ) .. " AND TaskID = " .. SQLStr( tostring( taskID ) ) .. ";" )
+
+    end
+
+end
+
+function CompleteSubtask(player, taskID, taskObjective)
+
+    if FindPlayerTaskIDs(player) == nil then return end
+
+    local objectives = tostring( sql.QueryValue( "SELECT TaskObjectives FROM TaskTable WHERE TaskUser = " .. SQLStr( player:SteamID64() ) .. " AND TaskID = " .. SQLStr( tostring( taskID ) ) .. ";" ) )
+
+    -- write the subtask as complete
+
+    local explodedObjectives = string.Explode( " ", objectives )
+
+    if explodedObjectives[ taskObjective ] == subtaskCompleteText then print("this subtask is completed fucking retard") return end
+
+    explodedObjectives[taskObjective] = subtaskCompleteText
+
+    implodedObjectives = string.Implode( " ", explodedObjectives )
+
+    print( "imploded objectives: "..implodedObjectives )
+
+    -- set the subtask as completed
+
+    sql.Query( "UPDATE TaskTable SET TaskObjectives = " .. SQLStr( implodedObjectives ) .. " WHERE TaskUser = " .. SQLStr( player:SteamID64() ) .. " AND TaskID = " .. SQLStr( tostring( taskID ) ) .. ";" )
+
+    player:PrintMessage( HUD_PRINTTALK, taskList[ taskID ].TaskName.." Subtask Completed.")
+
+    CheckIfTaskComplete(player, taskID)
+
+end
+
 local function CreateTaskTable()
 
-    sql.Query( "CREATE TABLE IF NOT EXISTS TaskTable ( TaskUser INTEGER, TaskID INTEGER, TaskObjectives TEXT )" )
+    sql.Query( "CREATE TABLE IF NOT EXISTS TaskTable ( TaskUser INTEGER, TaskID INTEGER, TaskObjectives TEXT, TaskCompleted INTEGER )" )
 
     print("Last SQL Error = " .. tostring(sql.LastError()))
 
@@ -153,15 +286,101 @@ hook.Add( "Initialize", "CreateTaskList", function()
 
 end )
 
+hook.Add( "OnNPCKilled", "OnPMCKilled", function( npc, attacker, inflictor )
+	
+    if FindPlayerTaskIDs(attacker) == nil then return end
+
+    if attacker:IsPlayer() == false then return end
+
+    for h, j in pairs(FindPlayerTaskIDs(attacker)) do
+        
+        local taskObjectives = taskList[ tonumber( j ) ].TaskInternalObjectives
+
+        print(taskObjectives)
+
+        -- converts all objectives into singular objectives in a table
+
+        local taskObjectivesExploded = string.Explode( " ", taskObjectives )
+
+        PrintTable(taskObjectivesExploded)
+
+        for k, v in pairs( taskObjectivesExploded ) do
+
+            if string.find( v, "kill" ) != nil then
+            
+                -- v[k] == kill_<number>
+
+                tableForShit = string.Explode( "_", v )
+
+                PrintTable(tableForShit)
+                
+                for iter, b in pairs ( tableForShit ) do
+
+                    if mapName == game.GetMap() or mapName == nil then
+
+                        print("adding kill to subtask number "..k)
+
+                        AddKillSubtask(attacker, tonumber( j ), k)
+
+                        break
+
+                    end
+
+                end
+
+                break
+
+            end
+
+        end
+    end
+
+end)
+
 hook.Add( "PlayerExtract", "PlayerExtracted", function(ply)
 
     if FindPlayerTaskIDs(ply) == nil then return end
 
-	for k, v in pairs(FindPlayerTaskIDs(ply)) do
-        if v == tostring(3) then
-            print("completing subtask")
+	for h, j in pairs(FindPlayerTaskIDs(ply)) do
+        
+        local taskObjectives = taskList[ tonumber( j ) ].TaskInternalObjectives
 
-            CompleteSubtask(ply, 3, 2)
+        print(taskObjectives)
+
+        -- converts all objectives into singular objectives in a table
+
+        local taskObjectivesExploded = string.Explode( " ", taskObjectives )
+
+        PrintTable(taskObjectivesExploded)
+
+        for k, v in pairs( taskObjectivesExploded ) do
+
+            if string.find( v, "extract" ) != nil then
+            
+                -- v[k] == extract_<mapname>
+
+                tableForShit = string.Explode( "_", v )
+
+                PrintTable(tableForShit)
+                
+                for iter, b in pairs ( tableForShit ) do
+
+                    -- b == <mapname>
+
+                    local mapName = "efgm_"..b
+
+                    if mapName == game.GetMap() then
+
+                        print("completing subtask number "..k)
+
+                        CompleteSubtask(ply, tonumber( j ), k)
+
+                    end
+
+                end
+
+            end
+
         end
     end
 
@@ -185,7 +404,10 @@ local function CheckCurrentTasks(ply, cmd, args)
     local value = tonumber( sql.QueryValue( "SELECT TaskID FROM TaskTable WHERE TaskUser = " .. SQLStr( ply:SteamID64() ) .. ";" ) )
 
     if(value != nil) then
-        PrintTable( taskList[ value ] )
+
+        local taskTable = { taskList[ value ].TaskName, taskList[ value ].TaskDescription, taskList[ value ].TaskObjectives, taskList[ value ].TaskGiver, }
+
+        PrintTable( taskTable )
         print("Last SQL Error = " .. tostring(sql.LastError()))
     end
 

@@ -1,16 +1,27 @@
 ENT.Type = "brush"
 ENT.Base = "base_brush"
 
-ENT.TaskID			= ""
-ENT.TaskObjective	= 0
+ENT.TaskID				= 0
+ENT.TaskObjective		= 0
+
+ENT.TaskNameInternal	= ""
+ENT.TaskNameExternal	= ""
 
 function ENT:KeyValue(key, value)
 	if key == "task_number" then
-      self.TaskID = tostring(value)
+      self.TaskID = tonumber(value)
 	end
 
 	if key == "task_objective" then
       self.TaskObjective = tonumber(value)
+	end
+
+	if key == "task_name_internal" then
+      self.TaskNameInternal = tostring(value)
+	end
+
+	if key == "task_name_external" then
+      self.TaskNameExternal = tostring(value)
 	end
 end
 

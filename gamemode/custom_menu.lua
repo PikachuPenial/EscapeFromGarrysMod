@@ -4,9 +4,27 @@ local isSellMenu = false
 local clientPlayer
 local seller
 
+local isPlayerInRaid = false
+
 local stashClient
 
 local stashTable
+
+local taskInfo
+
+net.Receive("SendTaskInfo",function (len, ply)
+
+	taskInfo = net.ReadTable()
+
+	DrawTasks()
+	
+end)
+
+net.Receive("MenuInRaid",function (len, ply)
+
+	isPlayerInRaid = net.ReadBool()
+	
+end)
 
 net.Receive("SellMenuTable",function (len, ply)
 
@@ -50,7 +68,7 @@ net.Receive("StashMenuReload", function (len, ply) ResetMenu() end)
 -- Just because you can set it above 1, does not mean you should.
 -- 0.6 seems like a good starting point.
 
-function gameShopMenu()
+function gameShopMenu(ply, cmd, args)
 
 	-- This part just makes sure the client is the one viewing the hud. This is so some logic can work, it's complicated.
 
@@ -81,7 +99,7 @@ function gameShopMenu()
 			surface.DrawRect(0, 24, Menu:GetWide(), 1)
 		end
 	
-		addButtons(Menu, isSellMenu, clientPlayer)
+		addButtons(Menu, isSellMenu, isPlayerInRaid, clientPlayer)
 
 		gui.EnableScreenClicker(true)
 		surface.PlaySound( "common/wpn_select.wav" )
@@ -99,7 +117,7 @@ end
 concommand.Add("open_game_menu", gameShopMenu)
 
 --Button Code
-function addButtons(Menu, sellMenuBool, ply)
+function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 	--print("isSellMenu is "..tostring(isSellMenu))
 
@@ -298,7 +316,7 @@ function addButtons(Menu, sellMenuBool, ply)
 	playerButton:SetParent(Menu)
 	playerButton:SetText("")
 	playerButton:SetSize(100, 300)
-	playerButton:SetPos(0, 150)
+	playerButton:SetPos(0, 400)
 	playerButton.Paint = function()
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
@@ -454,177 +472,264 @@ function addButtons(Menu, sellMenuBool, ply)
 			-- Help Text Twenty Six
 			surface.SetFont("DermaLarge")
 			surface.SetTextPos(5, 1020)
-			surface.DrawText("          Penial#3298                                          Portator#6582")
+			surface.DrawText("          Portator#6582                                          Penial#3298")
 
 		end
 	end
-	
-	local shopButton = vgui.Create("DButton")
-	shopButton:SetParent(Menu)
-	shopButton:SetText("")
-	shopButton:SetSize(100, 50)
-	shopButton:SetPos(0, 75)
-	shopButton.Paint = function()
+
+	local taskButton = vgui.Create("DButton")
+	taskButton:SetParent(Menu)
+	taskButton:SetText("")
+	taskButton:SetSize(100, 50)
+	taskButton:SetPos(0, 75)
+	taskButton.Paint = function()
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
-		surface.DrawRect(0, 0, shopButton:GetWide(), shopButton:GetTall())
+		surface.DrawRect(0, 0, taskButton:GetWide(), taskButton:GetTall())
 		
 		--Draw bottom and Right borders
 		surface.SetDrawColor(40, 40, 40, 255)
-		surface.DrawRect(0, 49, shopButton:GetWide(), 1)
-		surface.DrawRect(99, 0, 1, shopButton:GetTall())
+		surface.DrawRect(0, 49, taskButton:GetWide(), 1)
+		surface.DrawRect(99, 0, 1, taskButton:GetTall())
 		
 		--Draw/write text
 
-		local shopText
-
-		if sellMenuBool == true then shopText = "SELL" else shopText = "SHOP" end
-
-		draw.DrawText(shopText, "DermaLarge", shopButton:GetWide() / 2.1, 10, Color(102, 255, 102, 255), 1)
+		draw.DrawText("Tasks", "DermaLarge", taskButton:GetWide() / 2.1, 10, Color(102, 255, 102, 255), 1)
 		
 	end
 
-	shopButton.DoClick = function(shopButton)
-		local shopPanel = Menu:Add("ShopPanel")	
+	taskButton.DoClick = function()
 
-		local entityCategory
+		net.Start("RequestTaskInfo")
+		net.SendToServer()
 
-		local entityList
+		function DrawTasks()
 
-		print(tostring(sellMenuBool))
+			local taskPanel = Menu:Add("TaskPanel")
 
-		if sellMenuBool == false then
-			
+			PrintTable(taskInfo)
 
-			entityCategory = vgui.Create("DCollapsibleCategory", shopPanel)
-			-- entityCategory:SetPos(0, 0)
-			-- entityCategory:SetSize(shopPanel:GetWide(), 100)
-			entityCategory:Dock( TOP )
-			entityCategory:SetLabel("Ammo/Armor/Crates")
+			for k, v in pairs(taskInfo) do
 
-			entityList = vgui.Create("DIconLayout", entityCategory)
-			-- entityList:SetPos(0, 20)
-			-- entityList:SetSize(entityCategory:GetWide(), entityCategory:GetTall())
-			entityList:Dock( TOP )
-			entityList:SetSpaceY(5)
-			entityList:SetSpaceX(5)
+				local taskCollapsible = vgui.Create("DCollapsibleCategory", taskPanel)
+				taskCollapsible:Dock( TOP )
+				taskCollapsible:SetSize( taskPanel:GetWide(), 350 )
+				taskCollapsible:SetLabel(v[1])
+				taskCollapsible:SetExpanded( false )	-- Start collapsed
+
+				local taskInfoPanel = vgui.Create("DPanel", taskPanel)
+				taskInfoPanel:Dock( FILL )
+				taskInfoPanel:SetSize( taskPanel:GetWide(), 350 )
+				
+				taskInfoPanel.Paint = function(wide, high)
+
+					surface.SetDrawColor(50,50,50,255)
+					surface.DrawRect(0, 0, taskInfoPanel:GetWide() , taskInfoPanel:GetTall())
+
+					surface.SetDrawColor(80,80,80,255)
+					surface.DrawRect(10, 10, taskInfoPanel:GetWide() - 20, taskInfoPanel:GetTall() - 20)
+
+					surface.SetDrawColor(50,50,50,255)
+
+					local textColor = Color(0,0,0,255)
+
+					draw.SimpleText( v[1], "DermaLarge", taskInfoPanel:GetWide() / 2, 30, textColor, 1 )
+
+					draw.SimpleText( v[2], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 70, textColor, 1 )
+
+					draw.SimpleText( "Objectives:", "DermaLarge", taskInfoPanel:GetWide() / 2, 100, textColor, 1 )
+
+					draw.SimpleText( v[3], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 130, textColor, 1 )
+
+					draw.SimpleText( "Client:", "DermaLarge", taskInfoPanel:GetWide() / 2, 170, textColor, 1 )
+
+					draw.SimpleText( v[4], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 200, textColor, 1 )
+
+					draw.SimpleText( "Mission Rewards:", "DermaLarge", taskInfoPanel:GetWide() / 2, 230, textColor, 1 )
+
+					draw.SimpleText( v[5], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 260, textColor, 1 )
+
+				end
+
+				taskCollapsible:SetContents( taskInfoPanel )
+
+			end
+
 		end
-		
-		local weaponCategory = vgui.Create("DCollapsibleCategory", shopPanel)
-		-- weaponCategory:SetPos(0, 230)
-		-- weaponCategory:SetSize(shopPanel:GetWide(), 200)
-		weaponCategory:Dock( TOP )
-		weaponCategory:SetLabel("Firearms/Weapons")
 
-		local weaponList = vgui.Create("DIconLayout", weaponCategory)
-		-- weaponList:SetPos(0, 20)
-		-- weaponList:SetSize(weaponCategory:GetWide(), weaponCategory:GetTall())
-		weaponList:Dock( TOP )
-		weaponList:SetSpaceY(5)
-		weaponList:SetSpaceX(5)
+	end
 
-		-- testing if this is the shop menu or sell menu, code will be vastly different for each
-
-		if sellMenuBool == true then
-
-			-- if this is the sell menu
-			
-			for k, v in pairs(weaponsArr) do
+	if menuInRaid == false then
 	
-				for l, b in pairs(sellBlacklist) do
-					if v[2] == b[1] then
-						return
+		local shopButton = vgui.Create("DButton")
+		shopButton:SetParent(Menu)
+		shopButton:SetText("")
+		shopButton:SetSize(100, 50)
+		shopButton:SetPos(0, 125)
+		shopButton.Paint = function()
+			--Color of entire button
+			surface.SetDrawColor(50, 50, 50, 255)
+			surface.DrawRect(0, 0, shopButton:GetWide(), shopButton:GetTall())
+			
+			--Draw bottom and Right borders
+			surface.SetDrawColor(40, 40, 40, 255)
+			surface.DrawRect(0, 49, shopButton:GetWide(), 1)
+			surface.DrawRect(99, 0, 1, shopButton:GetTall())
+			
+			--Draw/write text
+
+			local shopText
+
+			if sellMenuBool == true then shopText = "SELL" else shopText = "SHOP" end
+
+			draw.DrawText(shopText, "DermaLarge", shopButton:GetWide() / 2.1, 10, Color(102, 255, 102, 255), 1)
+			
+		end
+
+		shopButton.DoClick = function(shopButton)
+			local shopPanel = Menu:Add("ShopPanel")	
+
+			local entityCategory
+
+			local entityList
+
+			print(tostring(sellMenuBool))
+
+			if sellMenuBool == false then
+				
+
+				entityCategory = vgui.Create("DCollapsibleCategory", shopPanel)
+				-- entityCategory:SetPos(0, 0)
+				-- entityCategory:SetSize(shopPanel:GetWide(), 100)
+				entityCategory:Dock( TOP )
+				entityCategory:SetLabel("Ammo/Armor/Crates")
+
+				entityList = vgui.Create("DIconLayout", entityCategory)
+				-- entityList:SetPos(0, 20)
+				-- entityList:SetSize(entityCategory:GetWide(), entityCategory:GetTall())
+				entityList:Dock( TOP )
+				entityList:SetSpaceY(5)
+				entityList:SetSpaceX(5)
+			end
+			
+			local weaponCategory = vgui.Create("DCollapsibleCategory", shopPanel)
+			-- weaponCategory:SetPos(0, 230)
+			-- weaponCategory:SetSize(shopPanel:GetWide(), 200)
+			weaponCategory:Dock( TOP )
+			weaponCategory:SetLabel("Firearms/Weapons")
+
+			local weaponList = vgui.Create("DIconLayout", weaponCategory)
+			-- weaponList:SetPos(0, 20)
+			-- weaponList:SetSize(weaponCategory:GetWide(), weaponCategory:GetTall())
+			weaponList:Dock( TOP )
+			weaponList:SetSpaceY(5)
+			weaponList:SetSpaceX(5)
+
+			-- testing if this is the shop menu or sell menu, code will be vastly different for each
+
+			if sellMenuBool == true then
+
+				-- if this is the sell menu
+				
+				for k, v in pairs(weaponsArr) do
+		
+					for l, b in pairs(sellBlacklist) do
+						if v[2] == b[1] then
+							return
+						end
 					end
-				end
 
-				-- Creates buttons for the weapons
+					-- Creates buttons for the weapons
 
-				local icon = vgui.Create("SpawnIcon", weaponList)
-				icon:SetModel(v[1])
-			icon:SetToolTip(v[3].."\nCategory: "..v[7].."\nRarity: "..v[6].."\nSell Price: "..math.Round(v[4]*sellPriceMultiplier, 0))
+					local icon = vgui.Create("SpawnIcon", weaponList)
+					icon:SetModel(v[1])
+				icon:SetToolTip(v[3].."\nCategory: "..v[7].."\nRarity: "..v[6].."\nSell Price: "..math.Round(v[4]*sellPriceMultiplier, 0))
 
-				-- this lets players visually distinguish items they can sell
+					-- this lets players visually distinguish items they can sell
 
-				if not clientPlayer:HasWeapon(v[2]) then
-
-					function icon:Paint(w, h)
-						draw.RoundedBox( 0, 5, 5, w - 10, h - 10, Color( 40, 40, 40, 255 ) )
-						draw.RoundedBox( 0, 8, 8, w - 16, h - 16, Color( 50, 50, 50, 255 ) )
-					end
-
-				elseif clientPlayer:HasWeapon(v[2]) then
-
-					function icon:Paint(w, h)
-						draw.RoundedBox( 0, 5, 5, w - 10, h - 10, Color( 210, 210, 210, 255 ) )
-						draw.RoundedBox( 0, 8, 8, w - 16, h - 16, Color( 230, 230, 230, 255 ) )
-					end
-
-				end
-
-				weaponList:Add(icon)
-
-				icon.DoClick = function(icon)
-					
-					if clientPlayer:HasWeapon(v[2]) then
-
-						local tempTable = {clientPlayer, v[2], math.Round(v[4]*sellPriceMultiplier, 0), v[3]}
-
-						net.Start("SellItem")
-						net.WriteTable(tempTable)
-						net.SendToServer()
-
-						surface.PlaySound( "common/wpn_select.wav" )
-						surface.PlaySound( "items/ammo_pickup.wav" )
-
-						-- draws the icon black after selling
+					if not clientPlayer:HasWeapon(v[2]) then
 
 						function icon:Paint(w, h)
 							draw.RoundedBox( 0, 5, 5, w - 10, h - 10, Color( 40, 40, 40, 255 ) )
 							draw.RoundedBox( 0, 8, 8, w - 16, h - 16, Color( 50, 50, 50, 255 ) )
 						end
 
-					elseif not clientPlayer:HasWeapon(v[2]) then
-						
-						ply:PrintMessage(HUD_PRINTTALK, "You do not have a "..v[3].."!")
+					elseif clientPlayer:HasWeapon(v[2]) then
 
-						surface.PlaySound( "common/wpn_denyselect.wav" )
+						function icon:Paint(w, h)
+							draw.RoundedBox( 0, 5, 5, w - 10, h - 10, Color( 210, 210, 210, 255 ) )
+							draw.RoundedBox( 0, 8, 8, w - 16, h - 16, Color( 230, 230, 230, 255 ) )
+						end
 
 					end
+
+					weaponList:Add(icon)
+
+					icon.DoClick = function(icon)
+						
+						if clientPlayer:HasWeapon(v[2]) then
+
+							local tempTable = {clientPlayer, v[2], math.Round(v[4]*sellPriceMultiplier, 0), v[3]}
+
+							net.Start("SellItem")
+							net.WriteTable(tempTable)
+							net.SendToServer()
+
+							surface.PlaySound( "common/wpn_select.wav" )
+							surface.PlaySound( "items/ammo_pickup.wav" )
+
+							-- draws the icon black after selling
+
+							function icon:Paint(w, h)
+								draw.RoundedBox( 0, 5, 5, w - 10, h - 10, Color( 40, 40, 40, 255 ) )
+								draw.RoundedBox( 0, 8, 8, w - 16, h - 16, Color( 50, 50, 50, 255 ) )
+							end
+
+						elseif not clientPlayer:HasWeapon(v[2]) then
+							
+							ply:PrintMessage(HUD_PRINTTALK, "You do not have a "..v[3].."!")
+
+							surface.PlaySound( "common/wpn_denyselect.wav" )
+
+						end
+					end
 				end
-			end
 
-		else
+			else
 
-			-- if this is the regular shop
+				-- if this is the regular shop
 
-			for k, v in pairs(entsArr) do
-                local icon = vgui.Create("SpawnIcon", entityList)
+				for k, v in pairs(entsArr) do
+					local icon = vgui.Create("SpawnIcon", entityList)
 
-                icon:SetModel(v["Model"])
-                icon:SetToolTip(v["PrintName"].."\nCost: "..v["Cost"])
-                entityList:Add(icon)
+					icon:SetModel(v["Model"])
+					icon:SetToolTip(v["PrintName"].."\nCost: "..v["Cost"])
+					entityList:Add(icon)
 
-                icon.DoClick = function(icon)
-                    LocalPlayer():ConCommand("buy_entity "..v["ClassName"])
-                end
-            end
-			
-			for k, v in pairs(weaponsArr) do
-	
-				-- Creates buttons for the weapons
-	
-				local icon = vgui.Create("SpawnIcon", weaponList)
-				icon:SetModel(v[1])
-				icon:SetToolTip(v[3].."\nCategory: "..v[7].."\nRarity: "..v[6].."\nCost: "..v[4].."\nLevel Req: "..v[5])
-				weaponList:Add(icon)
-	
-				icon.DoClick = function(icon)
-					LocalPlayer():ConCommand("buy_gun "..v[2])
+					icon.DoClick = function(icon)
+						LocalPlayer():ConCommand("buy_entity "..v["ClassName"])
+					end
 				end
-			end
+				
+				for k, v in pairs(weaponsArr) do
+		
+					-- Creates buttons for the weapons
+		
+					local icon = vgui.Create("SpawnIcon", weaponList)
+					icon:SetModel(v[1])
+					icon:SetToolTip(v[3].."\nCategory: "..v[7].."\nRarity: "..v[6].."\nCost: "..v[4].."\nLevel Req: "..v[5])
+					weaponList:Add(icon)
+		
+					icon.DoClick = function(icon)
+						LocalPlayer():ConCommand("buy_gun "..v[2])
+					end
+				end
 
+			end
 		end
+
 	end
+	
 end
 
 --Player Panel
@@ -660,7 +765,25 @@ end
 
 vgui.Register("ShopPanel", PANEL, "Panel")
 
---End shop panel
+--Task Panel
+
+PANEL = {} --Creates empty panel
+
+function PANEL:Init() -- initializes the panel
+	self:SetSize(760, 1080)
+	self:SetPos(100, 25)
+end
+
+function PANEL:Paint(w, h)
+	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 255))
+end
+
+vgui.Register("TaskPanel", PANEL, "Panel")
+
+--End task panel
+
+-- wow this is why i had to merge the fucking stash menu into this jesus christ im dumb
+-- actually maybe not idk, im autistic im not a rocket scientist
 
 function MenuInit()
 

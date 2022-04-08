@@ -221,10 +221,16 @@ function checkForLevel(ply)
     end
 end
 
+util.AddNetworkString("MenuInRaid")
+
 function GM:ShowSpare2(ply)
-	if ply:GetNWBool("inRaid") == false then
-		ply:ConCommand("open_game_menu")
-	end
+
+	net.Start("MenuInRaid")
+	net.WriteBool(ply:GetNWBool("inRaid"))
+	net.Send(ply)
+
+	ply:ConCommand("open_game_menu")
+
 end
 
 function GM:PlayerDisconnected(ply)

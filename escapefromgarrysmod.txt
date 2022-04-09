@@ -3,5 +3,6 @@
 	"base"		"base"
 	"title"		"Escape From Garry's Mod"
 	"maps"		"^efgm_"
+	"category"	"pvp"
 	"menusystem"	"1"
 }

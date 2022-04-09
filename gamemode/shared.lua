@@ -323,10 +323,10 @@ function GM:ContextMenuOpen()
 end
 
 -- Disable Spawn Menu and show the extract list when the bind is pressed.
---function GM:SpawnMenuOpen()
-  --RunConsoleCommand("efgm_extract_list")
-  --return false
---end
+function GM:SpawnMenuOpen()
+  RunConsoleCommand("efgm_extract_list")
+  return false
+end
 
 -- This is where the console commands are ran when a client joins a game running the gamemode.
 

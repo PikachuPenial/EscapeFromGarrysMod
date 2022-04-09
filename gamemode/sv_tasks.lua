@@ -39,7 +39,8 @@ local debug1 = {
     ["TaskInternalConditions"] =        "resetondeath_true",
     ["TaskInternalObjectives"] =       "locate_SpecialSpot01 locate_SpecialSpot02 locate_SpecialSpot03 extract_tasktest",
     ["TaskInternalObjectiveCount"] =    4,
-    ["TaskInternalObjectiveLayout"] =   "incomplete incomplete incomplete incomplete"
+    ["TaskInternalObjectiveLayout"] =   "incomplete incomplete incomplete incomplete",
+    ["TaskInternalRewards"] =           "money_5000 gun_weapon_arccw_ak47"
 }
 
 local debug2 = {
@@ -57,7 +58,8 @@ local debug2 = {
     ["TaskInternalConditions"] =        "resetondeath_true",
     ["TaskInternalObjectives"] =       "kill_5",
     ["TaskInternalObjectiveCount"] =    1,
-    ["TaskInternalObjectiveLayout"] =   "0/5"
+    ["TaskInternalObjectiveLayout"] =   "0/5",
+    ["TaskInternalRewards"] =           "money_7500 gun_weapon_arccw_ak47"
 }
 
 local taskList = {taskDaily, debug1, debug2}
@@ -66,7 +68,11 @@ local taskList = {taskDaily, debug1, debug2}
 util.AddNetworkString("SendTaskInfo")
 util.AddNetworkString("RequestTaskInfo")
 
-net.Receive("RequestTaskInfo",function (len, ply)
+util.AddNetworkString("TaskComplete")
+
+
+
+local function SendTaskInfo(ply)
 
     if sql.Query( "SELECT TaskID FROM TaskTable WHERE TaskUser = " .. SQLStr( ply:SteamID64() ) .. ";" ) == nil then return end
 
@@ -99,9 +105,24 @@ net.Receive("RequestTaskInfo",function (len, ply)
     net.WriteTable(taskTable)
 
     net.Send(ply)
-	
+
+end
+
+net.Receive("RequestTaskInfo",function (len, ply)
+
+    SendTaskInfo(ply)
+
 end)
 
+net.Receive("TaskComplete",function (len, ply)
+
+    if FinishTask(ply, net.ReadInt(12)) == true then
+
+        SendTaskInfo(ply)
+
+    end
+
+end)
 
 local function FindPlayerTaskIDs(player)
 
@@ -126,9 +147,8 @@ local function FindPlayerTaskIDs(player)
 
 end
 
-function FinishTask(ply, cmd, args)
+function FinishTask(ply, taskID)
 
-    local taskID = tonumber(args[1])
     local nextTaskId = taskList[taskID].TaskNextID
 
     task = tonumber( sql.QueryValue( "SELECT TaskCompleted FROM TaskTable WHERE TaskUser = " .. SQLStr( ply:SteamID64() ) .. " AND TaskID = " .. taskID .. ";" ) )
@@ -144,14 +164,24 @@ function FinishTask(ply, cmd, args)
 
         end
 
+        return true
+
     else
 
         print("Task isnt completed you fucking donut")
 
+        return false
+
     end
 
 end
-concommand.Add("efgm_complete_task", FinishTask)
+concommand.Add("efgm_complete_task", function(ply, cmd, args)
+
+    local taskID = tonumber(args[1])
+
+    FinishTask(ply, taskID)
+
+end)
 
 function AssignStartingTasks(ply)
 
@@ -247,6 +277,16 @@ end
 function CompleteSubtask(player, taskID, taskObjective)
 
     if FindPlayerTaskIDs(player) == nil then return end
+
+    local doesPlayerHaveThisTask = false
+
+    for k, v in pairs(FindPlayerTaskIDs(player)) do
+
+        if tonumber(v) == taskID then doesPlayerHaveThisTask = true break end
+
+    end
+
+    if doesPlayerHaveThisTask == false then return end
 
     local objectives = tostring( sql.QueryValue( "SELECT TaskObjectives FROM TaskTable WHERE TaskUser = " .. SQLStr( player:SteamID64() ) .. " AND TaskID = " .. SQLStr( tostring( taskID ) ) .. ";" ) )
 

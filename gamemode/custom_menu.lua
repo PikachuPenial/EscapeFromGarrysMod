@@ -10,13 +10,17 @@ local stashClient
 
 local stashTable
 
-local taskInfo
-
 net.Receive("SendTaskInfo",function (len, ply)
 
-	taskInfo = net.ReadTable()
+	local taskInfo = net.ReadTable()
 
-	DrawTasks()
+	print("Printing TaskInfo:")
+	PrintTable(taskInfo)
+
+	Menu:Hide()
+	Menu:Show()
+
+	DrawTasks(taskInfo)
 	
 end)
 
@@ -503,25 +507,28 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		net.Start("RequestTaskInfo")
 		net.SendToServer()
 
-		function DrawTasks()
+		local taskPanel = Menu:Add("TaskPanel")
 
-			local taskPanel = Menu:Add("TaskPanel")
+		function DrawTasks(taskInfo)
 
-			PrintTable(taskInfo)
+			taskPanel:Clear()
 
 			for k, v in pairs(taskInfo) do
 
 				local taskCollapsible = vgui.Create("DCollapsibleCategory", taskPanel)
 				taskCollapsible:Dock( TOP )
-				taskCollapsible:SetSize( taskPanel:GetWide(), 350 )
+				taskCollapsible:SetSize( taskPanel:GetWide(), 450 )
 				taskCollapsible:SetLabel(v[1])
-				taskCollapsible:SetExpanded( false )	-- Start collapsed
+				taskCollapsible:SetExpanded( true )	-- Start collapsed
 
 				local taskInfoPanel = vgui.Create("DPanel", taskPanel)
-				taskInfoPanel:Dock( FILL )
-				taskInfoPanel:SetSize( taskPanel:GetWide(), 350 )
 				
-				taskInfoPanel.Paint = function(wide, high)
+				taskCollapsible:SetContents( taskInfoPanel )
+
+				taskInfoPanel:Dock( FILL )
+				taskInfoPanel:SetSize( taskPanel:GetWide(), 450 )
+				
+				taskInfoPanel.Paint = function()
 
 					surface.SetDrawColor(50,50,50,255)
 					surface.DrawRect(0, 0, taskInfoPanel:GetWide() , taskInfoPanel:GetTall())
@@ -551,7 +558,27 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 				end
 
-				taskCollapsible:SetContents( taskInfoPanel )
+				local taskHoldOpenPanel = vgui.Create("DPanel", taskInfoPanel)
+				taskHoldOpenPanel:Dock( FILL )
+
+				taskHoldOpenPanel.Paint = function()
+					surface.SetDrawColor(0,0,0,0)
+					surface.DrawRect(0, 0, taskHoldOpenPanel:GetWide(), taskHoldOpenPanel:GetTall())
+
+				end
+
+				local taskCompleteButton = vgui.Create("DButton", taskInfoPanel)
+				taskCompleteButton:SetText( "Complete Task" )
+				taskCompleteButton:SetPos( taskInfoPanel:GetWide() / 2 - 125, taskInfoPanel:GetTall() - 100)
+				taskCompleteButton:SetSize( 250, 50 )
+
+				function taskCompleteButton:DoClick() -- Defines what should happen when the label is clicked
+					net.Start("TaskComplete")
+					net.WriteInt(v[6], 12)
+					net.SendToServer()
+
+					
+				end
 
 			end
 

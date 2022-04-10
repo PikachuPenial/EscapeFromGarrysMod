@@ -3,6 +3,7 @@
 	"base"		"base"
 	"title"		"Escape From Garry's Mod"
 	"maps"		"^efgm_"
+	"workshopid"	"2792129130"
 	"category"	"pvp"
 	"menusystem"	"1"
 }

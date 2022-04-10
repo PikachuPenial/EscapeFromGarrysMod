@@ -61,6 +61,8 @@ function HUD()
 		timeText = mapSwitchText
 
 		draw.SimpleText("MAP IS RESETING: TRANSFER ANYTHING YOU WANT TO KEEP INTO YOUR STASH, OR YOU WILL LOSE YOUR ITEMS.", "DermaLarge", ScrW() / 2, 50, colorRed, 1)
+		draw.SimpleText("TO CHECK AVAILABLE MAPS TO VOTE FOR, TYPE THE FOLLOWING INTO THE CONSOLE: vote.", "DermaLarge", ScrW() / 2 , 80, colorRed, 1)
+		draw.SimpleText("TO VOTE FOR A NEW MAP, TYPE THE FOLLOWING INTO THE CONSOLE: vote efgm_<nextmapname>.", "DermaLarge", ScrW() / 2 , 110, colorRed, 1)
 	end
 
 	draw.SimpleText(raidTimeLeft, "DermaLarge", 28, ScrH() - 305, timerColor, 0)

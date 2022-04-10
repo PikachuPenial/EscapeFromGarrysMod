@@ -18,6 +18,11 @@ local isRaidEnded = false
 
 local mapPool = {"efgm_concrete", "efgm_factory"}
 
+-- the numbers correspond to the maps of mapPool. mapVotes[1] would be for concrete, etc
+local mapVotes = {0, 0}
+
+local voterTable = {}
+
 -- Classes: "PMC", "PlayerScav", "NotInRaid"
 
 -- {player, spawnGroup, class}
@@ -178,19 +183,86 @@ function ENT:EndRaid()
 
 	timer.Create("RaidTimer", 120, 1, function()
 	
-		local newMap
+		local newMapTable = {}
 
-		for k, v in pairs(mapPool) do
-			if game.GetMap() != v then
-				newMap = v
+		local maxVotes = 0
+
+		for k, v in pairs(mapVotes) do
+
+			if v > maxVotes then
+
+				maxVotes = v
+
 			end
+
 		end
 
-		RunConsoleCommand("changelevel", newMap)
+		for k, v in pairs(mapPool) do
+
+			-- Does this current map reach the highest number of votes?
+			if mapVotes[k] == maxVotes then
+
+				table.insert(newMapTable, v)
+
+			end
+
+		end
+
+		RunConsoleCommand("changelevel", newMapTable[math.random(#newMapTable)])
 	
 	end)
 
 end
+
+local function VoteForMap(ply, cmd, args)
+
+	if args[1] == nil then
+
+		local mapNames = string.Implode(", ", mapPool)
+
+		ply:PrintMessage(3, "Valid maps to vote for are: ("..mapNames..")")
+
+	return end
+
+	if voterTable != nil then
+
+		for k, v in pairs(voterTable) do
+
+			if v == ply then return end
+
+		end
+
+	end
+
+	if isRaidEnded == false then print("I appreciate the enthusiasm "..ply:GetName().." but the raid actually isn't done yet.") return end
+
+	local votedMap = tostring( args[1] )
+
+	local validMapVote = false
+
+	-- This checks if the map they voted for actually like, you know, exists, and is supported. For example, loading into efgm_buttsex6969 has a non-zero chance of bricking the entire server, and loading into gm_flatgrass just probably won't be any fun.
+	for k, v in pairs(mapPool) do
+
+		if v == votedMap then validMapVote = true break end
+
+	end
+
+	if validMapVote == false then print("Hey, can someone tell "..ply:GetName().." that "..votedMap.." isn't actually a map that exists? Thanks.") return end
+
+	for k, v in pairs(mapPool) do
+
+		if votedMap == v then
+
+			mapVotes[k] = mapVotes[k] + 1
+
+			ply:PrintMessage(3, "Your vote for "..votedMap.." has been counted successfully!")
+
+		end
+
+	end
+
+end
+concommand.Add("vote", VoteForMap)
 
 function ENT:InitializeRaid()
 

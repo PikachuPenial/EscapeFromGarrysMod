@@ -513,6 +513,13 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 			taskPanel:Clear()
 
+			local panelGap = 30
+
+			local textColor = Color(0,0,0,255)
+
+			local taskIncompleteColor = Color(90, 60, 60, 255)
+			local taskCompleteColor = Color(90, 90, 120, 255)
+
 			for k, v in pairs(taskInfo) do
 
 				local taskCollapsible = vgui.Create("DCollapsibleCategory", taskPanel)
@@ -530,54 +537,75 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				
 				taskInfoPanel.Paint = function()
 
-					surface.SetDrawColor(50,50,50,255)
-					surface.DrawRect(0, 0, taskInfoPanel:GetWide() , taskInfoPanel:GetTall())
-
 					surface.SetDrawColor(80,80,80,255)
-					surface.DrawRect(10, 10, taskInfoPanel:GetWide() - 20, taskInfoPanel:GetTall() - 20)
-
-					surface.SetDrawColor(50,50,50,255)
-
-					local textColor = Color(0,0,0,255)
+					surface.DrawRect(0, 0, taskInfoPanel:GetWide(), taskInfoPanel:GetTall())
 
 					draw.SimpleText( v[1], "DermaLarge", taskInfoPanel:GetWide() / 2, 30, textColor, 1 )
 
 					draw.SimpleText( v[2], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 70, textColor, 1 )
 
-					draw.SimpleText( "Objectives:", "DermaLarge", taskInfoPanel:GetWide() / 2, 100, textColor, 1 )
+					draw.SimpleText( "Client:", "DermaLarge", taskInfoPanel:GetWide() / 2, 100, textColor, 1 )
 
-					draw.SimpleText( v[3], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 130, textColor, 1 )
+					draw.SimpleText( v[4], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 130, textColor, 1 )
 
-					draw.SimpleText( "Client:", "DermaLarge", taskInfoPanel:GetWide() / 2, 170, textColor, 1 )
+					draw.SimpleText( "Mission Rewards:", "DermaLarge", taskInfoPanel:GetWide() / 2, 160, textColor, 1 )
 
-					draw.SimpleText( v[4], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 200, textColor, 1 )
-
-					draw.SimpleText( "Mission Rewards:", "DermaLarge", taskInfoPanel:GetWide() / 2, 230, textColor, 1 )
-
-					draw.SimpleText( v[5], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 260, textColor, 1 )
+					draw.SimpleText( v[5], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 190, textColor, 1 )
 
 				end
 
-				local taskHoldOpenPanel = vgui.Create("DPanel", taskInfoPanel)
-				taskHoldOpenPanel:Dock( FILL )
+				local tasksCompletedExploded = string.Explode(" ", tostring( v[7] ))
+				local taskObjectivesExploded = string.Explode("|", tostring( v[3] ))
 
-				taskHoldOpenPanel.Paint = function()
-					surface.SetDrawColor(0,0,0,0)
-					surface.DrawRect(0, 0, taskHoldOpenPanel:GetWide(), taskHoldOpenPanel:GetTall())
+				local completeButtonPosition = 0
+
+				for l, b in pairs(tasksCompletedExploded) do
+
+					print(b)
+
+					local panelOffset = 190 + (l * (panelGap + 80))
+
+					local objectivePanel = vgui.Create("DPanel", taskInfoPanel)
+					objectivePanel:SetPos(taskInfoPanel:GetWide() / 2 - 150, panelOffset)
+					objectivePanel:SetSize(300, 80)
+
+					objectivePanel.Paint = function()
+
+						if tasksCompletedExploded[l] == "complete" then
+							surface.SetDrawColor(taskCompleteColor)
+						else
+							surface.SetDrawColor(taskIncompleteColor)
+						end
+	
+						surface.DrawRect(0, 0, objectivePanel:GetWide(), objectivePanel:GetTall())
+
+						draw.SimpleText( taskObjectivesExploded[l], "DermaDefaultBold", objectivePanel:GetWide() / 2, objectivePanel:GetTall() / 2, textColor, 1 )
+
+					end
+
+					completeButtonPosition = panelOffset
 
 				end
 
-				local taskCompleteButton = vgui.Create("DButton", taskInfoPanel)
-				taskCompleteButton:SetText( "Complete Task" )
-				taskCompleteButton:SetPos( taskInfoPanel:GetWide() / 2 - 125, taskInfoPanel:GetTall() - 100)
-				taskCompleteButton:SetSize( 250, 50 )
+				completeButtonPosition = completeButtonPosition + 110
 
-				function taskCompleteButton:DoClick() -- Defines what should happen when the label is clicked
-					net.Start("TaskComplete")
-					net.WriteInt(v[6], 12)
-					net.SendToServer()
+				if tonumber(v[8]) == 1 then
 
-					
+					print("Task completed = "..v[8])
+
+					local taskCompleteButton = vgui.Create("DButton", taskInfoPanel)
+					taskCompleteButton:SetText( "Complete Task" )
+					taskCompleteButton:SetPos( taskInfoPanel:GetWide() / 2 - 125, completeButtonPosition)
+					taskCompleteButton:SetSize( 250, 50 )
+
+					function taskCompleteButton:DoClick() -- Defines what should happen when the label is clicked
+						net.Start("TaskComplete")
+						net.WriteInt(v[6], 12)
+						net.SendToServer()
+
+						
+					end
+
 				end
 
 			end

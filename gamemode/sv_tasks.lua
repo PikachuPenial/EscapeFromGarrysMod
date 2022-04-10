@@ -20,14 +20,14 @@
 local subtaskIncompleteText =   "incomplete"
 local subtaskCompleteText =     "complete"
 
-local taskPossibleObjectives = {"locate", "find", "extract"}
+local taskPossibleObjectives = {"locate", "find", "extract", "kill"}
 
 local taskDaily = {}
 
 local debug1 = {
     ["TaskName"] =                      "Debug - Part 1",
     ["TaskDescription"] =               "Do the shit i dare you",
-    ["TaskObjectives"] =                "Locate special area 1, locate special area 2, locate special area 3, and extract from tasktest",
+    ["TaskObjectives"] =                "Locate special area 1|Locate special area 2|Locate special area 3|Extract from tasktest",
 
     ["TaskGiver"] =                     "Gunner",
     ["TaskNextID"] =                    3,
@@ -70,8 +70,6 @@ util.AddNetworkString("RequestTaskInfo")
 
 util.AddNetworkString("TaskComplete")
 
-
-
 local function SendTaskInfo(ply)
 
     if sql.Query( "SELECT TaskID FROM TaskTable WHERE TaskUser = " .. SQLStr( ply:SteamID64() ) .. ";" ) == nil then return end
@@ -94,7 +92,11 @@ local function SendTaskInfo(ply)
 
         PrintTable(taskList[taskID])
 
-        local tempTable = {taskList[taskID].TaskName, taskList[taskID].TaskDescription, taskList[taskID].TaskObjectives, taskList[taskID].TaskGiver, taskList[taskID].TaskRewards, taskID}
+        local tasksCompleted = sql.QueryValue( "SELECT TaskObjectives FROM TaskTable WHERE TaskUser = " .. ply:SteamID64() .. " AND TaskID = " .. taskID .. ";" )
+
+        local isTaskComplete = sql.QueryValue( "SELECT TaskCompleted FROM TaskTable WHERE TaskUser = " .. ply:SteamID64() .. " AND TaskID = " .. taskID .. ";" )
+
+        local tempTable = {taskList[taskID].TaskName, taskList[taskID].TaskDescription, taskList[taskID].TaskObjectives, taskList[taskID].TaskGiver, taskList[taskID].TaskRewards, taskID, tasksCompleted, isTaskComplete}
 
         -- task name, description, objectives, giver, rewards, id
 
@@ -123,6 +125,31 @@ net.Receive("TaskComplete",function (len, ply)
     end
 
 end)
+
+local function GenerateDailyTask(ply, dailyTaskID)
+
+    taskDaily = {
+        ["TaskName"] =                      "",
+        ["TaskDescription"] =               "",
+        ["TaskObjectives"] =                "",
+    
+        ["TaskGiver"] =                     "The Camera",
+        ["TaskNextID"] =                    nil,
+    
+        ["TaskRewards"] =                   "7500 Roubles|AK-47",
+    
+        ["TaskMap"] =                       "efgm_tasktest",
+    
+        ["TaskInternalConditions"] =        "resetondeath_true",
+        ["TaskInternalObjectives"] =       "kill_5",
+        ["TaskInternalObjectiveCount"] =    1,
+        ["TaskInternalObjectiveLayout"] =   "0/5",
+        ["TaskInternalRewards"] =           "money_7500 gun_weapon_arccw_ak47"
+    }
+
+    -- sql.Query( "INSERT INTO TaskTable ( TaskUser, TaskID, TaskObjectives, TaskCompleted ) VALUES( " .. ply:SteamID64() .. ", " .. nextTaskId .. ", " .. SQLStr( taskList[nextTaskId].TaskInternalObjectiveLayout ) .. ", " .. 0 .. " )" )
+
+end
 
 local function FindPlayerTaskIDs(player)
 
@@ -326,11 +353,11 @@ hook.Add( "Initialize", "CreateTaskList", function()
 
 end )
 
-hook.Add( "OnNPCKilled", "OnPMCKilled", function( npc, attacker, inflictor )
-	
-    if FindPlayerTaskIDs(attacker) == nil then return end
+hook.Add( "PlayerDeath", "OnPMCKilled", function( victim, inflictor, attacker )
 
     if attacker:IsPlayer() == false then return end
+	
+    if FindPlayerTaskIDs(attacker) == nil then return end
 
     for h, j in pairs(FindPlayerTaskIDs(attacker)) do
         

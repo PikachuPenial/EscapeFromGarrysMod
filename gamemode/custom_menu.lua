@@ -498,7 +498,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		
 		--Draw/write text
 
-		draw.DrawText("Tasks", "DermaLarge", taskButton:GetWide() / 2.1, 10, Color(102, 255, 102, 255), 1)
+		draw.DrawText("TASKS", "DermaLarge", taskButton:GetWide() / 2.1, 10, Color(255, 165, 0, 255), 1)
 		
 	end
 

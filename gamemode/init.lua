@@ -2,6 +2,7 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 AddCSLuaFile("testhud.lua")
 AddCSLuaFile("custom_menu.lua")
+AddCSLuaFile("map_menu.lua")
 AddCSLuaFile("custom_scoreboard.lua")
 
 include("shared.lua")

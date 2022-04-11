@@ -36,8 +36,7 @@ function HUD()
 	draw.SimpleText("EXP: " .. client:GetNWInt("playerExp") .. "/" .. expToLevel, "DermaDefaultBold", 50, ScrH() - 22, Color(255, 255, 255), 0)
 	
 	draw.SimpleText("₽ " .. client:GetNWInt("playerMoney"), "DermaDefaultBold", 100, ScrH() - 38, Color(255, 255, 255, 255), 0)
-	draw.SimpleText("EFGM BETA Testing / made by Penial & Porty", "DermaDefaultBold", 375, ScrH() - 38, Color(85, 0, 255, 255), 0)
-	draw.SimpleText("JOIN OUR DISCORD - discord.gg/Wb9cVUwvTV", "DermaDefaultBold", 375, ScrH() - 22, Color(85, 0, 255, 255), 0)
+	draw.SimpleText("JOIN OUR DISCORD - discord.gg/Wb9cVUwvTV", "DermaDefaultBold", 375, ScrH() - 22, Color(58, 235, 52, 255), 0)
 	draw.SimpleText("Press F3 to access your inventory", "DermaDefaultBold", 170, ScrH() - 38, Color(255, 166, 0, 255), 0)
 	draw.SimpleText("Press F4 for shop, stats, and help", "DermaDefaultBold", 170, ScrH() - 22, Color(255, 166, 0, 255), 0)
 
@@ -61,8 +60,6 @@ function HUD()
 		timeText = mapSwitchText
 
 		draw.SimpleText("MAP IS RESETING: TRANSFER ANYTHING YOU WANT TO KEEP INTO YOUR STASH, OR YOU WILL LOSE YOUR ITEMS.", "DermaLarge", ScrW() / 2, 50, colorRed, 1)
-		draw.SimpleText("TO CHECK AVAILABLE MAPS TO VOTE FOR, TYPE THE FOLLOWING INTO THE CONSOLE: vote.", "DermaLarge", ScrW() / 2 , 80, colorRed, 1)
-		draw.SimpleText("TO VOTE FOR A NEW MAP, TYPE THE FOLLOWING INTO THE CONSOLE: vote efgm_<nextmapname>.", "DermaLarge", ScrW() / 2 , 110, colorRed, 1)
 	end
 
 	draw.SimpleText(raidTimeLeft, "DermaLarge", 28, ScrH() - 305, timerColor, 0)

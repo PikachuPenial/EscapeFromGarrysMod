@@ -18,8 +18,9 @@ local isRaidEnded = false
 
 local mapPool = {"efgm_concrete", "efgm_factory", "efgm_customs"}
 
--- the numbers correspond to the maps of mapPool. mapVotes[1] would be for concrete, etc
-local mapVotes = {0, 0}
+-- the numbers correspond to the maps of mapPool. mapVotes[1] would be for concrete, etc. 
+-- PENIAL ADD A ZERO FOR EACH MAP DONT SCARE ME WITH THESE ERRORS ok thanks lol
+local mapVotes = {0, 0, 0}
 
 local voterTable = {}
 

@@ -181,6 +181,16 @@ function ENT:EndRaid()
 
 	self:TriggerOutput("OnRaidEnd", self, nil)
 
+	timer.Simple(30, function()
+	
+		for k, v in pairs(player.GetHumans()) do
+
+			v:ConCommand("open_map_menu")
+
+		end
+
+	)
+
 	timer.Create("RaidTimer", 120, 1, function()
 	
 		local newMapTable = {}

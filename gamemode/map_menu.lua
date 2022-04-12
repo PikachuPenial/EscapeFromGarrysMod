@@ -27,12 +27,10 @@ function mapVoteMenu(ply, cmd, args)
 		addMapButtons(MapMenu)
 
 		gui.EnableScreenClicker(true)
-		surface.PlaySound( "common/wpn_select.wav" )
 	else
 		MapMenu:Remove()
 		MapMenu = nil
 		gui.EnableScreenClicker(false)
-		surface.PlaySound( "common/wpn_denyselect.wav" )
 	end
 end
 concommand.Add("open_map_menu", mapVoteMenu)

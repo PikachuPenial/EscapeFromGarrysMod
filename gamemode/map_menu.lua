@@ -24,10 +24,13 @@ function mapVoteMenu(ply, cmd, args)
 			surface.DrawRect(0, 24, MapMenu:GetWide(), 1)
 		end
 	
+        inMapVoteMenu = true
 		addMapButtons(MapMenu)
 
 		gui.EnableScreenClicker(true)
 	else
+        inMapVoteMenu = false
+
 		MapMenu:Remove()
 		MapMenu = nil
 		gui.EnableScreenClicker(false)
@@ -55,11 +58,20 @@ function addMapButtons(MapMenu)
 		--Draw/write text
 		draw.DrawText("Close Menu / Skip Vote", "Trebuchet24", closeButton:GetWide() / 2.1, 10, Color(255, 0, 0, 255), 1)
     end
-        closeButton.DoClick = function(closeButton)
+    
+    closeButton.DoClick = function(closeButton)
+        if (inPlayerMenu == false) and (inStashMenu == false) then
             MapMenu:Remove()
             MapMenu = nil
             gui.EnableScreenClicker(false)
             surface.PlaySound( "common/wpn_select.wav" )
+            inMapVoteMenu = false
+        else
+            MapMenu:Remove()
+            MapMenu = nil
+            surface.PlaySound( "common/wpn_select.wav" )
+            inMapVoteMenu = false
+        end
 	end
 
     local concreteButton = vgui.Create("DImageButton")
@@ -70,10 +82,18 @@ function addMapButtons(MapMenu)
     concreteButton.DoClick = function()
         RunConsoleCommand("vote", "efgm_concrete")
 
-        MapMenu:Remove()
-        MapMenu = nil
-        gui.EnableScreenClicker(false)
-        surface.PlaySound( "common/wpn_select.wav" )
+        if (inPlayerMenu == false) and (inStashMenu == false) then
+            MapMenu:Remove()
+            MapMenu = nil
+            gui.EnableScreenClicker(false)
+            surface.PlaySound( "common/wpn_select.wav" )
+            inMapVoteMenu = false
+        else
+            MapMenu:Remove()
+            MapMenu = nil
+            surface.PlaySound( "common/wpn_select.wav" )
+            inMapVoteMenu = false
+        end
     end
 
     local factoryButton = vgui.Create("DImageButton")
@@ -84,10 +104,18 @@ function addMapButtons(MapMenu)
     factoryButton.DoClick = function()
         RunConsoleCommand("vote", "efgm_factory")
 
-        MapMenu:Remove()
-        MapMenu = nil
-        gui.EnableScreenClicker(false)
-        surface.PlaySound( "common/wpn_select.wav" )
+        if (inPlayerMenu == false) and (inStashMenu == false) then
+            MapMenu:Remove()
+            MapMenu = nil
+            gui.EnableScreenClicker(false)
+            surface.PlaySound( "common/wpn_select.wav" )
+            inMapVoteMenu = false
+        else
+            MapMenu:Remove()
+            MapMenu = nil
+            surface.PlaySound( "common/wpn_select.wav" )
+            inMapVoteMenu = false
+        end
     end
 
     local customsButton = vgui.Create("DImageButton")
@@ -98,9 +126,17 @@ function addMapButtons(MapMenu)
     customsButton.DoClick = function()
         RunConsoleCommand("vote", "efgm_customs")
 
-        MapMenu:Remove()
-        MapMenu = nil
-        gui.EnableScreenClicker(false)
-        surface.PlaySound( "common/wpn_select.wav" )
+        if (inPlayerMenu == false) and (inStashMenu == false) then
+            MapMenu:Remove()
+            MapMenu = nil
+            gui.EnableScreenClicker(false)
+            surface.PlaySound( "common/wpn_select.wav" )
+            inMapVoteMenu = false
+        else
+            MapMenu:Remove()
+            MapMenu = nil
+            surface.PlaySound( "common/wpn_select.wav" )
+            inMapVoteMenu = false
+        end
     end
 end

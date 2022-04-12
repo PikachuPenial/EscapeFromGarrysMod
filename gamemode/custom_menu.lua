@@ -68,10 +68,6 @@ end)
 
 net.Receive("StashMenuReload", function (len, ply) ResetMenu() end)
 
--- This sets the percent of money you will earn from selling a weapon.
--- Just because you can set it above 1, does not mean you should.
--- 0.6 seems like a good starting point.
-
 function gameShopMenu(ply, cmd, args)
 
 	-- This part just makes sure the client is the one viewing the hud. This is so some logic can work, it's complicated.
@@ -87,35 +83,52 @@ function gameShopMenu(ply, cmd, args)
 
 	-- Moving on
 
-	if (Menu == nil) then
+	if (inPlayerMenu == false) then
 		Menu = vgui.Create("DFrame")
 		Menu:SetSize(860, 1080)
 		Menu:Center()
 		Menu:SetTitle("Escape From Garry's Mod Menu")
 		Menu:SetDraggable(true)
-		Menu:ShowCloseButton(false)
+		Menu:ShowCloseButton(true)
 		Menu:SetDeleteOnClose(false)
 		Menu.Paint = function()
 			surface.SetDrawColor(90, 90, 90, 50)
 			surface.DrawRect(0, 0, Menu:GetWide(), Menu:GetTall())
-			
+		
 			surface.SetDrawColor(40, 40, 40, 50)
 			surface.DrawRect(0, 24, Menu:GetWide(), 1)
 		end
 	
 		addButtons(Menu, isSellMenu, isPlayerInRaid, clientPlayer)
 
+		inPlayerMenu = true
+
 		gui.EnableScreenClicker(true)
 		surface.PlaySound( "common/wpn_select.wav" )
-	else
-		Menu:Remove()
-		Menu = nil
-		gui.EnableScreenClicker(false)
-		surface.PlaySound( "common/wpn_denyselect.wav" )
 
-		clientPlayer = nil
-		isSellMenu = false
-		seller = nil
+		Menu.OnClose = function()
+
+			if (inStashMenu == false) and (inMapVoteMenu == false) then
+				inPlayerMenu = false
+	
+				gui.EnableScreenClicker(false)
+				surface.PlaySound( "common/wpn_denyselect.wav" )
+
+				inPlayerMenu = false
+
+				clientPlayer = nil
+				isSellMenu = false
+				seller = nil
+			else
+				surface.PlaySound( "common/wpn_denyselect.wav" )
+				
+				inPlayerMenu = false
+
+				clientPlayer = nil
+				isSellMenu = false
+				seller = nil
+			end
+		end
 	end
 end
 concommand.Add("open_game_menu", gameShopMenu)
@@ -842,248 +855,124 @@ vgui.Register("TaskPanel", PANEL, "Panel")
 
 function MenuInit()
 
-	StashMenu = vgui.Create("DFrame")
-	StashMenu:SetSize(ScrW(), ScrH())
-	StashMenu:Center()
-	StashMenu:SetTitle("Stash Inventory")
-	StashMenu:SetDraggable(false)
-	StashMenu:ShowCloseButton(true)
-	StashMenu:SetDeleteOnClose(false)
-	StashMenu.Paint = function()
-		surface.SetDrawColor(30, 30, 30, 255)
-		surface.DrawRect(0, 0, StashMenu:GetWide(), StashMenu:GetTall())
-	end
+	if (inStashMenu == false) then
+		StashMenu = vgui.Create("DFrame")
+		StashMenu:SetSize(ScrW(), ScrH())
+		StashMenu:Center()
+		StashMenu:SetTitle("Stash Inventory")
+		StashMenu:SetDraggable(false)
+		StashMenu:ShowCloseButton(true)
+		StashMenu:SetDeleteOnClose(false)
+		StashMenu.Paint = function()
+			surface.SetDrawColor(30, 30, 30, 255)
+			surface.DrawRect(0, 0, StashMenu:GetWide(), StashMenu:GetTall())
+		end
 
-	gui.EnableScreenClicker(true)
-	surface.PlaySound( "common/wpn_select.wav" )
+		gui.EnableScreenClicker(true)
+		surface.PlaySound( "common/wpn_select.wav" )
 
-	StashMenu.OnClose = function()
-		gui.EnableScreenClicker(false)
-		surface.PlaySound( "common/wpn_denyselect.wav" )
-	end
+		inStashMenu = true
 
-	inventoryTable = stashClient:GetWeapons()
+		StashMenu.OnClose = function()
+			if (inPlayerMenu == false) and (inMapVoteMenu == false) then
+				inStashMenu = false
 
-	local playerInventoryPanel = vgui.Create("DPanel", StashMenu)
-	playerInventoryPanel:Dock( LEFT )
-	playerInventoryPanel:SetSize(96, 0)
+				gui.EnableScreenClicker(false)
+				surface.PlaySound( "common/wpn_denyselect.wav" )
+			else
+				inStashMenu = false
 
-	function playerInventoryPanel:Paint(w, h)
-
-		draw.RoundedBox(0, 0, 0, w, h, Color( 120, 120, 120, 255 ))
-
-	end
-
-	local ammoInventoryPanel = vgui.Create("DPanel", StashMenu)
-	ammoInventoryPanel:Dock( LEFT )
-	ammoInventoryPanel:SetSize(96, 0)
-
-	function ammoInventoryPanel:Paint(w, h)
-
-		draw.RoundedBox(0, 0, 0, w, h, Color( 120, 120, 120, 255 ))
-
-	end
-
-	local separatePanel = vgui.Create("DPanel", StashMenu)
-	separatePanel:Dock( LEFT )
-	separatePanel:SetSize(20, 0)
-
-	function separatePanel:Paint(w, h)
-
-		draw.RoundedBox(0, 0, 0, w, h, Color( 30, 30, 30, 255 ))
-
-	end
-
-	local stashPanel = vgui.Create("DPanel", StashMenu)
-	stashPanel:Dock( FILL )
-	
-	function stashPanel:Paint(w, h)
-
-		draw.RoundedBox(0, 0, 0, w, h, Color( 120, 120, 120, 255 ))
-
-	end
-
-
-	local stashIconLayout = vgui.Create("DIconLayout", stashPanel)
-	stashIconLayout:Dock( FILL )
-	stashIconLayout:SetSpaceY(5)
-	stashIconLayout:SetSpaceX(5)
-
-	local inventoryIconLayout = vgui.Create("DIconLayout", playerInventoryPanel)
-	inventoryIconLayout:Dock( FILL )
-	inventoryIconLayout:SetSpaceY(5)
-	inventoryIconLayout:SetSpaceX(5)
-
-	local ammoIconLayout = vgui.Create("DIconLayout", ammoInventoryPanel)
-	ammoIconLayout:Dock( FILL )
-	ammoIconLayout:SetSpaceY(5)
-	ammoIconLayout:SetSpaceX(5)
-
-	function DoInventory()
-
-		--local avatar = vgui.Create("AvatarImage")
-
-		--avatar:SetSize(96, 96)
-		--avatar:SetPos(101, 635)
-		--avatar:SetPlayer(LocalPlayer(), 96)
-
-		print("doing inventory")
-
-		for k, v in pairs(stashClient:GetWeapons()) do
-			-- Creates buttons for the weapons
-
-			if weapons.Get( v:GetClass() ) == nil then return end
-
-			local weaponInfo = weapons.Get( v:GetClass() )
-
-			-- PrintTable(stashClient:GetWeapons())
-
-			local wepName
-
-			if weaponInfo["TrueName"] == nil then wepName = weaponInfo["PrintName"] else wepName = weaponInfo["TrueName"] end
-
-			local icon = vgui.Create("SpawnIcon", stashIconLayout)
-			icon:SetModel(weaponInfo["WorldModel"])
-			icon:SetToolTip(wepName)
-			icon:SetSize(96, 96)
-
-			function icon:Paint(w, h)
-				
-				draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
-				draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
-				draw.SimpleText(wepName, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
-
-				local currentItemPrice = nil
-				local currentItemLevel = nil
-				local currentItemTier = nil
-				local currentItemCategory = nil
-
-				local currentItemSellPrice = nil
-
-				for l, b in pairs(weaponsArr) do
-
-					-- if names match (v.ItemName is same as v["ItemName"])
-					if b[2] == v.ItemName then
-
-						currentItemPrice = tostring(b[4])
-						currentItemLevel = tostring(b[5])
-						currentItemTier = tostring(b[6])
-						currentItemCategory = tostring(b[7])
-
-						currentItemSellPrice = (currentItemPrice * sellPriceMultiplier)
-
-						break
-
-					end
-
-				end
-
-				if currentItemPrice != nil then
-					-- Weapon Sell Price
-					draw.SimpleText("₽", "DermaDefault", 5, 0, Color(255, 255, 0, 255), 0)
-					draw.SimpleText(currentItemSellPrice, "DermaDefault", 15, 0, Color(255, 255, 255, 255), 0)
-					
-					draw.SimpleText("Sell Price", "HudHintTextSmall", 5, 10, Color(255, 255, 255, 255), 0)
-					draw.SimpleText("Rarity", "HudHintTextSmall", w/1.05, 10, Color(255, 255, 255, 255), 2)
-				end
-
-				if currentItemTier == "LOW" then
-					draw.SimpleText("LOW", "DermaDefault", w/1.05, 0, Color(255, 0, 0, 255), 2)
-				end
-
-				if currentItemTier == "MID" then
-					draw.SimpleText("MID", "DermaDefault", w/1.05, 0, Color(255, 255, 0, 255), 2)
-				end
-				
-				if currentItemTier == "HIGH" then
-					draw.SimpleText("HIGH", "DermaDefault", w/1.05, 0, Color(0, 255, 0, 255), 2)
-				end
-
-				if currentItemTier == "UTIL" then
-					draw.SimpleText("UTIL", "DermaDefault", w/1.05, 0, Color(0, 0, 255, 255), 2)
-				end
-
-			end
-
-			inventoryIconLayout:Add(icon)
-			
-			icon.DoClick = function(icon)
-
-				net.Start("PutWepInStash")
-				net.WriteString(v:GetClass())
-				net.SendToServer()
-
-				surface.PlaySound( "UI/buttonclick.wav" )
-
-				icon:Remove()
-
+				surface.PlaySound( "common/wpn_denyselect.wav" )
 			end
 		end
 
-		PrintTable(LocalPlayer():GetAmmo())
+		inventoryTable = stashClient:GetWeapons()
 
-		-- for k, v in pairs(LocalPlayer():GetAmmo()) do
-		-- 	-- Creates buttons for the weapons
+		local playerInventoryPanel = vgui.Create("DPanel", StashMenu)
+		playerInventoryPanel:Dock( LEFT )
+		playerInventoryPanel:SetSize(96, 0)
 
-		-- 	if v == nil then print("ammo is nil") return end
+		function playerInventoryPanel:Paint(w, h)
 
-		-- 	local ammoName = game.GetAmmoName(v)
-		-- 	local ammoAmount = LocalPlayer():GetAmmoCount(v)
+			draw.RoundedBox(0, 0, 0, w, h, Color( 120, 120, 120, 255 ))
 
-		-- 	if ammoName == nil then print("cannot find ammo name") return end
+		end
 
-		-- 	print("starting on ammo icon")
+		local ammoInventoryPanel = vgui.Create("DPanel", StashMenu)
+		ammoInventoryPanel:Dock( LEFT )
+		ammoInventoryPanel:SetSize(96, 0)
 
-		-- 	local icon = vgui.Create("SpawnIcon", ammoIconLayout)
-		-- 	--icon:SetModel(ammoName["WorldModel"])
-		-- 	icon:SetToolTip(ammoName)
-		-- 	icon:SetSize(96, 96)
+		function ammoInventoryPanel:Paint(w, h)
 
-		-- 	function icon:Paint(w, h)
-				
-		-- 		draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
-		-- 		draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
-		-- 		draw.SimpleText(ammoName.." x"..ammoAmount, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
+			draw.RoundedBox(0, 0, 0, w, h, Color( 120, 120, 120, 255 ))
 
-		-- 	end
+		end
 
-		-- 	print("adding ammo to ammo icon layout")
-		-- 	ammoIconLayout:Add(icon)
-			
-		-- 	-- icon.DoClick = function(icon)
+		local separatePanel = vgui.Create("DPanel", StashMenu)
+		separatePanel:Dock( LEFT )
+		separatePanel:SetSize(20, 0)
 
-		-- 	-- end
+		function separatePanel:Paint(w, h)
 
-		-- end
+			draw.RoundedBox(0, 0, 0, w, h, Color( 30, 30, 30, 255 ))
 
-		print("sending message to server to fetch stash")
+		end
 
-		net.Start( "RequestStash" )
-		net.SendToServer()
-
-		function ShowStashTable()
-
-			for k, v in pairs(stashTable) do
-
-				if v["ItemOwner"] != LocalPlayer():SteamID64() then	print(LocalPlayer():SteamID64() .. " does not equal " .. v["ItemOwner"])	return end
-				if v["ItemType"] != "wep" then						print("ammo bad")															return end
+		local stashPanel = vgui.Create("DPanel", StashMenu)
+		stashPanel:Dock( FILL )
 	
-				print("Initializing Stash Contents, gun class is " .. v["ItemName"])
-				
-				local weaponInfo = weapons.Get( v["ItemName"] )
+		function stashPanel:Paint(w, h)
+
+			draw.RoundedBox(0, 0, 0, w, h, Color( 120, 120, 120, 255 ))
+
+		end
+
+
+		local stashIconLayout = vgui.Create("DIconLayout", stashPanel)
+		stashIconLayout:Dock( FILL )
+		stashIconLayout:SetSpaceY(5)
+		stashIconLayout:SetSpaceX(5)
+
+		local inventoryIconLayout = vgui.Create("DIconLayout", playerInventoryPanel)
+		inventoryIconLayout:Dock( FILL )
+		inventoryIconLayout:SetSpaceY(5)
+		inventoryIconLayout:SetSpaceX(5)
+
+		local ammoIconLayout = vgui.Create("DIconLayout", ammoInventoryPanel)
+		ammoIconLayout:Dock( FILL )
+		ammoIconLayout:SetSpaceY(5)
+		ammoIconLayout:SetSpaceX(5)
+
+		function DoInventory()
+
+			--local avatar = vgui.Create("AvatarImage")
+
+			--avatar:SetSize(96, 96)
+			--avatar:SetPos(101, 635)
+			--avatar:SetPlayer(LocalPlayer(), 96)
+
+			print("doing inventory")
+
+			for k, v in pairs(stashClient:GetWeapons()) do
+				-- Creates buttons for the weapons
+
+				if weapons.Get( v:GetClass() ) == nil then return end
+
+				local weaponInfo = weapons.Get( v:GetClass() )
+			
+				-- PrintTable(stashClient:GetWeapons())
 
 				local wepName
-	
+
 				if weaponInfo["TrueName"] == nil then wepName = weaponInfo["PrintName"] else wepName = weaponInfo["TrueName"] end
-	
+
 				local icon = vgui.Create("SpawnIcon", stashIconLayout)
 				icon:SetModel(weaponInfo["WorldModel"])
 				icon:SetToolTip(wepName)
 				icon:SetSize(96, 96)
-	
-				function icon:Paint(w, h)
 
-					-- Weapon Name
+				function icon:Paint(w, h)
+				
 					draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
 					draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
 					draw.SimpleText(wepName, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
@@ -1092,20 +981,22 @@ function MenuInit()
 					local currentItemLevel = nil
 					local currentItemTier = nil
 					local currentItemCategory = nil
-	
+
 					local currentItemSellPrice = nil
-	
+				
 					for l, b in pairs(weaponsArr) do
-	
+
 						-- if names match (v.ItemName is same as v["ItemName"])
 						if b[2] == v.ItemName then
-	
+
 							currentItemPrice = tostring(b[4])
 							currentItemLevel = tostring(b[5])
 							currentItemTier = tostring(b[6])
 							currentItemCategory = tostring(b[7])
-	
+
 							currentItemSellPrice = (currentItemPrice * sellPriceMultiplier)
+
+							break
 
 						end
 
@@ -1115,8 +1006,7 @@ function MenuInit()
 						-- Weapon Sell Price
 						draw.SimpleText("₽", "DermaDefault", 5, 0, Color(255, 255, 0, 255), 0)
 						draw.SimpleText(currentItemSellPrice, "DermaDefault", 15, 0, Color(255, 255, 255, 255), 0)
-						draw.SimpleText(currentItemCategory, "HudHintTextSmall", 5, 64, Color(255, 255, 255, 255), 0)
-
+					
 						draw.SimpleText("Sell Price", "HudHintTextSmall", 5, 10, Color(255, 255, 255, 255), 0)
 						draw.SimpleText("Rarity", "HudHintTextSmall", w/1.05, 10, Color(255, 255, 255, 255), 2)
 					end
@@ -1128,7 +1018,7 @@ function MenuInit()
 					if currentItemTier == "MID" then
 						draw.SimpleText("MID", "DermaDefault", w/1.05, 0, Color(255, 255, 0, 255), 2)
 					end
-					
+				
 					if currentItemTier == "HIGH" then
 						draw.SimpleText("HIGH", "DermaDefault", w/1.05, 0, Color(0, 255, 0, 255), 2)
 					end
@@ -1138,39 +1028,174 @@ function MenuInit()
 					end
 
 				end
-	
-				stashIconLayout:Add(icon)
 
+				inventoryIconLayout:Add(icon)
+			
 				icon.DoClick = function(icon)
-	
-					if LocalPlayer():HasWeapon( v["ItemName"] ) == false then
 
-						net.Start("TakeFromStash")
-						net.WriteString(v["ItemName"])
-						net.SendToServer()
+					net.Start("PutWepInStash")
+					net.WriteString(v:GetClass())
+					net.SendToServer()
 
-					else
+					surface.PlaySound( "UI/buttonclick.wav" )
 
-						surface.PlaySound( "common/wpn_denyselect.wav" )
-
-					end
+					icon:Remove()
 
 				end
+			end
+
+			PrintTable(LocalPlayer():GetAmmo())
+
+			-- for k, v in pairs(LocalPlayer():GetAmmo()) do
+			-- 	-- Creates buttons for the weapons
+
+			-- 	if v == nil then print("ammo is nil") return end
+
+			-- 	local ammoName = game.GetAmmoName(v)
+			-- 	local ammoAmount = LocalPlayer():GetAmmoCount(v)
+
+			-- 	if ammoName == nil then print("cannot find ammo name") return end
+
+			-- 	print("starting on ammo icon")
+
+			-- 	local icon = vgui.Create("SpawnIcon", ammoIconLayout)
+			-- 	icon:SetModel(ammoName["WorldModel"])
+			-- 	icon:SetToolTip(ammoName)
+			-- 	icon:SetSize(96, 96)
+
+			-- 	function icon:Paint(w, h)
+				
+			-- 		draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
+			-- 		draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
+			-- 		draw.SimpleText(ammoName.." x"..ammoAmount, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
+
+			-- 	end
+
+			-- 	print("adding ammo to ammo icon layout")
+			-- 	ammoIconLayout:Add(icon)
+			
+			-- icon.DoClick = function(icon)
+
+			-- end
+
+			-- end
+
+			print("sending message to server to fetch stash")
+
+			net.Start( "RequestStash" )
+			net.SendToServer()
+
+			function ShowStashTable()
+
+				for k, v in pairs(stashTable) do
+
+					if v["ItemOwner"] != LocalPlayer():SteamID64() then	print(LocalPlayer():SteamID64() .. " does not equal " .. v["ItemOwner"])	return end
+					if v["ItemType"] != "wep" then						print("ammo bad")															return end
+					
+					print("Initializing Stash Contents, gun class is " .. v["ItemName"])
+				
+					local weaponInfo = weapons.Get( v["ItemName"] )
+
+					local wepName
 	
+					if weaponInfo["TrueName"] == nil then wepName = weaponInfo["PrintName"] else wepName = weaponInfo["TrueName"] end
+	
+					local icon = vgui.Create("SpawnIcon", stashIconLayout)
+					icon:SetModel(weaponInfo["WorldModel"])
+					icon:SetToolTip(wepName)
+					icon:SetSize(96, 96)
+	
+					function icon:Paint(w, h)
+
+						-- Weapon Name
+						draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
+						draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
+						draw.SimpleText(wepName, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
+
+						local currentItemPrice = nil
+						local currentItemLevel = nil
+						local currentItemTier = nil
+						local currentItemCategory = nil
+	
+						local currentItemSellPrice = nil
+	
+						for l, b in pairs(weaponsArr) do
+	
+							-- if names match (v.ItemName is same as v["ItemName"])
+							if b[2] == v.ItemName then
+	
+								currentItemPrice = tostring(b[4])
+								currentItemLevel = tostring(b[5])
+								currentItemTier = tostring(b[6])
+								currentItemCategory = tostring(b[7])
+	
+								currentItemSellPrice = (currentItemPrice * sellPriceMultiplier)
+
+							end
+
+						end
+
+						if currentItemPrice != nil then
+							-- Weapon Sell Price
+							draw.SimpleText("₽", "DermaDefault", 5, 0, Color(255, 255, 0, 255), 0)
+							draw.SimpleText(currentItemSellPrice, "DermaDefault", 15, 0, Color(255, 255, 255, 255), 0)
+							draw.SimpleText(currentItemCategory, "HudHintTextSmall", 5, 64, Color(255, 255, 255, 255), 0)
+
+							draw.SimpleText("Sell Price", "HudHintTextSmall", 5, 10, Color(255, 255, 255, 255), 0)
+							draw.SimpleText("Rarity", "HudHintTextSmall", w/1.05, 10, Color(255, 255, 255, 255), 2)
+						end
+
+						if currentItemTier == "LOW" then
+							draw.SimpleText("LOW", "DermaDefault", w/1.05, 0, Color(255, 0, 0, 255), 2)
+						end
+
+						if currentItemTier == "MID" then
+							draw.SimpleText("MID", "DermaDefault", w/1.05, 0, Color(255, 255, 0, 255), 2)
+						end
+					
+						if currentItemTier == "HIGH" then
+							draw.SimpleText("HIGH", "DermaDefault", w/1.05, 0, Color(0, 255, 0, 255), 2)
+						end
+
+						if currentItemTier == "UTIL" then
+							draw.SimpleText("UTIL", "DermaDefault", w/1.05, 0, Color(0, 0, 255, 255), 2)
+						end
+
+					end
+	
+					stashIconLayout:Add(icon)
+
+					icon.DoClick = function(icon)
+	
+						if LocalPlayer():HasWeapon( v["ItemName"] ) == false then
+
+							net.Start("TakeFromStash")
+							net.WriteString(v["ItemName"])
+							net.SendToServer()
+
+						else
+
+							surface.PlaySound( "common/wpn_denyselect.wav" )
+
+						end
+
+					end
+	
+				end
+
+			end
+
+			function ResetMenu()
+
+				stashIconLayout:Clear()
+				inventoryIconLayout:Clear()
+				ammoIconLayout:Clear()
+
+				DoInventory()
+
 			end
 
 		end
 
-		function ResetMenu()
-
-			stashIconLayout:Clear()
-			inventoryIconLayout:Clear()
-			ammoIconLayout:Clear()
-
-			DoInventory()
-
-		end
-
 	end
-
 end

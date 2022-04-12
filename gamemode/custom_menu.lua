@@ -14,7 +14,6 @@ net.Receive("SendTaskInfo",function (len, ply)
 
 	local taskInfo = net.ReadTable()
 
-	print("Printing TaskInfo:")
 	PrintTable(taskInfo)
 
 	Menu:Hide()
@@ -40,8 +39,6 @@ net.Receive("SellMenuTable",function (len, ply)
 end)
 
 net.Receive("OpenStashGUI",function (len, ply)
-
-	print("got message to open stash")
 
 	tempTable = net.ReadTable()
 
@@ -661,8 +658,6 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 			local entityList
 
-			print(tostring(sellMenuBool))
-
 			if sellMenuBool == false then
 				
 
@@ -951,8 +946,6 @@ function MenuInit()
 			--avatar:SetPos(101, 635)
 			--avatar:SetPlayer(LocalPlayer(), 96)
 
-			print("doing inventory")
-
 			for k, v in pairs(stashClient:GetWeapons()) do
 				-- Creates buttons for the weapons
 
@@ -1080,8 +1073,6 @@ function MenuInit()
 
 			-- end
 
-			print("sending message to server to fetch stash")
-
 			net.Start( "RequestStash" )
 			net.SendToServer()
 
@@ -1091,8 +1082,6 @@ function MenuInit()
 
 					if v["ItemOwner"] != LocalPlayer():SteamID64() then	print(LocalPlayer():SteamID64() .. " does not equal " .. v["ItemOwner"])	return end
 					if v["ItemType"] != "wep" then						print("ammo bad")															return end
-					
-					print("Initializing Stash Contents, gun class is " .. v["ItemName"])
 				
 					local weaponInfo = weapons.Get( v["ItemName"] )
 

@@ -11,11 +11,7 @@ local function SendStashToClient(player)
 
     local value = sql.Query( "SELECT * FROM stash_table WHERE ItemOwner = " .. player:SteamID64() .. " ORDER BY ItemName;" )
 
-    print("stash request received")
-
     if value != nil then
-
-        -- PrintTable(value)
 
         net.Start( "SendStash" )
         net.WriteTable( value )
@@ -27,7 +23,6 @@ end
 
 net.Receive("RequestStash",function (len, ply)
 
-    print("got request to show stash")
     SendStashToClient(ply)
 	
 end)
@@ -41,8 +36,6 @@ net.Receive("PutWepInStash",function (len, ply)
     if ply:HasWeapon( item ) == false then print("Player does not have " .. item .. "!") return end
 
     sql.Query( "INSERT INTO stash_table ( ItemName, ItemCount, ItemType, ItemOwner ) VALUES( " .. SQLStr(item, false) .. ", " .. count .. ", " .. type .. ", " .. ply:SteamID64() .. ")" )
-    print("Added into SQL Table (stash_table): " .. SQLStr(item, false) .. " " .. count .. " " .. type .. " " .. ply:SteamID64() .. "!")
-    print("Last SQL Error = " .. tostring(sql.LastError()))
 
     ply:StripWeapon( item )
 
@@ -64,10 +57,7 @@ net.Receive("TakeFromStash",function (len, ply)
 
         local amountOfItemsMinusOne = amountOfItems - 1
 
-        print("Amount of items matching is " .. amountOfItems)
-
         sql.Query( "DELETE FROM stash_table WHERE ItemName = " .. sql.SQLStr(stashItemName) .. " AND ItemOwner = " .. ply:SteamID64() .. ";" )
-        print("Last SQL Error = " .. tostring(sql.LastError()))
 
         for i=1, amountOfItemsMinusOne do 
 
@@ -139,7 +129,6 @@ local function ConsoleWriteStashContents(ply, cmd, args)
     local type = SQLStr(args[3], false)
 
     sql.Query( "INSERT INTO stash_table ( ItemName, ItemCount, ItemType, ItemOwner ) VALUES( " .. item .. ", " .. count .. ", " .. type .. ", " .. ply:SteamID64() .. ")" )
-    print("Last SQL Error = " .. tostring(sql.LastError()))
 
 end
 concommand.Add("write_stash", ConsoleWriteStashContents)
@@ -150,7 +139,6 @@ local function WipeTable(ply, cmd, args)
 
     sql.Query( " DELETE FROM stash_table; " )
 
-    print("Last SQL Error = " .. tostring(sql.LastError()))
 
 end
 concommand.Add("delete_stash", WipeTable)

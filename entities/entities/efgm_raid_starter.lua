@@ -189,7 +189,7 @@ function ENT:EndRaid()
 
 		end
 
-	)
+	end)
 
 	timer.Create("RaidTimer", 120, 1, function()
 	

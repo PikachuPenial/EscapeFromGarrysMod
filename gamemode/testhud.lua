@@ -16,6 +16,8 @@ function HUD()
   if !client:Alive() then
       return
     end
+
+	hudInRaid = client:GetNWBool("inRaid")
 	
 --Gun Hud
 

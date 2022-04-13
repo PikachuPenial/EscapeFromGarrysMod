@@ -121,7 +121,7 @@ function ENT:CheckForPlayers()
 	
 						local expGained = math.random(250, 600)
 				
-						attacker:SetNWInt("playerExp", attacker:GetNWInt("playerExp") + expGained)
+						ply:SetNWInt("playerExp", ply:GetNWInt("playerExp") + expGained)
 
 						pmcInRaid = false
 

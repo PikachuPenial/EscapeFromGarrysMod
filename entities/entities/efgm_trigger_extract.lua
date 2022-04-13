@@ -119,6 +119,8 @@ function ENT:CheckForPlayers()
 
 						ply:PrintMessage( HUD_PRINTCENTER, "You have left the "..self.ExtractName.." extract!" )
 
+						pmcInRaid = false
+
 						timer.Remove( ply:GetName()..self.ExtractName.."_timer" )
 					end
 					

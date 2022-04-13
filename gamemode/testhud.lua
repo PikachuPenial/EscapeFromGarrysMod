@@ -1,5 +1,7 @@
-local raidTimeLeft = "Raid is over!"
+local raidTimeLeft = "Raid has not started."
 local timerRed = false
+
+local hudInRaid = false
 
 net.Receive("RaidTimeLeft",function (len, ply)
 
@@ -40,7 +42,7 @@ function HUD()
 	draw.SimpleText("Press F3 to access your inventory", "DermaDefaultBold", 170, ScrH() - 38, Color(255, 166, 0, 255), 0)
 	draw.SimpleText("Press F4 for shop, stats, and help", "DermaDefaultBold", 170, ScrH() - 22, Color(255, 166, 0, 255), 0)
 
-	-- timer
+	-- Timer
 
 	local colorBlack = Color(255, 255, 255, 255)
 	local colorRed = Color(255, 0, 0, 255)
@@ -53,7 +55,7 @@ function HUD()
 		timerColor = colorRed
 	end
 
-	local timeText = "Time Remaining"
+	local timeText = "Time Remaining ^"
 	local mapSwitchText = "Time Until Map Switches"
 
 	if timerRed == true then
@@ -65,11 +67,97 @@ function HUD()
 	draw.SimpleText(raidTimeLeft, "DermaLarge", 28, ScrH() - 305, timerColor, 0)
 	draw.SimpleText(timeText, "DermaDefaultBold", 28, ScrH() - 275, timerColor, 0)
 
-
+	-- Steam Profile Picture in the left corner
 
 	--avatar:SetSize(42, 42)
 	--avatar:SetPos(4, 1035)
 	--avatar:SetPlayer(client, 64)
+
+	-- Control hints while in lobby
+
+	if (hudInRaid == false) then
+
+		local spawnMenuBind = input.LookupBinding("+menu")
+
+		local contextMenuBind = input.LookupBinding("+menu_context")
+
+		local leanLeftBind = input.LookupBinding("+alt1")
+
+		local leanRightBind = input.LookupBinding("+alt2")
+
+		local dropBind = input.LookupBinding("+drop")
+
+		local nvgBind = input.LookupBinding("arc_vm_nvg")
+
+
+		if (spawnMenuBind == nil) then
+			spawnMenuBind = "#"
+			spawnMenuColor = 255, 0, 0, 255
+		else
+			spawnMenuColor = 255, 255, 255, 255
+		end
+
+		if (contextMenuBind == nil) then
+			contextMenuBind = "#"
+			contextMenuColor = 255, 0, 0, 255
+		else
+			contextMenuColor = 255, 255, 255, 255
+		end
+
+		if (leanLeftBind == nil) then
+			leanLeftBind = "#"
+			leanLeftColor = 255, 0, 0, 255
+		else
+			leanLeftColor = 255, 255, 255, 255
+		end
+
+		if (leanRightBind == nil) then
+			leanRightBind = "#"
+			leanRightColor = 255, 0, 0, 255
+		else
+			leanRightColor = 255, 255, 255, 255
+		end
+
+		if (dropBind == nil) then
+			dropBind = "#"
+			dropColor = 255, 0, 0, 255
+		else
+			dropColor = 255, 255, 255, 255
+		end
+
+		if (nvgBind == nil) then
+			nvgBind = "#"
+			nvgColor = 255, 0, 0, 255
+		else
+			nvgColor = 255, 255, 255, 255
+		end
+
+		draw.SimpleText("[Controls]", "DermaLarge", 135, ScrH() - 1060, Color(0, 200, 255, 255), 0)
+		draw.SimpleText("# = Not Binded", "DermaLarge", 135, ScrH() - 1030, Color(255, 0, 0, 255), 0)
+
+		draw.SimpleText("[" .. spawnMenuBind .. "]", "DermaLarge", 135, ScrH() - 1000, Color(spawnMenuColor), 0)
+		draw.SimpleText("Check Extracts", "DermaLarge", 170, ScrH() - 1000, Color(255, 255, 255, 255), 0)
+
+		draw.SimpleText("[" .. contextMenuBind .. "]", "DermaLarge", 135, ScrH() - 970, Color(contextMenuColor), 0)
+		draw.SimpleText("Change Attachments", "DermaLarge", 165, ScrH() - 970, Color(255, 255, 255, 255), 0)
+
+		draw.SimpleText("[" .. leanLeftBind .. "]", "DermaLarge", 135, ScrH() - 940, Color(leanLeftColor), 0)
+		draw.SimpleText("Lean Left", "DermaLarge", 170, ScrH() - 940, Color(255, 255, 255, 255), 0)
+		draw.SimpleText("bind key +alt1", "DermaDefaultBold", 290, ScrH() - 930, Color(255, 255, 255, 255), 0)
+
+		draw.SimpleText("[" .. leanRightBind .. "]", "DermaLarge", 135, ScrH() - 910, Color(leanRightColor), 0)
+		draw.SimpleText("Lean Right", "DermaLarge", 170, ScrH() - 910, Color(255, 255, 255, 255), 0)
+		draw.SimpleText("bind key +alt2", "DermaDefaultBold", 305, ScrH() - 900, Color(255, 255, 255, 255), 0)
+
+		draw.SimpleText("[" .. dropBind .. "]", "DermaLarge", 135, ScrH() - 880, Color(dropColor), 0)
+		draw.SimpleText("Drop Held Item", "DermaLarge", 170, ScrH() - 880, Color(255, 255, 255, 255), 0)
+		draw.SimpleText("bind key +drop", "DermaDefaultBold", 356, ScrH() - 870, Color(255, 255, 255, 255), 0)
+
+		draw.SimpleText("[" .. nvgBind .. "]", "DermaLarge", 135, ScrH() - 850, Color(nvgColor), 0)
+		draw.SimpleText("Toggle NVG", "DermaLarge", 175, ScrH() - 850, Color(255, 255, 255, 255), 0)
+		draw.SimpleText("bind key arc_vm_nvg", "DermaDefaultBold", 325, ScrH() - 840, Color(255, 255, 255, 255), 0)
+
+	end
 end
 hook.Add("HUDPaint", "TestHud", HUD)
 

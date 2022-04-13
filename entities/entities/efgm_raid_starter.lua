@@ -123,7 +123,7 @@ function RaidTimeLeft()
 	if timer.Exists("RaidTimer") then
 		raidTimeLeft = timer.TimeLeft("RaidTimer")
 	else
-		return "Raid is over!"
+		return "Raid has not started."
 	end
 
 	local minsLeft = math.Truncate(raidTimeLeft / 60, 0)
@@ -141,7 +141,7 @@ function RaidTimeLeft()
 	local timeLeftClean = tostring(minsLeft..":"..secondsText)
 
 	if raidTimeLeft == 0 or raidTimeLeft == nil then
-		return "Raid is over!"
+		return "Raid has not started."
 	else
 		return tostring(timeLeftClean)
 	end

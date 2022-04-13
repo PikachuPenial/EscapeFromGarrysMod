@@ -118,6 +118,10 @@ function ENT:CheckForPlayers()
 					if timer.Exists(ply:GetName()..self.ExtractName.."_timer") == true then
 
 						ply:PrintMessage( HUD_PRINTCENTER, "You have left the "..self.ExtractName.." extract!" )
+	
+						local expGained = math.random(250, 600)
+				
+						attacker:SetNWInt("playerExp", attacker:GetNWInt("playerExp") + expGained)
 
 						pmcInRaid = false
 

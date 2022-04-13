@@ -80,16 +80,13 @@ function HUD()
 	if (hudInRaid == false) then
 
 		local spawnMenuBind = input.LookupBinding("+menu")
-
 		local contextMenuBind = input.LookupBinding("+menu_context")
-
 		local leanLeftBind = input.LookupBinding("+alt1")
-
 		local leanRightBind = input.LookupBinding("+alt2")
-
 		local dropBind = input.LookupBinding("+drop")
-
 		local nvgBind = input.LookupBinding("arc_vm_nvg")
+		local tacticalBind = input.LookupBinding("impulse 100")
+		local fireModeBind = input.LookupBinding("+zoom")
 
 
 		if (spawnMenuBind == nil) then
@@ -134,14 +131,30 @@ function HUD()
 			nvgColor = 255, 255, 255, 255
 		end
 
+		if (tacticalBind == nil) then
+			tacticalBind = "#"
+			tacticalColor = 255, 0, 0, 255
+		else
+			tacticalColor = 255, 255, 255, 255
+		end
+
+		if (fireModeBind == nil) then
+			fireModeBind = "#"
+			fireModeColor = 255, 0, 0, 255
+		else
+			fireModeColor = 255, 255, 255, 255
+		end
+
 		draw.SimpleText("[Controls]", "DermaLarge", 135, ScrH() - 1060, Color(0, 200, 255, 255), 0)
 		draw.SimpleText("# = Not Binded", "DermaLarge", 135, ScrH() - 1030, Color(255, 0, 0, 255), 0)
 
 		draw.SimpleText("[" .. spawnMenuBind .. "]", "DermaLarge", 135, ScrH() - 1000, Color(spawnMenuColor), 0)
 		draw.SimpleText("Check Extracts", "DermaLarge", 170, ScrH() - 1000, Color(255, 255, 255, 255), 0)
+		draw.SimpleText("bind key +menu", "DermaDefaultBold", 360, ScrH() - 990, Color(255, 255, 255, 255), 0)
 
 		draw.SimpleText("[" .. contextMenuBind .. "]", "DermaLarge", 135, ScrH() - 970, Color(contextMenuColor), 0)
 		draw.SimpleText("Change Attachments", "DermaLarge", 165, ScrH() - 970, Color(255, 255, 255, 255), 0)
+		draw.SimpleText("bind key +menu_context", "DermaDefaultBold", 425, ScrH() - 960, Color(255, 255, 255, 255), 0)
 
 		draw.SimpleText("[" .. leanLeftBind .. "]", "DermaLarge", 135, ScrH() - 940, Color(leanLeftColor), 0)
 		draw.SimpleText("Lean Left", "DermaLarge", 170, ScrH() - 940, Color(255, 255, 255, 255), 0)
@@ -158,6 +171,14 @@ function HUD()
 		draw.SimpleText("[" .. nvgBind .. "]", "DermaLarge", 135, ScrH() - 850, Color(nvgColor), 0)
 		draw.SimpleText("Toggle NVG", "DermaLarge", 175, ScrH() - 850, Color(255, 255, 255, 255), 0)
 		draw.SimpleText("bind key arc_vm_nvg", "DermaDefaultBold", 325, ScrH() - 840, Color(255, 255, 255, 255), 0)
+
+		draw.SimpleText("[" .. tacticalBind .. "]", "DermaLarge", 135, ScrH() - 820, Color(tacticalColor), 0)
+		draw.SimpleText("Toggle Laser/Light", "DermaLarge", 162, ScrH() - 820, Color(255, 255, 255, 255), 0)
+		draw.SimpleText("bind key impulse 100", "DermaDefaultBold", 400, ScrH() - 810, Color(255, 255, 255, 255), 0)
+
+		draw.SimpleText("[" .. fireModeBind .. "]", "DermaLarge", 135, ScrH() - 790, Color(fireModeColor), 0)
+		draw.SimpleText("Toggle Firemode", "DermaLarge", 168, ScrH() - 790, Color(255, 255, 255, 255), 0)
+		draw.SimpleText("bind key +zoom", "DermaDefaultBold", 380, ScrH() - 780, Color(255, 255, 255, 255), 0)
 
 	end
 end

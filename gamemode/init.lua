@@ -16,9 +16,9 @@ include("sv_tasks.lua")
 function GM:PlayerSpawn(ply)
   ply:SetGravity(.72)
   ply:SetMaxHealth(100)
-  ply:SetRunSpeed(215)
-  ply:SetWalkSpeed(130)
-  ply:SetJumpPower(124)
+  ply:SetRunSpeed(200)
+  ply:SetWalkSpeed(120)
+  ply:SetJumpPower(125)
   
   local playerModels = {"models/player/eft/pmc/eft_bear/models/eft_bear_pm_summer.mdl", "models/player/eft/pmc/eft_bear/models/eft_bear_pm_redux.mdl"}
   local spawningWeapon = {"arccw_eap_lebedev", "arccw_eap_vp70", "arccw_eft_1911", "arccw_go_glock", "arccw_go_cz75", "arccw_go_fiveseven", "arccw_go_usp", "arccw_go_tec9", "arccw_go_p2000", "arccw_go_p250", "arccw_go_m9"}
@@ -146,10 +146,12 @@ end
 function GM:PlayerDeath(victim, inflictor, attacker)
     if(victim == attacker) then		
 		victim:SetNWInt("playerDeathsSuicide", victim:GetNWInt("playerDeathsSuicide") + 1)
+
+		victim:SetNWInt("playerDeaths", victim:GetNWInt("playerDeaths") + deathGained)
 		
 		victim:SetNWInt("playerKDR", victim:GetNWInt("playerKills") / victim:GetNWInt("playerDeaths"))
 	else
-		local moneyGained = math.random(1000, 3000)
+		local moneyGained = math.random(1000, 2500)
 	
 		local expGained = math.random(425, 675)
 	
@@ -219,6 +221,7 @@ function checkForLevel(ply)
         ply:SetNWInt("playerLvl", curLvl + 1)
 		
 		ply:PrintMessage(HUD_PRINTCENTER, "You have leveled up to level "..(curLvl + 1)..".", Color(85, 0, 255, 255), 0)
+		surface.PlaySound("taskcomplete.wav")
     end
 end
 
@@ -286,25 +289,6 @@ end
 
 function GM:GravGunPunt(player, entity)
 	return false
-end
-
-function GM:PlayerSay(ply, text)
-	local playerMsg = string.Explode(" ", text)
-	
-	if (playerMsg[1] == "/dropmoney") then
-		if (tonumber(playerMsg[2])) then
-			local amount = tonumber(playerMsg[2])
-			local plyBalance = ply:GetNWInt("playerMoney")
-			
-			if (amount > 0 and amount <= plyBalance) then
-				ply:SetNWInt("playerMoney", plyBalance - amount)
-				
-				scripted_ents.Get("money"):SpawnFunction(ply, ply:GetEyeTrace(), "money"):SetValue(amount)
-			end
-			
-			return ""
-		end	
-	end
 end
 
 --What da dog doin?

@@ -277,51 +277,6 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.SetTextPos(496, 450)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Distance Travelled: "..LocalPlayer():GetNWInt("playerDistance"))
-			
-			-- Help Section
-			surface.SetTextPos(8, 85)
-			surface.SetTextColor(155, 255, 0, 255)
-			surface.DrawText("Help:")
-			
-			-- Help Text One
-			surface.SetTextPos(8, 100)
-			surface.SetTextColor(255, 255, 255, 255)
-			surface.DrawText("Welcome to Escape From Garry's Mod! This gamemode is an extremely punishing PVP shooter where you")
-			
-			-- Help Text Two
-			surface.SetTextPos(8, 110)
-			surface.SetTextColor(255, 255, 255, 255)
-			surface.DrawText("can either fight others or spend time looting and building up your EXP and roubles.")
-			
-			-- Help Text Three
-			surface.SetTextPos(8, 130)
-			surface.SetTextColor(255, 255, 255, 255)
-			surface.DrawText("In most POI's, you can find a variety of weapons, armor, and spending cash to buy these items yourself.")
-			
-			-- Help Text Four
-			surface.SetTextPos(8, 140)
-			surface.SetTextColor(255, 255, 255, 255)
-			surface.DrawText("When you die, you will drop all of your loot, but keep your EXP and lose no money. Each kill gives you")
-			
-			-- Help Text Five
-			surface.SetTextPos(8, 150)
-			surface.SetTextColor(255, 255, 255, 255)
-			surface.DrawText("a chunk of experience and 1000 roubles. Levels will unlock certain items in the shop while roubles")
-			
-			-- Help Text Six
-			surface.SetTextPos(8, 160)
-			surface.SetTextColor(255, 255, 255, 255)
-			surface.DrawText("are used to purchased these items.")
-			
-			-- Help Text Seven
-			surface.SetTextPos(8, 180)
-			surface.SetTextColor(255, 255, 255, 255)
-			surface.DrawText("All projectile based weapons will have bullet drop, bullet velocity, penetration, and richochet mechanics.")
-			
-			-- Help Text Eight
-			surface.SetTextPos(8, 190)
-			surface.SetTextColor(255, 255, 255, 255)
-			surface.DrawText("You can press your menu bind (default key is C) to customize attachments and change the feel of the gun!")
 
 		end
 	end
@@ -491,6 +446,31 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		end
 	end
 
+	local skillButton = vgui.Create("DButton")
+	skillButton:SetParent(Menu)
+	skillButton:SetText("")
+	skillButton:SetSize(100, 50)
+	skillButton:SetPos(0, 125)
+	skillButton.Paint = function()
+		--Color of entire button
+		surface.SetDrawColor(50, 50, 50, 255)
+		surface.DrawRect(0, 0, skillButton:GetWide(), skillButton:GetTall())
+		
+		--Draw bottom and Right borders
+		surface.SetDrawColor(40, 40, 40, 255)
+		surface.DrawRect(0, 49, skillButton:GetWide(), 1)
+		surface.DrawRect(99, 0, 1, skillButton:GetTall())
+		
+		--Draw/write text
+
+		draw.DrawText("SKILLS", "DermaLarge", skillButton:GetWide() / 2.1, 10, Color(0, 165, 255, 255), 1)
+		
+	end
+
+	skillButton.DoClick = function()
+		surface.PlaySound("taskcomplete.wav")
+	end
+
 	local taskButton = vgui.Create("DButton")
 	taskButton:SetParent(Menu)
 	taskButton:SetText("")
@@ -513,6 +493,8 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	end
 
 	taskButton.DoClick = function()
+
+		surface.PlaySound("taskcomplete.wav")
 
 		net.Start("RequestTaskInfo")
 		net.SendToServer()
@@ -630,7 +612,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		shopButton:SetParent(Menu)
 		shopButton:SetText("")
 		shopButton:SetSize(100, 50)
-		shopButton:SetPos(0, 125)
+		shopButton:SetPos(0, 175)
 		shopButton.Paint = function()
 			--Color of entire button
 			surface.SetDrawColor(50, 50, 50, 255)

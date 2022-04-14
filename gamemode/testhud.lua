@@ -64,6 +64,7 @@ function HUD()
 		timeText = mapSwitchText
 
 		draw.SimpleText("MAP IS RESETING: TRANSFER ANYTHING YOU WANT TO KEEP INTO YOUR STASH, OR YOU WILL LOSE YOUR ITEMS.", "DermaLarge", ScrW() / 2, 50, colorRed, 1)
+		surface.PlaySound("taskfailed.wav")
 	end
 
 	draw.SimpleText(raidTimeLeft, "DermaLarge", 28, ScrH() - 305, timerColor, 0)
@@ -87,6 +88,8 @@ function HUD()
 		local nvgBind = input.LookupBinding("arc_vm_nvg")
 		local tacticalBind = input.LookupBinding("impulse 100")
 		local fireModeBind = input.LookupBinding("+zoom")
+		local inventoryBind = input.LookupBinding("gm_showspare1")
+		local shopBind = input.LookupBinding("gm_showspare2")
 
 
 		if (spawnMenuBind == nil) then
@@ -145,6 +148,20 @@ function HUD()
 			fireModeColor = 255, 255, 255, 255
 		end
 
+		if (inventoryBind == nil) then
+			inventoryBind = "#"
+			inventoryColor = 255, 0, 0, 255
+		else
+			inventoryColor = 255, 255, 255, 255
+		end
+
+		if (shopBind == nil) then
+			shopBind = "#"
+			shopColor = 255, 0, 0, 255
+		else
+			shopColor = 255, 255, 255, 255
+		end
+
 		draw.SimpleText("[Controls]", "DermaLarge", 135, ScrH() - 1060, Color(0, 200, 255, 255), 0)
 		draw.SimpleText("# = Not Binded", "DermaLarge", 135, ScrH() - 1030, Color(255, 0, 0, 255), 0)
 
@@ -179,6 +196,14 @@ function HUD()
 		draw.SimpleText("[" .. fireModeBind .. "]", "DermaLarge", 135, ScrH() - 790, Color(fireModeColor), 0)
 		draw.SimpleText("Toggle Firemode", "DermaLarge", 168, ScrH() - 790, Color(255, 255, 255, 255), 0)
 		draw.SimpleText("bind key +zoom", "DermaDefaultBold", 380, ScrH() - 780, Color(255, 255, 255, 255), 0)
+
+		draw.SimpleText("[" .. inventoryBind .. "]", "DermaLarge", 135, ScrH() - 760, Color(inventoryColor), 0)
+		draw.SimpleText("Open Inventory", "DermaLarge", 182, ScrH() - 760, Color(255, 255, 255, 255), 0)
+		draw.SimpleText("bind key gm_showspare1", "DermaDefaultBold", 372, ScrH() - 750, Color(255, 255, 255, 255), 0)
+
+		draw.SimpleText("[" .. shopBind .. "]", "DermaLarge", 135, ScrH() - 730, Color(shopColor), 0)
+		draw.SimpleText("Open Menu (Shop/Tasks)", "DermaLarge", 182, ScrH() - 730, Color(255, 255, 255, 255), 0)
+		draw.SimpleText("bind key gm_showspare2", "DermaDefaultBold", 498, ScrH() - 720, Color(255, 255, 255, 255), 0)
 
 	end
 end

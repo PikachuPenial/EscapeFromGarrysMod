@@ -72,6 +72,16 @@ function SpawnPlayer(player, spawnGroup, status, pos, angles)
 
 	player:SetNWBool("inRaid", true)
 
+	player:SetNWInt("raidKill", 0)
+	player:SetNWInt("raidXP", 0)
+	player:SetNWInt("raidMoney", 0)
+	player:SetNWInt("raidDamageGiven", 0)
+	player:SetNWInt("raidDamageTaken", 0)
+	player:SetNWInt("raidItemsPicked", 0)
+
+	player:SetNWInt("raidSuccess", 0)
+	player:SetNWInt("firstSpawn", 0)
+
 	player:SetPos(pos)
 	player:SetAngles(angles)
 

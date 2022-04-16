@@ -10,6 +10,7 @@ sellPriceMultiplier = 0.35
 inPlayerMenu = false
 inStashMenu = false
 inMapVoteMenu = false
+inRaidSummaryMenu = false
 
 weaponsArr = {}
 entsArr = {}

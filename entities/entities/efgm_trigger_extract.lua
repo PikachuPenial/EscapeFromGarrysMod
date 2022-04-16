@@ -90,6 +90,16 @@ function ENT:CheckForPlayers()
 							local lobbySpawns = ents.FindByName( "lobby_spawns" )
 							local chosenSpawn = lobbySpawns[math.random(#lobbySpawns)]
 
+							local expGained = math.random(250, 600)
+				
+							ply:SetNWInt("playerExp", ply:GetNWInt("playerExp") + expGained)
+	
+							ply:SetNWInt("raidSuccess", 1)
+	
+							ply:ConCommand("open_raid_summary_menu")
+	
+							checkForLevel(ply)
+
 							ply:SetPos(chosenSpawn:GetPos())
 							ply:SetAngles(chosenSpawn:GetAngles())
 
@@ -118,10 +128,6 @@ function ENT:CheckForPlayers()
 					if timer.Exists(ply:GetName()..self.ExtractName.."_timer") == true then
 
 						ply:PrintMessage( HUD_PRINTCENTER, "You have left the "..self.ExtractName.." extract!" )
-	
-						local expGained = math.random(250, 600)
-				
-						ply:SetNWInt("playerExp", ply:GetNWInt("playerExp") + expGained)
 
 						pmcInRaid = false
 
@@ -136,6 +142,21 @@ function ENT:CheckForPlayers()
 
 	end
 
+end
+
+function checkForLevel(ply)
+    local expToLevel = (ply:GetNWInt("playerLvl") * 110) * 5.15
+    local curExp = ply:GetNWInt("playerExp")
+    local curLvl = ply:GetNWInt("playerLvl")
+
+    if (curExp >= expToLevel) then
+        curExp = curExp - expToLevel
+
+        ply:SetNWInt("playerExp", curExp)
+        ply:SetNWInt("playerLvl", curLvl + 1)
+		
+		ply:PrintMessage(HUD_PRINTCENTER, "You have leveled up to level "..(curLvl + 1)..".", Color(85, 0, 255, 255), 0)
+    end
 end
 
 function ENT:Think()

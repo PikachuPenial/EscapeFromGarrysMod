@@ -105,7 +105,7 @@ function gameShopMenu(ply, cmd, args)
 
 		Menu.OnClose = function()
 
-			if (inStashMenu == false) and (inMapVoteMenu == false) then
+			if (inStashMenu == false) and (inMapVoteMenu == false) and (inRaidSummaryMenu == false) then
 				inPlayerMenu = false
 	
 				gui.EnableScreenClicker(false)
@@ -468,7 +468,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	end
 
 	skillButton.DoClick = function()
-		surface.PlaySound("taskcomplete.wav")
+
 	end
 
 	local taskButton = vgui.Create("DButton")
@@ -493,8 +493,6 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	end
 
 	taskButton.DoClick = function()
-
-		surface.PlaySound("taskcomplete.wav")
 
 		net.Start("RequestTaskInfo")
 		net.SendToServer()
@@ -851,7 +849,7 @@ function MenuInit()
 		inStashMenu = true
 
 		StashMenu.OnClose = function()
-			if (inPlayerMenu == false) and (inMapVoteMenu == false) then
+			if (inPlayerMenu == false) and (inMapVoteMenu == false) and (inRaidSummaryMenu == false) then
 				inStashMenu = false
 
 				gui.EnableScreenClicker(false)
@@ -1019,7 +1017,7 @@ function MenuInit()
 				end
 			end
 
-			PrintTable(LocalPlayer():GetAmmo())
+			-- PrintTable(LocalPlayer():GetAmmo())
 
 			-- for k, v in pairs(LocalPlayer():GetAmmo()) do
 			-- 	-- Creates buttons for the weapons

@@ -38,7 +38,7 @@ function HUD()
 	
 	draw.SimpleText("Level " .. client:GetNWInt("playerLvl"), "DermaDefaultBold", 50, ScrH() - 38, Color(255, 255, 255, 255), 0)
 	draw.SimpleText("EXP: " .. client:GetNWInt("playerExp") .. "/" .. expToLevel, "DermaDefaultBold", 50, ScrH() - 22, Color(255, 255, 255), 0)
-	
+
 	draw.SimpleText("₽ " .. client:GetNWInt("playerMoney"), "DermaDefaultBold", 100, ScrH() - 38, Color(255, 255, 255, 255), 0)
 	draw.SimpleText("JOIN OUR DISCORD - discord.gg/Wb9cVUwvTV", "DermaDefaultBold", 375, ScrH() - 22, Color(58, 235, 52, 255), 0)
 	draw.SimpleText("Press F3 to access your inventory", "DermaDefaultBold", 170, ScrH() - 38, Color(255, 166, 0, 255), 0)
@@ -64,7 +64,6 @@ function HUD()
 		timeText = mapSwitchText
 
 		draw.SimpleText("MAP IS RESETING: TRANSFER ANYTHING YOU WANT TO KEEP INTO YOUR STASH, OR YOU WILL LOSE YOUR ITEMS.", "DermaLarge", ScrW() / 2, 50, colorRed, 1)
-		surface.PlaySound("taskfailed.wav")
 	end
 
 	draw.SimpleText(raidTimeLeft, "DermaLarge", 28, ScrH() - 305, timerColor, 0)
@@ -94,114 +93,114 @@ function HUD()
 
 		if (spawnMenuBind == nil) then
 			spawnMenuBind = "#"
-			spawnMenuColor = 255, 0, 0, 255
+			spawnMenuColor = Color(255, 0, 0, 255)
 		else
-			spawnMenuColor = 255, 255, 255, 255
+			spawnMenuColor = Color(255, 255, 255, 255)
 		end
 
 		if (contextMenuBind == nil) then
 			contextMenuBind = "#"
-			contextMenuColor = 255, 0, 0, 255
+			contextMenuColor = Color(255, 0, 0, 255)
 		else
-			contextMenuColor = 255, 255, 255, 255
+			contextMenuColor = Color(255, 255, 255, 255)
 		end
 
 		if (leanLeftBind == nil) then
 			leanLeftBind = "#"
-			leanLeftColor = 255, 0, 0, 255
+			leanLeftColor = Color(255, 0, 0, 255)
 		else
-			leanLeftColor = 255, 255, 255, 255
+			leanLeftColor = Color(255, 255, 255, 255)
 		end
 
 		if (leanRightBind == nil) then
 			leanRightBind = "#"
-			leanRightColor = 255, 0, 0, 255
+			leanRightColor = Color(255, 0, 0, 255)
 		else
-			leanRightColor = 255, 255, 255, 255
+			leanRightColor = Color(255, 255, 255, 255)
 		end
 
 		if (dropBind == nil) then
 			dropBind = "#"
-			dropColor = 255, 0, 0, 255
+			dropColor = Color(255, 0, 0, 255)
 		else
-			dropColor = 255, 255, 255, 255
+			dropColor = Color(255, 255, 255, 255)
 		end
 
 		if (nvgBind == nil) then
 			nvgBind = "#"
-			nvgColor = 255, 0, 0, 255
+			nvgColor = Color(255, 0, 0, 255)
 		else
-			nvgColor = 255, 255, 255, 255
+			nvgColor = Color(255, 255, 255, 255)
 		end
 
 		if (tacticalBind == nil) then
 			tacticalBind = "#"
-			tacticalColor = 255, 0, 0, 255
+			tacticalColor = Color(255, 0, 0, 255)
 		else
-			tacticalColor = 255, 255, 255, 255
+			tacticalColor = Color(255, 255, 255, 255)
 		end
 
 		if (fireModeBind == nil) then
 			fireModeBind = "#"
-			fireModeColor = 255, 0, 0, 255
+			fireModeColor = Color(255, 0, 0, 255)
 		else
-			fireModeColor = 255, 255, 255, 255
+			fireModeColor = Color(255, 255, 255, 255)
 		end
 
 		if (inventoryBind == nil) then
 			inventoryBind = "#"
-			inventoryColor = 255, 0, 0, 255
+			inventoryColor = Color(255, 0, 0, 255)
 		else
-			inventoryColor = 255, 255, 255, 255
+			inventoryColor = Color(255, 255, 255, 255)
 		end
 
 		if (shopBind == nil) then
 			shopBind = "#"
-			shopColor = 255, 0, 0, 255
+			shopColor = Color(255, 0, 0, 255)
 		else
-			shopColor = 255, 255, 255, 255
+			shopColor = Color(255, 255, 255, 255)
 		end
 
 		draw.SimpleText("[Controls]", "DermaLarge", 135, ScrH() - 1060, Color(0, 200, 255, 255), 0)
 		draw.SimpleText("# = Not Binded", "DermaLarge", 135, ScrH() - 1030, Color(255, 0, 0, 255), 0)
 
-		draw.SimpleText("[" .. spawnMenuBind .. "]", "DermaLarge", 135, ScrH() - 1000, Color(spawnMenuColor), 0)
+		draw.SimpleText("[" .. spawnMenuBind .. "]", "DermaLarge", 135, ScrH() - 1000, spawnMenuColor, 0)
 		draw.SimpleText("Check Extracts", "DermaLarge", 170, ScrH() - 1000, Color(255, 255, 255, 255), 0)
 		draw.SimpleText("bind key +menu", "DermaDefaultBold", 360, ScrH() - 990, Color(255, 255, 255, 255), 0)
 
-		draw.SimpleText("[" .. contextMenuBind .. "]", "DermaLarge", 135, ScrH() - 970, Color(contextMenuColor), 0)
+		draw.SimpleText("[" .. contextMenuBind .. "]", "DermaLarge", 135, ScrH() - 970, contextMenuColor, 0)
 		draw.SimpleText("Change Attachments", "DermaLarge", 165, ScrH() - 970, Color(255, 255, 255, 255), 0)
 		draw.SimpleText("bind key +menu_context", "DermaDefaultBold", 425, ScrH() - 960, Color(255, 255, 255, 255), 0)
 
-		draw.SimpleText("[" .. leanLeftBind .. "]", "DermaLarge", 135, ScrH() - 940, Color(leanLeftColor), 0)
+		draw.SimpleText("[" .. leanLeftBind .. "]", "DermaLarge", 135, ScrH() - 940, leanLeftColor, 0)
 		draw.SimpleText("Lean Left", "DermaLarge", 170, ScrH() - 940, Color(255, 255, 255, 255), 0)
 		draw.SimpleText("bind key +alt1", "DermaDefaultBold", 290, ScrH() - 930, Color(255, 255, 255, 255), 0)
 
-		draw.SimpleText("[" .. leanRightBind .. "]", "DermaLarge", 135, ScrH() - 910, Color(leanRightColor), 0)
+		draw.SimpleText("[" .. leanRightBind .. "]", "DermaLarge", 135, ScrH() - 910, leanRightColor, 0)
 		draw.SimpleText("Lean Right", "DermaLarge", 170, ScrH() - 910, Color(255, 255, 255, 255), 0)
 		draw.SimpleText("bind key +alt2", "DermaDefaultBold", 305, ScrH() - 900, Color(255, 255, 255, 255), 0)
 
-		draw.SimpleText("[" .. dropBind .. "]", "DermaLarge", 135, ScrH() - 880, Color(dropColor), 0)
+		draw.SimpleText("[" .. dropBind .. "]", "DermaLarge", 135, ScrH() - 880, dropColor, 0)
 		draw.SimpleText("Drop Held Item", "DermaLarge", 170, ScrH() - 880, Color(255, 255, 255, 255), 0)
 		draw.SimpleText("bind key +drop", "DermaDefaultBold", 356, ScrH() - 870, Color(255, 255, 255, 255), 0)
 
-		draw.SimpleText("[" .. nvgBind .. "]", "DermaLarge", 135, ScrH() - 850, Color(nvgColor), 0)
+		draw.SimpleText("[" .. nvgBind .. "]", "DermaLarge", 135, ScrH() - 850, nvgColor, 0)
 		draw.SimpleText("Toggle NVG", "DermaLarge", 175, ScrH() - 850, Color(255, 255, 255, 255), 0)
 		draw.SimpleText("bind key arc_vm_nvg", "DermaDefaultBold", 325, ScrH() - 840, Color(255, 255, 255, 255), 0)
 
-		draw.SimpleText("[" .. tacticalBind .. "]", "DermaLarge", 135, ScrH() - 820, Color(tacticalColor), 0)
+		draw.SimpleText("[" .. tacticalBind .. "]", "DermaLarge", 135, ScrH() - 820, tacticalColor, 0)
 		draw.SimpleText("Toggle Laser/Light", "DermaLarge", 162, ScrH() - 820, Color(255, 255, 255, 255), 0)
 		draw.SimpleText("bind key impulse 100", "DermaDefaultBold", 400, ScrH() - 810, Color(255, 255, 255, 255), 0)
 
-		draw.SimpleText("[" .. fireModeBind .. "]", "DermaLarge", 135, ScrH() - 790, Color(fireModeColor), 0)
+		draw.SimpleText("[" .. fireModeBind .. "]", "DermaLarge", 135, ScrH() - 790, fireModeColor, 0)
 		draw.SimpleText("Toggle Firemode", "DermaLarge", 168, ScrH() - 790, Color(255, 255, 255, 255), 0)
 		draw.SimpleText("bind key +zoom", "DermaDefaultBold", 380, ScrH() - 780, Color(255, 255, 255, 255), 0)
 
-		draw.SimpleText("[" .. inventoryBind .. "]", "DermaLarge", 135, ScrH() - 760, Color(inventoryColor), 0)
+		draw.SimpleText("[" .. inventoryBind .. "]", "DermaLarge", 135, ScrH() - 760, inventoryColor, 0)
 		draw.SimpleText("Open Inventory", "DermaLarge", 182, ScrH() - 760, Color(255, 255, 255, 255), 0)
 		draw.SimpleText("bind key gm_showspare1", "DermaDefaultBold", 372, ScrH() - 750, Color(255, 255, 255, 255), 0)
 
-		draw.SimpleText("[" .. shopBind .. "]", "DermaLarge", 135, ScrH() - 730, Color(shopColor), 0)
+		draw.SimpleText("[" .. shopBind .. "]", "DermaLarge", 135, ScrH() - 730, shopColor, 0)
 		draw.SimpleText("Open Menu (Shop/Tasks)", "DermaLarge", 182, ScrH() - 730, Color(255, 255, 255, 255), 0)
 		draw.SimpleText("bind key gm_showspare2", "DermaDefaultBold", 498, ScrH() - 720, Color(255, 255, 255, 255), 0)
 

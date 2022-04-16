@@ -98,12 +98,17 @@ end)
 
 -- Debug Console Commands
 
-local function CreateTable(ply)
+local function CreateTable()
 
     sql.Query( "CREATE TABLE IF NOT EXISTS stash_table ( ItemName TEXT, ItemCount INTEGER, ItemType TEXT, ItemOwner INTEGER )" )
     
 end
 
+hook.Add( "Initialize", "StashCreate", function()
+	
+    CreateTable()
+
+end )
 
 local function ConsoleReturnStashContents(ply, cmd, args)
 

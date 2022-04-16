@@ -320,6 +320,42 @@ function ENT:InitializeRaid()
 
 end
 
+function ENT:GetSmartSpawn(class)
+
+	local spawns = self:DetermineSpawnTable(class)
+
+	local finalSpawns = {}
+
+	for k, v in pairs(spawns) do
+
+		local willTableBeAdded = true
+
+		for l, b in pairs(player.GetHumans()) do
+
+			print(tostring( "Distance between player and spawn is:" .. v:GetPos():Distance( b:GetPos() ) ))
+
+			if v:GetPos():Distance( b:GetPos() ) < 1024 then
+
+				willTableBeAdded = false
+
+			end
+
+		end
+
+		if willTableBeAdded == true then
+
+			table.insert(finalSpawns, v)
+
+		end
+
+	end
+
+	if table.IsEmpty(finalSpawns) == true then return spawns[math.random(#spawns)] end
+
+	return finalSpawns[math.random(#finalSpawns)]
+
+end
+
 function ENT:DetermineSpawnTable(class)
 
 	local baseSpawnTable = ents.FindByClass( "efgm_raid_spawn" )
@@ -357,23 +393,9 @@ end
 
 function ENT:IndividualSpawn(ply, class, raidHasStarted)
 
-	spawnTable = self:DetermineSpawnTable(class)
+	local randomSpawn = self:GetSmartSpawn(class)
 
-	local randomSpawn = spawnTable[math.random(#spawnTable)]
-
-	if raidHasStarted == true then
-
-		local playerSpawnInt = math.random(#raidStartSpawnTable)
-
-		SpawnPlayer(ply, raidStartSpawnTable[playerSpawnInt].SpawnGroup, class, raidStartSpawnTable[playerSpawnInt]:GetPos(), raidStartSpawnTable[playerSpawnInt]:GetAngles())
-
-		table.remove(raidStartSpawnTable, playerSpawnInt)
-
-	else
-
-		SpawnPlayer(ply, randomSpawn.SpawnGroup, class, randomSpawn:GetPos(), randomSpawn:GetAngles())
-
-	end
+	SpawnPlayer(ply, randomSpawn.SpawnGroup, class, randomSpawn:GetPos(), randomSpawn:GetAngles())
 
 end
 

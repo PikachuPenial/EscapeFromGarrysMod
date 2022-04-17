@@ -172,6 +172,8 @@ end
 
 function ENT:EndRaid()
 
+	if #player.GetHumans() == 0 then RunConsoleCommand("changelevel", mapPool[math.random(#mapPool)]) return end
+
 	isRaidEnded = true
 
 	for k, v in pairs(playerStatusTable) do

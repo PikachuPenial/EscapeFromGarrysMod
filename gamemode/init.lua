@@ -17,8 +17,8 @@ include("sv_tasks.lua")
 function GM:PlayerSpawn(ply)
 	ply:SetGravity(.72)
 	ply:SetMaxHealth(100)
-	ply:SetRunSpeed(200)
-	ply:SetWalkSpeed(120)
+	ply:SetRunSpeed(215)
+	ply:SetWalkSpeed(130)
 	ply:SetJumpPower(125)
   
 	local playerModels = {"models/player/eft/pmc/eft_bear/models/eft_bear_pm_summer.mdl", "models/player/eft/pmc/eft_bear/models/eft_bear_pm_redux.mdl"}
@@ -275,7 +275,7 @@ hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
 		local distance = (math.Round(rawDistance*0.01905*10)/10)
 		
         victim:PrintMessage(HUD_PRINTCENTER, attacker:Name() .. " killed you from " .. distance .. "m away.")
-		victim:PrintMessage(HUD_PRINTCENTER, "They had an " .. weaponInfo["PrintName"]  .. ".")
+		victim:PrintMessage(HUD_PRINTCENTER, "They had an " .. weaponInfo["PrintName"]  .. ", and shot you in the " .. victim:LastHitGroup())
     end
 end )
 

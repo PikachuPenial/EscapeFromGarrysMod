@@ -3,6 +3,17 @@ local timerRed = false
 
 local hudInRaid = false
 
+local spawnMenuBind = input.LookupBinding("+menu")
+local contextMenuBind = input.LookupBinding("+menu_context")
+local leanLeftBind = input.LookupBinding("+alt1")
+local leanRightBind = input.LookupBinding("+alt2")
+local dropBind = input.LookupBinding("+drop")
+local nvgBind = input.LookupBinding("arc_vm_nvg")
+local tacticalBind = input.LookupBinding("impulse 100")
+local fireModeBind = input.LookupBinding("+zoom")
+local inventoryBind = input.LookupBinding("gm_showspare1")
+local shopBind = input.LookupBinding("gm_showspare2")
+
 net.Receive("RaidTimeLeft",function (len, ply)
 
 	raidTimeLeft = net.ReadString()
@@ -41,8 +52,8 @@ function HUD()
 
 	draw.SimpleText("₽ " .. client:GetNWInt("playerMoney"), "DermaDefaultBold", 100, ScrH() - 38, Color(255, 255, 255, 255), 0)
 	draw.SimpleText("JOIN OUR DISCORD - discord.gg/Wb9cVUwvTV", "DermaDefaultBold", 375, ScrH() - 22, Color(58, 235, 52, 255), 0)
-	draw.SimpleText("Press F3 to access your inventory", "DermaDefaultBold", 170, ScrH() - 38, Color(255, 166, 0, 255), 0)
-	draw.SimpleText("Press F4 for shop, stats, and help", "DermaDefaultBold", 170, ScrH() - 22, Color(255, 166, 0, 255), 0)
+	draw.SimpleText("Press " .. inventoryBind .. " to access your inventory", "DermaDefaultBold", 170, ScrH() - 38, Color(255, 166, 0, 255), 0)
+	draw.SimpleText("Press " .. shopBind .. " for shop, stats, and help", "DermaDefaultBold", 170, ScrH() - 22, Color(255, 166, 0, 255), 0)
 
 	-- Timer
 
@@ -78,18 +89,6 @@ function HUD()
 	-- Control hints while in lobby
 
 	if (hudInRaid == false) then
-
-		local spawnMenuBind = input.LookupBinding("+menu")
-		local contextMenuBind = input.LookupBinding("+menu_context")
-		local leanLeftBind = input.LookupBinding("+alt1")
-		local leanRightBind = input.LookupBinding("+alt2")
-		local dropBind = input.LookupBinding("+drop")
-		local nvgBind = input.LookupBinding("arc_vm_nvg")
-		local tacticalBind = input.LookupBinding("impulse 100")
-		local fireModeBind = input.LookupBinding("+zoom")
-		local inventoryBind = input.LookupBinding("gm_showspare1")
-		local shopBind = input.LookupBinding("gm_showspare2")
-
 
 		if (spawnMenuBind == nil) then
 			spawnMenuBind = "#"

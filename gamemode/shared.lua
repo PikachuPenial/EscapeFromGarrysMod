@@ -334,9 +334,6 @@ RunConsoleCommand("sv_ec2_dynamicheight_max", "64")
 --GWS Config
 
 RunConsoleCommand("sv_drop_loot_on_death", "1")
-RunConsoleCommand("sv_gws_flashlight_disable", "1")
-RunConsoleCommand("sv_gws_adventure_mod", "0")
-RunConsoleCommand("sv_spawns_deathtimer", "15")
 
 --Proximity Voice Chat
 

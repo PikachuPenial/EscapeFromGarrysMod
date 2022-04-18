@@ -24,7 +24,6 @@ function GM:PlayerSpawn(ply)
 	local playerModels = {"models/player/eft/pmc/eft_bear/models/eft_bear_pm_summer.mdl", "models/player/eft/pmc/eft_bear/models/eft_bear_pm_redux.mdl"}
 	local spawningWeapon = {"arccw_eap_lebedev", "arccw_eap_vp70", "arccw_eft_1911", "arccw_go_glock", "arccw_go_cz75", "arccw_go_fiveseven", "arccw_go_usp", "arccw_go_tec9", "arccw_go_p2000", "arccw_go_p250", "arccw_go_m9"}
 	local spawningMelee = {"arccw_go_melee_knife", "arccw_go_knife_bowie", "arccw_go_knife_butterfly", "arccw_go_knife_t", "arccw_go_knife_karambit", "arccw_go_knife_m9bayonet", "arccw_go_knife_ct", "arccw_go_knife_stiletto"}
-	local spawningGrenade = {"arccw_go_nade_incendiary", "arccw_go_nade_frag", "arccw_go_nade_flash", "arccw_go_nade_smoke", "arccw_go_nade_molotov", "arccw_go_nade_knife"}
 	local chosenPlayerModel = playerModels[math.random(#playerModels)]
   
 	ply:SetModel(playerModels[math.random(#playerModels)])
@@ -32,9 +31,7 @@ function GM:PlayerSpawn(ply)
 	hook.Call("PlayerLoadout", GAMEMODE, ply)
 	ply:Give(spawningWeapon[math.random(#spawningWeapon)])
 	ply:Give(spawningMelee[math.random(#spawningMelee)])
-	ply:Give(spawningGrenade[math.random(#spawningGrenade)])
 	ply:Give("fas2_ifak")
-	ply:RemoveAmmo(3, "grenade")
 
 	if (ply:GetNWInt("firstSpawn") == 0) then
 		ply:ConCommand("open_raid_summary_menu")
@@ -276,8 +273,6 @@ hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
 		
         victim:PrintMessage(HUD_PRINTCENTER, attacker:Name() .. " killed you from " .. distance .. "m away.")
 		victim:PrintMessage(HUD_PRINTCENTER, "They had an " .. weaponInfo["PrintName"]  .. ", and shot you in the " .. victim:LastHitGroup())
-
-		print attacker:Name() .. " killed " .. victim:Name() .. " from " .. distance .. "m away with a " .. weaponInfo["PrintName"] .. "."
     end
 end )
 

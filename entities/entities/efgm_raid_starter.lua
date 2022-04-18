@@ -397,36 +397,36 @@ function ENT:IndividualSpawn(ply, class, raidHasStarted)
 
 	local randomSpawn = self:GetSmartSpawn(class)
 
+	-- This is for debugging, leave it alone, I'll remove it when it needs to be removed
+
+	-- for k, v in pairs( randomSpawn.TeamSpawnVectors ) do
+
+	-- 	local totallyFriendlyTeammateForDebugging = ents.Create( "npc_combine_s" )
+	-- 	totallyFriendlyTeammateForDebugging:SetPos( v )
+	-- 	totallyFriendlyTeammateForDebugging:Spawn( )
+
+	-- end
+
 	SpawnPlayer(ply, randomSpawn.SpawnGroup, class, randomSpawn:GetPos(), randomSpawn:GetAngles())
 
 end
 
 function ENT:PartySpawn(players, class)
 
-	spawnTable = self:DetermineSpawnTable(class)
-	teamSpawnTable = {}
+	local randomSpawn = self:GetSmartSpawn(class)
 
-	local mainSpawn = spawnTable[math.random(#spawnTable)]
-
-	local spawnName = mainSpawn.SpawnName
-
-	for k, v in pairs(ents.FindByClass( "efgm_team_spawn" )) do
-
-		if v.MainSpawnName == spawnName then
-			table.insert(teamSpawnTable, v)
-		end
-
-	end
+	local spawnVectors = randomSpawn.TeamSpawnVectors
 
 	for k, v in pairs(players) do
 
-		local spawnInt = math.random(#teamSpawnTable)
+		local spawnInt = math.random(#spawnVectors)
 
-		SpawnPlayer(v, mainSpawn.SpawnGroup, class, teamSpawnTable[spawnInt]:GetPos(), teamSpawnTable[spawnInt]:GetAngles())
+		SpawnPlayer(v, randomSpawn.SpawnGroup, class, spawnVectors[spawnInt], randomSpawn:GetAngles())
 
-		table.remove(teamSpawnTable, spawnInt)
+		table.remove(spawnVectors, spawnInt)
 
 	end
+
 end
 
 hook.Add("PlayerDisconnected", "PlayerLeave", function(ply) RemoveFromTable(ply) end)
@@ -480,6 +480,8 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 			self:InitializeRaid()
 
+			hook.Call( "RaidStart", nil )
+
 			self:IndividualSpawn(ply, "PMC", false)
 
 		else
@@ -488,6 +490,5 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 		end
 
-		
 	end
 end

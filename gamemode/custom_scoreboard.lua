@@ -36,11 +36,6 @@ function GM:ScoreboardShow()
 				
 				draw.SimpleText(v:GetName().." - "..v:Ping().."ms", "DermaDefault", 50, 10, Color(255, 255, 255))
 				draw.SimpleText("Level "..v:GetNWInt("playerLvl"), "DermaDefault", 50, 25, Color(255, 195, 0))
-
-				local Avatar = vgui.Create("AvatarImage", PlayerPanel)
-				Avatar:SetSize(40, 40)
-				Avatar:SetPos(5, 5)
-				Avatar:SetPlayer(LocalPlayer(), 64)
 			end
 		end
 	

@@ -179,7 +179,7 @@ function ENT:EndRaid()
 	for k, v in pairs(playerStatusTable) do
 
 		if v[3] != noClass then
-			v[1]:KillSilent()
+			v[1]:Kill()
 			
 			SetPlayerStatus(v[1], nil, noClass)
 		end

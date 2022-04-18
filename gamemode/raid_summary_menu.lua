@@ -47,7 +47,7 @@ function raidSummaryMenu(ply, cmd, args)
 			surface.SetFont("Trebuchet24")
 
 			surface.SetTextPos(20, 250)
-			surface.DrawText("Kills: " .. LocalPlayer():GetNWInt("raidKills"))
+			surface.DrawText("Kills: " .. LocalPlayer():GetNWInt("raidKill"))
 
 			surface.SetTextPos(20, 275)
 			surface.DrawText("XP Earned:" .. LocalPlayer():GetNWInt("raidXP"))

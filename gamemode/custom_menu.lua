@@ -159,7 +159,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		playerPanel.Paint = function()
 			surface.SetDrawColor(50, 50, 50, 255)
 			surface.DrawRect(0, 0, playerPanel:GetWide(), playerPanel:GetTall())
-			surface.SetTextColor(255, 255, 255, 255)
+			surface.SetTextColor(255, 255, 255)
 			
 			-- Player Name
 			surface.SetFont("Trebuchet24")

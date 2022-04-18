@@ -276,6 +276,8 @@ hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
 		
         victim:PrintMessage(HUD_PRINTCENTER, attacker:Name() .. " killed you from " .. distance .. "m away.")
 		victim:PrintMessage(HUD_PRINTCENTER, "They had an " .. weaponInfo["PrintName"]  .. ", and shot you in the " .. victim:LastHitGroup())
+
+		print attacker:Name() .. " killed " .. victim:Name() .. " from " .. distance .. "m away with a " .. weaponInfo["PrintName"] .. "."
     end
 end )
 

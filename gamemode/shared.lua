@@ -144,6 +144,13 @@ function GM:Initialize()
 	tempWeaponsArray[115] = {"models/weapons/arccw_sov/v_tkb011.mdl", "arccw_sov_tkb011", "TKB-011", 16000, "14", "HIGH", "Rifle"}
 	tempWeaponsArray[116] = {"models/weapons/arccw/c_type89.mdl", "midnights_gso_type89", "Howa Type 89", 18005, "15", "HIGH", "Rifle"}
 	tempWeaponsArray[117] = {"models/weapons/bordelzio/arccw/sviinfinity/wmodel/w_svi_infinity.mdl", "arccwsviinfinite", "SVI Infinity", 5555, "5", "LOW", "Pistol"}
+	tempWeaponsArray[118] = {"models/weapons/arccw/c_waw_thompson.mdl", "arccw_waw_thompson", "M1A1 Thompson", 11565, "9", "MID", "SMG"}
+	tempWeaponsArray[119] = {"models/weapons/arccw/c_waw_mp40.mdl", "arccw_waw_mp40", "MP40", 9895, "8", "LOW", "SMG"}
+	tempWeaponsArray[120] = {"models/weapons/arccw/c_waw_type100.mdl", "arccw_waw_type100", "Type 100/44", 12995, "12", "MID", "SMG"}
+	tempWeaponsArray[121] = {"models/weapons/arccw/c_bo1_mpl.mdl", "arccw_bo1_mpl", "MPL", 9205, "7", "LOW", "SMG"}
+	tempWeaponsArray[122] = {"models/weapons/arccw/c_bo1_pm63.mdl", "arccw_bo1_pm63", "PM-63 RAK", 8995, "7", "LOW", "Pistol"}
+	tempWeaponsArray[123] = {"models/weapons/arccw/c_bo1_g11.mdl", "arccw_bo1_g11", "HK G11", 15900, "13", "MID", "Rifle"}
+	tempWeaponsArray[124] = {"models/weapons/arccw/c_bo1_law.mdl", "arccw_bo1_law", "M72 LAW RL", 33333, "24", "HIGH", "Heavy"}
 
 	local tempArmorArray = {}
 

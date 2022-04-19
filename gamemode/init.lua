@@ -11,6 +11,7 @@ include("concommands.lua")
 include("init_spawns.lua")
 include("sv_stash.lua")
 include("sv_tasks.lua")
+include("sv_party_system.lua")
 
 --Player stats.
 
@@ -40,7 +41,6 @@ end
 
 function GM:PlayerInitialSpawn(ply)
 
-	ply:SetNWString("playerTeam", "")
 	ply:SetNWBool("inRaid", false)
 
 	-- tasks hehe

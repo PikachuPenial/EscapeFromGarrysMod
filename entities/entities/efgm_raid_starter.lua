@@ -334,6 +334,8 @@ function ENT:GetSmartSpawn(class)
 
 		for l, b in pairs(player.GetHumans()) do
 
+			-- print(tostring( "Distance between player and spawn is:" .. v:GetPos():Distance( b:GetPos() ) ))
+
 			if v:GetPos():Distance( b:GetPos() ) < 3650 then
 
 				willTableBeAdded = false
@@ -470,6 +472,7 @@ end
 concommand.Add("efgm_join_team", AssignTeam)
 
 function ENT:AcceptInput(name, ply, caller, data)
+
 	if name == "StartRaid" then
 
 		if isRaidEnded == true then return end
@@ -480,13 +483,24 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 			hook.Call( "RaidStart", nil )
 
-			self:IndividualSpawn(ply, "PMC", false)
+		end
 
-		else
+		if ply:GetNWString("playerTeam") == "" then
 
 			self:IndividualSpawn(ply, "PMC", false)
 
 		end
 
+		if ply:GetNWString("playerTeam") != "" then
+
+			local partyName = ply:GetNWString("playerTeam")
+
+			local partyPlayers = GetAllFromParty(partyName)
+
+			self:PartySpawn(partyPlayers, "PMC", false)
+
+		end
+
 	end
+
 end

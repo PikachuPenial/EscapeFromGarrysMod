@@ -361,11 +361,11 @@ function ENT:GetSmartSpawn(class)
 	local finalSpawns = DoSmartSpawnStuff(spawns, 3072)
 
 	if table.IsEmpty(finalSpawns) == true then
-	
+
 		finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 1.25)
 
 		if table.IsEmpty(finalSpawns) == true then
-	
+
 			finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 1.5)
 
 			if table.IsEmpty(finalSpawns) == true then
@@ -384,20 +384,14 @@ function ENT:GetSmartSpawn(class)
 	
 							finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 6)
 
-							if table.IsEmpty(finalSpawns) == true then
-	
-								finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 8)
-
-							end
-
 						end
 			
 					end
 
 				end
-		
+
 			end
-	
+
 		end
 
 	end
@@ -471,11 +465,15 @@ function ENT:PartySpawn(players, class)
 
 	for k, v in pairs(players) do
 
-		local spawnInt = math.random(#spawnVectors)
+		if v:GetNWBool("inRaid") == false then
 
-		SpawnPlayer(v, randomSpawn.SpawnGroup, class, spawnVectors[spawnInt], randomSpawn:GetAngles())
+			local spawnInt = math.random(#spawnVectors)
 
-		table.remove(spawnVectors, spawnInt)
+			SpawnPlayer(v, randomSpawn.SpawnGroup, class, spawnVectors[spawnInt], randomSpawn:GetAngles())
+
+			table.remove(spawnVectors, spawnInt)
+
+		end
 
 	end
 

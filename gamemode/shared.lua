@@ -268,7 +268,16 @@ function GM:SpawnMenuOpen()
   return false
 end
 
+-- Disabling console commands that allow prop/entity abuse.
 function GM:PlayerSpawnProp( ply, model )
+	return false
+end
+
+function GM:PlayerSpawnedSENT(ply, ent)
+	return false
+end
+
+function GM:PlayerSpawnedSWEP(ply, ent)
 	return false
 end
 

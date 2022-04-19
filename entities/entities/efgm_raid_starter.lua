@@ -334,9 +334,7 @@ function ENT:GetSmartSpawn(class)
 
 		for l, b in pairs(player.GetHumans()) do
 
-			print(tostring( "Distance between player and spawn is:" .. v:GetPos():Distance( b:GetPos() ) ))
-
-			if v:GetPos():Distance( b:GetPos() ) < 1024 then
+			if v:GetPos():Distance( b:GetPos() ) < 6144 then
 
 				willTableBeAdded = false
 

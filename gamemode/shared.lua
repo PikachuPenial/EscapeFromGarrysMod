@@ -5,7 +5,7 @@ GM.Website = "https://github.com/PikachuPenial"
 
 DeriveGamemode("sandbox")
 
-sellPriceMultiplier = 0.35
+sellPriceMultiplier = 0.30
 
 inPlayerMenu = false
 inStashMenu = false
@@ -263,23 +263,58 @@ function GM:ContextMenuOpen()
 end
 
 -- Disable Spawn Menu and show the extract list when the bind is pressed.
+function GM:SpawnMenuEnabled()
+	return false     
+end
+
 function GM:SpawnMenuOpen()
   RunConsoleCommand("efgm_extract_list")
   return false
 end
 
 -- Disabling console commands that allow prop/entity abuse.
-function GM:PlayerSpawnProp( ply, model )
+hook.Add( "PlayerGiveSWEP", "BlockPlayerSWEPs", function( ply, class, swep )
+	if ( not ply:IsAdmin() ) then
+		return false
+	end
+end )
+
+function GM:PlayerSpawnEffect(ply)
 	return false
 end
 
-function GM:PlayerSpawnedSENT(ply, ent)
+function GM:PlayerSpawnNPC(ply)
 	return false
 end
 
-function GM:PlayerSpawnedSWEP(ply, ent)
+function GM:PlayerSpawnObject(ply)
 	return false
 end
+
+function GM:PlayerSpawnProp(ply)
+	return false
+end
+
+function GM:PlayerSpawnRagdoll(ply)
+	return false
+end
+
+function GM:PlayerSpawnSENT(ply)
+	return false
+end
+
+function GM:PlayerSpawnSWEP(ply)
+	return false
+end
+
+function GM:PlayerSpawnVehicle(ply)
+	return false
+end
+
+-- Removing problematic console commmands.
+
+concommand.Remove("ent_create")
+concommand.Remove("gmod_spawnnpc")
 
 -- This is where the console commands are ran when a client joins a game running the gamemode.
 

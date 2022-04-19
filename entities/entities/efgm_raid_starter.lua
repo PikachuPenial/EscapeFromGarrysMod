@@ -322,9 +322,7 @@ function ENT:InitializeRaid()
 
 end
 
-function ENT:GetSmartSpawn(class)
-
-	local spawns = self:DetermineSpawnTable(class)
+local function DoSmartSpawnStuff(spawns, minimumDistance)
 
 	local finalSpawns = {}
 
@@ -336,7 +334,7 @@ function ENT:GetSmartSpawn(class)
 
 			-- print(tostring( "Distance between player and spawn is:" .. v:GetPos():Distance( b:GetPos() ) ))
 
-			if v:GetPos():Distance( b:GetPos() ) < 3650 then
+			if v:GetPos():Distance( b:GetPos() ) < minimumDistance then
 
 				willTableBeAdded = false
 
@@ -352,9 +350,39 @@ function ENT:GetSmartSpawn(class)
 
 	end
 
-	if table.IsEmpty(finalSpawns) == true then return spawns[math.random(#spawns)] end
+	return finalSpawns
 
-	return finalSpawns[math.random(#finalSpawns)]
+end
+
+function ENT:GetSmartSpawn(class)
+
+	local spawns = self:DetermineSpawnTable(class)
+
+	local finalSpawns = DoSmartSpawnStuff(spawns, 3072)
+
+	if table.IsEmpty(finalSpawns) == true then
+	
+		finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 2)
+
+		if table.IsEmpty(finalSpawns) == true then
+	
+			finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 4)
+
+			if table.IsEmpty(finalSpawns) == true then
+	
+				finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 8)
+		
+			end
+	
+		end
+
+	end
+
+	if table.IsEmpty(finalSpawns) == false then
+	
+		return finalSpawns[math.random(#finalSpawns)]
+
+	end
 
 end
 

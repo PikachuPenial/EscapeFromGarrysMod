@@ -268,6 +268,10 @@ function GM:SpawnMenuOpen()
   return false
 end
 
+function GM:PlayerSpawnProp( ply, model )
+	return false
+end
+
 -- This is where the console commands are ran when a client joins a game running the gamemode.
 
 --Anti-Bunnyhopping
@@ -449,3 +453,4 @@ RunConsoleCommand("arccw_ammonames", "1")
 RunConsoleCommand("arccw_altubglkey", "1")
 RunConsoleCommand("arccw_hud_minimal", "0")
 RunConsoleCommand("arccw_hud_size", "0.95")
+RunConsoleCommand("mf_legmodel", "1")

@@ -115,18 +115,18 @@ function GM:Initialize()
 	tempWeaponsArray[86] = {"models/weapons/arccw/c_bo1_law.mdl", "arccw_bo1_law", "M72 LAW RL", 33333, "24", "HIGH", "Heavy"}
 	tempWeaponsArray[87] = {"models/weapons/arccw/mifl/fas2/c_toz34.mdl", "arccw_mifl_fas2_g20", "Glock 20", 4700, "4", "LOW", "Pistol"}
 	tempWeaponsArray[88] = {"models/weapons/arccw/mifl/fas2/c_toz34.mdl", "arccw_mifl_fas2_p226", "P226", 4700, "4", "LOW", "Pistol"}
-	tempWeaponsArray[89] = {"models/weapons/arccw/c_waw_nambu", "arccw_waw_nambu", "Type 14 Nambu", 4250, "4", "LOW", "Pistol"}
-	tempWeaponsArray[90] = {"models/weapons/arccw/c_bo1_aug", "arccw_bo1_aug", "AUG", 14250, "12", "MID", "Rifle"}
-	tempWeaponsArray[91] = {"models/weapons/arccw/c_bo1_xl60", "arccw_bo1_xl60", "XL64ES", 13905, "11", "MID", "Rifle"}
-	tempWeaponsArray[92] = {"models/weapons/arccw/c_bo1_famas", "arccw_bo1_famas", "FAMAS Valorise", 14505, "13", "MID", "Rifle"}
-	tempWeaponsArray[93] = {"models/weapons/arccw/c_bo1_fal", "arccw_bo1_fal", "FN Fal", 17050, "15", "HIGH", "Rifle"}
-	tempWeaponsArray[94] = {"models/weapons/arccw/c_bo1_hk21", "arccw_bo1_hk21", "HK21", 19995, "17", "HIGH", "Heavy"}
-	tempWeaponsArray[95] = {"models/weapons/arccw/c_bo1_galil", "arccw_bo1_galil", "IMI Galil", 14005, "13", "MID", "Rifle"}
-	tempWeaponsArray[96] = {"models/weapons/arccw/c_bo1_spas12", "arccw_bo1_spas12", "SPAS-12", 16000, "14", "MID", "Shotgun"}
-	tempWeaponsArray[97] = {"models/weapons/arccw/c_cde_ak5", "arccw_cde_ak5", "Ak-5", 14940, "13", "MID", "Rifle"}
-	tempWeaponsArray[98] = {"models/weapons/arccw/c_waw_mosin", "arccw_waw_mosin", "Mosin-Nagant M38", 15000, "13", "MID", "Sniper"}
-	tempWeaponsArray[99] = {"models/weapons/arccw/c_waw_garand", "arccw_waw_garand", "M1 Garand", 15500, "14", "MID", "Rifle"}
-	tempWeaponsArray[100] = {"models/weapons/arccw/c_waw_357", "arccw_waw_357", "S&W Model 27", 6995, "5", "LOW", "Pistol"}
+	tempWeaponsArray[89] = {"models/weapons/arccw/c_waw_nambu.mdl", "arccw_waw_nambu", "Type 14 Nambu", 4250, "4", "LOW", "Pistol"}
+	tempWeaponsArray[90] = {"models/weapons/arccw/c_bo1_aug.mdl", "arccw_bo1_aug", "AUG", 14250, "12", "MID", "Rifle"}
+	tempWeaponsArray[91] = {"models/weapons/arccw/c_bo1_xl60.mdl", "arccw_bo1_xl60", "XL64ES", 13905, "11", "MID", "Rifle"}
+	tempWeaponsArray[92] = {"models/weapons/arccw/c_bo1_famas.mdl", "arccw_bo1_famas", "FAMAS Valorise", 14505, "13", "MID", "Rifle"}
+	tempWeaponsArray[93] = {"models/weapons/arccw/c_bo1_fal.mdl", "arccw_bo1_fal", "FN Fal", 17050, "15", "HIGH", "Rifle"}
+	tempWeaponsArray[94] = {"models/weapons/arccw/c_bo1_hk21.mdl", "arccw_bo1_hk21", "HK21", 19995, "17", "HIGH", "Heavy"}
+	tempWeaponsArray[95] = {"models/weapons/arccw/c_bo1_galil.mdl", "arccw_bo1_galil", "IMI Galil", 14005, "13", "MID", "Rifle"}
+	tempWeaponsArray[96] = {"models/weapons/arccw/c_bo1_spas12.mdl", "arccw_bo1_spas12", "SPAS-12", 16000, "14", "MID", "Shotgun"}
+	tempWeaponsArray[97] = {"models/weapons/arccw/c_cde_ak5.mdl", "arccw_cde_ak5", "Ak-5", 14940, "13", "MID", "Rifle"}
+	tempWeaponsArray[98] = {"models/weapons/arccw/c_waw_mosin.mdl", "arccw_waw_mosin", "Mosin-Nagant M38", 15000, "13", "MID", "Sniper"}
+	tempWeaponsArray[99] = {"models/weapons/arccw/c_waw_garand.mdl", "arccw_waw_garand", "M1 Garand", 15500, "14", "MID", "Rifle"}
+	tempWeaponsArray[100] = {"models/weapons/arccw/c_waw_357.mdl", "arccw_waw_357", "S&W Model 27", 6995, "5", "LOW", "Pistol"}
 
 	local tempArmorArray = {}
 
@@ -384,7 +384,7 @@ RunConsoleCommand("arccw_bullet_enable", "1")
 RunConsoleCommand("arccw_bullet_gravity", "675.00")
 RunConsoleCommand("arccw_bullet_imaginary", "1")
 RunConsoleCommand("arccw_bullet_lifetime", "10.00")
-RunConsoleCommand("arccw_bullet_velocity", "0.88")
+RunConsoleCommand("arccw_bullet_velocity", "0.82")
 RunConsoleCommand("arccw_cheapscopes", "0")
 RunConsoleCommand("arccw_cheapscopesautoconfig", "0")
 RunConsoleCommand("arccw_cheapscopesv2_ratio", "0.00")
@@ -413,14 +413,14 @@ RunConsoleCommand("arccw_mult_crouchrecoil", "0.85")
 RunConsoleCommand("arccw_mult_damage", "0.90")
 RunConsoleCommand("arccw_mult_defaultammo", "3")
 RunConsoleCommand("arccw_mult_heat", "1.00")
-RunConsoleCommand("arccw_mult_hipfire", "1.00")
+RunConsoleCommand("arccw_mult_hipfire", "1.75")
 RunConsoleCommand("arccw_mult_infiniteammo", "0")
 RunConsoleCommand("arccw_mult_malfunction", "1.65")
 RunConsoleCommand("arccw_mult_movedisp", "0.50")
 RunConsoleCommand("arccw_mult_penetration", "1.00")
 RunConsoleCommand("arccw_mult_range", "1.00")
 RunConsoleCommand("arccw_mult_recoil", "1.30")
-RunConsoleCommand("arccw_mult_reloadtime", "1.25")
+RunConsoleCommand("arccw_mult_reloadtime", "1.65")
 RunConsoleCommand("arccw_mult_shootwhilesprinting", "0")
 RunConsoleCommand("arccw_mult_sighttime", "1.30")
 RunConsoleCommand("arccw_mult_startunloaded", "0")

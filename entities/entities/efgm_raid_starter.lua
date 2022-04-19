@@ -362,15 +362,39 @@ function ENT:GetSmartSpawn(class)
 
 	if table.IsEmpty(finalSpawns) == true then
 	
-		finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 2)
+		finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 1.25)
 
 		if table.IsEmpty(finalSpawns) == true then
 	
-			finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 4)
+			finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 1.5)
 
 			if table.IsEmpty(finalSpawns) == true then
 	
-				finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 8)
+				finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 2)
+
+				if table.IsEmpty(finalSpawns) == true then
+	
+					finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 3)
+			
+					if table.IsEmpty(finalSpawns) == true then
+	
+						finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 4)
+
+						if table.IsEmpty(finalSpawns) == true then
+	
+							finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 6)
+
+							if table.IsEmpty(finalSpawns) == true then
+	
+								finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 8)
+
+							end
+
+						end
+			
+					end
+
+				end
 		
 			end
 	

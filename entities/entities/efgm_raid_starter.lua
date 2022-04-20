@@ -354,73 +354,73 @@ local function DoSmartSpawnStuff(spawns, minimumDistance)
 
 end
 
-function ENT:GetSmartSpawn(class, useTeamSpawns)
+-- function ENT:GetSmartSpawn(class, useTeamSpawns)
 
-	local spawns = self:DetermineSpawnTable(class, useTeamSpawns)
+-- 	local spawns = self:DetermineSpawnTable(class, useTeamSpawns)
 
-	local finalSpawns = DoSmartSpawnStuff(spawns, 6000)
+-- 	local finalSpawns = DoSmartSpawnStuff(spawns, 6000)
 
-	if table.IsEmpty(finalSpawns) == true then
+-- 	if table.IsEmpty(finalSpawns) == true then
 
-		finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 1.25)
+-- 		finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 1.25)
 
-		if table.IsEmpty(finalSpawns) == true then
+-- 		if table.IsEmpty(finalSpawns) == true then
 
-			finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 1.5)
+-- 			finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 1.5)
 
-			if table.IsEmpty(finalSpawns) == true then
+-- 			if table.IsEmpty(finalSpawns) == true then
 	
-				finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 2)
+-- 				finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 2)
 
-				if table.IsEmpty(finalSpawns) == true then
+-- 				if table.IsEmpty(finalSpawns) == true then
 	
-					finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 3)
+-- 					finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 3)
 			
-					if table.IsEmpty(finalSpawns) == true then
+-- 					if table.IsEmpty(finalSpawns) == true then
 	
-						finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 4)
+-- 						finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 4)
 
-						if table.IsEmpty(finalSpawns) == true then
+-- 						if table.IsEmpty(finalSpawns) == true then
 	
-							finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 6)
+-- 							finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 6)
 
-							if table.IsEmpty(finalSpawns) == true then
+-- 							if table.IsEmpty(finalSpawns) == true then
 	
-								finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 8)
+-- 								finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 8)
 
-								if table.IsEmpty(finalSpawns) == true then
+-- 								if table.IsEmpty(finalSpawns) == true then
 	
-									finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 12)
+-- 									finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 12)
 
-									if table.IsEmpty(finalSpawns) == true then
+-- 									if table.IsEmpty(finalSpawns) == true then
 	
-										finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 16)
+-- 										finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 16)
 									
-									end
+-- 									end
 
-								end
+-- 								end
 							
-							end
+-- 							end
 
-						end
+-- 						end
 			
-					end
+-- 					end
 
-				end
+-- 				end
 
-			end
+-- 			end
 
-		end
+-- 		end
 
-	end
+-- 	end
 
-	if table.IsEmpty(finalSpawns) == false then
+-- 	if table.IsEmpty(finalSpawns) == false then
 	
-		return finalSpawns[math.random(#finalSpawns)]
+-- 		return finalSpawns[math.random(#finalSpawns)]
 
-	end
+-- 	end
 
-end
+-- end
 
 function ENT:DetermineSpawnTable(class, useTeamSpawns)
 
@@ -479,7 +479,9 @@ end
 
 function ENT:IndividualSpawn(ply, class, raidHasStarted)
 
-	local randomSpawn = self:GetSmartSpawn(class, false)
+	local randomSpawnTable = self:DetermineSpawnTable(class, false)
+
+	local randomSpawn = randomSpawnTable[math.random(#randomSpawnTable)]
 
 	-- This is for debugging, leave it alone, I'll remove it when it needs to be removed
 
@@ -497,7 +499,9 @@ end
 
 function ENT:PartySpawn(players, class)
 
-	local randomSpawn = self:GetSmartSpawn(class, true)
+	local randomSpawnTable = self:DetermineSpawnTable(class, true)
+
+	local randomSpawn = randomSpawnTable[math.random(#randomSpawnTable)]
 
 	local spawnVectors = randomSpawn.TeamSpawnVectors
 

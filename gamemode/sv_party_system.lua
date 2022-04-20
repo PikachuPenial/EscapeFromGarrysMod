@@ -2,6 +2,8 @@
 
 function JoinParty(ply, cmd, args)
 
+	if ply:IsAdmin() == false then return end
+
 	local partyName = args[1]
 
 	ply:SetNWString("playerTeam", partyName)
@@ -11,12 +13,16 @@ concommand.Add("party_join", JoinParty)
 
 function LeaveParty(ply, cmd, args)
 
+	if ply:IsAdmin() == false then return end
+
 	ply:SetNWString("playerTeam", "")
 
 end
 concommand.Add("party_leave", JoinParty)
 
 function PrintPartyMembers(ply, cmd, args)
+
+	if ply:IsAdmin() == false then return end
 
 	if args[1] == nil or args[1] == "" then return end
 

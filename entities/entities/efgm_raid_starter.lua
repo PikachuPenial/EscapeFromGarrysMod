@@ -435,17 +435,19 @@ function ENT:DetermineSpawnTable(class, useTeamSpawns)
 
 			if v.SpawnType != 2 then
 
-				if useTeamSpawns == true then
+				-- if useTeamSpawns == true then
 
-					if v.IsTeamSpawn == true then table.insert(spawnTable, v) end
+				-- 	if v.IsTeamSpawn == true then table.insert(spawnTable, v) end
 
-				end
+				-- end
 
-				if useTeamSpawns == false then
+				-- if useTeamSpawns == false then
 
-					table.insert(spawnTable, v)
+					
 
-				end
+				-- end
+
+				table.insert(spawnTable, v)
 
 			end
 
@@ -455,17 +457,19 @@ function ENT:DetermineSpawnTable(class, useTeamSpawns)
 
 			if v.SpawnType != 1 then
 
-				if useTeamSpawns == true then
+				-- if useTeamSpawns == true then
 
-					if v.IsTeamSpawn == true then table.insert(spawnTable, v) end
+				-- 	if v.IsTeamSpawn == true then table.insert(spawnTable, v) end
 
-				end
+				-- end
 
-				if useTeamSpawns == false then
+				-- if useTeamSpawns == false then
 
-					table.insert(spawnTable, v)
+				-- 	table.insert(spawnTable, v)
 
-				end
+				-- end
+
+				table.insert(spawnTable, v)
 	
 			end
 
@@ -578,8 +582,6 @@ function ENT:AcceptInput(name, ply, caller, data)
 		end
 
 		if ply:GetNWString("playerTeam") == "" then
-
-			
 
 		end
 

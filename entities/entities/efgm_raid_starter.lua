@@ -16,11 +16,11 @@ local raidStartSpawnTable = {}
 
 local isRaidEnded = false
 
-local mapPool = {"efgm_concrete", "efgm_factory", "efgm_customs"}
+local mapPool = {"efgm_concrete", "efgm_factory", "efgm_customs", "efgm_belmont"}
 
 -- the numbers correspond to the maps of mapPool. mapVotes[1] would be for concrete, etc. 
 -- PENIAL ADD A ZERO FOR EACH MAP DONT SCARE ME WITH THESE ERRORS ok thanks lol
-local mapVotes = {0, 0, 0}
+local mapVotes = {0, 0, 0, 0}
 
 local voterTable = {}
 
@@ -358,31 +358,49 @@ function ENT:GetSmartSpawn(class)
 
 	local spawns = self:DetermineSpawnTable(class)
 
-	local finalSpawns = DoSmartSpawnStuff(spawns, 3072)
+	local finalSpawns = DoSmartSpawnStuff(spawns, 6000)
 
 	if table.IsEmpty(finalSpawns) == true then
 
-		finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 1.25)
+		finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 1.25)
 
 		if table.IsEmpty(finalSpawns) == true then
 
-			finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 1.5)
+			finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 1.5)
 
 			if table.IsEmpty(finalSpawns) == true then
 	
-				finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 2)
+				finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 2)
 
 				if table.IsEmpty(finalSpawns) == true then
 	
-					finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 3)
+					finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 3)
 			
 					if table.IsEmpty(finalSpawns) == true then
 	
-						finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 4)
+						finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 4)
 
 						if table.IsEmpty(finalSpawns) == true then
 	
-							finalSpawns = DoSmartSpawnStuff(spawns, 3072 / 6)
+							finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 6)
+
+							if table.IsEmpty(finalSpawns) == true then
+	
+								finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 8)
+
+								if table.IsEmpty(finalSpawns) == true then
+	
+									finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 12)
+
+									if table.IsEmpty(finalSpawns) == true then
+	
+										finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 16)
+									
+									end
+
+								end
+							
+							end
 
 						end
 			

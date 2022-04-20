@@ -10,9 +10,9 @@ function mapVoteMenu(ply, cmd, args)
 
 	if (MapMenu == nil) then
 		MapMenu = vgui.Create("DFrame")
-		MapMenu:SetSize(750, 500)
+		MapMenu:SetSize(750, 600)
 		MapMenu:Center()
-		MapMenu:SetTitle("VOTE FOR THE NEXT MAP")
+		MapMenu:SetTitle("")
 		MapMenu:SetDraggable(true)
 		MapMenu:ShowCloseButton(false)
 		MapMenu:SetDeleteOnClose(false)
@@ -22,7 +22,12 @@ function mapVoteMenu(ply, cmd, args)
 			
 			surface.SetDrawColor(40, 40, 40, 50)
 			surface.DrawRect(0, 24, MapMenu:GetWide(), 1)
-		end
+
+            surface.SetTextColor(255, 255, 255, 255)
+			surface.SetFont("Trebuchet24")
+			surface.SetTextPos(250, 20)
+			surface.DrawText("VOTE FOR THE NEXT MAP!")
+        end
 	
         inMapVoteMenu = true
 		addMapButtons(MapMenu)
@@ -44,7 +49,7 @@ function addMapButtons(MapMenu)
 	closeButton:SetParent(MapMenu)
 	closeButton:SetText("")
 	closeButton:SetSize(225, 50)
-	closeButton:SetPos(255, 400)
+	closeButton:SetPos(255, 500)
 	closeButton.Paint = function()
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
@@ -56,7 +61,7 @@ function addMapButtons(MapMenu)
 		surface.DrawRect(224, 0, 1, closeButton:GetTall())
 		
 		--Draw/write text
-		draw.DrawText("Close Menu / Skip Vote", "Trebuchet24", closeButton:GetWide() / 2.1, 10, Color(255, 0, 0, 255), 1)
+		draw.DrawText("Close Menu / Skip Vote", "Trebuchet24", closeButton:GetWide() / 2, 10, Color(255, 0, 0, 255), 1)
     end
     
     closeButton.DoClick = function(closeButton)
@@ -138,5 +143,36 @@ function addMapButtons(MapMenu)
             surface.PlaySound( "common/wpn_select.wav" )
             inMapVoteMenu = false
         end
+    end
+
+    local belmontButton = vgui.Create("DImageButton")
+    belmontButton:SetParent(MapMenu)
+    belmontButton:SetPos(100, 285)
+    belmontButton:SetImage("mapicon/belmont.png")
+    belmontButton:SizeToContents()
+    belmontButton.DoClick = function()
+
+        if #player.GetHumans() >= 5 then
+
+            RunConsoleCommand("vote", "efgm_belmont")
+
+            if (inPlayerMenu == false) and (inStashMenu == false) then
+                MapMenu:Remove()
+                MapMenu = nil
+                gui.EnableScreenClicker(false)
+                surface.PlaySound( "common/wpn_select.wav" )
+                inMapVoteMenu = false
+            else
+                MapMenu:Remove()
+                MapMenu = nil
+                surface.PlaySound( "common/wpn_select.wav" )
+                inMapVoteMenu = false
+            end
+
+        else
+            surface.PlaySound( "common/wpn_denyselect.wav" )
+
+        end
+
     end
 end

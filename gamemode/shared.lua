@@ -230,8 +230,8 @@ function GM:SpawnMenuEnabled()
 end
 
 function GM:SpawnMenuOpen()
-  RunConsoleCommand("efgm_extract_list")
-  return false
+	RunConsoleCommand("efgm_extract_list")
+	return false
 end
 
 -- Disabling console commands that allow prop/entity abuse.

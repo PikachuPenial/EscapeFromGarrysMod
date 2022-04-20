@@ -40,7 +40,7 @@ function ENT:SetupTeamSpawnVectors()
     local xSpawns = 3
     local ySpawns = 3
 
-    local spawnOffset = 40
+    local spawnOffset = 32
 
     local gridX = (xSpawns - 1) * spawnOffset
     local gridY = (ySpawns - 1) * spawnOffset

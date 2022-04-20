@@ -23,7 +23,7 @@ function GM:PlayerSpawn(ply)
 	ply:SetJumpPower(125)
   
 	local playerModels = {"models/player/eft/pmc/eft_bear/models/eft_bear_pm_summer.mdl", "models/player/eft/pmc/eft_bear/models/eft_bear_pm_redux.mdl"}
-	local spawningWeapon = {"arccw_eft_1911", "arccw_mifl_fas2_g20", "arccw_mifl_fas2_p226", "arccw_waw_nambu"}
+	local spawningWeapon = {"arccw_eft_1911", "arccw_mifl_fas2_g20", "arccw_mifl_fas2_p226", "arccw_waw_nambu", "arccw_waw_tt33"}
 	local spawningMelee = {"arccw_go_knife_m9bayonet"}
 	local chosenPlayerModel = playerModels[math.random(#playerModels)]
   

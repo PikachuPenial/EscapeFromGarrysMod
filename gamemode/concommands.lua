@@ -142,6 +142,12 @@ function buyGun(ply, cmd, args)
 	weaponPrices[98] = {"arccw_waw_mosin", "15000", "13"}
 	weaponPrices[99] = {"arccw_waw_garand", "15500", "14"}
 	weaponPrices[100] = {"arccw_waw_357", "6995", "5"}
+	weaponPrices[101] = {"arccw_waw_ptrs41", "45999", "30"}
+	weaponPrices[102] = {"arccw_waw_tt33", "4500", "4"}
+	weaponPrices[103] = {"arccw_bo1_sten", "11000", "9"}
+	weaponPrices[104] = {"arccw_waw_fg42", "40999", "27"}
+	weaponPrices[105] = {"arccw_bo1_m60", "32999", "24"}
+	weaponPrices[106] = {"arccw_waw_trenchgun", "14995", "13"}
 
 	for k, v in pairs(weaponPrices) do
 		if(args[1] == v[1]) then

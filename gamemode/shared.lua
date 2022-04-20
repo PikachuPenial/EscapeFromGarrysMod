@@ -113,8 +113,8 @@ function GM:Initialize()
 	tempWeaponsArray[84] = {"models/weapons/arccw/c_bo1_pm63.mdl", "arccw_bo1_pm63", "PM-63 RAK", 8995, "7", "LOW", "Pistol"}
 	tempWeaponsArray[85] = {"models/weapons/arccw/c_bo1_g11.mdl", "arccw_bo1_g11", "HK G11", 15900, "13", "MID", "Rifle"}
 	tempWeaponsArray[86] = {"models/weapons/arccw/c_bo1_law.mdl", "arccw_bo1_law", "M72 LAW RL", 33333, "24", "HIGH", "Heavy"}
-	tempWeaponsArray[87] = {"models/weapons/arccw/mifl/fas2/c_toz34.mdl", "arccw_mifl_fas2_g20", "Glock 20", 4700, "4", "LOW", "Pistol"}
-	tempWeaponsArray[88] = {"models/weapons/arccw/mifl/fas2/c_toz34.mdl", "arccw_mifl_fas2_p226", "P226", 4700, "4", "LOW", "Pistol"}
+	tempWeaponsArray[87] = {"models/weapons/arccw/mifl/fas2/c_glock20.mdl", "arccw_mifl_fas2_g20", "Glock 20", 4700, "4", "LOW", "Pistol"}
+	tempWeaponsArray[88] = {"models/weapons/arccw/mifl/fas2/c_p226.mdl", "arccw_mifl_fas2_p226", "P226", 4700, "4", "LOW", "Pistol"}
 	tempWeaponsArray[89] = {"models/weapons/arccw/c_waw_nambu.mdl", "arccw_waw_nambu", "Type 14 Nambu", 4250, "4", "LOW", "Pistol"}
 	tempWeaponsArray[90] = {"models/weapons/arccw/c_bo1_aug.mdl", "arccw_bo1_aug", "AUG", 14250, "12", "MID", "Rifle"}
 	tempWeaponsArray[91] = {"models/weapons/arccw/c_bo1_xl60.mdl", "arccw_bo1_xl60", "XL64ES", 13905, "11", "MID", "Rifle"}
@@ -127,6 +127,12 @@ function GM:Initialize()
 	tempWeaponsArray[98] = {"models/weapons/arccw/c_waw_mosin.mdl", "arccw_waw_mosin", "Mosin-Nagant M38", 15000, "13", "MID", "Sniper"}
 	tempWeaponsArray[99] = {"models/weapons/arccw/c_waw_garand.mdl", "arccw_waw_garand", "M1 Garand", 15500, "14", "MID", "Rifle"}
 	tempWeaponsArray[100] = {"models/weapons/arccw/c_waw_357.mdl", "arccw_waw_357", "S&W Model 27", 6995, "5", "LOW", "Pistol"}
+	tempWeaponsArray[101] = {"models/weapons/arccw/c_waw_ptrs41.mdl", "arccw_waw_ptrs41", "PTRS-41 SR", 45999, "30", "HIGH", "Sniper"}
+	tempWeaponsArray[102] = {"models/weapons/arccw/c_waw_tt33.mdl", "arccw_waw_tt33", "TT-33", 4500, "4", "LOW", "Pistol"}
+	tempWeaponsArray[103] = {"models/weapons/arccw/c_bo1_sten.mdl", "arccw_bo1_sten", "Sten Mk II", 11000, "9", "MID", "SMG"}
+	tempWeaponsArray[104] = {"models/weapons/arccw/c_waw_fg42.mdl", "arccw_waw_fg42", "FG 42", 40999, "27", "HIGH", "Heavy"}
+	tempWeaponsArray[105] = {"models/weapons/arccw/c_bo1_m60.mdl", "arccw_bo1_m60", "M60E3", 32999, "24", "HIGH", "Heavy"}
+	tempWeaponsArray[106] = {"models/weapons/arccw/c_waw_trenchgun.mdl", "arccw_waw_trenchgun", "M1897 Trenchgun", 14995, "13", "MID", "Shotgun"}
 
 	local tempArmorArray = {}
 
@@ -203,6 +209,7 @@ function GM:Initialize()
 	sellBlacklist[9] = {"arccw_go_nade_smoke"}
 	sellBlacklist[10] = {"arccw_go_nade_molotov"}
 	sellBlacklist[11] = {"arccw_go_nade_knife"}
+	sellBlacklist[2] = {"arccw_waw_tt33"}
 
 	-- Temporary array created. This next section will sort the guns by cost, so guns higher to the top will hopefully be better. This is convenient.
 	-- The sort function takes the fourth value of all tempWeaponsArray indexes (the rouble count) and sorts by them from greatest to lowest.

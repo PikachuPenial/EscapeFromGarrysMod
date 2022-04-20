@@ -10,6 +10,7 @@ ENT.SpawnName = ""
 -- These are defined by myself eat shit hammer
 
 ENT.TeamSpawnVectors = {}
+ENT.IsTeamSpawn = false
 
 function ENT:KeyValue(key, value)
 
@@ -37,8 +38,8 @@ function ENT:SetupTeamSpawnVectors()
 
     print("Setting Up Team Spawn Vectors")
 
-    local xSpawns = 5
-    local ySpawns = 5
+    local xSpawns = 3
+    local ySpawns = 3
 
     local spawnOffset = 32
 
@@ -82,11 +83,9 @@ function ENT:SetupTeamSpawnVectors()
 
     end
 
-    if #self.TeamSpawnVectors < 5 then
+    if #self.TeamSpawnVectors >= 5 then
 
-        print("Raid spawn was too cramped, removing...")
-
-        self:Remove()
+        self.IsTeamSpawn = true
 
     end
 

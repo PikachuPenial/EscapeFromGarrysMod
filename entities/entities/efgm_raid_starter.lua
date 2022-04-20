@@ -354,9 +354,9 @@ local function DoSmartSpawnStuff(spawns, minimumDistance)
 
 end
 
-function ENT:GetSmartSpawn(class)
+function ENT:GetSmartSpawn(class, useTeamSpawns)
 
-	local spawns = self:DetermineSpawnTable(class)
+	local spawns = self:DetermineSpawnTable(class, useTeamSpawns)
 
 	local finalSpawns = DoSmartSpawnStuff(spawns, 6000)
 
@@ -422,7 +422,7 @@ function ENT:GetSmartSpawn(class)
 
 end
 
-function ENT:DetermineSpawnTable(class)
+function ENT:DetermineSpawnTable(class, useTeamSpawns)
 
 	local baseSpawnTable = ents.FindByClass( "efgm_raid_spawn" )
 	local spawnTable = {}
@@ -435,8 +435,18 @@ function ENT:DetermineSpawnTable(class)
 
 			if v.SpawnType != 2 then
 
-				table.insert(spawnTable, v)
-	
+				if useTeamSpawns == true then
+
+					if v.IsTeamSpawn == true then table.insert(spawnTable, v) end
+
+				end
+
+				if useTeamSpawns == false then
+
+					table.insert(spawnTable, v)
+
+				end
+
 			end
 
 		end
@@ -445,7 +455,17 @@ function ENT:DetermineSpawnTable(class)
 
 			if v.SpawnType != 1 then
 
-				table.insert(spawnTable, v)
+				if useTeamSpawns == true then
+
+					if v.IsTeamSpawn == true then table.insert(spawnTable, v) end
+
+				end
+
+				if useTeamSpawns == false then
+
+					table.insert(spawnTable, v)
+
+				end
 	
 			end
 
@@ -459,7 +479,7 @@ end
 
 function ENT:IndividualSpawn(ply, class, raidHasStarted)
 
-	local randomSpawn = self:GetSmartSpawn(class)
+	local randomSpawn = self:GetSmartSpawn(class, false)
 
 	-- This is for debugging, leave it alone, I'll remove it when it needs to be removed
 
@@ -477,7 +497,7 @@ end
 
 function ENT:PartySpawn(players, class)
 
-	local randomSpawn = self:GetSmartSpawn(class)
+	local randomSpawn = self:GetSmartSpawn(class, true)
 
 	local spawnVectors = randomSpawn.TeamSpawnVectors
 

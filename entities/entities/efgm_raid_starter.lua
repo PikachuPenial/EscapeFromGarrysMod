@@ -579,19 +579,21 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 		if ply:GetNWString("playerTeam") == "" then
 
-			self:IndividualSpawn(ply, "PMC", false)
+			
 
 		end
 
-		if ply:GetNWString("playerTeam") != "" then
+		self:IndividualSpawn(ply, "PMC", false)
 
-			local partyName = ply:GetNWString("playerTeam")
+		-- if ply:GetNWString("playerTeam") != "" then
 
-			local partyPlayers = GetAllFromParty(partyName)
+		-- 	local partyName = ply:GetNWString("playerTeam")
 
-			self:PartySpawn(partyPlayers, "PMC", false)
+		-- 	local partyPlayers = GetAllFromParty(partyName)
 
-		end
+		-- 	self:PartySpawn(partyPlayers, "PMC", false)
+
+		-- end
 
 	end
 

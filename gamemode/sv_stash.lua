@@ -118,7 +118,6 @@ local function ConsoleReturnStashContents(ply, cmd, args)
 
     if(value != nil) then
         PrintTable(value)
-        print("Last SQL Error = " .. tostring(sql.LastError()))
     end
 
 end

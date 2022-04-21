@@ -65,7 +65,7 @@
 	]
 ]
 
-@PointClass base(Weapon) studio("models/player/armor_6b34/6b34.mdl") = efgm_random_ammo : "Spawns a random ammo item."
+@PointClass base(Weapon) studio("models/illusion/eftcontainers/magbox.mdl") = efgm_random_ammo : "Spawns a random ammo item."
 [
 	spawn_chance(integer) : "Ammo Spawn Chance" : 0 : "The chance a ammo will be spawned from this. (1 is a guranteed spawn, 2 will spawn ammo half the time, etc.)"
 
@@ -74,6 +74,32 @@
 		0 : "Small"
 		1 : "Large"
         2 : "Mixed"
+	]
+]
+
+@PointClass base(Weapon) studio("models/illusion/eftcontainers/magbox.mdl") = efgm_random_medical : "Spawns a random medical item."
+[
+	spawn_chance(integer) : "Medical Item Spawn Chance" : 0 : "The chance a medical item will be spawned from this. (1 is a guranteed spawn, 2 will spawn medical items half the time, etc.)"
+
+	med_tier(choices) : "Medical Item" : 0 : "The medical item spawned from this entity will depend on what tier it's set to." =
+	[
+		0 : "Random"
+		1 : "Bandage"
+        2 : "Quikclot"
+        3 : "Hemostat"
+	]
+]
+
+@PointClass base(Weapon) studio("models/weapons/w_smg1.mdl") = efgm_random_attach : "Spawns a random attachment."
+[
+	spawn_chance(integer) : "Attachment Spawn Chance" : 0 : "The chance a attachment will be spawned from this. (1 is a guranteed spawn, 2 will spawn attachments half the time, etc.)"
+
+	attach_tier(choices) : "Attachment Type" : 0 : "The attachment spawned from this entity will depend on what tier it's set to." =
+	[
+		0 : "All"
+		1 : "Optics"
+        2 : "Barrels"
+        3 : "Foregrips"
 	]
 ]
 

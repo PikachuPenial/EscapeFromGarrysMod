@@ -294,7 +294,7 @@ hook.Add( "HUDWeaponPickedUp", "WeaponPickedUp", function( weapon )
 end )
 
 function checkForLevel(ply)
-    local expToLevel = (ply:GetNWInt("playerLvl") * 110) * 5.15
+    local expToLevel = (ply:GetNWInt("playerLvl") * 140) * 5.15
     local curExp = ply:GetNWInt("playerExp")
     local curLvl = ply:GetNWInt("playerLvl")
 

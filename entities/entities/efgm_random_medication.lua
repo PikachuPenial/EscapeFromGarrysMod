@@ -42,6 +42,8 @@ function ENT:Initialize()
 	end
 	
 	if med then
+
+		print("efgm_random_medical: med does not equal nil, proceeding...")
 		
 		local spawnChance = math.random(1, 100)
 		

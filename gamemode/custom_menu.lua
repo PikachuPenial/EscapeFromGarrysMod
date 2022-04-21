@@ -172,7 +172,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.DrawText("Your Stats")
 			
 			-- Player EXP and level
-			local expToLevel = (LocalPlayer():GetNWInt("playerLvl") * 110) * 5.15
+			local expToLevel = (LocalPlayer():GetNWInt("playerLvl") * 140) * 5.15
 			
 			surface.SetFont("Default")
 			surface.SetTextPos(8, 35)

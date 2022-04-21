@@ -44,7 +44,7 @@ function HUD()
 	end
 --Money And Or XP Hud	
 
-	local expToLevel = (client:GetNWInt("playerLvl") * 110) * 5.15
+	local expToLevel = (client:GetNWInt("playerLvl") * 140) * 5.15
 	--local avatar = vgui.Create("AvatarImage")
 	
 	draw.SimpleText("Level " .. client:GetNWInt("playerLvl"), "DermaDefaultBold", 50, ScrH() - 38, Color(255, 255, 255, 255), 0)

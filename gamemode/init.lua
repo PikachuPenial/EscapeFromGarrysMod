@@ -57,6 +57,18 @@ function GM:PlayerInitialSpawn(ply)
 	else
 		ply:SetNWInt("playerLvl", tonumber(ply:GetPData("playerLvl")))
 	end
+
+	if(ply:GetPData("playerPrestige") == nil) then
+		ply:SetNWInt("playerPrestige", 0)
+	else
+		ply:SetNWInt("playerPrestige", tonumber(ply:GetPData("playerPrestige")))
+	end
+
+	if(ply:GetPData("playerRoubleMulti") == nil) then
+		ply:SetNWInt("playerRoubleMulti", 1)
+	else
+		ply:SetNWInt("playerRoubleMulti", tonumber(ply:GetPData("playerRoubleMulti")))
+	end
 	
 		if(ply:GetPData("playerExp") == nil) then
 		ply:SetNWInt("playerExp", 0)
@@ -235,11 +247,13 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 	
 		local deathGained = (1)
 
-		attacker:SetNWInt("playerMoney", attacker:GetNWInt("playerMoney") + moneyGained)
-		attacker:SetNWInt("raidMoney", attacker:GetNWInt("raidMoney") + moneyGained)
+		attacker:SetNWInt("playerMoney", attacker:GetNWInt("playerMoney") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))
+		attacker:SetNWInt("raidMoney", attacker:GetNWInt("raidMoney") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))
 
-		attacker:SetNWInt("playerExp", attacker:GetNWInt("playerExp") + expGained)
-		attacker:SetNWInt("raidXP", attacker:GetNWInt("raidXP") + expGained)
+		if (attacker:GetNWInt("playerLvl") < 32) then
+			attacker:SetNWInt("playerExp", attacker:GetNWInt("playerExp") + expGained)
+			attacker:SetNWInt("raidXP", attacker:GetNWInt("raidXP") + expGained)
+		end
 	
 		attacker:SetNWInt("playerKills", attacker:GetNWInt("playerKills") + killGained)
 		attacker:SetNWInt("raidKill", attacker:GetNWInt("raidKill") + killGained)
@@ -250,11 +264,11 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 	
 		attacker:SetNWInt("playerKDR", attacker:GetNWInt("playerKills") / attacker:GetNWInt("playerDeaths"))
 	
-		attacker:SetNWInt("playerTotalEarned", attacker:GetNWInt("playerTotalEarned") + moneyGained)
+		attacker:SetNWInt("playerTotalEarned", attacker:GetNWInt("playerTotalEarned") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))
 	
 		attacker:SetNWInt("playerTotalXpEarned", attacker:GetNWInt("playerTotalXpEarned") + expGained)
 	
-		attacker:SetNWInt("playerTotalEarnedKill", attacker:GetNWInt("playerTotalEarnedKill") + moneyGained)
+		attacker:SetNWInt("playerTotalEarnedKill", attacker:GetNWInt("playerTotalEarnedKill") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))
 
 		victim:SetNWInt("raidSuccess", 0)
 	
@@ -294,19 +308,21 @@ hook.Add( "HUDWeaponPickedUp", "WeaponPickedUp", function( weapon )
 end )
 
 function checkForLevel(ply)
-    local expToLevel = (ply:GetNWInt("playerLvl") * 140) * 5.15
-    local curExp = ply:GetNWInt("playerExp")
-    local curLvl = ply:GetNWInt("playerLvl")
+	if (ply:GetNWInt("playerLvl") < 32) then
+    	local expToLevel = (ply:GetNWInt("playerLvl") * 140) * 5.15
+    	local curExp = ply:GetNWInt("playerExp")
+    	local curLvl = ply:GetNWInt("playerLvl")
 
-    if (curExp >= expToLevel) then
-        curExp = curExp - expToLevel
+    	if (curExp >= expToLevel) then
+        	curExp = curExp - expToLevel
 
-        ply:SetNWInt("playerExp", curExp)
-        ply:SetNWInt("playerLvl", curLvl + 1)
+        	ply:SetNWInt("playerExp", curExp)
+        	ply:SetNWInt("playerLvl", curLvl + 1)
 		
-		ply:PrintMessage(HUD_PRINTCENTER, "You have leveled up to level "..(curLvl + 1)..".", Color(85, 0, 255, 255), 0)
-		surface.PlaySound("taskcomplete.wav")
-    end
+			ply:PrintMessage(HUD_PRINTCENTER, "You have leveled up to level "..(curLvl + 1)..".", Color(85, 0, 255, 255), 0)
+			surface.PlaySound("taskcomplete.wav")
+    	end
+	end
 end
 
 util.AddNetworkString("MenuInRaid")
@@ -323,6 +339,8 @@ end
 
 function GM:PlayerDisconnected(ply)
 	ply:SetPData("playerLvl", ply:GetNWInt("playerLvl"))
+	ply:SetPData("playerPrestige", ply:GetNWInt("playerPrestige"))
+	ply:SetPData("playerRoubleMulti", ply:GetNWInt("playerRoubleMulti"))
 	ply:SetPData("playerExp", ply:GetNWInt("playerExp"))
 	ply:SetPData("playerMoney", ply:GetNWInt("playerMoney"))
 	ply:SetPData("playerKills", ply:GetNWInt("playerKills"))
@@ -348,6 +366,8 @@ end
 function GM:ShutDown()
 	for k, v in pairs(player.GetAll()) do
 		v:SetPData("playerLvl", v:GetNWInt("playerLvl"))
+		v:SetPData("playerPrestige", v:GetNWInt("playerPrestige"))
+		v:SetPData("playerRoubleMulti", v:GetNWInt("playerRoubleMulti"))
 		v:SetPData("playerExp", v:GetNWInt("playerExp"))
 		v:SetPData("playerMoney", v:GetNWInt("playerMoney"))
 		v:SetPData("playerKills", v:GetNWInt("playerKills"))

@@ -94,8 +94,10 @@ function ENT:CheckForPlayers()
 
 							local expGained = math.random(250, 600)
 				
-							ply:SetNWInt("playerExp", ply:GetNWInt("playerExp") + expGained)
-	
+							if (ply:GetNWInt("playerLvl") < 32) then
+								ply:SetNWInt("playerExp", ply:GetNWInt("playerExp") + expGained)
+							end
+							
 							ply:SetNWInt("raidSuccess", 1)
 	
 							ply:ConCommand("open_raid_summary_menu")
@@ -147,18 +149,21 @@ function ENT:CheckForPlayers()
 end
 
 function checkForLevel(ply)
-    local expToLevel = (ply:GetNWInt("playerLvl") * 140) * 5.15
-    local curExp = ply:GetNWInt("playerExp")
-    local curLvl = ply:GetNWInt("playerLvl")
+	if (ply:GetNWInt("playerLvl") < 32) then
+    	local expToLevel = (ply:GetNWInt("playerLvl") * 140) * 5.15
+    	local curExp = ply:GetNWInt("playerExp")
+    	local curLvl = ply:GetNWInt("playerLvl")
 
-    if (curExp >= expToLevel) then
-        curExp = curExp - expToLevel
+    	if (curExp >= expToLevel) then
+        	curExp = curExp - expToLevel
 
-        ply:SetNWInt("playerExp", curExp)
-        ply:SetNWInt("playerLvl", curLvl + 1)
+        	ply:SetNWInt("playerExp", curExp)
+        	ply:SetNWInt("playerLvl", curLvl + 1)
 		
-		ply:PrintMessage(HUD_PRINTCENTER, "You have leveled up to level "..(curLvl + 1)..".", Color(85, 0, 255, 255), 0)
-    end
+			ply:PrintMessage(HUD_PRINTCENTER, "You have leveled up to level "..(curLvl + 1)..".", Color(85, 0, 255, 255), 0)
+			surface.PlaySound("taskcomplete.wav")
+    	end
+	end
 end
 
 function ENT:Think()

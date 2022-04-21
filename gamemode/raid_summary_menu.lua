@@ -8,12 +8,13 @@ function raidSummaryMenu(ply, cmd, args)
 	if (inRaidSummaryMenu == false) then
 		local SummaryMenu = vgui.Create("DFrame")
 
-		if (ply:GetNWInt("raidSuccess") == 0) then
-			SummaryMenu:SetSize(500, 400)
-		else
-			SummaryMenu:SetSize(250, 400)
-		end
+		--if (ply:GetNWInt("raidSuccess") == 0) then
+		--	SummaryMenu:SetSize(500, 400)
+		--else
+		--	SummaryMenu:SetSize(250, 400)
+		--end
 		
+		SummaryMenu:SetSize(250, 400)
 		SummaryMenu:Center()
 		SummaryMenu:SetBackgroundBlur(true)
 		SummaryMenu:SetTitle("")

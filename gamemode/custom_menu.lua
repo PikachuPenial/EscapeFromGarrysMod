@@ -85,7 +85,7 @@ function gameShopMenu(ply, cmd, args)
 		Menu:SetSize(860, 1080)
 		Menu:Center()
 		Menu:SetTitle("Escape From Garry's Mod Menu")
-		Menu:SetDraggable(true)
+		Menu:SetDraggable(false)
 		Menu:ShowCloseButton(true)
 		Menu:SetDeleteOnClose(false)
 		Menu.Paint = function()
@@ -772,7 +772,88 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		end
 
 	end
-	
+
+	if menuInRaid == false then
+		local prestigeButton = vgui.Create("DButton")
+		prestigeButton:SetParent(Menu)
+		prestigeButton:SetText("")
+		prestigeButton:SetSize(100, 50)
+		prestigeButton:SetPos(0, 225)
+		prestigeButton.Paint = function()
+				--Color of entire button
+				surface.SetDrawColor(50, 50, 50, 255)
+				surface.DrawRect(0, 0, prestigeButton:GetWide(), prestigeButton:GetTall())
+			
+				--Draw bottom and Right borders
+				surface.SetDrawColor(40, 40, 40, 255)
+				surface.DrawRect(0, 49, prestigeButton:GetWide(), 1)
+				surface.DrawRect(99, 0, 1, prestigeButton:GetTall())
+			
+				--Draw/write text
+				draw.DrawText("PRESTIGE", "CloseCaption_Normal", taskButton:GetWide() / 2, 10, Color(255, 0, 0, 255), 1)
+		end
+
+		prestigeButton.DoClick = function(prestigeButton)
+			local prestigePanel = Menu:Add("PrestigePanel")
+			
+			prestigePanel.Paint = function()
+				surface.SetDrawColor(50, 50, 50, 255)
+				surface.DrawRect(0, 0, prestigePanel:GetWide(), prestigePanel:GetTall())
+
+				surface.SetTextColor(255, 0, 0, 255)
+			
+				surface.SetFont("DermaLarge")
+				surface.SetTextPos(290, 360)
+				surface.DrawText("PRESTIGE")
+
+				surface.SetTextColor(255, 255, 255, 255)
+
+				surface.SetFont("DermaLarge")
+				surface.SetTextPos(100, 410)
+				surface.DrawText("Once you hit level 32, you can prestige, which")
+
+				surface.SetTextPos(25, 440)
+				surface.DrawText("resets your level to get a permanent rouble boost until wipe!")
+			end
+
+			local doPrestigeButton = vgui.Create("DButton")
+			doPrestigeButton:SetParent(Menu)
+			doPrestigeButton:SetText("")
+			doPrestigeButton:SetSize(225, 50)
+			doPrestigeButton:SetPos(340, 550)
+			doPrestigeButton.Paint = function()
+				--Color of entire button
+				surface.SetDrawColor(150, 150, 150, 10)
+				surface.DrawRect(0, 0, doPrestigeButton:GetWide(), doPrestigeButton:GetTall())
+				
+				--Draw bottom and Right borders
+				surface.SetDrawColor(40, 40, 40, 255)
+				surface.DrawRect(0, 49, doPrestigeButton:GetWide(), 1)
+				surface.DrawRect(224, 0, 1, doPrestigeButton:GetTall())
+				
+				--Draw/write text
+				draw.DrawText("Prestige Now!", "Trebuchet24", doPrestigeButton:GetWide() / 2, 10, Color(0, 255, 0, 255), 1)
+			end
+			
+			doPrestigeButton.DoClick = function()
+				if (LocalPlayer():GetNWInt("playerLvl") >= 32) then
+
+					local prestigeGained = (1)
+					local roubleMulti = (0.25)
+
+					LocalPlayer():SetNWInt("playerPrestige", LocalPlayer():GetNWInt("playerPrestige") + prestigeGained)
+					LocalPlayer():SetNWInt("playerRoubleMulti", LocalPlayer():GetNWInt("playerRoubleMulti") + roubleMulti)
+
+					LocalPlayer():SetNWInt("playerLvl", 1)
+					LocalPlayer():SetNWInt("playerExp", 0)
+				else
+					LocalPlayer():PrintMessage(3, "Sorry, " .. LocalPlayer():GetName() .. ". " .. "I can't give credit. Come back when you're a little... mmmmm... higher leveled!")
+				end
+			end
+
+		end
+	end
+
 end
 
 --Player Panel
@@ -785,7 +866,7 @@ function PANEL:Init() -- initializes the panel
 end
 
 function PANEL:Paint(w, h)
-	draw.RoundedBox(0, 0, 0, w, h, Color(0, 0, 0, 255))
+	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 255)) 
 end
 
 vgui.Register("PlayerPanel", PANEL, "Panel")
@@ -824,6 +905,23 @@ end
 vgui.Register("TaskPanel", PANEL, "Panel")
 
 --End task panel
+
+--Prestige Panel
+
+PANEL = {} --Creates empty panel
+
+function PANEL:Init() -- initializes the panel
+	self:SetSize(760, 1080)
+	self:SetPos(100, 25)
+end
+
+function PANEL:Paint(w, h)
+	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 255))
+end
+
+vgui.Register("PrestigePanel", PANEL, "Panel")
+
+--End prestige panel
 
 -- wow this is why i had to merge the fucking stash menu into this jesus christ im dumb
 -- actually maybe not idk, im autistic im not a rocket scientist

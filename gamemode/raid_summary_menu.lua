@@ -62,7 +62,7 @@ function raidSummaryMenu(ply, cmd, args)
 			surface.DrawText("Damage Taken: " .. LocalPlayer():GetNWInt("raidDamageTaken"))
 		end
 
-		if(ply:GetNWInt("raidSuccess") == 1) then
+		if (ply:GetNWInt("raidSuccess") == 1) then
 			surface.PlaySound("taskfinished.wav")
 		else
 			surface.PlaySound("taskfailed.wav")
@@ -78,7 +78,6 @@ function raidSummaryMenu(ply, cmd, args)
 				gui.EnableScreenClicker(false)
 				surface.PlaySound( "common/wpn_select.wav" )
 				inRaidSummaryMenu = false
-
 
 			else
 

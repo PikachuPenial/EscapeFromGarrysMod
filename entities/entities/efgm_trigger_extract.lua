@@ -83,6 +83,8 @@ function ENT:CheckForPlayers()
 
 						ply:PrintMessage( HUD_PRINTCENTER, "You will extract in "..self.ExtractTime.." seconds through "..self.ExtractName.."!" )
 
+						ply:SetNWInt("raidSuccess", 1)
+
 						timer.Create( ply:GetName()..self.ExtractName.."_timer" , self.ExtractTime, 1, function()
 
 							ply:PrintMessage( HUD_PRINTCENTER, "You have extracted from the raid through "..self.ExtractName.."! Good job!" )

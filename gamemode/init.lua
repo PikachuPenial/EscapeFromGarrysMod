@@ -151,7 +151,7 @@ function GM:PlayerInitialSpawn(ply)
 	ply:SetNWInt("raidDamageTaken", 0)
 	ply:SetNWInt("raidItemsPicked", 0)
 
-	ply:SetNWInt("raidSuccess", 0)
+	ply:SetNWInt("raidSuccess", 1)
 	ply:SetNWInt("firstSpawn", 1)
 
 	-- Skills

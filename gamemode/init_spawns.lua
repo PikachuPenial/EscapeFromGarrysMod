@@ -19,3 +19,23 @@ highHelmets	= {"helmet_achhc_black", "helmet_achhc_green","helmet_maska_1sch", "
 -- Utility Spawns
 
 utility		= {"arccw_go_nade_incendiary", "arccw_go_nade_frag", "arccw_go_nade_flash", "arccw_go_nade_smoke", "arccw_go_nade_molotov", "arccw_go_nade_knife"}
+
+-- Ammo
+
+smallAmmo   = {"arccw_ammo_smg1", "arccw_ammo_357", "arccw_ammo_pistol", "arccw_ammo_plinking", "arccw_ammo_ar2", "arccw_ammo_smg1_grenade", "arccw_ammo_buckshot", "arccw_ammo_sniper"}
+largeAmmo   = {"arccw_ammo_smg1_large", "arccw_ammo_357_large", "arccw_ammo_pistol_large", "arccw_ammo_plinking_large", "arccw_ammo_ar2_large", "arccw_ammo_smg1_grenade_large", "arccw_ammo_buckshot_large", "arccw_ammo_sniper_large"}
+mixedAmmo   = {"arccw_ammo_smg1", "arccw_ammo_357", "arccw_ammo_pistol", "arccw_ammo_plinking", "arccw_ammo_ar2", "arccw_ammo_smg1_grenade", "arccw_ammo_buckshot", "arccw_ammo_sniper", "arccw_ammo_smg1_large", "arccw_ammo_357_large", "arccw_ammo_pistol_large", "arccw_ammo_plinking_large", "arccw_ammo_ar2_large", "arccw_ammo_smg1_grenade_large", "arccw_ammo_buckshot_large", "arccw_ammo_sniper_large"}
+
+-- Medical
+
+random      = {"fas2_ammo_bandages", "fas2_ammo_quikclots", "fas2_ammo_hemostats"}
+bandages    = {"fas2_ammo_bandages"}
+quikclots   = {"fas2_ammo_quikclots"}
+hemostats   = {"fas2_ammo_hemostats"}
+
+-- Attachments
+
+all         = {"acwatt_go_optic_barska", "acwatt_go_supp_osprey", "acwatt_go_foregrip_stubby"}
+optics      = {"acwatt_go_optic_barska"}
+barrels     = {"acwatt_go_supp_osprey"}
+foregrips   = {"acwatt_go_foregrip_stubby"}

@@ -1,4 +1,5 @@
 local SummaryMenu
+local KillerMenu
 
 function raidSummaryMenu(ply, cmd, args)
 
@@ -6,8 +7,13 @@ function raidSummaryMenu(ply, cmd, args)
 
 	if (inRaidSummaryMenu == false) then
 		local SummaryMenu = vgui.Create("DFrame")
-		SummaryMenu:SetSize(300, 600)
-		SummaryMenu:SetSize(300, 400)
+
+		if (ply:GetNWInt("raidSuccess") == 0) then
+			SummaryMenu:SetSize(500, 400)
+		else
+			SummaryMenu:SetSize(250, 400)
+		end
+		
 		SummaryMenu:Center()
 		SummaryMenu:SetBackgroundBlur(true)
 		SummaryMenu:SetTitle("")
@@ -23,17 +29,17 @@ function raidSummaryMenu(ply, cmd, args)
 
 			surface.SetTextColor(255, 255, 255, 255)
 			surface.SetFont("Trebuchet24")
-			surface.SetTextPos(25, 0)
+			surface.SetTextPos(10, 0)
 			surface.DrawText("RAID SUMMARY")
 
 			surface.SetTextColor(255, 255, 255, 255)
 			surface.SetFont("Trebuchet24")
-			surface.SetTextPos(123, 50)
+			surface.SetTextPos(95, 50)
 			surface.DrawText(LocalPlayer():GetName())
 
 			local Avatar = vgui.Create("AvatarImage", SummaryMenu)
 			Avatar:SetSize(100, 100)
-			Avatar:SetPos(100, 75)
+			Avatar:SetPos(75, 75)
 			Avatar:SetPlayer(LocalPlayer(), 64)
 
 			-- Stats for the raid

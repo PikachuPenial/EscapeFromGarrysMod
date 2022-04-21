@@ -5,7 +5,7 @@ GM.Website = "https://github.com/PikachuPenial"
 
 DeriveGamemode("sandbox")
 
-sellPriceMultiplier = 0.30
+sellPriceMultiplier = 0.40
 
 inPlayerMenu = false
 inStashMenu = false

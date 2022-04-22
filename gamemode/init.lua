@@ -283,12 +283,6 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 	end
 end
 
-function GM:HUDDrawTargetID()
-	if (ply:GetNWBool("inRaid") == true) then
-		return false
-	end
-end
-
 hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
     if (victim == attacker) then
         victim:PrintMessage(HUD_PRINTCENTER, "You committed suicide.")

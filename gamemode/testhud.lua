@@ -212,6 +212,12 @@ function HUD()
 end
 hook.Add("HUDPaint", "TestHud", HUD)
 
+function GM:HUDDrawTargetID()
+	if (LocalPlayer():GetNWBool("inRaid") == true) then
+		return false
+	end
+end
+
 function HideHud(name)
   for k, v in pairs({"CHudHealth", "CHudBattery", "CHudAmmo", "CHudSecondaryAmmo"}) do
       if name == v then

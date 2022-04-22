@@ -305,15 +305,6 @@ RunConsoleCommand("atmos_weather_chance", "20")
 RunConsoleCommand("atmos_weather_delay", "300")
 RunConsoleCommand("atmos_weather_lighting", "1")
 
---Compass Configuration
-
-RunConsoleCommand("mcompass_enabled", "1")
-RunConsoleCommand("mcompass_style", "2")
-RunConsoleCommand("mcompass_xposition", "0.50")
-RunConsoleCommand("mcompass_yposition", "0")
-RunConsoleCommand("mcompass_ratio", "1.75")
-RunConsoleCommand("mcompass_spacing", "5")
-
 --Tarkov Hud Configuration
 
 RunConsoleCommand("tarkovhud_hp_colored", "1")

@@ -46,7 +46,7 @@ function GM:PlayerInitialSpawn(ply)
 	-- Overleveled check (support for prestige during mid-wipes)
 
 	if(ply:GetNWInt("playerLvl") >= 32) then
-		ply:SetNWInt("playerLvl", 1)
+		ply:SetNWInt("playerLvl", 32)
 		ply:SetNWInt("playerExp", 0)
 	end
 

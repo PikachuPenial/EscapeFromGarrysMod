@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "9169"
-	"mapversion" "223"
+	"mapversion" "224"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -20,7 +20,7 @@ viewsettings
 world
 {
 	"id" "1"
-	"mapversion" "223"
+	"mapversion" "224"
 	"classname" "worldspawn"
 	"comment" "Decompiled by BSPSource v1.4.0 from efgm_concrete_amogus | Decompiled by BSPSource v1.4.1 from efgm_concrete"
 	"detailmaterial" "detail/detailsprites"
@@ -147959,13 +147959,493 @@ entity
 		"logicalpos" "[0 7000]"
 	}
 }
+entity
+{
+	"id" "209185"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "-3259.13 2731.79 -127.887"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209189"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "-4681.99 3068.73 -127.887"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209191"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "-1360.65 746.103 96.1133"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209193"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "-164.033 2069.85 -127.887"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209195"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "756.218 1819.56 -127.887"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209197"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "1333.95 -362.191 -127.887"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209199"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "3112.6 -1384.9 64.1133"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209201"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "2840.45 -1511.15 1024.11"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209203"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "2771.27 -1264.11 1408.11"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209205"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "3233.82 -2142.48 1792.11"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209207"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "2819.94 -2059.66 1792.11"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209209"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "1081 -2978.81 -127.887"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209211"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "846.272 -4631 -13.5457"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209213"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "-591.636 -7427.59 -127.887"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209215"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "-2202.5 -5266.03 -127.887"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209217"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "-4573.03 -3771.47 -117.605"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209219"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "-2829.74 -2187.86 -119.887"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209221"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "-521.809 -1745.68 -119.887"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209223"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "-1496.48 -1459.67 128.113"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209225"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "-3461.73 -301.092 256.113"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209227"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "-1434.23 215.458 128.113"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209229"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "-3750.4 2024.2 64.1133"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209231"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "-396.551 98.2068 -127.887"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
+entity
+{
+	"id" "209233"
+	"classname" "efgm_random_medical"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"med_tier" "0"
+	"spawn_chance" "50"
+	"origin" "981.357 -1204.45 -119.887"
+	editor
+	{
+		"color" "0 0 200"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[4000 15000]"
+	}
+}
 cameras
 {
 	"activecamera" "0"
 	camera
 	{
-		"position" "[-3145.9 1174.96 408.256]"
-		"look" "[-2926.13 1026.7 434.25]"
+		"position" "[868.807 -931.841 386.114]"
+		"look" "[921.266 -1054.26 155.425]"
 	}
 	camera
 	{

@@ -133,6 +133,10 @@ function GM:Initialize()
 	tempWeaponsArray[104] = {"models/weapons/arccw/c_waw_fg42.mdl", "arccw_waw_fg42", "FG 42", 40999, "27", "HIGH", "Heavy"}
 	tempWeaponsArray[105] = {"models/weapons/arccw/c_bo1_m60.mdl", "arccw_bo1_m60", "M60E3", 32999, "24", "HIGH", "Heavy"}
 	tempWeaponsArray[106] = {"models/weapons/arccw/c_waw_trenchgun.mdl", "arccw_waw_trenchgun", "M1897 Trenchgun", 14995, "13", "MID", "Shotgun"}
+	tempWeaponsArray[107] = {"models/weapons/arccw/c_bo1_stoner.mdl", "arccw_bo1_stoner", "Stoner 63", 15400, "14", "MID", "Rifle"}
+	tempWeaponsArray[108] = {"models/weapons/arccw/c_bo2_fiveseven.mdl", "arccw_bo2_fiveseven", "FN Five-SeveN", 4750, "4", "LOW", "Pistol"}
+	tempWeaponsArray[109] = {"models/weapons/arccw/c_cde_m93r.mdl", "arccw_cde_m93r", "Beretta 92", 5000, "4", "LOW", "Pistol"}
+	tempWeaponsArray[110] = {"models/weapons/arccw/c_waw_mg42.mdl", "arccw_waw_mg42", "MG-42", 52500, "32", "HIGH", "Heavy"}
 
 	local tempArmorArray = {}
 

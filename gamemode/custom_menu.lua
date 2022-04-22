@@ -1112,7 +1112,7 @@ function MenuInit()
 
 					surface.PlaySound( "UI/buttonclick.wav" )
 
-					icon:Remove()
+					-- icon:Remove()
 
 				end
 			end

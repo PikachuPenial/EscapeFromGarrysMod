@@ -13,6 +13,10 @@ include("sv_stash.lua")
 include("sv_tasks.lua")
 include("sv_party_system.lua")
 
+-- Better PData
+
+include("sv_pdata.lua")
+
 --Player stats.
 
 function GM:PlayerSpawn(ply)
@@ -42,6 +46,14 @@ end
 function GM:PlayerInitialSpawn(ply)
 
 	ply:SetNWBool("inRaid", false)
+
+	
+
+	if GetPData64(ply, "StashLimit") == "nil" then
+		
+		SetPData64(ply, "StashLimit", 6)
+
+	end
 
 	-- Overleveled check (support for prestige during mid-wipes)
 

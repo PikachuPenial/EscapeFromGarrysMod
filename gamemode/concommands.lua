@@ -296,3 +296,23 @@ function CheckExtracts(ply, cmd, args)
 
 end
 concommand.Add("efgm_extract_list", CheckExtracts)
+
+function PlayerPrestige(ply, cmd, args)
+	if (ply:GetNWInt("playerLvl") >= 32) then
+
+		local prestigeGained = (1)
+		local roubleMulti = (0.25)
+
+		local levelReset = (1)
+		local expReset = (0)
+
+		ply:SetNWInt("playerPrestige", ply:GetNWInt("playerPrestige") + prestigeGained)
+		ply:SetNWInt("playerRoubleMulti", ply:GetNWInt("playerRoubleMulti") + roubleMulti)
+
+		ply:SetNWInt("playerLvl", levelReset)
+		ply:SetNWInt("playerExp", expReset)
+	else
+		ply:PrintMessage(3, "Sorry, " .. ply:GetName() .. ". " .. "I can't give credit. Come back when you're a little... mmmmm... higher leveled!")
+	end
+end
+concommand.Add("efgm_prestige", PlayerPrestige)

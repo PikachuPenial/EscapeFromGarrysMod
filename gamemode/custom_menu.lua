@@ -814,6 +814,20 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 				surface.SetTextPos(25, 440)
 				surface.DrawText("resets your level to get a permanent rouble boost until wipe!")
+
+				surface.SetTextPos(195, 600)
+				surface.DrawText("Current ₽ Multiplier:")
+
+				surface.SetTextColor(255, 255, 0, 255)
+				surface.SetTextPos(440, 600)
+				surface.DrawText(LocalPlayer():GetNWInt("playerRoubleMulti") .. "x")
+
+				surface.SetTextColor(255, 255, 255, 255)
+				surface.SetTextPos(195, 650)
+				surface.DrawText("Current Prestige: " .. (LocalPlayer():GetNWInt("playerPrestige")))
+
+				surface.SetTextPos(195, 700)
+				surface.DrawText("Current Level: " .. (LocalPlayer():GetNWInt("playerLvl")))
 			end
 
 			local doPrestigeButton = vgui.Create("DButton")
@@ -836,19 +850,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			end
 			
 			doPrestigeButton.DoClick = function()
-				if (LocalPlayer():GetNWInt("playerLvl") >= 32) then
-
-					local prestigeGained = (1)
-					local roubleMulti = (0.25)
-
-					LocalPlayer():SetNWInt("playerPrestige", LocalPlayer():GetNWInt("playerPrestige") + prestigeGained)
-					LocalPlayer():SetNWInt("playerRoubleMulti", LocalPlayer():GetNWInt("playerRoubleMulti") + roubleMulti)
-
-					LocalPlayer():SetNWInt("playerLvl", 1)
-					LocalPlayer():SetNWInt("playerExp", 0)
-				else
-					LocalPlayer():PrintMessage(3, "Sorry, " .. LocalPlayer():GetName() .. ". " .. "I can't give credit. Come back when you're a little... mmmmm... higher leveled!")
-				end
+				RunConsoleCommand("efgm_prestige")
 			end
 
 		end

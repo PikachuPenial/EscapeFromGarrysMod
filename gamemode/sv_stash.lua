@@ -74,28 +74,6 @@ net.Receive("TakeFromStash",function (len, ply)
 
 end)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -- Debug Console Commands
 
 local function CreateTable()
@@ -121,7 +99,7 @@ local function ConsoleReturnStashContents(ply, cmd, args)
     end
 
 end
-concommand.Add("read_stash", ConsoleReturnStashContents)
+concommand.Add("efgm_read_stashes", ConsoleReturnStashContents)
 
 
 local function ConsoleWriteStashContents(ply, cmd, args)
@@ -135,7 +113,7 @@ local function ConsoleWriteStashContents(ply, cmd, args)
     sql.Query( "INSERT INTO stash_table ( ItemName, ItemCount, ItemType, ItemOwner ) VALUES( " .. item .. ", " .. count .. ", " .. type .. ", " .. ply:SteamID64() .. ")" )
 
 end
-concommand.Add("write_stash", ConsoleWriteStashContents)
+concommand.Add("efgm_write_stashes", ConsoleWriteStashContents)
 
 local function WipeTable(ply, cmd, args)
 
@@ -145,7 +123,7 @@ local function WipeTable(ply, cmd, args)
 
 
 end
-concommand.Add("delete_stash", WipeTable)
+concommand.Add("efgm_delete_stashes", WipeTable)
 
 local function ConsoleDropTable(ply, cmd, args)
 
@@ -156,4 +134,4 @@ local function ConsoleDropTable(ply, cmd, args)
     CreateTable(ply)
 
 end
-concommand.Add("reset_stash", ConsoleDropTable)
+concommand.Add("efgm_reset_all_stashes", ConsoleDropTable)

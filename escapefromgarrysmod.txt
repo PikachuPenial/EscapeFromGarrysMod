@@ -15,7 +15,7 @@
 			"text"		"Sell Price Multiplier"
 			"help"		"Changes the money that players will receive when they sell an item, multiplied by the buy price"
 			"type"		"Numeric"
-			"default"	"0.35"
+			"default"	"0.30"
 		}
 	}
 }

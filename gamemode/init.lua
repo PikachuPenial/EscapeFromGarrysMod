@@ -43,6 +43,13 @@ function GM:PlayerInitialSpawn(ply)
 
 	ply:SetNWBool("inRaid", false)
 
+	-- Overleveled check (support for prestige during mid-wipes)
+
+	if(ply:GetNWInt("playerLvl") >= 32) then
+		ply:SetNWInt("playerLvl", 1)
+		ply:SetNWInt("playerExp", 0)
+	end
+
 	-- tasks hehe
 
 	if ply:GetPData("PlayerStartedTasks") == false then
@@ -65,7 +72,7 @@ function GM:PlayerInitialSpawn(ply)
 	end
 
 	if(ply:GetPData("playerRoubleMulti") == nil) then
-		ply:SetNWInt("playerRoubleMulti", 1)
+		ply:SetNWInt("playerRoubleMulti", 1.00)
 	else
 		ply:SetNWInt("playerRoubleMulti", tonumber(ply:GetPData("playerRoubleMulti")))
 	end
@@ -276,6 +283,12 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 	end
 end
 
+function GM:HUDDrawTargetID()
+	if (ply:GetNWBool("inRaid") == true) then
+		return false
+	end
+end
+
 hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
     if (victim == attacker) then
         victim:PrintMessage(HUD_PRINTCENTER, "You committed suicide.")
@@ -320,7 +333,6 @@ function checkForLevel(ply)
         	ply:SetNWInt("playerLvl", curLvl + 1)
 		
 			ply:PrintMessage(HUD_PRINTCENTER, "You have leveled up to level "..(curLvl + 1)..".", Color(85, 0, 255, 255), 0)
-			surface.PlaySound("taskcomplete.wav")
     	end
 	end
 end

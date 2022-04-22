@@ -5,7 +5,7 @@ GM.Website = "https://github.com/PikachuPenial"
 
 DeriveGamemode("sandbox")
 
-sellPriceMultiplier = 0.40
+sellPriceMultiplier = 0.30
 
 inPlayerMenu = false
 inStashMenu = false
@@ -325,6 +325,10 @@ RunConsoleCommand("tarkovhud_blur_neardeath", "1")
 --Realistic Fall Damage
 
 RunConsoleCommand("mp_falldamage", "1")
+
+--Killfeed Disable
+
+RunConsoleCommand("hud_deathnotice_time", "0")
 
 --Damage Slow Config
 

@@ -161,7 +161,6 @@ function checkForLevel(ply)
         	ply:SetNWInt("playerLvl", curLvl + 1)
 		
 			ply:PrintMessage(HUD_PRINTCENTER, "You have leveled up to level "..(curLvl + 1)..".", Color(85, 0, 255, 255), 0)
-			surface.PlaySound("taskcomplete.wav")
     	end
 	end
 end

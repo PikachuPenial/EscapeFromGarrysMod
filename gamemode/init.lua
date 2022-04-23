@@ -49,7 +49,7 @@ function GM:PlayerInitialSpawn(ply)
 
 	
 
-	if GetPData64(ply, "StashLimit") == "nil" then
+	if GetPData64(ply, "StashLimit") == nil then
 		
 		SetPData64(ply, "StashLimit", 6)
 

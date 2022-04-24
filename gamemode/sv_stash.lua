@@ -29,19 +29,19 @@ end)
 
 net.Receive("PutWepInStash",function (len, ply)
 
-    local stashItemLimit = tonumber( GetPData64(ply, "StashLimit") )
+    local stashItemLimit = ply:GetNWInt("playerStashLimit")
 
     print("Player's stash limit is: " .. tostring( stashItemLimit ) )
 
     local weaponsInStash = sql.Query( "SELECT ItemName FROM stash_table WHERE ItemOwner = " .. ply:SteamID64() .. ";" )
 
-    if weaponsInStash != nil then
+    local numberOfWeps
 
-        print( "Number of weapons in stash == " .. tostring( #weaponsInStash ) )
+    if weaponsInStash == nil then numberOfWeps = 0 else numberOfWeps = #weaponsInStash end
 
-        if #weaponsInStash == stashItemLimit then print("You have too much shit in your stash, clear it out! Your limit is " .. stashItemLimit .. " by the way.") return end
+    print( "Number of weapons in stash == " .. tostring( numberOfWeps ) )
 
-    end
+    if tonumber( numberOfWeps ) == tonumber( stashItemLimit ) then print("You have too much shit in your stash, clear it out! Your limit is " .. stashItemLimit .. " by the way.") return end
 
     local item = net.ReadString()
     local count = 1

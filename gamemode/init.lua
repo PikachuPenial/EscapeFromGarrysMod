@@ -47,10 +47,12 @@ function GM:PlayerInitialSpawn(ply)
 	ply:SetNWBool("inRaid", false)
 
 	if GetPData64(ply, "StashLimit") == nil then
-
-		SetPData64(ply, "StashLimit", 6)
-
+		ply:SetNWInt("playerStashLimit", 6)
+	else
+		ply:SetNWInt("playerStashLimit", GetPData64(ply, "StashLimit"))
 	end
+
+	print( "Set playerStashLimit to " .. ply:GetNWInt("playerStashLimit") )
 
 	-- Overleveled check (support for prestige during mid-wipes)
 
@@ -376,6 +378,10 @@ function GM:PlayerDisconnected(ply)
 	ply:SetPData("playerDamageHealed", ply:GetNWInt("playerDamageHealed"))
 	ply:SetPData("playerItemsPickedUp", ply:GetNWInt("playerItemsPickedUp"))
 	ply:SetPData("playerDistance", ply:GetNWInt("playerDistance"))
+
+	-- PData64
+
+	SetPData64(ply, "StashLimit", ply:GetNWInt("playerStashLimit"))
 end
 
 function GM:ShutDown()
@@ -403,6 +409,10 @@ function GM:ShutDown()
 		v:SetPData("playerDamageHealed", v:GetNWInt("playerDamageHealed"))
 		v:SetPData("playerItemsPickedUp", v:GetNWInt("playerItemsPickedUp"))
 		v:SetPData("playerDistance", v:GetNWInt("playerDistance"))
+
+		-- PData64
+	
+		SetPData64(v, "StashLimit", v:GetNWInt("playerStashLimit"))
 	end
 end
 

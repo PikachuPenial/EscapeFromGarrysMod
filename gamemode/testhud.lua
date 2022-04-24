@@ -22,31 +22,30 @@ net.Receive("RaidTimeLeft",function (len, ply)
 end)
 
 function HUD()
-  local client = LocalPlayer()
+	local client = LocalPlayer()
 
-  if !client:Alive() then
-      return
-    end
+	if !client:Alive() then
+		return
+	end
 
 	hudInRaid = client:GetNWBool("inRaid")
-	
+
 --Gun Hud
 
-	if (client:GetActiveWeapon():IsValid()) then
-		if (client:GetActiveWeapon():GetPrintName() != nil) then
-			draw.SimpleText("Holding: " .. client:GetActiveWeapon():GetPrintName(), "DermaDefaultBold", 205, ScrH() - 58, Color(255, 255, 255, 255), 0, 0)
+	if (client:GetActiveWeapon():IsValid()) and (client:GetActiveWeapon():GetPrintName() != nil) then
+		draw.SimpleText("Holding: " .. client:GetActiveWeapon():GetPrintName(), "DermaDefaultBold", 205, ScrH() - 58, Color(255, 255, 255, 255), 0, 0)
 
-			--draw.SimpleText("[LOW Tier]", "DermaDefault", 230, ScrH() - 72, Color(255, 0, 0, 255), 1)
-			--draw.SimpleText("[MID Tier]", "DermaDefault", 230, ScrH() - 72, Color(255, 255, 0, 255), 1)
-			--draw.SimpleText("[HIGH Tier]", "DermaDefault", 232, ScrH() - 72, Color(0, 255, 0, 255), 1)
-			--draw.SimpleText("[UTIL Tier]", "DermaDefault", 232, ScrH() - 72, Color(0, 0, 255, 255), 1)
-		end
+		--draw.SimpleText("[LOW Tier]", "DermaDefault", 230, ScrH() - 72, Color(255, 0, 0, 255), 1)
+		--draw.SimpleText("[MID Tier]", "DermaDefault", 230, ScrH() - 72, Color(255, 255, 0, 255), 1)
+		--draw.SimpleText("[HIGH Tier]", "DermaDefault", 232, ScrH() - 72, Color(0, 255, 0, 255), 1)
+		--draw.SimpleText("[UTIL Tier]", "DermaDefault", 232, ScrH() - 72, Color(0, 0, 255, 255), 1)
 	end
+
 --Money And Or XP Hud	
 
 	local expToLevel = (client:GetNWInt("playerLvl") * 140) * 5.15
 	--local avatar = vgui.Create("AvatarImage")
-	
+
 	draw.SimpleText("Level " .. client:GetNWInt("playerLvl"), "DermaDefaultBold", 50, ScrH() - 38, Color(255, 255, 255, 255), 0)
 
 	if (client:GetNWInt("playerLvl") < 32) then
@@ -220,10 +219,10 @@ end
 hook.Add( "HUDDrawTargetID", "HidePlayerInfo", DrawTarget )
 
 function HideHud(name)
-  for k, v in pairs({"CHudHealth", "CHudBattery", "CHudAmmo", "CHudSecondaryAmmo"}) do
-      if name == v then
-          return false
-      end
-  end
+	for k, v in pairs({"CHudHealth", "CHudBattery", "CHudAmmo", "CHudSecondaryAmmo"}) do
+		if name == v then
+			return false
+		end
+	end
 end
 hook.Add("HUDShouldDraw", "HideDefaultHud", HideHud)

@@ -10,7 +10,7 @@ function ENT:KeyValue(key, value)
    if key == "spawn_chance" then
       self.SpawnChance = tonumber(value)
    end
-   
+
    if key == "helmet_tier" then
 		self.SpawnTier = tonumber(value)
    end
@@ -22,23 +22,23 @@ function ENT:Initialize()
 	local highTierHelmets =	{"helmet_achhc_black", "helmet_achhc_green","helmet_maska_1sch", "helmet_maska_1sch_killa", "helmet_opscore", "helmet_opscore_visor", "helmet_ulach", "helmet_zsh1_2m"}
 
 	local helmets
-	
+
 	if self.SpawnTier == 0 then
 		helmets = midTierHelmets
 	end
-	
+
 	if self.SpawnTier == 1 then
 		helmets = highTierHelmets
 	end
-	
+
 	if helmets then
-		
+
 		local spawnChance = math.random(1, 100)
-		
+
 		if spawnChance <= self.SpawnChance then
-			
+
 			local ent = ents.Create(helmets[math.random(#helmets)])
-			
+
 			if IsValid(ent) then
 				local pos = self:GetPos()
 				ent:SetPos(pos)

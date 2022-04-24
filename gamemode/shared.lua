@@ -17,8 +17,8 @@ entsArr = {}
 sellBlacklist = {}
 
 function GM:Initialize()
-  
-  isSellMenu = false
+
+	isSellMenu = false
 	clientPlayer = nil
 
 	-- Creating a temporary array to sort through for the actual array seen in the shop
@@ -232,65 +232,6 @@ function GM:Initialize()
 	entsArr = tempArmorArray
 
 end
-
--- Disable the context menu.
-function GM:ContextMenuOpen()
-  return false
-end
-
--- Disable Spawn Menu and show the extract list when the bind is pressed.
-function GM:SpawnMenuEnabled()
-	return false     
-end
-
-function GM:SpawnMenuOpen()
-	RunConsoleCommand("efgm_extract_list")
-	return false
-end
-
--- Disabling console commands that allow prop/entity abuse.
-hook.Add( "PlayerGiveSWEP", "BlockPlayerSWEPs", function( ply, class, swep )
-	if ( not ply:IsAdmin() ) then
-		return false
-	end
-end )
-
-function GM:PlayerSpawnEffect(ply)
-	return false
-end
-
-function GM:PlayerSpawnNPC(ply)
-	return false
-end
-
-function GM:PlayerSpawnObject(ply)
-	return false
-end
-
-function GM:PlayerSpawnProp(ply)
-	return false
-end
-
-function GM:PlayerSpawnRagdoll(ply)
-	return false
-end
-
-function GM:PlayerSpawnSENT(ply)
-	return false
-end
-
-function GM:PlayerSpawnSWEP(ply)
-	return false
-end
-
-function GM:PlayerSpawnVehicle(ply)
-	return false
-end
-
--- Removing problematic console commmands.
-
-concommand.Remove("ent_create")
-concommand.Remove("gmod_spawnnpc")
 
 -- This is where the console commands are ran when a client joins a game running the gamemode.
 

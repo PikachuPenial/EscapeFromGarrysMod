@@ -24,14 +24,14 @@ end
 net.Receive("RequestStash",function (len, ply)
 
     SendStashToClient(ply)
-	
+
 end)
 
 net.Receive("PutWepInStash",function (len, ply)
 
     local stashItemLimit = tonumber( GetPData64(ply, "StashLimit") )
 
-    print("Player's stash limit is: "..tostring( stashItemLimit ) )
+    print("Player's stash limit is: " .. tostring( stashItemLimit ) )
 
     local weaponsInStash = sql.Query( "SELECT ItemName FROM stash_table WHERE ItemOwner = " .. ply:SteamID64() .. ";" )
 
@@ -39,7 +39,7 @@ net.Receive("PutWepInStash",function (len, ply)
 
         print( "Number of weapons in stash == " .. tostring( #weaponsInStash ) )
 
-        if #weaponsInStash == stashItemLimit then print("You have too much shit in your stash, clear it out! Your limit is "..stashItemLimit.." by the way.") return end
+        if #weaponsInStash == stashItemLimit then print("You have too much shit in your stash, clear it out! Your limit is " .. stashItemLimit .. " by the way.") return end
 
     end
 
@@ -55,15 +55,15 @@ net.Receive("PutWepInStash",function (len, ply)
 
     net.Start("StashMenuReload")
     net.Send(ply)
-	
+
 end)
 
 net.Receive("TakeFromStash",function (len, ply)
 
     requestedItemName = net.ReadString()
     stashItemName = sql.QueryValue( "SELECT ItemName FROM stash_table WHERE ItemName = " .. sql.SQLStr(requestedItemName) .. " AND ItemOwner = " .. ply:SteamID64() .. ";" )
-    
-    if(stashItemName != nil) then
+
+    if (stashItemName != nil) then
 
         local items = sql.Query( "SELECT ItemName FROM stash_table WHERE ItemName = " .. sql.SQLStr(requestedItemName) .. " AND ItemOwner = " .. ply:SteamID64() .. ";" )
 
@@ -73,7 +73,7 @@ net.Receive("TakeFromStash",function (len, ply)
 
         sql.Query( "DELETE FROM stash_table WHERE ItemName = " .. sql.SQLStr(stashItemName) .. " AND ItemOwner = " .. ply:SteamID64() .. ";" )
 
-        for i=1, amountOfItemsMinusOne do 
+        for i = 1, amountOfItemsMinusOne do
 
             sql.Query( "INSERT INTO stash_table ( ItemName, ItemCount, ItemType, ItemOwner ) VALUES( " .. SQLStr(requestedItemName, false) .. ", " .. 1 .. ", " .. SQLStr( "wep" ) .. ", " .. ply:SteamID64() .. ")" )
 
@@ -93,11 +93,11 @@ end)
 local function CreateTable()
 
     sql.Query( "CREATE TABLE IF NOT EXISTS stash_table ( ItemName TEXT, ItemCount INTEGER, ItemType TEXT, ItemOwner INTEGER )" )
-    
+
 end
 
 hook.Add( "Initialize", "StashCreate", function()
-	
+
     CreateTable()
 
 end )
@@ -108,7 +108,7 @@ local function ConsoleReturnStashContents(ply, cmd, args)
 
     local value = sql.Query( "SELECT * FROM stash_table;" )
 
-    if(value != nil) then
+    if (value != nil) then
         PrintTable(value)
     end
 

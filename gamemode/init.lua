@@ -25,12 +25,11 @@ function GM:PlayerSpawn(ply)
 	ply:SetRunSpeed(215)
 	ply:SetWalkSpeed(130)
 	ply:SetJumpPower(125)
-  
+
 	local playerModels = {"models/player/eft/pmc/eft_bear/models/eft_bear_pm_summer.mdl", "models/player/eft/pmc/eft_bear/models/eft_bear_pm_redux.mdl"}
 	local spawningWeapon = {"arccw_eft_1911", "arccw_waw_nambu", "arccw_waw_tt33"}
 	local spawningMelee = {"arccw_go_knife_m9bayonet"}
-	local chosenPlayerModel = playerModels[math.random(#playerModels)]
-  
+
 	ply:SetModel(playerModels[math.random(#playerModels)])
 	ply:SetupHands()
 	hook.Call("PlayerLoadout", GAMEMODE, ply)
@@ -47,17 +46,15 @@ function GM:PlayerInitialSpawn(ply)
 
 	ply:SetNWBool("inRaid", false)
 
-	
-
 	if GetPData64(ply, "StashLimit") == nil then
-		
+
 		SetPData64(ply, "StashLimit", 6)
 
 	end
 
 	-- Overleveled check (support for prestige during mid-wipes)
 
-	if(ply:GetNWInt("playerLvl") >= 32) then
+	if (ply:GetNWInt("playerLvl") >= 32) then
 		ply:SetNWInt("playerLvl", 32)
 		ply:SetNWInt("playerExp", 0)
 	end
@@ -71,103 +68,103 @@ function GM:PlayerInitialSpawn(ply)
 
 	end
 
-	if(ply:GetPData("playerLvl") == nil) then
+	if (ply:GetPData("playerLvl") == nil) then
 		ply:SetNWInt("playerLvl", 1)
 	else
 		ply:SetNWInt("playerLvl", tonumber(ply:GetPData("playerLvl")))
 	end
 
-	if(ply:GetPData("playerPrestige") == nil) then
+	if (ply:GetPData("playerPrestige") == nil) then
 		ply:SetNWInt("playerPrestige", 0)
 	else
 		ply:SetNWInt("playerPrestige", tonumber(ply:GetPData("playerPrestige")))
 	end
 
-	if(ply:GetPData("playerRoubleMulti") == nil) then
+	if (ply:GetPData("playerRoubleMulti") == nil) then
 		ply:SetNWInt("playerRoubleMulti", 1.00)
 	else
 		ply:SetNWInt("playerRoubleMulti", tonumber(ply:GetPData("playerRoubleMulti")))
 	end
-	
-		if(ply:GetPData("playerExp") == nil) then
+
+	if (ply:GetPData("playerExp") == nil) then
 		ply:SetNWInt("playerExp", 0)
 	else
 		ply:SetNWInt("playerExp", tonumber(ply:GetPData("playerExp")))
 	end
-	
-		if(ply:GetPData("playerMoney") == nil) then
+
+	if (ply:GetPData("playerMoney") == nil) then
 		ply:SetNWInt("playerMoney", 10000)
 	else
 		ply:SetNWInt("playerMoney", tonumber(ply:GetPData("playerMoney")))
 	end
-	
-		if(ply:GetPData("playerKills") == nil) then
+
+	if (ply:GetPData("playerKills") == nil) then
 		ply:SetNWInt("playerKills", 0)
 	else
 		ply:SetNWInt("playerKills", tonumber(ply:GetPData("playerKills")))
 	end
-	
-		if(ply:GetPData("playerDeaths") == nil) then
+
+	if (ply:GetPData("playerDeaths") == nil) then
 		ply:SetNWInt("playerDeaths", 0)
 	else
 		ply:SetNWInt("playerDeaths", tonumber(ply:GetPData("playerDeaths")))
 	end
-	
-		if(ply:GetPData("playerKDR") == nil) then
+
+	if (ply:GetPData("playerKDR") == nil) then
 		ply:SetNWInt("playerKDR", 1)
 	else
 		ply:SetNWInt("playerKDR", tonumber(ply:GetPData("playerKDR")))
 	end
-	
-		if(ply:GetPData("playerTotalEarned") == nil) then
+
+	if (ply:GetPData("playerTotalEarned") == nil) then
 		ply:SetNWInt("playerTotalEarned", 0)
 	else
 		ply:SetNWInt("playerTotalEarned", tonumber(ply:GetPData("playerTotalEarned")))
 	end
-	
-		if(ply:GetPData("playerTotalEarnedKill") == nil) then
+
+	if (ply:GetPData("playerTotalEarnedKill") == nil) then
 		ply:SetNWInt("playerTotalEarnedKill", 0)
 	else
 		ply:SetNWInt("playerTotalEarnedKill", tonumber(ply:GetPData("playerTotalEarnedKill")))
 	end
-	
-		if(ply:GetPData("playerTotalEarnedSell") == nil) then
+
+	if (ply:GetPData("playerTotalEarnedSell") == nil) then
 		ply:SetNWInt("playerTotalEarnedSell", 0)
 	else
 		ply:SetNWInt("playerTotalEarnedSell", tonumber(ply:GetPData("playerTotalEarnedSell")))
 	end
-	
-		if(ply:GetPData("playerDeathsSuicide") == nil) then
+
+	if (ply:GetPData("playerDeathsSuicide") == nil) then
 		ply:SetNWInt("playerDeathsSuicide", 0)
 	else
 		ply:SetNWInt("playerDeathsSuicide", tonumber(ply:GetPData("playerDeathsSuicide")))
 	end
-	
-		if(ply:GetPData("playerDamageGiven") == nil) then
+
+	if (ply:GetPData("playerDamageGiven") == nil) then
 		ply:SetNWInt("playerDamageGiven", 0)
 	else
 		ply:SetNWInt("playerDamageGiven", tonumber(ply:GetPData("playerDamageGiven")))
 	end
-	
-		if(ply:GetPData("playerDamageRecieved") == nil) then
+
+	if (ply:GetPData("playerDamageRecieved") == nil) then
 		ply:SetNWInt("playerDamageRecieved", 0)
 	else
 		ply:SetNWInt("playerDamageRecieved", tonumber(ply:GetPData("playerDamageRecieved")))
 	end
-	
-		if(ply:GetPData("playerDamageHealed") == nil) then
+
+	if (ply:GetPData("playerDamageHealed") == nil) then
 		ply:SetNWInt("playerDamageHealed", 0)
 	else
 		ply:SetNWInt("playerDamageHealed", tonumber(ply:GetPData("playerDamageHealed")))
 	end
 
-		if(ply:GetPData("playerItemsPickedUp") == nil) then
+	if (ply:GetPData("playerItemsPickedUp") == nil) then
 		ply:SetNWInt("playerItemsPickedUp", 0)
 	else
 		ply:SetNWInt("playerItemsPickedUp", tonumber(ply:GetPData("playerItemsPickedUp")))
 	end
-	
-		if(ply:GetPData("playerDistance") == nil) then
+
+	if (ply:GetPData("playerDistance") == nil) then
 		ply:SetNWInt("playerDistance", 0)
 	else
 		ply:SetNWInt("playerDistance", tonumber(ply:GetPData("playerDistance")))
@@ -246,25 +243,25 @@ function GM:PlayerInitialSpawn(ply)
 end
 
 function GM:PlayerDeath(victim, inflictor, attacker)
-    if(victim == attacker) then	
-		
-		local deathGained = (1)
+	if (victim == attacker) then
+
+		local deathGained = 1
 
 		victim:SetNWInt("playerDeathsSuicide", victim:GetNWInt("playerDeathsSuicide") + 1)
 
 		victim:SetNWInt("playerDeaths", victim:GetNWInt("playerDeaths") + deathGained)
-		
+
 		victim:SetNWInt("playerKDR", victim:GetNWInt("playerKills") / victim:GetNWInt("playerDeaths"))
 
 		victim:SetNWInt("raidSuccess", 0)
 	else
 		local moneyGained = math.random(1000, 2500)
-	
+
 		local expGained = math.random(425, 675)
-	
-		local killGained = (1)
-	
-		local deathGained = (1)
+
+		local killGained = 1
+
+		local deathGained = 1
 
 		attacker:SetNWInt("playerMoney", attacker:GetNWInt("playerMoney") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))
 		attacker:SetNWInt("raidMoney", attacker:GetNWInt("raidMoney") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))
@@ -273,47 +270,47 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 			attacker:SetNWInt("playerExp", attacker:GetNWInt("playerExp") + expGained)
 			attacker:SetNWInt("raidXP", attacker:GetNWInt("raidXP") + expGained)
 		end
-	
+
 		attacker:SetNWInt("playerKills", attacker:GetNWInt("playerKills") + killGained)
 		attacker:SetNWInt("raidKill", attacker:GetNWInt("raidKill") + killGained)
-	
+
 		victim:SetNWInt("playerDeaths", victim:GetNWInt("playerDeaths") + deathGained)
-	
+
 		victim:SetNWInt("playerKDR", victim:GetNWInt("playerKills") / victim:GetNWInt("playerDeaths"))
-	
+
 		attacker:SetNWInt("playerKDR", attacker:GetNWInt("playerKills") / attacker:GetNWInt("playerDeaths"))
-	
+
 		attacker:SetNWInt("playerTotalEarned", attacker:GetNWInt("playerTotalEarned") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))
-	
+
 		attacker:SetNWInt("playerTotalXpEarned", attacker:GetNWInt("playerTotalXpEarned") + expGained)
-	
+
 		attacker:SetNWInt("playerTotalEarnedKill", attacker:GetNWInt("playerTotalEarnedKill") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))
 
 		victim:SetNWInt("raidSuccess", 0)
-	
+
 		checkForLevel(attacker)
 	end
 end
 
 hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
-    if (victim == attacker) then
-        victim:PrintMessage(HUD_PRINTCENTER, "You committed suicide.")
-    else
+	if (victim == attacker) then
+		victim:PrintMessage(HUD_PRINTCENTER, "You committed suicide.")
+	else
 		local weaponInfo = weapons.Get( attacker:GetActiveWeapon():GetClass() )
 		local rawDistance = victim:GetPos():Distance(attacker:GetPos())
 
-		local distance = (math.Round(rawDistance*0.01905*10)/10)
-		
-        victim:PrintMessage(HUD_PRINTCENTER, attacker:Name() .. " killed you from " .. distance .. "m away.")
+		local distance = (math.Round(rawDistance * 0.01905 * 10) / 10)
+
+		victim:PrintMessage(HUD_PRINTCENTER, attacker:Name() .. " killed you from " .. distance .. "m away.")
 		victim:PrintMessage(HUD_PRINTCENTER, "They had an " .. weaponInfo["PrintName"]  .. ".")
-    end
+	end
 end )
 
 hook.Add("PlayerHurt", "playerDamage", function(victim, attacker, remainingHealth, dmgTaken)
 
-    attacker:SetNWInt("playerDamageGiven", attacker:GetNWInt("playerDamageGiven") + math.Round(dmgTaken, 0))
+	attacker:SetNWInt("playerDamageGiven", attacker:GetNWInt("playerDamageGiven") + math.Round(dmgTaken, 0))
 	attacker:SetNWInt("raidDamageGiven", attacker:GetNWInt("raidDamageGiven") + math.Round(dmgTaken, 0))
-	
+
 	victim:SetNWInt("playerDamageRecieved", victim:GetNWInt("playerDamageRecieved") + math.Round(dmgTaken, 0))
 	victim:SetNWInt("raidDamageTaken", victim:GetNWInt("raidDamageTaken") + math.Round(dmgTaken, 0))
 
@@ -321,25 +318,25 @@ end)
 
 hook.Add( "HUDWeaponPickedUp", "WeaponPickedUp", function( weapon )
 
-    ply:SetNWInt("playerItemsPickedUp", ply:GetNWInt("playerItemsPickedUp") + 1)
+	ply:SetNWInt("playerItemsPickedUp", ply:GetNWInt("playerItemsPickedUp") + 1)
 	ply:SetNWInt("raidItemsPicked", ply:GetNWInt("raidItemsPicked") + 1)
 
 end )
 
 function checkForLevel(ply)
 	if (ply:GetNWInt("playerLvl") < 32) then
-    	local expToLevel = (ply:GetNWInt("playerLvl") * 140) * 5.15
-    	local curExp = ply:GetNWInt("playerExp")
-    	local curLvl = ply:GetNWInt("playerLvl")
+		local expToLevel = (ply:GetNWInt("playerLvl") * 140) * 5.15
+		local curExp = ply:GetNWInt("playerExp")
+		local curLvl = ply:GetNWInt("playerLvl")
 
-    	if (curExp >= expToLevel) then
-        	curExp = curExp - expToLevel
+		if (curExp >= expToLevel) then
+			curExp = curExp - expToLevel
 
-        	ply:SetNWInt("playerExp", curExp)
-        	ply:SetNWInt("playerLvl", curLvl + 1)
-		
-			ply:PrintMessage(HUD_PRINTCENTER, "You have leveled up to level "..(curLvl + 1)..".", Color(85, 0, 255, 255), 0)
-    	end
+			ply:SetNWInt("playerExp", curExp)
+			ply:SetNWInt("playerLvl", curLvl + 1)
+
+			ply:PrintMessage(HUD_PRINTCENTER, "You have leveled up to level " .. (curLvl + 1) .. ".", Color(85, 0, 255, 255), 0)
+		end
 	end
 end
 

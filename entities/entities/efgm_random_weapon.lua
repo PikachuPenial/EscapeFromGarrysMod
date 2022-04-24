@@ -9,9 +9,9 @@ ENT.SpawnedEnt = nil
 
 function ENT:KeyValue(key, value)
 	if key == "spawn_chance" then
-      self.SpawnChance = tonumber(value)
+    	self.SpawnChance = tonumber(value)
 	end
-   
+
 	if key == "weapon_tier" then
 		self.SpawnTier = tonumber(value)
 	end
@@ -25,7 +25,7 @@ end
 function ENT:SpawnItem()
 
 	local spawnChance = math.random(1, 100)
-	
+
 	if spawnChance <= self.SpawnChance then
 
 		local lowTierWeapons	= {"arccw_eft_mp5", "arccw_eft_mp5sd", "arccw_eft_aks74u", "arccw_eft_ppsh", "arccw_eap_brenten", "arccw_slog_altor", "arccw_mifl_mds9", "arccw_ur_deagle", "arccw_725", "arccw_ud_glock", "arccw_mifl_fas2_mac11", "arccw_mifl_fas2_ragingbull", "arccw_mifl_fas2_toz34", "arccw_eft_usp", "arccw_eft_ump", "arccw_ud_uzi", "arccw_waw_mp40", "arccw_bo1_mpl", "arccw_bo1_pm63", "arccw_eap_lebedev", "arccw_eap_vp70", "arccw_waw_357", "arccw_bo2_fiveseven", "arccw_cde_m93r"}
@@ -34,25 +34,25 @@ function ENT:SpawnItem()
         local grenadeTierWeapons = {"arccw_go_nade_incendiary", "arccw_go_nade_frag", "arccw_go_nade_flash", "arccw_go_nade_smoke", "arccw_go_nade_molotov", "arccw_go_nade_knife"}
 
 		local weps
-		
+
 		if self.SpawnTier == 0 then
 			weps = lowTierWeapons
 		end
-		
+
 		if self.SpawnTier == 1 then
 			weps = midTierWeapons
 		end
-		
+
 		if self.SpawnTier == 2 then
 			weps = highTierWeapons
 		end
-		
+
 		if weps then
 
 			print("efgm_random_weapon: weps does not equal nil, proceeding...")
-			
+
 			local ent = ents.Create(weps[math.random(#weps)])
-			
+
 			if IsValid(ent) then
 
 				if self.SpawnedEnt != nil then

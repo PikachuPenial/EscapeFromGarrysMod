@@ -1,5 +1,5 @@
 function buyEntity(ply, cmd, args)
-    if(args[1] != nil) then
+    if (args[1] != nil) then
         local ent = ents.Create(args[1])
         local tr = ply:GetEyeTrace()
 		local balance = ply:GetNWInt("playerMoney")
@@ -7,9 +7,9 @@ function buyEntity(ply, cmd, args)
         if (IsValid(ent)) then
 
             local ClassName = ent:GetClass()
-            if(!tr.Hit) then return end
+            if (!tr.Hit) then return end
 
-            local entCount = ply:GetNWInt(ClassName.."count")
+            local entCount = ply:GetNWInt(ClassName .. "count")
 
             if (!ent.limit or entCount < ent.Limit) then
 				if (balance >= ent.Cost) then
@@ -20,23 +20,23 @@ function buyEntity(ply, cmd, args)
 					ent:SetPos(SpawnPos)
 					ent:Spawn()
 					ent:Activate()
-					
+
 					ply:SetNWInt("playerMoney", balance - ent.Cost)
 					ply:SetNWInt("playerTotalMoneySpent", ply:GetNWInt("playerTotalMoneySpent") + ent.Cost)
 					ply:SetNWInt("playerTotalMoneySpentItem", ply:GetNWInt("playerTotalMoneySpentItem") + ent.Cost)
-					ply:SetNWInt(ClassName.."count", entCount + 1)
+					ply:SetNWInt(ClassName .. "count", entCount + 1)
 
 					return ent
 				else
 					ply:PrintMessage(HUD_PRINTTALK, "You do not have enough roubles to purchase this item.")
 				end
 			else
-				ply:PrintMessage(HUD_PRINTTALK, "You already have the maximum amount of this specific entity. MAX = "..ent.Limit)
-            end
+				ply:PrintMessage(HUD_PRINTTALK, "You already have the maximum amount of this specific entity. MAX = " .. ent.Limit)
+			end
 
-            return
-        end
-    end
+			return
+		end
+	end
 end
 concommand.Add("buy_entity", buyEntity)
 
@@ -159,7 +159,7 @@ function buyGun(ply, cmd, args)
 			local playerLvl = ply:GetNWInt("playerLvl")
 			local gunCost = tonumber(v[2])
 			local levelReq = tonumber(v[3])
-			
+
 			if (playerLvl >= levelReq) then
 				if (balance >= gunCost) then
 					ply:SetNWInt("playerMoney", balance - gunCost)
@@ -170,10 +170,10 @@ function buyGun(ply, cmd, args)
 				else
 					ply:PrintMessage(HUD_PRINTTALK, "You do not have enough roubles to purchase this item.")
 				end
-			else 
-				ply:PrintMessage(HUD_PRINTTALK, "You must be level "..levelReq.." to purchase this item.")
+			else
+				ply:PrintMessage(HUD_PRINTTALK, "You must be level " .. levelReq .. " to purchase this item.")
 			end
-			
+
 			return
 		end
 	end
@@ -182,99 +182,99 @@ concommand.Add("buy_gun", buyGun)
 
 function ResetIndividualProgress(ply, cmd, args)
 
-    ply:SetNWInt("playerLvl", 1)
+	ply:SetNWInt("playerLvl", 1)
 
-    ply:SetNWInt("playerExp", 0)
+	ply:SetNWInt("playerExp", 0)
 
-    ply:SetNWInt("playerMoney", 10000)
+	ply:SetNWInt("playerMoney", 10000)
 
 end
 concommand.Add("efgm_reset_progress", ResetIndividualProgress)
 
 function ResetIndividualStats(ply, cmd, args)
 
-    ply:SetNWInt("playerLvl", 1)
+	ply:SetNWInt("playerLvl", 1)
 
-    ply:SetNWInt("playerExp", 0)
+	ply:SetNWInt("playerExp", 0)
 
-    ply:SetNWInt("playerMoney", 10000)
+	ply:SetNWInt("playerMoney", 10000)
 
-    ply:SetNWInt("playerKills", 0)
+	ply:SetNWInt("playerKills", 0)
 
-    ply:SetNWInt("playerDeaths", 0)
+	ply:SetNWInt("playerDeaths", 0)
 
-    ply:SetNWInt("playerKDR", 1)
-	
-    ply:SetNWInt("playerTotalEarned", 0)
-	
-    ply:SetNWInt("playerTotalEarnedKill", 0)
-	
-    ply:SetNWInt("playerTotalEarnedSell", 0)
-	
-    ply:SetNWInt("playerTotalXpEarned", 0)
-	
-    ply:SetNWInt("playerTotalXpEarnedKill", 0)
-	
-    ply:SetNWInt("playerTotalXpEarnedExplore", 0)
-	
-    ply:SetNWInt("playerTotalMoneySpent", 0)
-	
-    ply:SetNWInt("playerTotalMoneySpentWep", 0)
-	
-    ply:SetNWInt("playerTotalMoneySpentItem", 0)
-	
-    ply:SetNWInt("playerDeathsSuicide", 0)
-	
-    ply:SetNWInt("playerDamageGiven", 0)
+	ply:SetNWInt("playerKDR", 1)
 
-    ply:SetNWInt("playerDamageRecieved", 0)
-	
-    ply:SetNWInt("playerDamageHealed", 0)
-	
-    ply:SetNWInt("playerItemsPickedUp", 0)
-	
-    ply:SetNWInt("playerDistance", 0)
+	ply:SetNWInt("playerTotalEarned", 0)
+
+	ply:SetNWInt("playerTotalEarnedKill", 0)
+
+	ply:SetNWInt("playerTotalEarnedSell", 0)
+
+	ply:SetNWInt("playerTotalXpEarned", 0)
+
+	ply:SetNWInt("playerTotalXpEarnedKill", 0)
+
+	ply:SetNWInt("playerTotalXpEarnedExplore", 0)
+
+	ply:SetNWInt("playerTotalMoneySpent", 0)
+
+	ply:SetNWInt("playerTotalMoneySpentWep", 0)
+
+	ply:SetNWInt("playerTotalMoneySpentItem", 0)
+
+	ply:SetNWInt("playerDeathsSuicide", 0)
+
+	ply:SetNWInt("playerDamageGiven", 0)
+
+	ply:SetNWInt("playerDamageRecieved", 0)
+
+	ply:SetNWInt("playerDamageHealed", 0)
+
+	ply:SetNWInt("playerItemsPickedUp", 0)
+
+	ply:SetNWInt("playerDistance", 0)
 
 end
 concommand.Add("efgm_reset_stats", ResetIndividualStats)
 
 function ResetIndividualAll(ply, cmd, args)
 
-    ply:SetNWInt("playerKills", 0)
+	ply:SetNWInt("playerKills", 0)
 
-    ply:SetNWInt("playerDeaths", 0)
+	ply:SetNWInt("playerDeaths", 0)
 
-    ply:SetNWInt("playerKDR", 1)
-	
-    ply:SetNWInt("playerTotalEarned", 0)
-	
-    ply:SetNWInt("playerTotalEarnedKill", 0)
-	
-    ply:SetNWInt("playerTotalEarnedSell", 0)
-	
-    ply:SetNWInt("playerTotalXpEarned", 0)
-	
-    ply:SetNWInt("playerTotalXpEarnedKill", 0)
-	
-    ply:SetNWInt("playerTotalXpEarnedExplore", 0)
-	
-    ply:SetNWInt("playerTotalMoneySpent", 0)
-	
-    ply:SetNWInt("playerTotalMoneySpentWep", 0)
-	
-    ply:SetNWInt("playerTotalMoneySpentItem", 0)
-	
-    ply:SetNWInt("playerDeathsSuicide", 0)
-	
-    ply:SetNWInt("playerDamageGiven", 0)
+	ply:SetNWInt("playerKDR", 1)
 
-    ply:SetNWInt("playerDamageRecieved", 0)
-	
-    ply:SetNWInt("playerDamageHealed", 0)
-	
-    ply:SetNWInt("playerItemsPickedUp", 0)
-	
-    ply:SetNWInt("playerDistance", 0)
+	ply:SetNWInt("playerTotalEarned", 0)
+
+	ply:SetNWInt("playerTotalEarnedKill", 0)
+
+	ply:SetNWInt("playerTotalEarnedSell", 0)
+
+	ply:SetNWInt("playerTotalXpEarned", 0)
+
+	ply:SetNWInt("playerTotalXpEarnedKill", 0)
+
+	ply:SetNWInt("playerTotalXpEarnedExplore", 0)
+
+	ply:SetNWInt("playerTotalMoneySpent", 0)
+
+	ply:SetNWInt("playerTotalMoneySpentWep", 0)
+
+	ply:SetNWInt("playerTotalMoneySpentItem", 0)
+
+	ply:SetNWInt("playerDeathsSuicide", 0)
+
+	ply:SetNWInt("playerDamageGiven", 0)
+
+	ply:SetNWInt("playerDamageRecieved", 0)
+
+	ply:SetNWInt("playerDamageHealed", 0)
+
+	ply:SetNWInt("playerItemsPickedUp", 0)
+
+	ply:SetNWInt("playerDistance", 0)
 
 end
 concommand.Add("efgm_reset_everything", ResetIndividualAll)
@@ -286,12 +286,12 @@ function CheckExtracts(ply, cmd, args)
 	for k, v in pairs( ents.FindByClass("efgm_trigger_extract") ) do
 
 		if v.ExtractGroup == "All" or v.ExtractGroup == CheckSpawnGroup(ply) then
-			extractNames = extractNames.."\n"..v.ExtractName
+			extractNames = extractNames .. "\n" .. v.ExtractName
 
 			if v.Available == 1 then
-				extractNames = extractNames.." (Status: Unknown)"
+				extractNames = extractNames .. " (Status: Unknown)"
 			else
-				extractNames = extractNames.." (Status: Available)"
+				extractNames = extractNames .. " (Status: Available)"
 			end
 		end
 	end
@@ -304,11 +304,11 @@ concommand.Add("efgm_extract_list", CheckExtracts)
 function PlayerPrestige(ply, cmd, args)
 	if (ply:GetNWInt("playerLvl") >= 32) then
 
-		local prestigeGained = (1)
-		local roubleMulti = (0.25)
+		local prestigeGained = 1
+		local roubleMulti = 0.25
 
-		local levelReset = (1)
-		local expReset = (0)
+		local levelReset = 1
+		local expReset = 0
 
 		ply:SetNWInt("playerPrestige", ply:GetNWInt("playerPrestige") + prestigeGained)
 		ply:SetNWInt("playerRoubleMulti", ply:GetNWInt("playerRoubleMulti") + roubleMulti)

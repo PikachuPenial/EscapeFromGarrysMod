@@ -9,19 +9,19 @@ ENT.TaskNameExternal	= ""
 
 function ENT:KeyValue(key, value)
 	if key == "task_number" then
-      self.TaskID = tonumber(value)
+		self.TaskID = tonumber(value)
 	end
 
 	if key == "task_objective" then
-      self.TaskObjective = tonumber(value)
+		self.TaskObjective = tonumber(value)
 	end
 
 	if key == "task_name_internal" then
-      self.TaskNameInternal = tostring(value)
+		self.TaskNameInternal = tostring(value)
 	end
 
 	if key == "task_name_external" then
-      self.TaskNameExternal = tostring(value)
+		self.TaskNameExternal = tostring(value)
 	end
 end
 
@@ -37,12 +37,12 @@ end
 
 function ENT:CheckForPlayers()
 
-   -- Setting variables
+	-- Setting variables
 
-   local mins = self:LocalToWorld(self:OBBMins())
-   local maxs = self:LocalToWorld(self:OBBMaxs())
+	local mins = self:LocalToWorld(self:OBBMins())
+	local maxs = self:LocalToWorld(self:OBBMaxs())
 
-   for iteration, ply in ipairs(player.GetAll()) do
+	for iteration, ply in ipairs(player.GetAll()) do
 
 		if IsValid(ply) and ply:Alive() then
 

@@ -10,7 +10,7 @@ function ENT:KeyValue(key, value)
    if key == "spawn_chance" then
       self.SpawnChance = tonumber(value)
    end
-   
+
    if key == "ammo_tier" then
 		self.SpawnTier = tonumber(value)
    end
@@ -23,11 +23,11 @@ function ENT:Initialize()
     local mixedAmmo = {"arccw_ammo_smg1", "arccw_ammo_357", "arccw_ammo_pistol", "arccw_ammo_plinking", "arccw_ammo_ar2", "arccw_ammo_smg1_grenade", "arccw_ammo_buckshot", "arccw_ammo_sniper", "arccw_ammo_smg1_large", "arccw_ammo_357_large", "arccw_ammo_pistol_large", "arccw_ammo_plinking_large", "arccw_ammo_ar2_large", "arccw_ammo_smg1_grenade_large", "arccw_ammo_buckshot_large", "arccw_ammo_sniper_large"}
 
 	local ammo
-	
+
 	if self.SpawnTier == 0 then
 		ammo = smallAmmo
 	end
-	
+
 	if self.SpawnTier == 1 then
 		ammo = largeAmmo
 	end
@@ -35,17 +35,17 @@ function ENT:Initialize()
     if self.SpawnTier == 2 then
 		ammo = mixedAmmo
 	end
-	
+
 	if ammo then
 
 		print("efgm_random_ammo: ammo does not equal nil, proceeding...")
-		
+
 		local spawnChance = math.random(1, 100)
-		
+
 		if spawnChance <= self.SpawnChance then
-			
+
 			local ent = ents.Create(ammo[math.random(#ammo)])
-			
+
 			if IsValid(ent) then
 				local pos = self:GetPos()
 				ent:SetPos(pos)

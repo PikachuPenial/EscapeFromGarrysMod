@@ -13,9 +13,9 @@ local playersVisted = {}
 
 function ENT:KeyValue(key, value)
 	if key == "extract_time" then
-      self.ExtractTime = tonumber(value)
+		self.ExtractTime = tonumber(value)
 	end
-   
+
 	if key == "extract_name" then
 		self.ExtractName = tostring(value)
 	end
@@ -29,9 +29,9 @@ function ENT:KeyValue(key, value)
 	end
 
 	if key == "start_extract_disabled" then
-      self.Disabled = tobool(value)
+		self.Disabled = tobool(value)
 	end
-   
+
 	if key == "availability" then
 		self.Available = tonumber(value)
 	end
@@ -50,12 +50,12 @@ end
 
 function ENT:CheckForPlayers()
 
-   -- Setting variables
+	-- Setting variables
 
-   local mins = self:LocalToWorld(self:OBBMins())
-   local maxs = self:LocalToWorld(self:OBBMaxs())
+	local mins = self:LocalToWorld(self:OBBMins())
+	local maxs = self:LocalToWorld(self:OBBMaxs())
 
-   for iteration, ply in ipairs(player.GetAll()) do
+	for iteration, ply in ipairs(player.GetAll()) do
 
 		if IsValid(ply) and ply:Alive() then
 
@@ -79,29 +79,29 @@ function ENT:CheckForPlayers()
 
 					return end
 
-					if timer.Exists(ply:GetName()..self.ExtractName.."_timer") == false then
+					if timer.Exists(ply:GetName() .. self.ExtractName .. "_timer") == false then
 
-						ply:PrintMessage( HUD_PRINTCENTER, "You will extract in "..self.ExtractTime.." seconds through "..self.ExtractName.."!" )
+						ply:PrintMessage( HUD_PRINTCENTER, "You will extract in " .. self.ExtractTime .. " seconds through " .. self.ExtractName .. "!" )
 
 						ply:SetNWInt("raidSuccess", 1)
 
-						timer.Create( ply:GetName()..self.ExtractName.."_timer" , self.ExtractTime, 1, function()
+						timer.Create( ply:GetName() .. self.ExtractName .. "_timer" , self.ExtractTime, 1, function()
 
-							ply:PrintMessage( HUD_PRINTCENTER, "You have extracted from the raid through "..self.ExtractName.."! Good job!" )
+							ply:PrintMessage( HUD_PRINTCENTER, "You have extracted from the raid through " .. self.ExtractName .. "! Good job!" )
 
 							local lobbySpawns = ents.FindByName( "lobby_spawns" )
 							local chosenSpawn = lobbySpawns[math.random(#lobbySpawns)]
 
 							local expGained = math.random(250, 600)
-				
+
 							if (ply:GetNWInt("playerLvl") < 32) then
 								ply:SetNWInt("playerExp", ply:GetNWInt("playerExp") + expGained)
 							end
-							
+
 							ply:SetNWInt("raidSuccess", 1)
-	
+
 							ply:ConCommand("open_raid_summary_menu")
-	
+
 							checkForLevel(ply)
 
 							ply:SetPos(chosenSpawn:GetPos())
@@ -129,17 +129,17 @@ function ENT:CheckForPlayers()
 						return
 					end
 
-					if timer.Exists(ply:GetName()..self.ExtractName.."_timer") == true then
+					if timer.Exists(ply:GetName() .. self.ExtractName .. "_timer") == true then
 
-						ply:PrintMessage( HUD_PRINTCENTER, "You have left the "..self.ExtractName.." extract!" )
+						ply:PrintMessage( HUD_PRINTCENTER, "You have left the " .. self.ExtractName .. " extract!" )
 
 						pmcInRaid = false
 
-						timer.Remove( ply:GetName()..self.ExtractName.."_timer" )
+						timer.Remove( ply:GetName() .. self.ExtractName .. "_timer" )
 					end
-					
+
 				end
-			
+
 			end
 
 		end
@@ -150,18 +150,18 @@ end
 
 function checkForLevel(ply)
 	if (ply:GetNWInt("playerLvl") < 32) then
-    	local expToLevel = (ply:GetNWInt("playerLvl") * 140) * 5.15
-    	local curExp = ply:GetNWInt("playerExp")
-    	local curLvl = ply:GetNWInt("playerLvl")
+	local expToLevel = (ply:GetNWInt("playerLvl") * 140) * 5.15
+	local curExp = ply:GetNWInt("playerExp")
+	local curLvl = ply:GetNWInt("playerLvl")
 
-    	if (curExp >= expToLevel) then
-        	curExp = curExp - expToLevel
+	if (curExp >= expToLevel) then
+			curExp = curExp - expToLevel
 
-        	ply:SetNWInt("playerExp", curExp)
-        	ply:SetNWInt("playerLvl", curLvl + 1)
-		
-			ply:PrintMessage(HUD_PRINTCENTER, "You have leveled up to level "..(curLvl + 1)..".", Color(85, 0, 255, 255), 0)
-    	end
+			ply:SetNWInt("playerExp", curExp)
+			ply:SetNWInt("playerLvl", curLvl + 1)
+
+			ply:PrintMessage(HUD_PRINTCENTER, "You have leveled up to level " .. (curLvl + 1) .. ".", Color(85, 0, 255, 255), 0)
+		end
 	end
 end
 

@@ -1,11 +1,9 @@
 local MapMenu
 
-local clientPlayer
-
 function mapVoteMenu(ply, cmd, args)
 
 	local client = LocalPlayer()
-	
+
 	if not client:Alive() then return end
 
 	if (MapMenu == nil) then
@@ -19,7 +17,7 @@ function mapVoteMenu(ply, cmd, args)
 		MapMenu.Paint = function()
 			surface.SetDrawColor(90, 90, 90, 50)
 			surface.DrawRect(0, 0, MapMenu:GetWide(), MapMenu:GetTall())
-			
+
 			surface.SetDrawColor(40, 40, 40, 50)
 			surface.DrawRect(0, 24, MapMenu:GetWide(), 1)
 
@@ -28,7 +26,7 @@ function mapVoteMenu(ply, cmd, args)
 			surface.SetTextPos(250, 20)
 			surface.DrawText("VOTE FOR THE NEXT MAP!")
         end
-	
+
         inMapVoteMenu = true
 		addMapButtons(MapMenu)
 
@@ -54,16 +52,16 @@ function addMapButtons(MapMenu)
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
 		surface.DrawRect(0, 0, closeButton:GetWide(), closeButton:GetTall())
-		
+
 		--Draw bottom and Right borders
 		surface.SetDrawColor(40, 40, 40, 255)
 		surface.DrawRect(0, 49, closeButton:GetWide(), 1)
 		surface.DrawRect(224, 0, 1, closeButton:GetTall())
-		
+
 		--Draw/write text
 		draw.DrawText("Close Menu / Skip Vote", "Trebuchet24", closeButton:GetWide() / 2, 10, Color(255, 0, 0, 255), 1)
     end
-    
+
     closeButton.DoClick = function(closeButton)
         if (inPlayerMenu == false) and (inStashMenu == false) then
             MapMenu:Remove()

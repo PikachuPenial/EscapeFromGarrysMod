@@ -1,9 +1,4 @@
-local SummaryMenu
-local KillerMenu
-
 function raidSummaryMenu(ply, cmd, args)
-
-	local client = LocalPlayer()
 
 	if (inRaidSummaryMenu == false) then
 		local SummaryMenu = vgui.Create("DFrame")
@@ -13,7 +8,7 @@ function raidSummaryMenu(ply, cmd, args)
 		--else
 		--	SummaryMenu:SetSize(250, 400)
 		--end
-		
+
 		SummaryMenu:SetSize(250, 400)
 		SummaryMenu:Center()
 		SummaryMenu:SetBackgroundBlur(true)
@@ -24,7 +19,7 @@ function raidSummaryMenu(ply, cmd, args)
 		SummaryMenu.Paint = function()
 			surface.SetDrawColor(90, 90, 90, 50)
 			surface.DrawRect(0, 0, SummaryMenu:GetWide(), SummaryMenu:GetTall())
-			
+
 			surface.SetDrawColor(40, 40, 40, 50)
 			surface.DrawRect(0, 24, SummaryMenu:GetWide(), 1)
 

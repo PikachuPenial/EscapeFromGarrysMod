@@ -10,7 +10,7 @@ function ENT:KeyValue(key, value)
    if key == "spawn_chance" then
       self.SpawnChance = tonumber(value)
    end
-   
+
    if key == "attach_tier" then
 		self.SpawnTier = tonumber(value)
    end
@@ -24,11 +24,11 @@ function ENT:Initialize()
     local foregrips = {"acwatt_go_foregrip_stubby"}
 
 	local attach
-	
+
 	if self.SpawnTier == 0 then
 		attach = all
 	end
-	
+
 	if self.SpawnTier == 1 then
 		attach = optics
 	end
@@ -40,15 +40,15 @@ function ENT:Initialize()
     if self.SpawnTier == 3 then
 		attach = foregrips
 	end
-	
+
 	if attach then
-		
+
 		local spawnChance = math.random(1, 100)
-		
+
 		if spawnChance <= self.SpawnChance then
-			
+
 			local ent = ents.Create(attach[math.random(#attach)])
-			
+
 			if IsValid(ent) then
 				local pos = self:GetPos()
 				ent:SetPos(pos)

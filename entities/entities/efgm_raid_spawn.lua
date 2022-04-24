@@ -29,7 +29,7 @@ function ENT:KeyValue(key, value)
 end
 
 function ENT:Initialize()
-    
+
     self:SetupTeamSpawnVectors()
 
 end
@@ -48,9 +48,9 @@ function ENT:SetupTeamSpawnVectors()
 
     -- This sets up a grid (xSpawns, ySpawns) around the raid spawn. In each vertex of the grid, we will check if it is empty or not, and if it is empty we add this vector to the spawn table.
 
-    for x=1, xSpawns do
+    for x = 1, xSpawns do
 
-        for y=1, ySpawns do
+        for y = 1, ySpawns do
 
             -- God i fucking hope this works first time i have no idea what this does and its only been a solid minute from writing it
 
@@ -67,7 +67,7 @@ function ENT:SetupTeamSpawnVectors()
 
             if hullTrace.Hit == true then
 
-                -- print("Team spawn vector at (" .. x .. ", " .. y ..") destroyed; not enough space at target location!")
+                print("Team spawn vector at (" .. x .. ", " .. y .. ") destroyed; not enough space at target location!")
 
             elseif hullTrace.Hit == false then
 

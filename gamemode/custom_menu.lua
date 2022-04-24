@@ -2,7 +2,6 @@ local Menu
 
 local isSellMenu = false
 local clientPlayer
-local seller
 
 local isPlayerInRaid = false
 
@@ -20,13 +19,13 @@ net.Receive("SendTaskInfo",function (len, ply)
 	Menu:Show()
 
 	DrawTasks(taskInfo)
-	
+
 end)
 
 net.Receive("MenuInRaid",function (len, ply)
 
 	isPlayerInRaid = net.ReadBool()
-	
+
 end)
 
 net.Receive("SellMenuTable",function (len, ply)
@@ -35,7 +34,7 @@ net.Receive("SellMenuTable",function (len, ply)
 
 	clientPlayer = tempTable[1]
 	seller = tempTable[2]
-	
+
 end)
 
 net.Receive("OpenStashGUI",function (len, ply)
@@ -52,7 +51,7 @@ end)
 net.Receive("CloseStashGUI",function (len, ply)
 
 	StashMenu:Close()
-	
+
 end)
 
 net.Receive("SendStash",function (len, ply)
@@ -70,7 +69,7 @@ function gameShopMenu(ply, cmd, args)
 	-- This part just makes sure the client is the one viewing the hud. This is so some logic can work, it's complicated.
 
 	local client = LocalPlayer()
-	
+
 	if not client:Alive() then return end
 
 	if clientPlayer != nil then
@@ -91,11 +90,11 @@ function gameShopMenu(ply, cmd, args)
 		Menu.Paint = function()
 			surface.SetDrawColor(90, 90, 90, 50)
 			surface.DrawRect(0, 0, Menu:GetWide(), Menu:GetTall())
-		
+
 			surface.SetDrawColor(40, 40, 40, 50)
 			surface.DrawRect(0, 24, Menu:GetWide(), 1)
 		end
-	
+
 		addButtons(Menu, isSellMenu, isPlayerInRaid, clientPlayer)
 
 		inPlayerMenu = true
@@ -107,7 +106,7 @@ function gameShopMenu(ply, cmd, args)
 
 			if (inStashMenu == false) and (inMapVoteMenu == false) and (inRaidSummaryMenu == false) then
 				inPlayerMenu = false
-	
+
 				gui.EnableScreenClicker(false)
 				surface.PlaySound( "common/wpn_denyselect.wav" )
 
@@ -118,7 +117,7 @@ function gameShopMenu(ply, cmd, args)
 				seller = nil
 			else
 				surface.PlaySound( "common/wpn_denyselect.wav" )
-				
+
 				inPlayerMenu = false
 
 				clientPlayer = nil
@@ -144,139 +143,139 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
 		surface.DrawRect(0, 0, playerButton:GetWide(), playerButton:GetTall())
-		
+
 		--Draw bottom and Right borders
 		surface.SetDrawColor(40, 40, 40, 255)
 		surface.DrawRect(0, 49, playerButton:GetWide(), 1)
 		surface.DrawRect(99, 0, 1, playerButton:GetTall())
-		
+
 		--Draw/write text
 		draw.DrawText(LocalPlayer():GetName(), "DermaLarge", playerButton:GetWide() / 2.1, 10, Color(255, 255, 255, 255), 1)
 	end
 	playerButton.DoClick = function(playerButton)
 		local playerPanel = Menu:Add("PlayerPanel")
-		
+
 		playerPanel.Paint = function()
 			surface.SetDrawColor(50, 50, 50, 255)
 			surface.DrawRect(0, 0, playerPanel:GetWide(), playerPanel:GetTall())
 			surface.SetTextColor(255, 255, 255)
-			
+
 			-- Player Name
 			surface.SetFont("Trebuchet24")
 			surface.SetTextPos(5, 0)
 			surface.DrawText(LocalPlayer():GetName())
-			
+
 			-- Stats Text
 			surface.SetFont("Trebuchet24")
 			surface.SetTextPos(5, 320)
 			surface.DrawText("Your Stats")
-			
+
 			-- Player EXP and level
 			local expToLevel = (LocalPlayer():GetNWInt("playerLvl") * 140) * 5.15
-			
+
 			surface.SetFont("Default")
 			surface.SetTextPos(8, 35)
 			surface.SetTextColor(228, 255, 0, 255)
-			surface.DrawText("Level "..LocalPlayer():GetNWInt("playerLvl"))
-			
+			surface.DrawText("Level " .. LocalPlayer():GetNWInt("playerLvl"))
+
 			surface.SetTextPos(58, 35)
 			surface.SetTextColor(0, 255, 209 , 255)
-			surface.DrawText("Experience "..LocalPlayer():GetNWInt("playerExp").."/"..expToLevel)
-			
+			surface.DrawText("Experience " .. LocalPlayer():GetNWInt("playerExp") .. "/" .. expToLevel)
+
 			-- Balance
 			surface.SetTextPos(8, 55)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Roubles/Balance: "..LocalPlayer():GetNWInt("playerMoney"))
-			
+			surface.DrawText("Roubles/Balance: " .. LocalPlayer():GetNWInt("playerMoney"))
+
 			-- Stats (Kills)
 			surface.SetTextPos(8, 350)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Kills: "..LocalPlayer():GetNWInt("playerKills"))
-			
+			surface.DrawText("Total Kills: " .. LocalPlayer():GetNWInt("playerKills"))
+
 			-- Stats (Deaths)
 			surface.SetTextPos(8, 370)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Deaths: "..LocalPlayer():GetNWInt("playerDeaths"))
-			
+			surface.DrawText("Total Deaths: " .. LocalPlayer():GetNWInt("playerDeaths"))
+
 			-- Stats (KDR)
 			surface.SetTextPos(8, 390)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Kill/Death Ratio: "..LocalPlayer():GetNWInt("playerKDR"))
-			
+			surface.DrawText("Kill/Death Ratio: " .. LocalPlayer():GetNWInt("playerKDR"))
+
 			-- Stats (Total Earned)
 			surface.SetTextPos(8, 410)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Roubles Earned: "..LocalPlayer():GetNWInt("playerTotalEarned"))
-			
+			surface.DrawText("Total Roubles Earned: " .. LocalPlayer():GetNWInt("playerTotalEarned"))
+
 			-- Stats (Total Roubles From Kills)
 			surface.SetTextPos(8, 430)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Roubles Earned From Kills: "..LocalPlayer():GetNWInt("playerTotalEarnedKill"))
-			
+			surface.DrawText("Total Roubles Earned From Kills: " .. LocalPlayer():GetNWInt("playerTotalEarnedKill"))
+
 			-- Stats (Total Roubles From Selling)
 			surface.SetTextPos(8, 450)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Roubles Earned From Selling: "..LocalPlayer():GetNWInt("playerTotalEarnedSell"))
-			
+			surface.DrawText("Total Roubles Earned From Selling: " .. LocalPlayer():GetNWInt("playerTotalEarnedSell"))
+
 			-- Stats (Total Experience Gained)
 			surface.SetTextPos(252, 350)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Experience Gained: "..LocalPlayer():GetNWInt("playerTotalXpEarned"))
-			
+			surface.DrawText("Total Experience Gained: " .. LocalPlayer():GetNWInt("playerTotalXpEarned"))
+
 			-- Stats (Total Experience Gained From Killing)
 			surface.SetTextPos(252, 370)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Experience Gained From Kills: "..LocalPlayer():GetNWInt("playerTotalXpEarnedKill"))
-			
+			surface.DrawText("Total Experience Gained From Kills: " .. LocalPlayer():GetNWInt("playerTotalXpEarnedKill"))
+
 			-- Stats (Total Experience Gained From Exploration)
 			surface.SetTextPos(252, 390)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Experience Gained From Exploration: "..LocalPlayer():GetNWInt("playerTotalXpEarnedExplore"))
-			
+			surface.DrawText("Total Experience Gained From Exploration: " .. LocalPlayer():GetNWInt("playerTotalXpEarnedExplore"))
+
 			-- Stats (Total Money Spent)
 			surface.SetTextPos(252, 410)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Money Spent: "..LocalPlayer():GetNWInt("playerTotalMoneySpent"))
-			
+			surface.DrawText("Total Money Spent: " .. LocalPlayer():GetNWInt("playerTotalMoneySpent"))
+
 			-- Stats (Total Money Spent On Weapons)
 			surface.SetTextPos(252, 430)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Money Spent On Weapons: "..LocalPlayer():GetNWInt("playerTotalMoneySpentWep"))
-			
+			surface.DrawText("Total Money Spent On Weapons: " .. LocalPlayer():GetNWInt("playerTotalMoneySpentWep"))
+
 			-- Stats (Total Money Spent On Ammo/Armor)
 			surface.SetTextPos(252, 450)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Money Spent On Ammo/Armor: "..LocalPlayer():GetNWInt("playerTotalMoneySpentItem"))
-			
+			surface.DrawText("Total Money Spent On Ammo/Armor: " .. LocalPlayer():GetNWInt("playerTotalMoneySpentItem"))
+
 			-- Stats (Deaths By Suicide)
 			surface.SetTextPos(496, 350)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Deaths By Suicide: "..LocalPlayer():GetNWInt("playerDeathsSuicide"))
-			
+			surface.DrawText("Total Deaths By Suicide: " .. LocalPlayer():GetNWInt("playerDeathsSuicide"))
+
 			-- Stats (Damage Given)
 			surface.SetTextPos(496, 370)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Damage Given: "..LocalPlayer():GetNWInt("playerDamageGiven"))
-			
+			surface.DrawText("Damage Given: " .. LocalPlayer():GetNWInt("playerDamageGiven"))
+
 			-- Stats (Damage Recieved)
 			surface.SetTextPos(496, 390)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Damage Recieved: "..LocalPlayer():GetNWInt("playerDamageRecieved"))
-			
+			surface.DrawText("Damage Recieved: " .. LocalPlayer():GetNWInt("playerDamageRecieved"))
+
 			-- Stats (Damage Healed)
 			surface.SetTextPos(496, 410)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Damage Healed: "..LocalPlayer():GetNWInt("playerDamageHealed"))
-			
+			surface.DrawText("Damage Healed: " .. LocalPlayer():GetNWInt("playerDamageHealed"))
+
 			-- Stats (Items Picked Up)
 			surface.SetTextPos(496, 430)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Weapons Picked Up: "..LocalPlayer():GetNWInt("playerItemsPickedUp"))
-			
+			surface.DrawText("Weapons Picked Up: " .. LocalPlayer():GetNWInt("playerItemsPickedUp"))
+
 			-- Stats (Distance Travelled)
 			surface.SetTextPos(496, 450)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Distance Travelled: "..LocalPlayer():GetNWInt("playerDistance"))
+			surface.DrawText("Distance Travelled: " .. LocalPlayer():GetNWInt("playerDistance"))
 
 		end
 	end
@@ -290,19 +289,19 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
 		surface.DrawRect(0, 0, playerButton:GetWide(), playerButton:GetTall())
-	
-		
+
+
 		--Draw/write text
 		draw.DrawText("HELP", "DermaLarge", playerButton:GetWide() / 2.1, 125, Color(80, 255, 255, 255), 1)
 	end
 	playerButton.DoClick = function(playerButton)
 		local playerPanel = Menu:Add("PlayerPanel")
-		
+
 		playerPanel.Paint = function()
 			surface.SetDrawColor(50, 50, 50, 255)
 			surface.DrawRect(0, 0, playerPanel:GetWide(), playerPanel:GetTall())
 			surface.SetTextColor(255, 255, 255, 255)
-			
+
 			-- Player Name
 			surface.SetFont("DermaLarge")
 			surface.SetTextPos(5, 0)
@@ -387,7 +386,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.SetFont("DermaLarge")
 			surface.SetTextPos(5, 625)
 			surface.DrawText("If you can extract from a raid, you can then put the loot you")
-				
+
 			-- Help Text Seventeen
 			surface.SetFont("DermaLarge")
 			surface.SetTextPos(5, 650)
@@ -455,16 +454,16 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
 		surface.DrawRect(0, 0, skillButton:GetWide(), skillButton:GetTall())
-		
+
 		--Draw bottom and Right borders
 		surface.SetDrawColor(40, 40, 40, 255)
 		surface.DrawRect(0, 49, skillButton:GetWide(), 1)
 		surface.DrawRect(99, 0, 1, skillButton:GetTall())
-		
+
 		--Draw/write text
 
 		draw.DrawText("SKILLS", "DermaLarge", skillButton:GetWide() / 2.1, 10, Color(0, 165, 255, 255), 1)
-		
+
 	end
 
 	skillButton.DoClick = function()
@@ -480,16 +479,16 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
 		surface.DrawRect(0, 0, taskButton:GetWide(), taskButton:GetTall())
-		
+
 		--Draw bottom and Right borders
 		surface.SetDrawColor(40, 40, 40, 255)
 		surface.DrawRect(0, 49, taskButton:GetWide(), 1)
 		surface.DrawRect(99, 0, 1, taskButton:GetTall())
-		
+
 		--Draw/write text
 
 		draw.DrawText("TASKS", "DermaLarge", taskButton:GetWide() / 2.1, 10, Color(255, 165, 0, 255), 1)
-		
+
 	end
 
 	taskButton.DoClick = function()
@@ -519,12 +518,12 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				taskCollapsible:SetExpanded( true )	-- Start collapsed
 
 				local taskInfoPanel = vgui.Create("DPanel", taskPanel)
-				
+
 				taskCollapsible:SetContents( taskInfoPanel )
 
 				taskInfoPanel:Dock( FILL )
 				taskInfoPanel:SetSize( taskPanel:GetWide(), 450 )
-				
+
 				taskInfoPanel.Paint = function()
 
 					surface.SetDrawColor(80,80,80,255)
@@ -581,7 +580,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 				if tonumber(v[8]) == 1 then
 
-					print("Task completed = "..v[8])
+					print("Task completed = " .. v[8])
 
 					local taskCompleteButton = vgui.Create("DButton", taskInfoPanel)
 					taskCompleteButton:SetText( "Complete Task" )
@@ -593,7 +592,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 						net.WriteInt(v[6], 12)
 						net.SendToServer()
 
-						
+	
 					end
 
 				end
@@ -605,7 +604,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	end
 
 	if menuInRaid == false then
-	
+
 		local shopButton = vgui.Create("DButton")
 		shopButton:SetParent(Menu)
 		shopButton:SetText("")
@@ -615,12 +614,12 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			--Color of entire button
 			surface.SetDrawColor(50, 50, 50, 255)
 			surface.DrawRect(0, 0, shopButton:GetWide(), shopButton:GetTall())
-			
+
 			--Draw bottom and Right borders
 			surface.SetDrawColor(40, 40, 40, 255)
 			surface.DrawRect(0, 49, shopButton:GetWide(), 1)
 			surface.DrawRect(99, 0, 1, shopButton:GetTall())
-			
+
 			--Draw/write text
 
 			local shopText
@@ -628,18 +627,18 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			if sellMenuBool == true then shopText = "SELL" else shopText = "SHOP" end
 
 			draw.DrawText(shopText, "DermaLarge", shopButton:GetWide() / 2.1, 10, Color(102, 255, 102, 255), 1)
-			
+
 		end
 
 		shopButton.DoClick = function(shopButton)
-			local shopPanel = Menu:Add("ShopPanel")	
+			local shopPanel = Menu:Add("ShopPanel")
 
 			local entityCategory
 
 			local entityList
 
 			if sellMenuBool == false then
-				
+
 
 				entityCategory = vgui.Create("DCollapsibleCategory", shopPanel)
 				-- entityCategory:SetPos(0, 0)
@@ -654,7 +653,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				entityList:SetSpaceY(5)
 				entityList:SetSpaceX(5)
 			end
-			
+
 			local weaponCategory = vgui.Create("DCollapsibleCategory", shopPanel)
 			-- weaponCategory:SetPos(0, 230)
 			-- weaponCategory:SetSize(shopPanel:GetWide(), 200)
@@ -673,9 +672,9 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			if sellMenuBool == true then
 
 				-- if this is the sell menu
-				
+
 				for k, v in pairs(weaponsArr) do
-		
+
 					for l, b in pairs(sellBlacklist) do
 						if v[2] == b[1] then
 							return
@@ -686,7 +685,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 					local icon = vgui.Create("SpawnIcon", weaponList)
 					icon:SetModel(v[1])
-				icon:SetToolTip(v[3].."\nCategory: "..v[7].."\nRarity: "..v[6].."\nSell Price: "..math.Round(v[4]*sellPriceMultiplier, 0))
+				icon:SetToolTip(v[3] .. "\nCategory: " .. v[7] .. "\nRarity: " .. v[6] .. "\nSell Price: " .. math.Round(v[4] * sellPriceMultiplier, 0))
 
 					-- this lets players visually distinguish items they can sell
 
@@ -709,10 +708,10 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 					weaponList:Add(icon)
 
 					icon.DoClick = function(icon)
-						
+
 						if clientPlayer:HasWeapon(v[2]) then
 
-							local tempTable = {clientPlayer, v[2], math.Round(v[4]*sellPriceMultiplier, 0), v[3]}
+							local tempTable = {clientPlayer, v[2], math.Round(v[4] * sellPriceMultiplier, 0), v[3]}
 
 							net.Start("SellItem")
 							net.WriteTable(tempTable)
@@ -729,8 +728,8 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 							end
 
 						elseif not clientPlayer:HasWeapon(v[2]) then
-							
-							ply:PrintMessage(HUD_PRINTTALK, "You do not have a "..v[3].."!")
+
+							ply:PrintMessage(HUD_PRINTTALK, "You do not have a " .. v[3].."!")
 
 							surface.PlaySound( "common/wpn_denyselect.wav" )
 
@@ -746,25 +745,25 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 					local icon = vgui.Create("SpawnIcon", entityList)
 
 					icon:SetModel(v["Model"])
-					icon:SetToolTip(v["PrintName"].."\nCost: "..v["Cost"])
+					icon:SetToolTip(v["PrintName"] .. "\nCost: " .. v["Cost"])
 					entityList:Add(icon)
 
 					icon.DoClick = function(icon)
-						LocalPlayer():ConCommand("buy_entity "..v["ClassName"])
+						LocalPlayer():ConCommand("buy_entity " .. v["ClassName"])
 					end
 				end
-				
+
 				for k, v in pairs(weaponsArr) do
-		
+
 					-- Creates buttons for the weapons
-		
+
 					local icon = vgui.Create("SpawnIcon", weaponList)
 					icon:SetModel(v[1])
-					icon:SetToolTip(v[3].."\nCategory: "..v[7].."\nRarity: "..v[6].."\nCost: "..v[4].."\nLevel Req: "..v[5])
+					icon:SetToolTip(v[3] .. "\nCategory: " .. v[7] .. "\nRarity: " .. v[6] .. "\nCost: " .. v[4] .. "\nLevel Req: " .. v[5])
 					weaponList:Add(icon)
-		
+
 					icon.DoClick = function(icon)
-						LocalPlayer():ConCommand("buy_gun "..v[2])
+						LocalPlayer():ConCommand("buy_gun " .. v[2])
 					end
 				end
 
@@ -783,25 +782,25 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				--Color of entire button
 				surface.SetDrawColor(50, 50, 50, 255)
 				surface.DrawRect(0, 0, prestigeButton:GetWide(), prestigeButton:GetTall())
-			
+
 				--Draw bottom and Right borders
 				surface.SetDrawColor(40, 40, 40, 255)
 				surface.DrawRect(0, 49, prestigeButton:GetWide(), 1)
 				surface.DrawRect(99, 0, 1, prestigeButton:GetTall())
-			
+
 				--Draw/write text
 				draw.DrawText("PRESTIGE", "CloseCaption_Normal", taskButton:GetWide() / 2, 10, Color(255, 0, 0, 255), 1)
 		end
 
 		prestigeButton.DoClick = function(prestigeButton)
 			local prestigePanel = Menu:Add("PrestigePanel")
-			
+
 			prestigePanel.Paint = function()
 				surface.SetDrawColor(50, 50, 50, 255)
 				surface.DrawRect(0, 0, prestigePanel:GetWide(), prestigePanel:GetTall())
 
 				surface.SetTextColor(255, 0, 0, 255)
-			
+
 				surface.SetFont("DermaLarge")
 				surface.SetTextPos(290, 360)
 				surface.DrawText("PRESTIGE")
@@ -839,16 +838,16 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				--Color of entire button
 				surface.SetDrawColor(150, 150, 150, 10)
 				surface.DrawRect(0, 0, doPrestigeButton:GetWide(), doPrestigeButton:GetTall())
-				
+
 				--Draw bottom and Right borders
 				surface.SetDrawColor(40, 40, 40, 255)
 				surface.DrawRect(0, 49, doPrestigeButton:GetWide(), 1)
 				surface.DrawRect(224, 0, 1, doPrestigeButton:GetTall())
-				
+
 				--Draw/write text
 				draw.DrawText("Prestige Now!", "Trebuchet24", doPrestigeButton:GetWide() / 2, 10, Color(0, 255, 0, 255), 1)
 			end
-			
+
 			doPrestigeButton.DoClick = function()
 				RunConsoleCommand("efgm_prestige")
 			end
@@ -868,7 +867,7 @@ function PANEL:Init() -- initializes the panel
 end
 
 function PANEL:Paint(w, h)
-	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 255)) 
+	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 255))
 end
 
 vgui.Register("PlayerPanel", PANEL, "Panel")
@@ -995,7 +994,7 @@ function MenuInit()
 
 		local stashPanel = vgui.Create("DPanel", StashMenu)
 		stashPanel:Dock( FILL )
-	
+
 		function stashPanel:Paint(w, h)
 
 			draw.RoundedBox(0, 0, 0, w, h, Color( 120, 120, 120, 255 ))
@@ -1032,7 +1031,7 @@ function MenuInit()
 				if weapons.Get( v:GetClass() ) == nil then return end
 
 				local weaponInfo = weapons.Get( v:GetClass() )
-			
+
 				-- PrintTable(stashClient:GetWeapons())
 
 				local wepName
@@ -1045,10 +1044,10 @@ function MenuInit()
 				icon:SetSize(96, 96)
 
 				function icon:Paint(w, h)
-				
+
 					draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
 					draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
-					draw.SimpleText(wepName, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
+					draw.SimpleText(wepName, "DermaDefault", w / 2, 80, Color(255, 255, 255, 255), 1)
 
 					local currentItemPrice = nil
 					local currentItemLevel = nil
@@ -1056,7 +1055,7 @@ function MenuInit()
 					local currentItemCategory = nil
 
 					local currentItemSellPrice = nil
-				
+
 					for l, b in pairs(weaponsArr) do
 
 						-- if names match (v.ItemName is same as v["ItemName"])
@@ -1076,34 +1075,33 @@ function MenuInit()
 					end
 
 					if currentItemPrice != nil then
-						-- Weapon Sell Price
 						draw.SimpleText("₽", "DermaDefault", 5, 0, Color(255, 255, 0, 255), 0)
 						draw.SimpleText(currentItemSellPrice, "DermaDefault", 15, 0, Color(255, 255, 255, 255), 0)
-					
+
 						draw.SimpleText("Sell Price", "HudHintTextSmall", 5, 10, Color(255, 255, 255, 255), 0)
-						draw.SimpleText("Rarity", "HudHintTextSmall", w/1.05, 10, Color(255, 255, 255, 255), 2)
+						draw.SimpleText("Rarity", "HudHintTextSmall", w / 1.05, 10, Color(255, 255, 255, 255), 2)
 					end
 
 					if currentItemTier == "LOW" then
-						draw.SimpleText("LOW", "DermaDefault", w/1.05, 0, Color(255, 0, 0, 255), 2)
+						draw.SimpleText("LOW", "DermaDefault", w / 1.05, 0, Color(255, 0, 0, 255), 2)
 					end
 
 					if currentItemTier == "MID" then
-						draw.SimpleText("MID", "DermaDefault", w/1.05, 0, Color(255, 255, 0, 255), 2)
+						draw.SimpleText("MID", "DermaDefault", w / 1.05, 0, Color(255, 255, 0, 255), 2)
 					end
-				
+
 					if currentItemTier == "HIGH" then
-						draw.SimpleText("HIGH", "DermaDefault", w/1.05, 0, Color(0, 255, 0, 255), 2)
+						draw.SimpleText("HIGH", "DermaDefault", w / 1.05, 0, Color(0, 255, 0, 255), 2)
 					end
 
 					if currentItemTier == "UTIL" then
-						draw.SimpleText("UTIL", "DermaDefault", w/1.05, 0, Color(0, 0, 255, 255), 2)
+						draw.SimpleText("UTIL", "DermaDefault", w / 1.05, 0, Color(0, 0, 255, 255), 2)
 					end
 
 				end
 
 				inventoryIconLayout:Add(icon)
-			
+
 				icon.DoClick = function(icon)
 
 					net.Start("PutWepInStash")
@@ -1137,7 +1135,7 @@ function MenuInit()
 			-- 	icon:SetSize(96, 96)
 
 			-- 	function icon:Paint(w, h)
-				
+
 			-- 		draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
 			-- 		draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
 			-- 		draw.SimpleText(ammoName.." x"..ammoAmount, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
@@ -1146,7 +1144,7 @@ function MenuInit()
 
 			-- 	print("adding ammo to ammo icon layout")
 			-- 	ammoIconLayout:Add(icon)
-			
+
 			-- icon.DoClick = function(icon)
 
 			-- end
@@ -1162,42 +1160,42 @@ function MenuInit()
 
 					if v["ItemOwner"] != LocalPlayer():SteamID64() then	print(LocalPlayer():SteamID64() .. " does not equal " .. v["ItemOwner"])	return end
 					if v["ItemType"] != "wep" then						print("ammo bad")															return end
-				
+
 					local weaponInfo = weapons.Get( v["ItemName"] )
 
 					local wepName
-	
+
 					if weaponInfo["TrueName"] == nil then wepName = weaponInfo["PrintName"] else wepName = weaponInfo["TrueName"] end
-	
+
 					local icon = vgui.Create("SpawnIcon", stashIconLayout)
 					icon:SetModel(weaponInfo["WorldModel"])
 					icon:SetToolTip(wepName)
 					icon:SetSize(96, 96)
-	
+
 					function icon:Paint(w, h)
 
 						-- Weapon Name
 						draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
 						draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
-						draw.SimpleText(wepName, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
+						draw.SimpleText(wepName, "DermaDefault", w / 2, 80, Color(255, 255, 255, 255), 1)
 
 						local currentItemPrice = nil
 						local currentItemLevel = nil
 						local currentItemTier = nil
 						local currentItemCategory = nil
-	
+
 						local currentItemSellPrice = nil
-	
+
 						for l, b in pairs(weaponsArr) do
-	
+
 							-- if names match (v.ItemName is same as v["ItemName"])
 							if b[2] == v.ItemName then
-	
+
 								currentItemPrice = tostring(b[4])
 								currentItemLevel = tostring(b[5])
 								currentItemTier = tostring(b[6])
 								currentItemCategory = tostring(b[7])
-	
+
 								currentItemSellPrice = (currentItemPrice * sellPriceMultiplier)
 
 							end
@@ -1211,31 +1209,31 @@ function MenuInit()
 							draw.SimpleText(currentItemCategory, "HudHintTextSmall", 5, 64, Color(255, 255, 255, 255), 0)
 
 							draw.SimpleText("Sell Price", "HudHintTextSmall", 5, 10, Color(255, 255, 255, 255), 0)
-							draw.SimpleText("Rarity", "HudHintTextSmall", w/1.05, 10, Color(255, 255, 255, 255), 2)
+							draw.SimpleText("Rarity", "HudHintTextSmall", w / 1.05, 10, Color(255, 255, 255, 255), 2)
 						end
 
 						if currentItemTier == "LOW" then
-							draw.SimpleText("LOW", "DermaDefault", w/1.05, 0, Color(255, 0, 0, 255), 2)
+							draw.SimpleText("LOW", "DermaDefault", w / 1.05, 0, Color(255, 0, 0, 255), 2)
 						end
 
 						if currentItemTier == "MID" then
-							draw.SimpleText("MID", "DermaDefault", w/1.05, 0, Color(255, 255, 0, 255), 2)
+							draw.SimpleText("MID", "DermaDefault", w / 1.05, 0, Color(255, 255, 0, 255), 2)
 						end
-					
+
 						if currentItemTier == "HIGH" then
-							draw.SimpleText("HIGH", "DermaDefault", w/1.05, 0, Color(0, 255, 0, 255), 2)
+							draw.SimpleText("HIGH", "DermaDefault", w / 1.05, 0, Color(0, 255, 0, 255), 2)
 						end
 
 						if currentItemTier == "UTIL" then
-							draw.SimpleText("UTIL", "DermaDefault", w/1.05, 0, Color(0, 0, 255, 255), 2)
+							draw.SimpleText("UTIL", "DermaDefault", w / 1.05, 0, Color(0, 0, 255, 255), 2)
 						end
 
 					end
-	
+
 					stashIconLayout:Add(icon)
 
 					icon.DoClick = function(icon)
-	
+
 						if LocalPlayer():HasWeapon( v["ItemName"] ) == false then
 
 							net.Start("TakeFromStash")
@@ -1249,7 +1247,7 @@ function MenuInit()
 						end
 
 					end
-	
+
 				end
 
 			end

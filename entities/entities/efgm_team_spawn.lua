@@ -12,5 +12,5 @@ function ENT:KeyValue(key, value)
 end
 
 function ENT:Initialize()
-    
+
 end

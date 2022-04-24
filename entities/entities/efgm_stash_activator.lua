@@ -16,7 +16,7 @@ net.Receive("StripWeapon",function (len, ply)
 	wep = tempTable[2]
 
 	ply:StripWeapon(wep:GetClass())
-	
+
 end)
 
 net.Receive("GiveWeapon",function (len, ply)
@@ -27,7 +27,7 @@ net.Receive("GiveWeapon",function (len, ply)
 	wep = tempTable[2]
 
 	ply:Give(wep, true)
-	
+
 end)
 
 net.Receive("StripAmmo",function (len, ply)
@@ -38,7 +38,7 @@ net.Receive("StripAmmo",function (len, ply)
 	ammo = tempTable[2]
 
 	ply:SetAmmo( 0, ammo )
-	
+
 end)
 
 net.Receive("GiveAmmo",function (len, ply)
@@ -49,19 +49,19 @@ net.Receive("GiveAmmo",function (len, ply)
 	ammo = tempTable[2]
 
 	ply:SetAmmo( 90, ammo )
-	
+
 end)
 
 function ENT:AcceptInput(name, ply, caller)
-    if name == "OpenStash" then
+	if name == "OpenStash" then
 
 		local stashMenuTable = {ply}
 
-        net.Start("OpenStashGUI")
+		net.Start("OpenStashGUI")
 			net.WriteTable(stashMenuTable)
 		net.Send(ply)
 
-    end
+	end
 
 	if name == "CloseStash" then
 
@@ -71,5 +71,5 @@ function ENT:AcceptInput(name, ply, caller)
 			net.Broadcast()
 		end
 
-    end
+	end
 end

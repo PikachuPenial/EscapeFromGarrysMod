@@ -959,7 +959,7 @@ function MenuInit()
 			surface.DrawText("STASHED ITEMS")
 
 			surface.SetTextPos(525, 0)
-			surface.DrawText(client:GetNWInt("ItemsInStash") + 1 .. " / " .. client:GetNWInt("playerStashLimit"))
+			surface.DrawText(client:GetNWInt("ItemsInStash") .. " / " .. client:GetNWInt("playerStashLimit"))
 		end
 
 		gui.EnableScreenClicker(true)

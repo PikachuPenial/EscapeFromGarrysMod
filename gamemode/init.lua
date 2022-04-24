@@ -391,7 +391,7 @@ function GM:PlayerDisconnected(ply)
 end
 
 function GM:ShutDown()
-	for k, v in pairs(player.GetAll()) do
+	for k, v in pairs(player.GetHumans()) do
 		v:SetPData("playerLvl", v:GetNWInt("playerLvl"))
 		v:SetPData("playerPrestige", v:GetNWInt("playerPrestige"))
 		v:SetPData("playerRoubleMulti", v:GetNWInt("playerRoubleMulti"))

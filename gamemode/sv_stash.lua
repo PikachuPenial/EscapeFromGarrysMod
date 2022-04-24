@@ -7,9 +7,37 @@ util.AddNetworkString( "PutWepInStash" )
 
 util.AddNetworkString( "StashMenuReload" )
 
+local numberOfWeps
+
+local function UpdateWeaponsInStash(ply)
+
+    local weaponsInStash = {}
+
+    local weaponsInStash = sql.Query( "SELECT ItemName FROM stash_table WHERE ItemOwner = " .. ply:SteamID64() .. ";" )
+
+    -- table.IsEmpty(weaponsInStash) == true or
+
+    if weaponsInStash == nil then
+
+        numberOfWeps = 0
+
+    else
+
+        numberOfWeps = #weaponsInStash
+
+    end
+
+    print("Player has " .. numberOfWeps .. " in their stash!")
+
+    ply:SetNWInt("ItemsInStash", tostring(numberOfWeps))
+
+end
+
 local function SendStashToClient(player)
 
     local value = sql.Query( "SELECT * FROM stash_table WHERE ItemOwner = " .. player:SteamID64() .. " ORDER BY ItemName;" )
+
+    UpdateWeaponsInStash(player)
 
     if value != nil then
 
@@ -29,17 +57,11 @@ end)
 
 net.Receive("PutWepInStash",function (len, ply)
 
+    UpdateWeaponsInStash(ply)
+
     local stashItemLimit = ply:GetNWInt("playerStashLimit")
 
     print("Player's stash limit is: " .. tostring( stashItemLimit ) )
-
-    local weaponsInStash = sql.Query( "SELECT ItemName FROM stash_table WHERE ItemOwner = " .. ply:SteamID64() .. ";" )
-
-    local numberOfWeps
-
-    if weaponsInStash == nil then numberOfWeps = 0 else numberOfWeps = #weaponsInStash end
-
-    print( "Number of weapons in stash == " .. tostring( numberOfWeps ) )
 
     if tonumber( numberOfWeps ) == tonumber( stashItemLimit ) then print("You have too much shit in your stash, clear it out! Your limit is " .. stashItemLimit .. " by the way.") return end
 
@@ -53,7 +75,7 @@ net.Receive("PutWepInStash",function (len, ply)
 
     ply:StripWeapon( item )
 
-    ply:SetNWInt("ItemsInStash", tostring(#weaponsInStash))
+    UpdateWeaponsInStash(ply)
 
     net.Start("StashMenuReload")
     net.Send(ply)
@@ -61,6 +83,8 @@ net.Receive("PutWepInStash",function (len, ply)
 end)
 
 net.Receive("TakeFromStash",function (len, ply)
+
+    UpdateWeaponsInStash(ply)
 
     requestedItemName = net.ReadString()
     stashItemName = sql.QueryValue( "SELECT ItemName FROM stash_table WHERE ItemName = " .. sql.SQLStr(requestedItemName) .. " AND ItemOwner = " .. ply:SteamID64() .. ";" )
@@ -82,6 +106,8 @@ net.Receive("TakeFromStash",function (len, ply)
         end
 
         ply:Give(stashItemName, true)
+
+        UpdateWeaponsInStash(ply)
 
         net.Start( "StashMenuReload" )
         net.Send(ply)

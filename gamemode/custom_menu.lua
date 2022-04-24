@@ -1,5 +1,7 @@
 local Menu
 
+local player = LocalPlayer()
+
 local isSellMenu = false
 local clientPlayer
 
@@ -931,15 +933,24 @@ function MenuInit()
 
 	if (inStashMenu == false) then
 		StashMenu = vgui.Create("DFrame")
-		StashMenu:SetSize(ScrW(), ScrH())
+		StashMenu:SetSize(917, ScrH() - 41)
 		StashMenu:Center()
-		StashMenu:SetTitle("Stash Inventory")
+		StashMenu:SetTitle("")
 		StashMenu:SetDraggable(false)
 		StashMenu:ShowCloseButton(true)
 		StashMenu:SetDeleteOnClose(false)
 		StashMenu.Paint = function()
 			surface.SetDrawColor(30, 30, 30, 255)
 			surface.DrawRect(0, 0, StashMenu:GetWide(), StashMenu:GetTall())
+
+			surface.SetTextColor(255, 255, 255, 255)
+			surface.SetFont("Trebuchet24")
+
+			surface.SetTextPos(2, 0)
+			surface.DrawText("YOUR ITEMS")
+
+			surface.SetTextPos(500, 0)
+			surface.DrawText("STASHED ITEMS")
 		end
 
 		gui.EnableScreenClicker(true)
@@ -972,21 +983,42 @@ function MenuInit()
 
 		end
 
-		local ammoInventoryPanel = vgui.Create("DPanel", StashMenu)
-		ammoInventoryPanel:Dock( LEFT )
-		ammoInventoryPanel:SetSize(96, 0)
+		local optionsPanel = vgui.Create("DPanel", StashMenu)
+		optionsPanel:Dock( RIGHT )
+		optionsPanel:SetSize(150, 50)
 
-		function ammoInventoryPanel:Paint(w, h)
+		function optionsPanel:Paint(w, h)
 
-			draw.RoundedBox(0, 0, 0, w, h, Color( 120, 120, 120, 255 ))
+			draw.RoundedBox(0, 0, 0, w, 150, Color( 120, 120, 120, 255 ))
+
+			local Avatar = vgui.Create("AvatarImage", optionsPanel)
+			local pfpOnScreen = false
+
+			if (pfpOnScreen == false) then
+				Avatar:SetSize(140, 140)
+				Avatar:SetPos(5, 5)
+				Avatar:SetPlayer(LocalPlayer(), 140)
+
+				pfpOnScreen = true
+			end
 
 		end
 
 		local separatePanel = vgui.Create("DPanel", StashMenu)
 		separatePanel:Dock( LEFT )
-		separatePanel:SetSize(20, 0)
+		separatePanel:SetSize(30, 0)
 
 		function separatePanel:Paint(w, h)
+
+			draw.RoundedBox(0, 0, 0, w, h, Color( 30, 30, 30, 255 ))
+
+		end
+
+		local separateTwoPanel = vgui.Create("DPanel", StashMenu)
+		separateTwoPanel:Dock( RIGHT )
+		separateTwoPanel:SetSize(30, 0)
+
+		function separateTwoPanel:Paint(w, h)
 
 			draw.RoundedBox(0, 0, 0, w, h, Color( 30, 30, 30, 255 ))
 
@@ -1000,7 +1032,6 @@ function MenuInit()
 			draw.RoundedBox(0, 0, 0, w, h, Color( 120, 120, 120, 255 ))
 
 		end
-
 
 		local stashIconLayout = vgui.Create("DIconLayout", stashPanel)
 		stashIconLayout:Dock( FILL )

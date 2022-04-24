@@ -1,7 +1,5 @@
 local Menu
 
-local player = LocalPlayer()
-
 local isSellMenu = false
 local clientPlayer
 
@@ -931,6 +929,14 @@ vgui.Register("PrestigePanel", PANEL, "Panel")
 
 function MenuInit()
 
+	local client = LocalPlayer()
+
+	local expToLevel = (client:GetNWInt("playerLvl") * 140) * 5.15
+
+	if !client:Alive() then
+		return
+	end
+
 	if (inStashMenu == false) then
 		StashMenu = vgui.Create("DFrame")
 		StashMenu:SetSize(917, ScrH() - 41)
@@ -946,11 +952,14 @@ function MenuInit()
 			surface.SetTextColor(255, 255, 255, 255)
 			surface.SetFont("Trebuchet24")
 
-			surface.SetTextPos(2, 0)
+			surface.SetTextPos(5, 0)
 			surface.DrawText("YOUR ITEMS")
 
-			surface.SetTextPos(500, 0)
+			surface.SetTextPos(360, 0)
 			surface.DrawText("STASHED ITEMS")
+
+			surface.SetTextPos(525, 0)
+			surface.DrawText(client:GetNWInt("ItemsInStash") + 1 .. " / " .. client:GetNWInt("playerStashLimit"))
 		end
 
 		gui.EnableScreenClicker(true)
@@ -984,6 +993,7 @@ function MenuInit()
 		end
 
 		local optionsPanel = vgui.Create("DPanel", StashMenu)
+
 		optionsPanel:Dock( RIGHT )
 		optionsPanel:SetSize(150, 50)
 
@@ -991,16 +1001,32 @@ function MenuInit()
 
 			draw.RoundedBox(0, 0, 0, w, 150, Color( 120, 120, 120, 255 ))
 
-			local Avatar = vgui.Create("AvatarImage", optionsPanel)
-			local pfpOnScreen = false
+			if (pfpOnScreen == nil) then
+				local Avatar = vgui.Create("AvatarImage", optionsPanel)
 
-			if (pfpOnScreen == false) then
 				Avatar:SetSize(140, 140)
 				Avatar:SetPos(5, 5)
 				Avatar:SetPlayer(LocalPlayer(), 140)
 
 				pfpOnScreen = true
 			end
+
+			draw.DrawText(client:GetName(), "DermaLarge", 0, 200, Color(255, 255, 255, 255))
+
+			if (client:GetNWInt("playerPrestige") >= 1) then
+				draw.DrawText("Prestige: " .. client:GetNWInt("playerPrestige"), "DermaLarge", 0, 300, Color(255, 255, 255, 255))
+			end
+
+			draw.DrawText("Level: " .. client:GetNWInt("playerLvl"), "DermaLarge", 0, 300, Color(255, 255, 255, 255))
+			draw.DrawText("EXP: \n" .. client:GetNWInt("playerExp") .. "/" .. expToLevel, "DermaLarge", 0, 340, Color(255, 255, 255, 255))
+			draw.DrawText("₽ " .. client:GetNWInt("playerMoney"), "DermaLarge", 0, 420, Color(255, 255, 255, 255))
+
+			draw.DrawText("Kills: " .. client:GetNWInt("playerKills"), "DermaLarge", 0, 460, Color(255, 255, 255, 255))
+			draw.DrawText("Deaths:" .. client:GetNWInt("playerDeaths"),"DermaLarge", 0, 500, Color(255, 255, 255, 255))
+			draw.DrawText("KDR: " .. math.Round(client:GetNWInt("playerKDR"), 0), "DermaLarge", 0, 540, Color(255, 255, 255, 255))
+
+			draw.RoundedBox(0, 0, 610, w, 400, Color( 120, 120, 120, 255 ))
+			draw.RoundedBox(0, 145, 150, 5, 460, Color( 120, 120, 120, 255 ))
 
 		end
 

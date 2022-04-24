@@ -53,6 +53,8 @@ net.Receive("PutWepInStash",function (len, ply)
 
     ply:StripWeapon( item )
 
+    ply:SetNWInt("ItemsInStash", tostring(#weaponsInStash))
+
     net.Start("StashMenuReload")
     net.Send(ply)
 

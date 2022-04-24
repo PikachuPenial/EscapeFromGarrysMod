@@ -44,7 +44,11 @@ end
 
 function GM:PlayerInitialSpawn(ply)
 
+	-- In Raid Checks
+
 	ply:SetNWBool("inRaid", false)
+
+	-- Stash Limiting
 
 	if GetPData64(ply, "StashLimit") == nil then
 		ply:SetNWInt("playerStashLimit", 6)
@@ -52,7 +56,7 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetNWInt("playerStashLimit", GetPData64(ply, "StashLimit"))
 	end
 
-	print( "Set playerStashLimit to " .. ply:GetNWInt("playerStashLimit") )
+	print("Set playerStashLimit to " .. ply:GetNWInt("playerStashLimit"))
 
 	-- Overleveled check (support for prestige during mid-wipes)
 
@@ -69,6 +73,8 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetPData("PlayerStartedTasks", true)
 
 	end
+
+	-- Progression/Stats
 
 	if (ply:GetPData("playerLvl") == nil) then
 		ply:SetNWInt("playerLvl", 1)
@@ -411,7 +417,7 @@ function GM:ShutDown()
 		v:SetPData("playerDistance", v:GetNWInt("playerDistance"))
 
 		-- PData64
-	
+
 		SetPData64(v, "StashLimit", v:GetNWInt("playerStashLimit"))
 	end
 end

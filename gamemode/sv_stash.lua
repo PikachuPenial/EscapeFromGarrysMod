@@ -27,8 +27,6 @@ local function UpdateWeaponsInStash(ply)
 
     end
 
-    print("Player has " .. numberOfWeps .. " in their stash!")
-
     ply:SetNWInt("ItemsInStash", tostring(numberOfWeps))
 
 end
@@ -60,8 +58,6 @@ net.Receive("PutWepInStash",function (len, ply)
     UpdateWeaponsInStash(ply)
 
     local stashItemLimit = ply:GetNWInt("playerStashLimit")
-
-    print("Player's stash limit is: " .. tostring( stashItemLimit ) )
 
     if tonumber( numberOfWeps ) == tonumber( stashItemLimit ) then print("You have too much shit in your stash, clear it out! Your limit is " .. stashItemLimit .. " by the way.") return end
 

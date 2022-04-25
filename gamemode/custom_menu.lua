@@ -773,11 +773,89 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	end
 
 	if menuInRaid == false then
+		local stashMenuButton = vgui.Create("DButton")
+		stashMenuButton:SetParent(Menu)
+		stashMenuButton:SetText("")
+		stashMenuButton:SetSize(100, 50)
+		stashMenuButton:SetPos(0, 225)
+		stashMenuButton.Paint = function()
+				--Color of entire button
+				surface.SetDrawColor(50, 50, 50, 255)
+				surface.DrawRect(0, 0, stashMenuButton:GetWide(), stashMenuButton:GetTall())
+
+				--Draw bottom and Right borders
+				surface.SetDrawColor(40, 40, 40, 255)
+				surface.DrawRect(0, 49, stashMenuButton:GetWide(), 1)
+				surface.DrawRect(99, 0, 1, stashMenuButton:GetTall())
+
+				--Draw/write text
+				draw.DrawText("STASH", "DermaLarge", stashMenuButton:GetWide() / 2, 10, Color(255, 255, 0, 255), 1)
+		end
+
+		stashMenuButton.DoClick = function(stashMenuButton)
+			local stashMenuPanel = Menu:Add("StashMenuPanel")
+	
+			stashMenuPanel.Paint = function()
+				surface.SetDrawColor(50, 50, 50, 255)
+				surface.DrawRect(0, 0, stashMenuPanel:GetWide(), stashMenuPanel:GetTall())
+				surface.SetTextColor(255, 255, 255, 255)
+	
+				surface.SetFont("DermaLarge")
+				surface.SetTextPos(260, 250)
+				surface.DrawText("Upgrade Stash")
+
+				surface.SetTextPos(40, 300)
+				surface.DrawText("For each level, you gain an addition 6 slots in your stash!")
+
+				surface.SetTextPos(230, 375)
+				surface.DrawText("Current stash level: " .. LocalPlayer():GetNWInt("playerStashLevel"))
+
+				surface.SetTextPos(230, 415)
+				surface.DrawText("Current ₽ Count: " .. LocalPlayer():GetNWInt("playerMoney"))
+
+				if (LocalPlayer():GetNWInt("stashMaxed") == 0) then
+					surface.SetTextPos(200, 600)
+					surface.DrawText("Required ₽ to upgrade: " .. LocalPlayer():GetNWInt("playerRoubleForStashUpgrade"))
+				end
+
+				surface.SetTextPos(200, 640)
+				surface.DrawText("Current stash limt : " .. LocalPlayer():GetNWInt("playerStashLimit") .. " / " .. "60")
+	
+			end
+
+			if (LocalPlayer():GetNWInt("stashMaxed") == 0) then
+				local doStashUpgrade = vgui.Create("DButton")
+				doStashUpgrade:SetParent(Menu)
+				doStashUpgrade:SetText("")
+				doStashUpgrade:SetSize(225, 50)
+				doStashUpgrade:SetPos(340, 500)
+				doStashUpgrade.Paint = function()
+					--Color of entire button
+					surface.SetDrawColor(150, 150, 150, 10)
+					surface.DrawRect(0, 0, doStashUpgrade:GetWide(), doStashUpgrade:GetTall())
+
+					--Draw bottom and Right borders
+					surface.SetDrawColor(40, 40, 40, 255)
+					surface.DrawRect(0, 49, doStashUpgrade:GetWide(), 1)
+					surface.DrawRect(224, 0, 1, doStashUpgrade:GetTall())
+
+					--Draw/write text
+					draw.DrawText("Upgrade Stash!", "Trebuchet24", doStashUpgrade:GetWide() / 2, 10, Color(0, 255, 255, 255), 1)
+				end
+
+				doStashUpgrade.DoClick = function()
+					RunConsoleCommand("efgm_stash_upgrade")
+				end
+			end
+		end
+	end
+
+	if menuInRaid == false then
 		local prestigeButton = vgui.Create("DButton")
 		prestigeButton:SetParent(Menu)
 		prestigeButton:SetText("")
 		prestigeButton:SetSize(100, 50)
-		prestigeButton:SetPos(0, 225)
+		prestigeButton:SetPos(0, 275)
 		prestigeButton.Paint = function()
 				--Color of entire button
 				surface.SetDrawColor(50, 50, 50, 255)
@@ -789,7 +867,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				surface.DrawRect(99, 0, 1, prestigeButton:GetTall())
 
 				--Draw/write text
-				draw.DrawText("PRESTIGE", "CloseCaption_Normal", taskButton:GetWide() / 2, 10, Color(255, 0, 0, 255), 1)
+				draw.DrawText("PRESTIGE", "CloseCaption_Normal", prestigeButton:GetWide() / 2, 10, Color(255, 0, 0, 255), 1)
 		end
 
 		prestigeButton.DoClick = function(prestigeButton)
@@ -854,6 +932,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		end
 	end
+
 
 end
 
@@ -923,6 +1002,23 @@ end
 vgui.Register("PrestigePanel", PANEL, "Panel")
 
 --End prestige panel
+
+--Stash menu panel
+
+PANEL = {} --Creates empty panel
+
+function PANEL:Init() -- initializes the panel
+	self:SetSize(760, 1080)
+	self:SetPos(100, 25)
+end
+
+function PANEL:Paint(w, h)
+	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 255))
+end
+
+vgui.Register("StashMenuPanel", PANEL, "Panel")
+
+--End stash meun panel
 
 -- wow this is why i had to merge the fucking stash menu into this jesus christ im dumb
 -- actually maybe not idk, im autistic im not a rocket scientist
@@ -1001,15 +1097,12 @@ function MenuInit()
 
 			draw.RoundedBox(0, 0, 0, w, 150, Color( 120, 120, 120, 255 ))
 
-			if (pfpOnScreen == nil) then
-				local Avatar = vgui.Create("AvatarImage", optionsPanel)
 
-				Avatar:SetSize(140, 140)
-				Avatar:SetPos(5, 5)
-				Avatar:SetPlayer(LocalPlayer(), 140)
+			local Avatar = vgui.Create("AvatarImage", optionsPanel)
+			Avatar:SetSize(140, 140)
+			Avatar:SetPos(5, 5)
+			Avatar:SetPlayer(LocalPlayer(), 140)
 
-				pfpOnScreen = true
-			end
 
 			draw.DrawText(client:GetName(), "DermaLarge", 0, 200, Color(255, 255, 255, 255))
 
@@ -1023,10 +1116,13 @@ function MenuInit()
 
 			draw.DrawText("Kills: " .. client:GetNWInt("playerKills"), "DermaLarge", 0, 460, Color(255, 255, 255, 255))
 			draw.DrawText("Deaths:" .. client:GetNWInt("playerDeaths"),"DermaLarge", 0, 500, Color(255, 255, 255, 255))
-			draw.DrawText("KDR: " .. math.Round(client:GetNWInt("playerKDR"), 0), "DermaLarge", 0, 540, Color(255, 255, 255, 255))
+			draw.DrawText("KDR: " .. math.Round(client:GetNWInt("playerKDR"), 2), "DermaLarge", 0, 540, Color(255, 255, 255, 255))
 
-			draw.RoundedBox(0, 0, 610, w, 400, Color( 120, 120, 120, 255 ))
-			draw.RoundedBox(0, 145, 150, 5, 460, Color( 120, 120, 120, 255 ))
+			draw.DrawText("Stash Level " .. client:GetNWInt("playerStashLevel"), "Trebuchet24", 0, 610, Color(255, 255, 255, 255))
+			draw.DrawText(" Upgrade your \n stash in the F4 \n menu!", "Trebuchet24", -5, 650, Color(255, 255, 255, 255))
+
+			draw.RoundedBox(0, 0, 750, w, 350, Color( 120, 120, 120, 255 ))
+			draw.RoundedBox(0, 145, 150, 5, 650, Color( 120, 120, 120, 255 ))
 
 		end
 

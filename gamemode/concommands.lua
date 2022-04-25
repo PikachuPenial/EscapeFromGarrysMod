@@ -320,3 +320,103 @@ function PlayerPrestige(ply, cmd, args)
 	end
 end
 concommand.Add("efgm_prestige", PlayerPrestige)
+
+function StashUpgrade(ply, cmd, args)
+
+	local balance = (ply:GetNWInt("playerMoney"))
+	local cost
+
+	--This statement is checking for the cost
+	if (ply:GetNWInt("playerStashLevel") == 1) then
+		cost = 10000
+	else
+		if (ply:GetNWInt("playerStashLevel") == 2) then
+			cost = 20000
+		else
+			if (ply:GetNWInt("playerStashLevel") == 3) then
+				cost = 30000
+			else
+				if (ply:GetNWInt("playerStashLevel") == 4) then
+					cost = 40000
+				else
+					if (ply:GetNWInt("playerStashLevel") == 5) then
+						cost = 50000
+					else
+						if (ply:GetNWInt("playerStashLevel") == 6) then
+							cost = 75000
+						else
+							if (ply:GetNWInt("playerStashLevel") == 7) then
+								cost = 100000
+							else
+								if (ply:GetNWInt("playerStashLevel") == 8) then
+									cost = 175000
+								else
+									if (ply:GetNWInt("playerStashLevel") == 9) then
+										cost = 250000
+									else
+										if (ply:GetNWInt("playerStashLevel") == 10) then
+											ply:SetNWInt("stashMaxed", 1)
+										end
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+
+	if (balance >= cost) and (ply:GetNWInt("stashMaxed") == 0) then
+		ply:SetNWInt("playerMoney", balance - cost)
+		ply:SetNWInt("playerTotalMoneySpent", ply:GetNWInt("playerTotalMoneySpent") + cost)
+
+		ply:SetNWInt("playerStashLevel", ply:GetNWInt("playerStashLevel") + 1)
+		ply:SetNWInt("playerStashLimit", ply:GetNWInt("playerStashLimit") + 6)
+	else
+		ply:PrintMessage(HUD_PRINTTALK, "You do not have enough roubles to upgrade your stash!")
+	end
+
+	--And this statement is making this little fucking peice of shit update correctly i hate lua so goddamn much
+	if (ply:GetNWInt("playerStashLevel") == 1) then
+		ply:SetNWInt("playerRoubleForStashUpgrade", 10000)
+	else
+		if (ply:GetNWInt("playerStashLevel") == 2) then
+			ply:SetNWInt("playerRoubleForStashUpgrade", 20000)
+		else
+			if (ply:GetNWInt("playerStashLevel") == 3) then
+				ply:SetNWInt("playerRoubleForStashUpgrade", 30000)
+			else
+				if (ply:GetNWInt("playerStashLevel") == 4) then
+					ply:SetNWInt("playerRoubleForStashUpgrade", 40000)
+				else
+					if (ply:GetNWInt("playerStashLevel") == 5) then
+						ply:SetNWInt("playerRoubleForStashUpgrade", 50000)
+					else
+						if (ply:GetNWInt("playerStashLevel") == 6) then
+							ply:SetNWInt("playerRoubleForStashUpgrade", 75000)
+						else
+							if (ply:GetNWInt("playerStashLevel") == 7) then
+								ply:SetNWInt("playerRoubleForStashUpgrade", 100000)
+							else
+								if (ply:GetNWInt("playerStashLevel") == 8) then
+									ply:SetNWInt("playerRoubleForStashUpgrade", 175000)
+								else
+									if (ply:GetNWInt("playerStashLevel") == 9) then
+										ply:SetNWInt("playerRoubleForStashUpgrade", 250000)
+									else
+										if (ply:GetNWInt("playerStashLevel") == 10) then
+											ply:SetNWInt("stashMaxed", 1)
+										end
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+
+end
+concommand.Add("efgm_stash_upgrade", StashUpgrade)

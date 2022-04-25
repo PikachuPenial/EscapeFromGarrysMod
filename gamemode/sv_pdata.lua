@@ -27,7 +27,6 @@ function SetPData64(player, key, dataValue)
 
     end
 
-    print("Finished Setting Player Data (64 lol)")
     PrintTable( sql.Query( "SELECT * FROM BetterPlayerData WHERE PlayerID = " .. player:SteamID64() .. " AND Key = " .. SQLStr( key ) .. ";" ) )
 
 end

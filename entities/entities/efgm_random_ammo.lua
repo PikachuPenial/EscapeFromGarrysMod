@@ -18,9 +18,9 @@ end
 
 function ENT:Initialize()
 
-	local smallAmmo = {"arccw_ammo_smg1", "arccw_ammo_357", "arccw_ammo_pistol", "arccw_ammo_plinking", "arccw_ammo_ar2", "arccw_ammo_smg1_grenade", "arccw_ammo_buckshot", "arccw_ammo_sniper"}
-	local largeAmmo = {"arccw_ammo_smg1_large", "arccw_ammo_357_large", "arccw_ammo_pistol_large", "arccw_ammo_plinking_large", "arccw_ammo_ar2_large", "arccw_ammo_smg1_grenade_large", "arccw_ammo_buckshot_large", "arccw_ammo_sniper_large"}
-    local mixedAmmo = {"arccw_ammo_smg1", "arccw_ammo_357", "arccw_ammo_pistol", "arccw_ammo_plinking", "arccw_ammo_ar2", "arccw_ammo_smg1_grenade", "arccw_ammo_buckshot", "arccw_ammo_sniper", "arccw_ammo_smg1_large", "arccw_ammo_357_large", "arccw_ammo_pistol_large", "arccw_ammo_plinking_large", "arccw_ammo_ar2_large", "arccw_ammo_smg1_grenade_large", "arccw_ammo_buckshot_large", "arccw_ammo_sniper_large"}
+	local smallAmmo = {"arccw_ammo_smg1", "arccw_ammo_357", "arccw_ammo_pistol", "arccw_ammo_ar2", "arccw_ammo_smg1_grenade", "arccw_ammo_buckshot", "arccw_ammo_sniper"}
+	local largeAmmo = {"arccw_ammo_smg1_large", "arccw_ammo_357_large", "arccw_ammo_pistol_large", "arccw_ammo_ar2_large", "arccw_ammo_smg1_grenade_large", "arccw_ammo_buckshot_large", "arccw_ammo_sniper_large"}
+    local mixedAmmo = {"arccw_ammo_smg1", "arccw_ammo_357", "arccw_ammo_pistol", "arccw_ammo_ar2", "arccw_ammo_smg1_grenade", "arccw_ammo_buckshot", "arccw_ammo_sniper", "arccw_ammo_smg1_large", "arccw_ammo_357_large", "arccw_ammo_pistol_large", "arccw_ammo_ar2_large", "arccw_ammo_smg1_grenade_large", "arccw_ammo_buckshot_large", "arccw_ammo_sniper_large"}
 
 	local ammo
 

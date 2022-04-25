@@ -56,7 +56,25 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetNWInt("playerStashLimit", GetPData64(ply, "StashLimit"))
 	end
 
-	print("Set playerStashLimit to " .. ply:GetNWInt("playerStashLimit"))
+	-- Stash Leveling
+
+	if (ply:GetPData("playerStashLevel") == nil) then
+		ply:SetNWInt("playerStashLevel", 1)
+	else
+		ply:SetNWInt("playerStashLevel", tonumber(ply:GetPData("playerStashLevel")))
+	end
+
+	if (ply:GetPData("playerRoubleForStashUpgrade") == nil) then
+		ply:SetNWInt("playerRoubleForStashUpgrade", 10000)
+	else
+		ply:SetNWInt("playerRoubleForStashUpgrade", tonumber(ply:GetPData("playerRoubleForStashUpgrade")))
+	end
+
+	if (ply:GetPData("stashMaxed") == nil) then
+		ply:SetNWInt("stashMaxed", 0)
+	else
+		ply:SetNWInt("stashMaxed", tonumber(ply:GetPData("stashMaxed")))
+	end
 
 	-- Overleveled check (support for prestige during mid-wipes)
 
@@ -384,9 +402,11 @@ function GM:PlayerDisconnected(ply)
 	ply:SetPData("playerDamageHealed", ply:GetNWInt("playerDamageHealed"))
 	ply:SetPData("playerItemsPickedUp", ply:GetNWInt("playerItemsPickedUp"))
 	ply:SetPData("playerDistance", ply:GetNWInt("playerDistance"))
+	ply:SetPData("playerStashLevel", ply:GetNWInt("playerStashLevel"))
+	ply:SetPData("playerRoubleForStashUpgrade", ply:GetNWInt("playerRoubleForStashUpgrade"))
+	ply:SetPData("stashMaxed", ply:GetNWInt("stashMaxed"))
 
 	-- PData64
-
 	SetPData64(ply, "StashLimit", ply:GetNWInt("playerStashLimit"))
 end
 
@@ -415,9 +435,11 @@ function GM:ShutDown()
 		v:SetPData("playerDamageHealed", v:GetNWInt("playerDamageHealed"))
 		v:SetPData("playerItemsPickedUp", v:GetNWInt("playerItemsPickedUp"))
 		v:SetPData("playerDistance", v:GetNWInt("playerDistance"))
+		v:SetPData("playerStashLevel", v:GetNWInt("playerStashLevel"))
+		v:SetPData("playerRoubleForStashUpgrade", v:GetNWInt("playerRoubleForStashUpgrade"))
+		v:SetPData("stashMaxed", v:GetNWInt("stashMaxed"))
 
 		-- PData64
-
 		SetPData64(v, "StashLimit", v:GetNWInt("playerStashLimit"))
 	end
 end

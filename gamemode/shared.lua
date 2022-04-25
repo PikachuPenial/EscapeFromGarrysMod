@@ -197,11 +197,9 @@ function GM:Initialize()
 	tempArmorArray[55] = scripted_ents.Get("arccw_ammo_buckshot_large")
 	tempArmorArray[56] = scripted_ents.Get("arccw_ammo_sniper")
 	tempArmorArray[57] = scripted_ents.Get("arccw_ammo_sniper_large")
-	tempArmorArray[58] = scripted_ents.Get("arccw_ammo_plinking")
-	tempArmorArray[59] = scripted_ents.Get("arccw_ammo_plinking_large")
-	tempArmorArray[60] = scripted_ents.Get("fas2_ammo_bandages")
-	tempArmorArray[61] = scripted_ents.Get("fas2_ammo_quikclots")
-	tempArmorArray[62] = scripted_ents.Get("fas2_ammo_hemostats")
+	tempArmorArray[58] = scripted_ents.Get("fas2_ammo_bandages")
+	tempArmorArray[59] = scripted_ents.Get("fas2_ammo_quikclots")
+	tempArmorArray[60] = scripted_ents.Get("fas2_ammo_hemostats")
 
 	-- Any weapon in this array cannot be sold. Put any starting equipment here.
 

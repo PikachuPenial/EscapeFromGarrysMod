@@ -118,6 +118,8 @@ local function CreateTable()
 
     sql.Query( "CREATE TABLE IF NOT EXISTS stash_table ( ItemName TEXT, ItemCount INTEGER, ItemType TEXT, ItemOwner INTEGER )" )
 
+    numberOfWeps = 0
+
 end
 
 hook.Add( "Initialize", "StashCreate", function()

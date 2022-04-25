@@ -9,6 +9,9 @@ function SetPData64(player, key, dataValue)
 
     -- Create / update entry in BetterPlayerData table with key
 
+    print("Player steam id = " .. player:SteamID64())
+    print("Key = " .. SQLStr( key ))
+
     local value = sql.Query( "SELECT Value FROM BetterPlayerData WHERE PlayerID = " .. player:SteamID64() .. " AND Key = " .. SQLStr( key ) .. ";" )
 
     if value == nil then

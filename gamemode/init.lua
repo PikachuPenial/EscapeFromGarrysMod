@@ -50,10 +50,10 @@ function GM:PlayerInitialSpawn(ply)
 
 	-- Stash Limiting
 
-	if GetPData64(ply, "StashLimit") == nil then
+	if ply:GetPData("StashLimit") == nil then
 		ply:SetNWInt("playerStashLimit", 6)
 	else
-		ply:SetNWInt("playerStashLimit", GetPData64(ply, "StashLimit"))
+		ply:SetNWInt("playerStashLimit", ply:GetPData("StashLimit"))
 	end
 
 	-- Stash Leveling
@@ -407,7 +407,10 @@ function GM:PlayerDisconnected(ply)
 	ply:SetPData("stashMaxed", ply:GetNWInt("stashMaxed"))
 
 	-- PData64
-	SetPData64(ply, "StashLimit", ply:GetNWInt("playerStashLimit"))
+
+	-- SetPData64(ply, "StashLimit", ply:GetNWInt("playerStashLimit"))
+
+	ply:SetPData("StashLimit", ply:GetNWInt("playerStashLimit"))
 end
 
 function GM:ShutDown()
@@ -440,7 +443,11 @@ function GM:ShutDown()
 		v:SetPData("stashMaxed", v:GetNWInt("stashMaxed"))
 
 		-- PData64
-		SetPData64(v, "StashLimit", v:GetNWInt("playerStashLimit"))
+
+		-- SetPData64(v, "StashLimit", v:GetNWInt("playerStashLimit"))
+
+		v:SetPData("StashLimit", v:GetNWInt("playerStashLimit"))
+
 	end
 end
 

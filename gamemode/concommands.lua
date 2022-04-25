@@ -135,7 +135,7 @@ function buyGun(ply, cmd, args)
 	weaponPrices[91] = {"arccw_bo1_xl60", "13905", "11"}
 	weaponPrices[92] = {"arccw_bo1_famas", "14505", "13"}
 	weaponPrices[93] = {"arccw_bo1_fal", "17050", "15"}
-	weaponPrices[94] = {"arccw_bo1_hk21", "19995", "17"}
+	weaponPrices[94] = {"arccw_bo1_hk21", "26000", "20"}
 	weaponPrices[95] = {"arccw_bo1_galil", "14005", "13"}
 	weaponPrices[96] = {"arccw_bo1_spas12", "16000", "14"}
 	weaponPrices[97] = {"arccw_cde_ak5", "14940", "13"}
@@ -152,6 +152,13 @@ function buyGun(ply, cmd, args)
 	weaponPrices[108] = {"arccw_bo2_fiveseven", "4750", "4"}
 	weaponPrices[109] = {"arccw_cde_m93r", "5000", "4"}
 	weaponPrices[110] = {"arccw_waw_mg42", "52500", "32"}
+	weaponPrices[111] = {"arccw_bo1_kiparis", "9550", "8"}
+	weaponPrices[112] = {"arccw_bo1_skorpion", "9250", "7"}
+	weaponPrices[113] = {"arccw_bo2_vector", "24000", "17"}
+	weaponPrices[114] = {"arccw_bo1_dragunov", "25000", "17"}
+	weaponPrices[115] = {"arccw_bo1_rpk", "19500", "15"}
+	weaponPrices[116] = {"arccw_bo2_lsat", "15005", "14"}
+	weaponPrices[117] = {"arccw_bo2_smr", "26500", "18"}
 
 	for k, v in pairs(weaponPrices) do
 		if(args[1] == v[1]) then

@@ -120,7 +120,7 @@ function GM:Initialize()
 	tempWeaponsArray[91] = {"models/weapons/arccw/c_bo1_xl60.mdl", "arccw_bo1_xl60", "XL64ES", 13905, "11", "MID", "Rifle"}
 	tempWeaponsArray[92] = {"models/weapons/arccw/c_bo1_famas.mdl", "arccw_bo1_famas", "FAMAS Valorise", 14505, "13", "MID", "Rifle"}
 	tempWeaponsArray[93] = {"models/weapons/arccw/c_bo1_fal.mdl", "arccw_bo1_fal", "FN Fal", 17050, "15", "HIGH", "Rifle"}
-	tempWeaponsArray[94] = {"models/weapons/arccw/c_bo1_hk21.mdl", "arccw_bo1_hk21", "HK21", 19995, "17", "HIGH", "Heavy"}
+	tempWeaponsArray[94] = {"models/weapons/arccw/c_bo1_hk21.mdl", "arccw_bo1_hk21", "HK21", 26000, "20", "HIGH", "Heavy"}
 	tempWeaponsArray[95] = {"models/weapons/arccw/c_bo1_galil.mdl", "arccw_bo1_galil", "IMI Galil", 14005, "13", "MID", "Rifle"}
 	tempWeaponsArray[96] = {"models/weapons/arccw/c_bo1_spas12.mdl", "arccw_bo1_spas12", "SPAS-12", 16000, "14", "MID", "Shotgun"}
 	tempWeaponsArray[97] = {"models/weapons/arccw/c_cde_ak5.mdl", "arccw_cde_ak5", "Ak-5", 14940, "13", "MID", "Rifle"}
@@ -137,6 +137,13 @@ function GM:Initialize()
 	tempWeaponsArray[108] = {"models/weapons/arccw/c_bo2_fiveseven.mdl", "arccw_bo2_fiveseven", "FN Five-SeveN", 4750, "4", "LOW", "Pistol"}
 	tempWeaponsArray[109] = {"models/weapons/arccw/c_cde_m92.mdl", "arccw_cde_m93r", "Beretta 92", 5000, "4", "LOW", "Pistol"}
 	tempWeaponsArray[110] = {"models/weapons/arccw/c_waw_mg42.mdl", "arccw_waw_mg42", "MG-42", 52500, "32", "HIGH", "Heavy"}
+	tempWeaponsArray[111] = {"models/weapons/arccw/c_bo1_kiparis.mdl", "arccw_bo1_kiparis", "OTS-12 Kiparis", 9550, "8", "LOW", "Pistol"}
+	tempWeaponsArray[112] = {"models/weapons/arccw/c_bo1_skorpion.mdl", "arccw_bo1_skorpion", "Skorpion Vz. 65", 9250, "7", "LOW", "Pistol"}
+	tempWeaponsArray[113] = {"models/weapons/arccw/c_bo2_vector.mdl", "arccw_bo2_vector", "TDI Kriss Vector 9mm", 24000, "17", "HIGH", "SMG"}
+	tempWeaponsArray[114] = {"models/weapons/arccw/c_bo1_svd.mdl", "arccw_bo1_dragunov", "Dragunov SVD", 25000, "17", "HIGH", "Sniper"}
+	tempWeaponsArray[115] = {"models/weapons/arccw/c_bo1_rpk.mdl", "arccw_bo1_rpk", "RPK-74", 19500, "15", "HIGH", "Heavy"}
+	tempWeaponsArray[116] = {"models/weapons/arccw/c_bo2_lsat.mdl", "arccw_bo2_lsat", "AAI LSAT LMG", 15005, "14", "MID", "Heavy"}
+	tempWeaponsArray[117] = {"models/weapons/arccw/c_bo2_smr.mdl", "arccw_bo2_smr", "SMI Saritch .308", 26500, "18", "HIGH", "Rifle"}
 
 	local tempArmorArray = {}
 

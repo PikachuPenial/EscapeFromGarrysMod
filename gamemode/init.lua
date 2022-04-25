@@ -28,7 +28,7 @@ function GM:PlayerSpawn(ply)
 
 	local playerModels = {"models/player/eft/pmc/eft_bear/models/eft_bear_pm_summer.mdl", "models/player/eft/pmc/eft_bear/models/eft_bear_pm_redux.mdl"}
 	local spawningWeapon = {"arccw_eft_1911", "arccw_waw_nambu", "arccw_waw_tt33"}
-	local spawningMelee = {"arccw_go_knife_m9bayonet"}
+	local spawningMelee = {"arccw_bo1_sog_knife"}
 
 	ply:SetModel(playerModels[math.random(#playerModels)])
 	ply:SetupHands()

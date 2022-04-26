@@ -26,6 +26,13 @@ function GM:PlayerSpawn(ply)
 	ply:SetWalkSpeed(130)
 	ply:SetJumpPower(125)
 
+	ply:SetLadderClimbSpeed(55)
+	ply:SetSlowWalkSpeed(78)
+
+	ply:SetCrouchedWalkSpeed(0.45)
+	ply:SetDuckSpeed(0.53)
+	ply:SetUnDuckSpeed(0.53)
+
 	local playerModels = {"models/player/eft/pmc/eft_bear/models/eft_bear_pm_summer.mdl", "models/player/eft/pmc/eft_bear/models/eft_bear_pm_redux.mdl"}
 	local spawningWeapon = {"arccw_eft_1911", "arccw_waw_nambu", "arccw_waw_tt33"}
 	local spawningMelee = {"arccw_bo1_sog_knife"}

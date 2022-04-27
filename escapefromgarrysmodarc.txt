@@ -1,7 +1,7 @@
-"escapefromgarrysmod"
+"escapefromgarrysmodarc"
 {
 	"base"		"base"
-	"title"		"Escape From Garry's Mod"
+	"title"		"EFMG Testing"
 	"maps"		"^efgm_"
 	"workshopid"	"2792129130"
 	"category"	"pvp"

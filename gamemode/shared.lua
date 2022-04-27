@@ -319,6 +319,7 @@ RunConsoleCommand("atmos_weather_lighting", "1")
 
 --Tarkov Hud Configuration
 
+RunConsoleCommand("tarkovhud_enabled", "1")
 RunConsoleCommand("tarkovhud_hp_colored", "1")
 RunConsoleCommand("tarkovhud_autohide_hp", "0")
 RunConsoleCommand("tarkovhud_autohide_stamina", "0")
@@ -335,7 +336,7 @@ RunConsoleCommand("hud_deathnotice_time", "0")
 
 --View Bobbing
 RunConsoleCommand("viewbob_crouch_enable", "1")
-RunConsoleCommand("viewbob_crouch_multiplier", "0.12")
+RunConsoleCommand("viewbob_crouch_multiplier", "0.07")
 RunConsoleCommand("viewbob_enable", "1")
 RunConsoleCommand("viewbob_idle_enable", "0")
 RunConsoleCommand("viewbob_damage_enable", "1")

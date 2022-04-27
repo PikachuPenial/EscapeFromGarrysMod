@@ -161,7 +161,7 @@ function buyGun(ply, cmd, args)
 	weaponPrices[117] = {"arccw_bo2_smr", "26500", "18"}
 
 	for k, v in pairs(weaponPrices) do
-		if(args[1] == v[1]) then
+		if (args[1] == v[1]) then
 			local balance = (ply:GetNWInt("playerMoney"))
 			local playerLvl = ply:GetNWInt("playerLvl")
 			local gunCost = tonumber(v[2])

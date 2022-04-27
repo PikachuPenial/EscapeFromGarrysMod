@@ -266,7 +266,7 @@ local function VoteForMap(ply, cmd, args)
 	-- This checks if the map they voted for actually like, you know, exists, and is supported. For example, loading into efgm_buttsex6969 has a non-zero chance of bricking the entire server, and loading into gm_flatgrass just probably won't be any fun.
 
 	for k, v in pairs(mapPool) do
-		if votedMap == "efgm_belmont" and #player.GetHumans() <= 4 then
+		if votedMap == "efgm_belmont" and #player.GetHumans() >= 5 then
 			validMapVote = true
 			print("Stop looking inside the code, you dumb fucko.")
 		elseif v == votedMap then 
@@ -567,9 +567,9 @@ function ENT:AcceptInput(name, ply, caller, data)
 		if isRaidEnded == true then return end
 		if self.RaidStarted == false then
 			for k, v in pairs(player.GetHumans()) do
-				if k < 2 then
+				if k <= 1 then
 					ply:PrintMessage(3, "Not enough players to start a raid!")
-				elseif k >= 3 and self.RaidStarted == false then
+				elseif k >= 2 and self.RaidStarted == false then
 					self:InitializeRaid()
 					hook.Call( "RaidStart", nil )
 				end

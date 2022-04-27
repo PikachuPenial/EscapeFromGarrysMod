@@ -2,7 +2,7 @@ ENT.Type = "point"
 ENT.Base = "base_point"
 
 ENT.RaidStarted = false
-ENT.RaidTime = 1200
+ENT.RaidTime = 15
 
 local isRaidJoinTime = false
 
@@ -264,24 +264,20 @@ local function VoteForMap(ply, cmd, args)
 	local validMapVote = false
 
 	-- This checks if the map they voted for actually like, you know, exists, and is supported. For example, loading into efgm_buttsex6969 has a non-zero chance of bricking the entire server, and loading into gm_flatgrass just probably won't be any fun.
-	for k, v in pairs(mapPool) do
-
-		if v == votedMap then validMapVote = true break end
-
-	end
-
-	if validMapVote == false then print("Hey, can someone tell " .. ply:GetName() .. " that " .. votedMap .. " isn't actually a map that exists? Thanks.") return end
 
 	for k, v in pairs(mapPool) do
-		if votedMap == "efgm_belmont" and #player.GetHumans() < 4 then
+		if votedMap == "efgm_belmont" and #player.GetHumans() <= 4 then
+			validMapVote = true
 			print("Stop looking inside the code, you dumb fucko.")
-		elseif votedMap == "efgm_belmont" and #player.GetHumans() > 4 then 
-			mapVotes[k] = mapVotes[k] + 1
-			ply:PrintMessage(3, "Your vote for " .. votedMap .. " has been counted successfully!")
-		else
+		elseif v == votedMap then 
+			validMapVote = true
 			mapVotes[k] = mapVotes[k] + 1
 			ply:PrintMessage(3, "Your vote for " .. votedMap .. " has been counted successfully!")
 		end
+	end
+
+	if validMapVote == false then 
+		print("Hey, can someone tell " .. ply:GetName() .. " that " .. votedMap .. " isn't actually a map that exists? Thanks.") return 
 	end
 
 end
@@ -571,9 +567,9 @@ function ENT:AcceptInput(name, ply, caller, data)
 		if isRaidEnded == true then return end
 		if self.RaidStarted == false then
 			for k, v in pairs(player.GetHumans()) do
-				if k < 3 then
+				if k < 0 then
 					ply:PrintMessage(3, "Not enough players to start a raid!")
-				elseif k >= 3 and self.RaidStarted == false then
+				elseif k >= 1 and self.RaidStarted == false then
 					self:InitializeRaid()
 					hook.Call( "RaidStart", nil )
 				end

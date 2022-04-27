@@ -238,7 +238,7 @@ function GM:Initialize()
 
 end
 
-if CLIENT and !ConVarExists("efgm_hidebinds") then CreateConVar( "efgm_hidebinds", "0", FCVAR_ARCHIVE, "Show or hide binds, while you are not in Raid",0,1 ) end
+if !ConVarExists("efgm_hidebinds") then CreateConVar( "efgm_hidebinds", "0", FCVAR_ARCHIVE, "Show or hide binds, while you are not in Raid",0,1 ) end
 
 -- Disable the context menu.
 --function GM:ContextMenuOpen()

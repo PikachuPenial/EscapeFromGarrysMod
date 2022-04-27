@@ -280,6 +280,8 @@ local function VoteForMap(ply, cmd, args)
 
 			ply:PrintMessage(3, "Your vote for " .. votedMap .. " has been counted successfully!")
 
+			table.insert( voterTable, ply )
+
 		end
 
 	end
@@ -568,6 +570,15 @@ concommand.Add("efgm_join_team", AssignTeam)
 function ENT:AcceptInput(name, ply, caller, data)
 
 	if name == "StartRaid" then
+
+		if #player.GetHumans() < 2 then
+
+			ply:PrintMessage( 3, "bruh" )
+
+			return
+
+		end
+
 
 		if isRaidEnded == true then return end
 

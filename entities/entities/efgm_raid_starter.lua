@@ -2,7 +2,7 @@ ENT.Type = "point"
 ENT.Base = "base_point"
 
 ENT.RaidStarted = false
-ENT.RaidTime = 15
+ENT.RaidTime = 1200
 
 local isRaidJoinTime = false
 

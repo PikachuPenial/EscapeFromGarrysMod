@@ -266,7 +266,7 @@ local function VoteForMap(ply, cmd, args)
 	-- This checks if the map they voted for actually like, you know, exists, and is supported. For example, loading into efgm_buttsex6969 has a non-zero chance of bricking the entire server, and loading into gm_flatgrass just probably won't be any fun.
 
 	for k, v in pairs(mapPool) do
-		if votedMap == "efgm_belmont" and #player.GetHumans() >= 5 then
+		if votedMap == "efgm_belmont" and #player.GetHumans() <= 4 then
 			validMapVote = true
 			print("Stop looking inside the code, you dumb fucko.")
 		elseif v == votedMap then 

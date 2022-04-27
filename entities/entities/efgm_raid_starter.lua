@@ -567,9 +567,9 @@ function ENT:AcceptInput(name, ply, caller, data)
 		if isRaidEnded == true then return end
 		if self.RaidStarted == false then
 			for k, v in pairs(player.GetHumans()) do
-				if k < 0 then
+				if k < 2 then
 					ply:PrintMessage(3, "Not enough players to start a raid!")
-				elseif k >= 1 and self.RaidStarted == false then
+				elseif k >= 3 and self.RaidStarted == false then
 					self:InitializeRaid()
 					hook.Call( "RaidStart", nil )
 				end

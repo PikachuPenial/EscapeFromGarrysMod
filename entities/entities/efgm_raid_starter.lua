@@ -32,7 +32,7 @@ local playerStatusTable = {}
 function ENT:KeyValue(key, value)
 	-- This not only receives the keyvalue of raid_time, but also converts it into seconds which can be used in the timers.
 	if key == "raid_time" then
-      self.RaidTime = tonumber(value) * 60
+		self.RaidTime = tonumber(value) * 60
 	end
 
 	if key == "OnRaidEnd" then
@@ -101,7 +101,7 @@ function PrintStatus(ply, cmd, args)
 		end
 	end
 
-	print(ply:GetName().."\n"..tostring(spawnGroup).."\n"..tostring(status))
+	print(ply:GetName() .. "\n" .. tostring(spawnGroup) .. "\n" .. tostring(status))
 
 end
 concommand.Add("efgm_print_status", PrintStatus)
@@ -148,7 +148,7 @@ function RaidTimeLeft()
 		secondsText = secsLeft
 	end
 
-	local timeLeftClean = tostring(minsLeft..":"..secondsText)
+	local timeLeftClean = tostring(minsLeft .. ":" .. secondsText)
 
 	if raidTimeLeft == 0 or raidTimeLeft == nil then
 		return "Raid has not started."
@@ -180,7 +180,7 @@ function ENT:EndRaid()
 
 		if v[3] != noClass then
 			v[1]:Kill()
-			
+
 			SetPlayerStatus(v[1], nil, noClass)
 		end
 
@@ -195,7 +195,7 @@ function ENT:EndRaid()
 	self:TriggerOutput("OnRaidEnd", self, nil)
 
 	timer.Simple(30, function()
-	
+
 		for k, v in pairs(player.GetHumans()) do
 
 			v:ConCommand("open_map_menu")
@@ -205,7 +205,7 @@ function ENT:EndRaid()
 	end)
 
 	timer.Create("RaidTimer", 120, 1, function()
-	
+
 		local newMapTable = {}
 
 		local maxVotes = 0
@@ -232,7 +232,7 @@ function ENT:EndRaid()
 		end
 
 		RunConsoleCommand("changelevel", newMapTable[math.random(#newMapTable)])
-	
+
 	end)
 
 end
@@ -243,7 +243,7 @@ local function VoteForMap(ply, cmd, args)
 
 		local mapNames = string.Implode(", ", mapPool)
 
-		ply:PrintMessage(3, "Valid maps to vote for are: ("..mapNames..")")
+		ply:PrintMessage(3, "Valid maps to vote for are: (" .. mapNames .. ")")
 
 	return end
 
@@ -257,7 +257,7 @@ local function VoteForMap(ply, cmd, args)
 
 	end
 
-	if isRaidEnded == false then print("I appreciate the enthusiasm "..ply:GetName().." but the raid actually isn't done yet.") return end
+	if isRaidEnded == false then print("I appreciate the enthusiasm " .. ply:GetName() .. " but the raid actually isn't done yet.") return end
 
 	local votedMap = tostring( args[1] )
 
@@ -270,16 +270,18 @@ local function VoteForMap(ply, cmd, args)
 
 	end
 
-	if validMapVote == false then print("Hey, can someone tell "..ply:GetName().." that "..votedMap.." isn't actually a map that exists? Thanks.") return end
+	if validMapVote == false then print("Hey, can someone tell " .. ply:GetName() .. " that " .. votedMap .. " isn't actually a map that exists? Thanks.") return end
 
 	for k, v in pairs(mapPool) do
 
-		if votedMap == v then
-
+		if votedMap == "efgm_belmont" and #player.GetHumans() < 4 then
+			print("Stop looking inside the code, you dumb fucko.")
+		elseif votedMap == "efgm_belmont" and #player.GetHumans() > 4 then 
 			mapVotes[k] = mapVotes[k] + 1
-
-			ply:PrintMessage(3, "Your vote for "..votedMap.." has been counted successfully!")
-
+			ply:PrintMessage(3, "Your vote for " .. votedMap .. " has been counted successfully!")
+		else
+			mapVotes[k] = mapVotes[k] + 1
+			ply:PrintMessage(3, "Your vote for " .. votedMap .. " has been counted successfully!")
 		end
 
 	end
@@ -369,41 +371,41 @@ end
 -- 			finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 1.5)
 
 -- 			if table.IsEmpty(finalSpawns) == true then
-	
+
 -- 				finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 2)
 
 -- 				if table.IsEmpty(finalSpawns) == true then
-	
+
 -- 					finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 3)
-			
+
 -- 					if table.IsEmpty(finalSpawns) == true then
-	
+
 -- 						finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 4)
 
 -- 						if table.IsEmpty(finalSpawns) == true then
-	
+
 -- 							finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 6)
 
 -- 							if table.IsEmpty(finalSpawns) == true then
-	
+
 -- 								finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 8)
 
 -- 								if table.IsEmpty(finalSpawns) == true then
-	
+
 -- 									finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 12)
 
 -- 									if table.IsEmpty(finalSpawns) == true then
-	
+
 -- 										finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 16)
-									
+
 -- 									end
 
 -- 								end
-							
+
 -- 							end
 
 -- 						end
-			
+
 -- 					end
 
 -- 				end
@@ -415,7 +417,7 @@ end
 -- 	end
 
 -- 	if table.IsEmpty(finalSpawns) == false then
-	
+
 -- 		return finalSpawns[math.random(#finalSpawns)]
 
 -- 	end
@@ -443,8 +445,6 @@ function ENT:DetermineSpawnTable(class, useTeamSpawns)
 
 				-- if useTeamSpawns == false then
 
-					
-
 				-- end
 
 				table.insert(spawnTable, v)
@@ -470,7 +470,7 @@ function ENT:DetermineSpawnTable(class, useTeamSpawns)
 				-- end
 
 				table.insert(spawnTable, v)
-	
+
 			end
 
 		end
@@ -570,33 +570,28 @@ concommand.Add("efgm_join_team", AssignTeam)
 function ENT:AcceptInput(name, ply, caller, data)
 
 	if name == "StartRaid" then
-
 		if isRaidEnded == true then return end
-
 		if self.RaidStarted == false then
-
-			self:InitializeRaid()
-
-			hook.Call( "RaidStart", nil )
-
+			for k, v in pairs(player.GetHumans()) do
+				if k < 3 then
+					ply:PrintMessage(3, "Not enough players to start a raid!")
+				elseif k >= 3 and self.RaidStarted == false then
+					self:InitializeRaid()
+					hook.Call( "RaidStart", nil )
+				end
+			end
 		end
 
 		if ply:GetNWString("playerTeam") == "" then
-
 		end
 
-		self:IndividualSpawn(ply, "PMC", false)
-
+		if self.RaidStarted == true then
+			self:IndividualSpawn(ply, "PMC", false)
+		end
 		-- if ply:GetNWString("playerTeam") != "" then
-
 		-- 	local partyName = ply:GetNWString("playerTeam")
-
 		-- 	local partyPlayers = GetAllFromParty(partyName)
-
 		-- 	self:PartySpawn(partyPlayers, "PMC", false)
-
 		-- end
-
 	end
-
 end

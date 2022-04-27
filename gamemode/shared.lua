@@ -17,8 +17,8 @@ entsArr = {}
 sellBlacklist = {}
 
 function GM:Initialize()
-  
-  isSellMenu = false
+
+	isSellMenu = false
 	clientPlayer = nil
 
 	-- Creating a temporary array to sort through for the actual array seen in the shop
@@ -120,7 +120,7 @@ function GM:Initialize()
 	tempWeaponsArray[91] = {"models/weapons/arccw/c_bo1_xl60.mdl", "arccw_bo1_xl60", "XL64ES", 13905, "11", "MID", "Rifle"}
 	tempWeaponsArray[92] = {"models/weapons/arccw/c_bo1_famas.mdl", "arccw_bo1_famas", "FAMAS Valorise", 14505, "13", "MID", "Rifle"}
 	tempWeaponsArray[93] = {"models/weapons/arccw/c_bo1_fal.mdl", "arccw_bo1_fal", "FN Fal", 17050, "15", "HIGH", "Rifle"}
-	tempWeaponsArray[94] = {"models/weapons/arccw/c_bo1_hk21.mdl", "arccw_bo1_hk21", "HK21", 19995, "17", "HIGH", "Heavy"}
+	tempWeaponsArray[94] = {"models/weapons/arccw/c_bo1_hk21.mdl", "arccw_bo1_hk21", "HK21", 26000, "20", "HIGH", "Heavy"}
 	tempWeaponsArray[95] = {"models/weapons/arccw/c_bo1_galil.mdl", "arccw_bo1_galil", "IMI Galil", 14005, "13", "MID", "Rifle"}
 	tempWeaponsArray[96] = {"models/weapons/arccw/c_bo1_spas12.mdl", "arccw_bo1_spas12", "SPAS-12", 16000, "14", "MID", "Shotgun"}
 	tempWeaponsArray[97] = {"models/weapons/arccw/c_cde_ak5.mdl", "arccw_cde_ak5", "Ak-5", 14940, "13", "MID", "Rifle"}
@@ -137,6 +137,13 @@ function GM:Initialize()
 	tempWeaponsArray[108] = {"models/weapons/arccw/c_bo2_fiveseven.mdl", "arccw_bo2_fiveseven", "FN Five-SeveN", 4750, "4", "LOW", "Pistol"}
 	tempWeaponsArray[109] = {"models/weapons/arccw/c_cde_m92.mdl", "arccw_cde_m93r", "Beretta 92", 5000, "4", "LOW", "Pistol"}
 	tempWeaponsArray[110] = {"models/weapons/arccw/c_waw_mg42.mdl", "arccw_waw_mg42", "MG-42", 52500, "32", "HIGH", "Heavy"}
+	tempWeaponsArray[111] = {"models/weapons/arccw/c_bo1_kiparis.mdl", "arccw_bo1_kiparis", "OTS-12 Kiparis", 9550, "8", "LOW", "Pistol"}
+	tempWeaponsArray[112] = {"models/weapons/arccw/c_bo1_skorpion.mdl", "arccw_bo1_skorpion", "Skorpion Vz. 65", 9250, "7", "LOW", "Pistol"}
+	tempWeaponsArray[113] = {"models/weapons/arccw/c_bo2_vector.mdl", "arccw_bo2_vector", "TDI Kriss Vector 9mm", 24000, "17", "HIGH", "SMG"}
+	tempWeaponsArray[114] = {"models/weapons/arccw/c_bo1_svd.mdl", "arccw_bo1_dragunov", "Dragunov SVD", 25000, "17", "HIGH", "Sniper"}
+	tempWeaponsArray[115] = {"models/weapons/arccw/c_bo1_rpk.mdl", "arccw_bo1_rpk", "RPK-74", 19500, "15", "HIGH", "Heavy"}
+	tempWeaponsArray[116] = {"models/weapons/arccw/c_bo2_lsat.mdl", "arccw_bo2_lsat", "AAI LSAT LMG", 15005, "14", "MID", "Heavy"}
+	tempWeaponsArray[117] = {"models/weapons/arccw/c_bo2_smr.mdl", "arccw_bo2_smr", "SMI Saritch .308", 26500, "18", "HIGH", "Rifle"}
 
 	local tempArmorArray = {}
 
@@ -197,11 +204,9 @@ function GM:Initialize()
 	tempArmorArray[55] = scripted_ents.Get("arccw_ammo_buckshot_large")
 	tempArmorArray[56] = scripted_ents.Get("arccw_ammo_sniper")
 	tempArmorArray[57] = scripted_ents.Get("arccw_ammo_sniper_large")
-	tempArmorArray[58] = scripted_ents.Get("arccw_ammo_plinking")
-	tempArmorArray[59] = scripted_ents.Get("arccw_ammo_plinking_large")
-	tempArmorArray[60] = scripted_ents.Get("fas2_ammo_bandages")
-	tempArmorArray[61] = scripted_ents.Get("fas2_ammo_quikclots")
-	tempArmorArray[62] = scripted_ents.Get("fas2_ammo_hemostats")
+	tempArmorArray[58] = scripted_ents.Get("fas2_ammo_bandages")
+	tempArmorArray[59] = scripted_ents.Get("fas2_ammo_quikclots")
+	tempArmorArray[60] = scripted_ents.Get("fas2_ammo_hemostats")
 
 	-- Any weapon in this array cannot be sold. Put any starting equipment here.
 
@@ -216,7 +221,7 @@ function GM:Initialize()
 	sellBlacklist[9] = {"arccw_go_nade_smoke"}
 	sellBlacklist[10] = {"arccw_go_nade_molotov"}
 	sellBlacklist[11] = {"arccw_go_nade_knife"}
-	sellBlacklist[2] = {"arccw_waw_tt33"}
+	sellBlacklist[12] = {"arccw_waw_tt33"}
 
 	-- Temporary array created. This next section will sort the guns by cost, so guns higher to the top will hopefully be better. This is convenient.
 	-- The sort function takes the fourth value of all tempWeaponsArray indexes (the rouble count) and sorts by them from greatest to lowest.
@@ -232,65 +237,68 @@ function GM:Initialize()
 	entsArr = tempArmorArray
 
 end
+--custom convar table (shared)
+if !ConVarExists("efgm_hidebinds") then CreateConVar( "efgm_hidebinds", "0", FCVAR_ARCHIVE, "Show or hide binds, while you are not in Raid",0,1 ) end
 
 -- Disable the context menu.
-function GM:ContextMenuOpen()
-  return false
-end
+--function GM:ContextMenuOpen()
+	--return false
+--end
 
 -- Disable Spawn Menu and show the extract list when the bind is pressed.
-function GM:SpawnMenuEnabled()
-	return false     
-end
+--function GM:SpawnMenuEnabled()
+	--return false
+--end
 
-function GM:SpawnMenuOpen()
-	RunConsoleCommand("efgm_extract_list")
-	return false
-end
+--function GM:SpawnMenuOpen()
+	--RunConsoleCommand("efgm_extract_list")
+	--return false
+--end
 
 -- Disabling console commands that allow prop/entity abuse.
-hook.Add( "PlayerGiveSWEP", "BlockPlayerSWEPs", function( ply, class, swep )
-	if ( not ply:IsAdmin() ) then
-		return false
-	end
-end )
+--hook.Add( "PlayerGiveSWEP", "BlockPlayerSWEPs", function( ply, class, swep )
+	--if (not ply:IsAdmin()) then
+		-- return false
+	--end
+--end )
 
-function GM:PlayerSpawnEffect(ply)
-	return false
-end
+--function GM:PlayerSpawnEffect(ply)
+--	return false
+--end
 
-function GM:PlayerSpawnNPC(ply)
-	return false
-end
+--function GM:PlayerSpawnNPC(ply)
+--	return false
+--end
 
-function GM:PlayerSpawnObject(ply)
-	return false
-end
+--function GM:PlayerSpawnObject(ply)
+--	return false
+--end
 
-function GM:PlayerSpawnProp(ply)
-	return false
-end
+--function GM:PlayerSpawnProp(ply)
+--	return false
+--end
 
-function GM:PlayerSpawnRagdoll(ply)
-	return false
-end
+--function GM:PlayerSpawnRagdoll(ply)
+--	return false
+--end
 
-function GM:PlayerSpawnSENT(ply)
-	return false
-end
+--function GM:PlayerSpawnSENT(ply)
+--	return false
+--end
 
-function GM:PlayerSpawnSWEP(ply)
-	return false
-end
+--function GM:PlayerSpawnSWEP(ply)
+--	return false
+--end
 
-function GM:PlayerSpawnVehicle(ply)
-	return false
-end
+--function GM:PlayerSpawnVehicle(ply)
+--	return false
+--end
 
 -- Removing problematic console commmands.
 
-concommand.Remove("ent_create")
-concommand.Remove("gmod_spawnnpc")
+--concommand.Remove("ent_create")
+--concommand.Remove("gmod_spawnnpc")
+
 
 -- This is where the console commands are ran when a client joins a game running the gamemode.
 
@@ -324,6 +332,20 @@ RunConsoleCommand("mp_falldamage", "1")
 --Killfeed Disable
 
 RunConsoleCommand("hud_deathnotice_time", "0")
+
+--View Bobbing
+RunConsoleCommand("viewbob_crouch_enable", "1")
+RunConsoleCommand("viewbob_crouch_multiplier", "0.12")
+RunConsoleCommand("viewbob_enable", "1")
+RunConsoleCommand("viewbob_idle_enable", "0")
+RunConsoleCommand("viewbob_damage_enable", "1")
+RunConsoleCommand("viewbob_land_jump_enable", "1")
+RunConsoleCommand("viewbob_walk_enable", "0")
+
+RunConsoleCommand("viewbob_damage_enable", "1")
+RunConsoleCommand("viewbob_damage_multiplier", "0.10")
+
+RunConsoleCommand("suppression_viewpunch", "0")
 
 --Damage Slow Config
 

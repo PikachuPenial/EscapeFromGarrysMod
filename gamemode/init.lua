@@ -289,11 +289,8 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 		victim:SetNWInt("raidSuccess", 0)
 	else
 		local moneyGained = math.random(1000, 2500)
-
 		local expGained = math.random(425, 675)
-
 		local killGained = 1
-
 		local deathGained = 1
 
 		attacker:SetNWInt("playerMoney", attacker:GetNWInt("playerMoney") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))

@@ -313,7 +313,6 @@ function PlayerPrestige(ply, cmd, args)
 
 		local prestigeGained = 1
 		local roubleMulti = 0.25
-
 		local levelReset = 1
 		local expReset = 0
 

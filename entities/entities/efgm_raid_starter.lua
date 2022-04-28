@@ -318,7 +318,7 @@ function ENT:InitializeRaid()
 
 end
 
-local function DoSmartSpawnStuff(spawns, minimumDistance)
+function ENT:DoSmartSpawnStuff(spawns, minimumDistance)
 
 	local finalSpawns = {}
 
@@ -328,7 +328,7 @@ local function DoSmartSpawnStuff(spawns, minimumDistance)
 
 		for l, b in pairs(player.GetHumans()) do
 
-			-- print(tostring( "Distance between player and spawn is:" .. v:GetPos():Distance( b:GetPos() ) ))
+			print(tostring( "Distance between player and spawn is:" .. v:GetPos():Distance( b:GetPos() ) ))
 
 			if v:GetPos():Distance( b:GetPos() ) < minimumDistance then
 
@@ -350,73 +350,31 @@ local function DoSmartSpawnStuff(spawns, minimumDistance)
 
 end
 
--- function ENT:GetSmartSpawn(class, useTeamSpawns)
+function ENT:GetSmartSpawn(class, useTeamSpawns)
 
--- 	local spawns = self:DetermineSpawnTable(class, useTeamSpawns)
+	local spawns = self:DetermineSpawnTable(class, useTeamSpawns)
 
--- 	local finalSpawns = DoSmartSpawnStuff(spawns, 6000)
+	print("Spawns are:")
+	PrintTable(spawns)
 
--- 	if table.IsEmpty(finalSpawns) == true then
+	local finalSpawns = self:DoSmartSpawnStuff(spawns, 1024)
 
--- 		finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 1.25)
+	if table.IsEmpty(finalSpawns) == true then
 
--- 		if table.IsEmpty(finalSpawns) == true then
+		print("returning regular spawns")
+		PrintTable(spawns)
 
--- 			finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 1.5)
+		return spawns[math.random(#spawns)]
 
--- 			if table.IsEmpty(finalSpawns) == true then
+	elseif table.IsEmpty(finalSpawns) == false then
 
--- 				finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 2)
+		print("returning final spawns")
 
--- 				if table.IsEmpty(finalSpawns) == true then
+		return finalSpawns[math.random(#finalSpawns)]
 
--- 					finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 3)
+	end
 
--- 					if table.IsEmpty(finalSpawns) == true then
-
--- 						finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 4)
-
--- 						if table.IsEmpty(finalSpawns) == true then
-
--- 							finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 6)
-
--- 							if table.IsEmpty(finalSpawns) == true then
-
--- 								finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 8)
-
--- 								if table.IsEmpty(finalSpawns) == true then
-
--- 									finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 12)
-
--- 									if table.IsEmpty(finalSpawns) == true then
-
--- 										finalSpawns = DoSmartSpawnStuff(spawns, 6000 / 16)
-
--- 									end
-
--- 								end
-
--- 							end
-
--- 						end
-
--- 					end
-
--- 				end
-
--- 			end
-
--- 		end
-
--- 	end
-
--- 	if table.IsEmpty(finalSpawns) == false then
-
--- 		return finalSpawns[math.random(#finalSpawns)]
-
--- 	end
-
--- end
+end
 
 function ENT:DetermineSpawnTable(class, useTeamSpawns)
 
@@ -477,9 +435,7 @@ end
 
 function ENT:IndividualSpawn(ply, class, raidHasStarted)
 
-	local randomSpawnTable = self:DetermineSpawnTable(class, false)
-
-	local randomSpawn = randomSpawnTable[math.random(#randomSpawnTable)]
+	local randomSpawn = self:GetSmartSpawn(class, false)
 
 	-- This is for debugging, leave it alone, I'll remove it when it needs to be removed
 
@@ -495,29 +451,29 @@ function ENT:IndividualSpawn(ply, class, raidHasStarted)
 
 end
 
-function ENT:PartySpawn(players, class)
+-- function ENT:PartySpawn(players, class)
 
-	local randomSpawnTable = self:DetermineSpawnTable(class, true)
+-- 	local randomSpawnTable = self:DetermineSpawnTable(class, true)
 
-	local randomSpawn = randomSpawnTable[math.random(#randomSpawnTable)]
+-- 	local randomSpawn = randomSpawnTable[math.random(#randomSpawnTable)]
 
-	local spawnVectors = randomSpawn.TeamSpawnVectors
+-- 	local spawnVectors = randomSpawn.TeamSpawnVectors
 
-	for k, v in pairs(players) do
+-- 	for k, v in pairs(players) do
 
-		if v:GetNWBool("inRaid") == false then
+-- 		if v:GetNWBool("inRaid") == false then
 
-			local spawnInt = math.random(#spawnVectors)
+-- 			local spawnInt = math.random(#spawnVectors)
 
-			SpawnPlayer(v, randomSpawn.SpawnGroup, class, spawnVectors[spawnInt], randomSpawn:GetAngles())
+-- 			SpawnPlayer(v, randomSpawn.SpawnGroup, class, spawnVectors[spawnInt], randomSpawn:GetAngles())
 
-			table.remove(spawnVectors, spawnInt)
+-- 			table.remove(spawnVectors, spawnInt)
 
-		end
+-- 		end
 
-	end
+-- 	end
 
-end
+-- end
 
 hook.Add("PlayerDisconnected", "PlayerLeave", function(ply) RemoveFromTable(ply) end)
 
@@ -564,28 +520,42 @@ concommand.Add("efgm_join_team", AssignTeam)
 function ENT:AcceptInput(name, ply, caller, data)
 
 	if name == "StartRaid" then
+
 		if isRaidEnded == true then return end
+
 		if self.RaidStarted == false then
-			for k, v in pairs(player.GetHumans()) do
-				if k <= 1 then
-					ply:PrintMessage(3, "Not enough players to start a raid!")
-				elseif k >= 2 and self.RaidStarted == false then
-					self:InitializeRaid()
-					hook.Call( "RaidStart", nil )
-				end
+
+			if #player.GetHumans() <= 1 then
+
+				ply:PrintMessage(3, "Not enough players to start a raid!")
+
+			elseif #player.GetHumans() > 1 and self.RaidStarted == false then
+
+				self:InitializeRaid()
+				hook.Call( "RaidStart", nil )
+
 			end
+
 		end
 
 		if ply:GetNWString("playerTeam") == "" then
+
+			-- team logic eventually
+
 		end
 
 		if self.RaidStarted == true then
+
 			self:IndividualSpawn(ply, "PMC", false)
+
 		end
+
 		-- if ply:GetNWString("playerTeam") != "" then
 		-- 	local partyName = ply:GetNWString("playerTeam")
 		-- 	local partyPlayers = GetAllFromParty(partyName)
 		-- 	self:PartySpawn(partyPlayers, "PMC", false)
 		-- end
+
 	end
+
 end

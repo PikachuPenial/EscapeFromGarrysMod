@@ -357,7 +357,7 @@ function ENT:GetSmartSpawn(class, useTeamSpawns)
 	print("Spawns are:")
 	PrintTable(spawns)
 
-	local finalSpawns = self:DoSmartSpawnStuff(spawns, 1024)
+	local finalSpawns = self:DoSmartSpawnStuff(spawns, 2048)
 
 	if table.IsEmpty(finalSpawns) == true then
 

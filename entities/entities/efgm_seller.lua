@@ -62,10 +62,14 @@ function ItemSell(ply, weapon, value, weaponName)
 	elseif ply:HasWeapon(weapon) then
 
 		ply:SetNWInt("playerMoney", ply:GetNWInt("playerMoney") + value)
-
 		ply:SetNWInt("playerTotalEarned", ply:GetNWInt("playerTotalEarned") + value)
-
 		ply:SetNWInt("playerTotalEarnedSell", ply:GetNWInt("playerTotalEarnedSell") + value)
+
+		local charExpGain = (ply:GetNWInt("charismaExperience") + value)
+		local charExp = charExpGain / 1750
+
+		ply:SetNWInt("charismaExperience", ply:GetNWInt("charismaExperience") + charExp)
+		checkForCharisma(ply)
 
 		ply:StripWeapon(weapon)
 
@@ -73,4 +77,21 @@ function ItemSell(ply, weapon, value, weaponName)
 
 	end
 
+end
+
+function checkForCharisma(ply)
+	local charismaExpToLevel = (ply:GetNWInt("charismaLevel") * 5)
+	local charismaCurExp = ply:GetNWInt("charismaExperience")
+	local charismaCurLvl = ply:GetNWInt("charismaLevel")
+
+	if (charismaCurExp >= charismaExpToLevel) then
+		charismaCurExp = charismaCurExp - charismaExpToLevel
+
+		ply:SetNWInt("charismaExperience", charismaCurExp)
+		ply:SetNWInt("charismaLevel", charismaCurLvl + 1)
+
+		ply:SetNWInt("charismaEffect", ply:GetNWInt("charismaEffect") - 0.01)
+
+		ply:PrintMessage(HUD_PRINTCENTER, "You have leveled Charisma to level " .. (charismaCurLvl + 1) .. ".", Color(85, 0, 255, 255), 0)
+	end
 end

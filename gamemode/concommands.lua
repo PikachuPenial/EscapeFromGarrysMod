@@ -26,7 +26,7 @@ function buyEntity(ply, cmd, args)
 					ply:SetNWInt("playerTotalMoneySpentItem", ply:GetNWInt("playerTotalMoneySpentItem") + ent.Cost)
 
 					local charExpGain = (ply:GetNWInt("charismaExperience") + ent.Cost)
-					local charExp = charExpGain / 7500
+					local charExp = charExpGain / 1750
 
 					ply:SetNWInt("charismaExperience", ply:GetNWInt("charismaExperience") + charExp)
 					checkForCharisma(ply)
@@ -185,7 +185,7 @@ function buyGun(ply, cmd, args)
 			if (playerLvl >= levelReq) then
 				if (balance >= gunCost) then
 					local charExpGain = (ply:GetNWInt("charismaExperience") + gunCost)
-					local charExp = charExpGain / 7500
+					local charExp = charExpGain / 1750
 
 					ply:SetNWInt("playerMoney", balance - gunCost)
 					ply:SetNWInt("playerTotalMoneySpent", ply:GetNWInt("playerTotalMoneySpent") + gunCost)

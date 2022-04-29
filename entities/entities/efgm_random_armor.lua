@@ -18,8 +18,14 @@ end
 
 function ENT:Initialize()
 
-	local midArmor =	{"helmet_6b47", "helmet_6b47_2", "helmet_kiver", "helmet_lzsh", "helmet_psh97", "helmet_shpm", "helmet_untar", "vest_3m", "vest_6b5", "vest_6b23_1", "vest_bnti_kirasa", "vest_paca", "vest_untar", "vest_zhuk3"}
-	local highArmor =	{"helmet_achhc_black", "helmet_achhc_green","helmet_maska_1sch", "helmet_maska_1sch_killa", "helmet_opscore", "helmet_opscore_visor", "helmet_ulach", "helmet_zsh1_2m", "vest_6b13_1", "vest_6b13_2", "vest_6b13_m", "vest_6b23_2", "vest_6b43", "vest_a18", "vest_bnti_gzhel_k", "vest_iotv_gen4_full", "vest_m2", "vest_trooper", "vest_wartech_tv110", "vest_zhuk6"}
+	local midArmor =	{}
+	local highArmor =	{}
+
+	table.Add(midArmor, midVests)
+	table.Add(midArmor, midHelmets)
+
+	table.Add(highArmor, highVests)
+	table.Add(highArmor, highHelmets)
 
 	local armor
 

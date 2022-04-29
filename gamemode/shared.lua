@@ -339,15 +339,16 @@ RunConsoleCommand("hud_deathnotice_time", "0")
 
 --View Bobbing
 RunConsoleCommand("viewbob_crouch_enable", "1")
-RunConsoleCommand("viewbob_crouch_multiplier", "0.07")
+RunConsoleCommand("viewbob_crouch_multiplier", "0.070000")
+RunConsoleCommand("viewbob_damage_enable", "1")
+RunConsoleCommand("viewbob_damage_multiplier", "0.100000")
 RunConsoleCommand("viewbob_enable", "1")
 RunConsoleCommand("viewbob_idle_enable", "0")
-RunConsoleCommand("viewbob_damage_enable", "1")
+RunConsoleCommand("viewbob_idle_multiplier", "1.000000")
 RunConsoleCommand("viewbob_land_jump_enable", "1")
+RunConsoleCommand("viewbob_multiplie", "0.400000")
+RunConsoleCommand("viewbob_tools_enable", "0")
 RunConsoleCommand("viewbob_walk_enable", "0")
-
-RunConsoleCommand("viewbob_damage_enable", "1")
-RunConsoleCommand("viewbob_damage_multiplier", "0.10")
 
 RunConsoleCommand("suppression_viewpunch", "0")
 

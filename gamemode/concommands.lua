@@ -25,7 +25,10 @@ function buyEntity(ply, cmd, args)
 					ply:SetNWInt("playerTotalMoneySpent", ply:GetNWInt("playerTotalMoneySpent") + ent.Cost)
 					ply:SetNWInt("playerTotalMoneySpentItem", ply:GetNWInt("playerTotalMoneySpentItem") + ent.Cost)
 
-					ply:SetNWInt("charismaExperience", math.Round(ply:GetNWInt("charismaExperience") + ent.Cost / 7500), 2)
+					local charExpGain = (ply:GetNWInt("charismaExperience") + ent.Cost)
+					local charExp = charExpGain / 7500
+
+					ply:SetNWInt("charismaExperience", ply:GetNWInt("charismaExperience") + charExp)
 					checkForCharisma(ply)
 
 					ply:SetNWInt(ClassName .. "count", entCount + 1)
@@ -181,11 +184,14 @@ function buyGun(ply, cmd, args)
 
 			if (playerLvl >= levelReq) then
 				if (balance >= gunCost) then
+					local charExpGain = (ply:GetNWInt("charismaExperience") + gunCost)
+					local charExp = charExpGain / 7500
+
 					ply:SetNWInt("playerMoney", balance - gunCost)
 					ply:SetNWInt("playerTotalMoneySpent", ply:GetNWInt("playerTotalMoneySpent") + gunCost)
 					ply:SetNWInt("playerTotalMoneySpentWep", ply:GetNWInt("playerTotalMoneySpentWep") + gunCost)
 
-					ply:SetNWInt("charismaExperience", math.Round(ply:GetNWInt("charismaExperience") + gunCost / 7500), 2)
+					ply:SetNWInt("charismaExperience", ply:GetNWInt("charismaExperience") + charExp)
 
 					ply:Give(args[1])
 

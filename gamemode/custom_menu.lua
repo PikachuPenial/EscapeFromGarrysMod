@@ -511,7 +511,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.DrawRect(50, 400, 500, 30)
 
 			surface.SetTextPos(270, 400)
-			surface.DrawText(LocalPlayer():GetNWInt("charismaExperience") .. " / " .. charismaExpToLevel)
+			surface.DrawText(math.Round(LocalPlayer():GetNWInt("charismaExperience"), 2) .. " / " .. charismaExpToLevel)
 
 			--Covert Movement
 			surface.SetFont("DermaLarge")

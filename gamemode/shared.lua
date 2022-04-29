@@ -244,63 +244,63 @@ end
 if !ConVarExists("efgm_hidebinds") then CreateConVar( "efgm_hidebinds", "0", FCVAR_ARCHIVE, "Show or hide binds, while you are not in Raid",0,1 ) end
 
 --Disable the context menu.
-function GM:ContextMenuOpen()
-	return false
-end
+--function GM:ContextMenuOpen()
+--	return false
+--end
 
 -- Disable Spawn Menu and show the extract list when the bind is pressed.
-function GM:SpawnMenuEnabled()
-	return false
-end
+--function GM:SpawnMenuEnabled()
+--	return false
+--end
 
-function GM:SpawnMenuOpen()
-	RunConsoleCommand("efgm_extract_list")
-	return false
-end
+--function GM:SpawnMenuOpen()
+--	RunConsoleCommand("efgm_extract_list")
+--	return false
+--end
 
 -- Disabling console commands that allow prop/entity abuse.
-hook.Add( "PlayerGiveSWEP", "BlockPlayerSWEPs", function( ply, class, swep )
-	if (not ply:IsAdmin()) then
-		return false
-	end
-end )
+--hook.Add( "PlayerGiveSWEP", "BlockPlayerSWEPs", function( ply, class, swep )
+--	if (not ply:IsAdmin()) then
+--		return false
+--	end
+--end )
 
-function GM:PlayerSpawnEffect(ply)
-	return false
-end
+--function GM:PlayerSpawnEffect(ply)
+--	return false
+--end
 
-function GM:PlayerSpawnNPC(ply)
-	return false
-end
+--function GM:PlayerSpawnNPC(ply)
+--	return false
+--end
 
-function GM:PlayerSpawnObject(ply)
-	return false
-end
+--function GM:PlayerSpawnObject(ply)
+--	return false
+--end
 
-function GM:PlayerSpawnProp(ply)
-	return false
-end
+--function GM:PlayerSpawnProp(ply)
+--	return false
+--end
 
-function GM:PlayerSpawnRagdoll(ply)
-	return false
-end
+--function GM:PlayerSpawnRagdoll(ply)
+--	return false
+--end
 
-function GM:PlayerSpawnSENT(ply)
-	return false
-end
+--function GM:PlayerSpawnSENT(ply)
+--	return false
+--end
 
-function GM:PlayerSpawnSWEP(ply)
-	return false
-end
+--function GM:PlayerSpawnSWEP(ply)
+--	return false
+--end
 
-function GM:PlayerSpawnVehicle(ply)
-	return false
-end
+--function GM:PlayerSpawnVehicle(ply)
+--	return false
+--end
 
 -- Removing problematic console commmands.
 
-concommand.Remove("ent_create")
-concommand.Remove("gmod_spawnnpc")
+--concommand.Remove("ent_create")
+--concommand.Remove("gmod_spawnnpc")
 
 -- This is where the console commands are ran when a client joins a game running the gamemode.
 
@@ -346,7 +346,7 @@ RunConsoleCommand("viewbob_enable", "1")
 RunConsoleCommand("viewbob_idle_enable", "0")
 RunConsoleCommand("viewbob_idle_multiplier", "1.000000")
 RunConsoleCommand("viewbob_land_jump_enable", "1")
-RunConsoleCommand("viewbob_multiplie", "0.400000")
+RunConsoleCommand("viewbob_multiplier", "0.400000")
 RunConsoleCommand("viewbob_tools_enable", "0")
 RunConsoleCommand("viewbob_walk_enable", "0")
 

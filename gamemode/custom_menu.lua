@@ -83,7 +83,7 @@ function gameShopMenu(ply, cmd, args)
 		Menu = vgui.Create("DFrame")
 		Menu:SetSize(860, 1080)
 		Menu:Center()
-		Menu:SetTitle("Escape From Garry's Mod Menu")
+		Menu:SetTitle("Escape From Garry's Mod")
 		Menu:SetDraggable(false)
 		Menu:ShowCloseButton(true)
 		Menu:SetDeleteOnClose(false)
@@ -468,6 +468,62 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 	skillButton.DoClick = function()
 
+		local skillPanel = Menu:Add("SkillPanel")
+
+		local enduranceExpToLevel = (LocalPlayer():GetNWInt("charismaLevel") * 5)
+		local strengthExpToLevel = (LocalPlayer():GetNWInt("charismaLevel") * 5)
+		local charismaExpToLevel = (LocalPlayer():GetNWInt("charismaLevel") * 5)
+		local covertExpToLevel = (LocalPlayer():GetNWInt("charismaLevel") * 5)
+
+		skillPanel.Paint = function()
+			surface.SetDrawColor(50, 50, 50, 255)
+			surface.DrawRect(0, 0, skillPanel:GetWide(), skillPanel:GetTall())
+			surface.SetTextColor(255, 255, 255, 255)
+
+			--Endurance
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(50, 50)
+			surface.DrawText("Endurance : " .. " Level " .. LocalPlayer():GetNWInt("enduranceLevel"))
+
+			surface.SetDrawColor(100, 100, 100, 255)
+			surface.DrawRect(50, 100, 500, 30)
+
+			surface.SetTextPos(270, 100)
+			surface.DrawText(LocalPlayer():GetNWInt("enduranceExperience") .. " / " .. enduranceExpToLevel)
+
+			--Strength
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(50, 200)
+			surface.DrawText("Strength : " .. " Level " .. LocalPlayer():GetNWInt("strengthLevel"))
+
+			surface.SetDrawColor(100, 100, 100, 255)
+			surface.DrawRect(50, 250, 500, 30)
+
+			surface.SetTextPos(270, 250)
+			surface.DrawText(LocalPlayer():GetNWInt("strengthExperience") .. " / " .. strengthExpToLevel)
+
+			--Charisma
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(50, 350)
+			surface.DrawText("Charisma : " .. "  Level " .. LocalPlayer():GetNWInt("charismaLevel"))
+
+			surface.SetDrawColor(100, 100, 100, 255)
+			surface.DrawRect(50, 400, 500, 30)
+
+			surface.SetTextPos(270, 400)
+			surface.DrawText(LocalPlayer():GetNWInt("charismaExperience") .. " / " .. charismaExpToLevel)
+
+			--Covert Movement
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(50, 500)
+			surface.DrawText("Covert Movement : " .. " Level 1")
+
+			surface.SetDrawColor(100, 100, 100, 255)
+			surface.DrawRect(50, 550, 500, 30)
+
+			surface.SetTextPos(270, 550)
+			surface.DrawText(LocalPlayer():GetNWInt("enduranceExperience") .. " / " .. covertExpToLevel)
+		end
 	end
 
 	local taskButton = vgui.Create("DButton")
@@ -685,7 +741,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 					local icon = vgui.Create("SpawnIcon", weaponList)
 					icon:SetModel(v[1])
-				icon:SetToolTip(v[3] .. "\nCategory: " .. v[7] .. "\nRarity: " .. v[6] .. "\nSell Price: " .. math.Round(v[4] * sellPriceMultiplier, 0))
+					icon:SetToolTip(v[3] .. "\nCategory: " .. v[7] .. "\nRarity: " .. v[6] .. "\nSell Price: " .. math.Round(v[4] * sellPriceMultiplier, 0))
 
 					-- this lets players visually distinguish items they can sell
 
@@ -717,8 +773,8 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 							net.WriteTable(tempTable)
 							net.SendToServer()
 
-							surface.PlaySound( "common/wpn_select.wav" )
-							surface.PlaySound( "items/ammo_pickup.wav" )
+							surface.PlaySound("common/wpn_select.wav")
+							surface.PlaySound("items/ammo_pickup.wav")
 
 							-- draws the icon black after selling
 
@@ -729,10 +785,9 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 						elseif not clientPlayer:HasWeapon(v[2]) then
 
-							ply:PrintMessage(HUD_PRINTTALK, "You do not have a " .. v[3].."!")
+							ply:PrintMessage(HUD_PRINTTALK, "You do not have a " .. v[3] .. "!")
 
 							surface.PlaySound( "common/wpn_denyselect.wav" )
-
 						end
 					end
 				end
@@ -759,7 +814,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 					local icon = vgui.Create("SpawnIcon", weaponList)
 					icon:SetModel(v[1])
-					icon:SetToolTip(v[3] .. "\nCategory: " .. v[7] .. "\nRarity: " .. v[6] .. "\nCost: " .. v[4] .. "\nLevel Req: " .. v[5])
+					icon:SetToolTip(v[3] .. "\nCategory: " .. v[7] .. "\nRarity: " .. v[6] .. "\nCost: " .. math.Round(v[4] *  LocalPlayer():GetNWInt("charismaEffect"), 0) .. "\nLevel Req: " .. v[5])
 					weaponList:Add(icon)
 
 					icon.DoClick = function(icon)
@@ -820,7 +875,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 				surface.SetTextPos(200, 640)
 				surface.DrawText("Current stash limt : " .. LocalPlayer():GetNWInt("playerStashLimit") .. " / " .. "60")
-	
+
 			end
 
 			if (LocalPlayer():GetNWInt("stashMaxed") == 0) then
@@ -985,6 +1040,23 @@ end
 vgui.Register("TaskPanel", PANEL, "Panel")
 
 --End task panel
+
+--Skills Panel
+
+PANEL = {} --Creates empty panel
+
+function PANEL:Init() -- initializes the panel
+	self:SetSize(760, 1080)
+	self:SetPos(100, 25)
+end
+
+function PANEL:Paint(w, h)
+	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 255))
+end
+
+vgui.Register("SkillPanel", PANEL, "Panel")
+
+--End skills panel
 
 --Prestige Panel
 

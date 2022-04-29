@@ -47,6 +47,11 @@ function GM:PlayerSpawn(ply)
 	if (ply:GetNWInt("firstSpawn") == 0) then
 		ply:ConCommand("open_raid_summary_menu")
 	end
+
+	ply:SetNWInt("playerMoney", 1000000)
+	ply:SetNWInt("playerLvl", 32)
+
+	print(ply:GetNWInt("charismaExperience"))
 end
 
 function GM:PlayerInitialSpawn(ply)
@@ -218,61 +223,61 @@ function GM:PlayerInitialSpawn(ply)
 	-- Skills
 
 	-- Endurance
-	--if(ply:GetPData("enduranceLevel") == nil) then
-		--ply:SetNWInt("enduranceLevel", 1)
-	--else
-		--ply:SetNWInt("enduranceLevel", tonumber(ply:GetPData("enduranceLevel")))
-	--end
+	if (ply:GetPData("enduranceLevel") == nil) then
+		ply:SetNWInt("enduranceLevel", 1)
+	else
+		ply:SetNWInt("enduranceLevel", tonumber(ply:GetPData("enduranceLevel")))
+	end
 
-	--if(ply:GetPData("enduranceExperience") == nil) then
-		--ply:SetNWInt("enduranceExperience", 0)
-	--else
-		--ply:SetNWInt("enduranceExperience", tonumber(ply:GetPData("enduranceExperience")))
-	--end
+	if (ply:GetPData("enduranceExperience") == nil) then
+		ply:SetNWInt("enduranceExperience", 0)
+	else
+		ply:SetNWInt("enduranceExperience", tonumber(ply:GetPData("enduranceExperience")))
+	end
 
-	--if(ply:GetPData("enduranceEffect") == nil) then
-		--ply:SetNWInt("enduranceEffect", 0)
-	--else
-		--ply:SetNWInt("enduranceEffect", tonumber(ply:GetPData("enduranceEffect")))
-	--end
+	if (ply:GetPData("enduranceEffect") == nil) then
+		ply:SetNWInt("enduranceEffect", 0)
+	else
+		ply:SetNWInt("enduranceEffect", tonumber(ply:GetPData("enduranceEffect")))
+	end
 
 	-- Strength
-	--if(ply:GetPData("strengthLevel") == nil) then
-		--ply:SetNWInt("strengthLevel", 1)
-	--else
-		--ply:SetNWInt("strengthLevel", tonumber(ply:GetPData("strengthLevel")))
-	--end
+	if (ply:GetPData("strengthLevel") == nil) then
+		ply:SetNWInt("strengthLevel", 1)
+	else
+		ply:SetNWInt("strengthLevel", tonumber(ply:GetPData("strengthLevel")))
+	end
 
-	--if(ply:GetPData("strengthExperience") == nil) then
-		--ply:SetNWInt("strengthExperience", 0)
-	--else
-		--ply:SetNWInt("strengthExperience", tonumber(ply:GetPData("strengthExperience")))
-	--end
+	if (ply:GetPData("strengthExperience") == nil) then
+		ply:SetNWInt("strengthExperience", 0)
+	else
+		ply:SetNWInt("strengthExperience", tonumber(ply:GetPData("strengthExperience")))
+	end
 
-	--if(ply:GetPData("strengthEffect") == nil) then
-		--ply:SetNWInt("strengthEffect", 0)
-	--else
-		--ply:SetNWInt("strengthEffect", tonumber(ply:GetPData("strengthEffect")))
-	--end
+	if (ply:GetPData("strengthEffect") == nil) then
+		ply:SetNWInt("strengthEffect", 0)
+	else
+		ply:SetNWInt("strengthEffect", tonumber(ply:GetPData("strengthEffect")))
+	end
 
-	-- Charisma
-	--if(ply:GetPData("charismaLevel") == nil) then
-		--ply:SetNWInt("charismaLevel", 1)
-	--else
-		--ply:SetNWInt("charismaLevel", tonumber(ply:GetPData("charismaLevel")))
-	--end
+	--Charisma
+	if (ply:GetPData("charismaLevel") == nil) then
+		ply:SetNWInt("charismaLevel", 1)
+	else
+		ply:SetNWInt("charismaLevel", tonumber(ply:GetPData("charismaLevel")))
+	end
 
-	--if(ply:GetPData("charismaExperience") == nil) then
-		--ply:SetNWInt("charismaExperience", 0)
-	--else
-		--ply:SetNWInt("charismaExperience", tonumber(ply:GetPData("charismaExperience")))
-	--end
+	if (ply:GetPData("charismaExperience") == nil) then
+		ply:SetNWInt("charismaExperience", 0)
+	else
+		ply:SetNWInt("charismaExperience", tonumber(ply:GetPData("charismaExperience")))
+	end
 
-	--if(ply:GetPData("charismaEffect") == nil) then
-		--ply:SetNWInt("charismaEffect", 0)
-	--else
-		--ply:SetNWInt("charismaEffect", tonumber(ply:GetPData("charismaEffect")))
-	--end
+	if (ply:GetPData("charismaEffect") == nil) then
+		ply:SetNWInt("charismaEffect", 1)
+	else
+		ply:SetNWInt("charismaEffect", tonumber(ply:GetPData("charismaEffect")))
+	end
 end
 
 function GM:PlayerDeath(victim, inflictor, attacker)

@@ -24,6 +24,10 @@ function buyEntity(ply, cmd, args)
 					ply:SetNWInt("playerMoney", balance - ent.Cost)
 					ply:SetNWInt("playerTotalMoneySpent", ply:GetNWInt("playerTotalMoneySpent") + ent.Cost)
 					ply:SetNWInt("playerTotalMoneySpentItem", ply:GetNWInt("playerTotalMoneySpentItem") + ent.Cost)
+
+					ply:SetNWInt("charismaExperience", math.Round(ply:GetNWInt("charismaExperience") + ent.Cost / 7500), 2)
+					checkForCharisma(ply)
+
 					ply:SetNWInt(ClassName .. "count", entCount + 1)
 
 					return ent
@@ -167,16 +171,25 @@ function buyGun(ply, cmd, args)
 		if (args[1] == v[1]) then
 			local balance = (ply:GetNWInt("playerMoney"))
 			local playerLvl = ply:GetNWInt("playerLvl")
-			local gunCost = tonumber(v[2])
 			local levelReq = tonumber(v[3])
+
+			if (ply:GetNWInt("charismaEffect") == 1) then
+				gunCost = tonumber(v[2])
+			else
+				gunCost = math.Round(tonumber(v[2]) * ply:GetNWInt("charismaEffect"), 0)
+			end
 
 			if (playerLvl >= levelReq) then
 				if (balance >= gunCost) then
 					ply:SetNWInt("playerMoney", balance - gunCost)
 					ply:SetNWInt("playerTotalMoneySpent", ply:GetNWInt("playerTotalMoneySpent") + gunCost)
 					ply:SetNWInt("playerTotalMoneySpentWep", ply:GetNWInt("playerTotalMoneySpentWep") + gunCost)
+
+					ply:SetNWInt("charismaExperience", math.Round(ply:GetNWInt("charismaExperience") + gunCost / 7500), 2)
+
 					ply:Give(args[1])
-					ply:GiveAmmo(30, ply:GetWeapon(args[1]):GetPrimaryAmmoType(), false)
+
+					checkForCharisma(ply)
 				else
 					ply:PrintMessage(HUD_PRINTTALK, "You do not have enough roubles to purchase this item.")
 				end
@@ -189,6 +202,23 @@ function buyGun(ply, cmd, args)
 	end
 end
 concommand.Add("buy_gun", buyGun)
+
+function checkForCharisma(ply)
+	local charismaExpToLevel = (ply:GetNWInt("charismaLevel") * 5)
+	local charismaCurExp = ply:GetNWInt("charismaExperience")
+	local charismaCurLvl = ply:GetNWInt("charismaLevel")
+
+	if (charismaCurExp >= charismaExpToLevel) then
+		charismaCurExp = charismaCurExp - charismaExpToLevel
+
+		ply:SetNWInt("charismaExperience", charismaCurExp)
+		ply:SetNWInt("charismaLevel", charismaCurLvl + 1)
+
+		ply:SetNWInt("charismaEffect", ply:GetNWInt("charismaEffect") - 0.01)
+
+		ply:PrintMessage(HUD_PRINTCENTER, "You have leveled Charisma to level " .. (charismaCurLvl + 1) .. ".", Color(85, 0, 255, 255), 0)
+	end
+end
 
 function ResetIndividualProgress(ply, cmd, args)
 

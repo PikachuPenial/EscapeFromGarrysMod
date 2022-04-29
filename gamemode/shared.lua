@@ -144,6 +144,9 @@ function GM:Initialize()
 	tempWeaponsArray[115] = {"models/weapons/arccw/c_bo1_rpk.mdl", "arccw_bo1_rpk", "RPK-74", 19500, "15", "HIGH", "Heavy"}
 	tempWeaponsArray[116] = {"models/weapons/arccw/c_bo2_lsat.mdl", "arccw_bo2_lsat", "AAI LSAT LMG", 15005, "14", "MID", "Heavy"}
 	tempWeaponsArray[117] = {"models/weapons/arccw/c_bo2_smr.mdl", "arccw_bo2_smr", "SMI Saritch .308", 26500, "18", "HIGH", "Rifle"}
+	tempWeaponsArray[118] = {"models/weapons/arccw/c_mw2e_f2000.mdl", "arccw_mw2e_f2000", "FN F2000", 16900, "16", "MID", "Rifle"}
+	tempWeaponsArray[119] = {"models/weapons/arccw/c_mw3e_rsass.mdl", "arccw_mw3e_rsass", "RSASS", 22255, "17", "HIGH", "Rifle"}
+	tempWeaponsArray[120] = {"models/weapons/arccw/c_mw3e_p90.mdl", "arccw_mw3e_p90", "FN P90", 14900, "13", "MID", "SMG"}
 
 	local tempArmorArray = {}
 

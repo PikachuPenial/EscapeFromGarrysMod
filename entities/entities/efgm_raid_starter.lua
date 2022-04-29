@@ -527,7 +527,7 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 			if #player.GetHumans() <= 1 then
 
-				ply:PrintMessage(3, "Not enough players to start a raid!")
+				ply:PrintMessage(3, "Not enough players to spawn into/start a raid!")
 
 			elseif #player.GetHumans() > 1 and self.RaidStarted == false then
 

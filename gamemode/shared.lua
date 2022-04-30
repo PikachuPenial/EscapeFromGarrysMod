@@ -147,6 +147,11 @@ function GM:Initialize()
 	tempWeaponsArray[118] = {"models/weapons/arccw/c_mw2e_f2000.mdl", "arccw_mw2e_f2000", "FN F2000", 16900, "16", "MID", "Rifle"}
 	tempWeaponsArray[119] = {"models/weapons/arccw/c_mw3e_rsass.mdl", "arccw_mw3e_rsass", "RSASS", 22255, "17", "HIGH", "Rifle"}
 	tempWeaponsArray[120] = {"models/weapons/arccw/c_mw3e_p90.mdl", "arccw_mw3e_p90", "FN P90", 14900, "13", "MID", "SMG"}
+	tempWeaponsArray[121] = {"models/weapons/arccw/c_mw3e_mk14.mdl", "arccw_mw3e_mk14", "Mk 14 Mod 1", 19995, "15", "MID", "Rifle"}
+	tempWeaponsArray[122] = {"models/weapons/arccw/c_mw3e_l86.mdl", "arccw_mw3e_l86", "L86A2 LSW", 16555, "14", "MID", "Rifle"}
+	tempWeaponsArray[123] = {"models/weapons/arccw/c_mw3e_mk46.mdl", "arccw_mw3e_mk46", "FN M249 Para", 24000, "17", "HIGH", "Heavy"}
+	tempWeaponsArray[124] = {"models/weapons/arccw/c_mw3e_qbz97.mdl", "arccw_mw3e_qbz97", "QBZ-97", 15000, "13", "MID", "Rifle"}
+	tempWeaponsArray[125] = {"models/viper/mw/weapons/p320_arccw.mdl", "arccw_mw_p320", "SIG P320 RX", 4000, "3", "LOW", "Pistol"}
 
 	local tempArmorArray = {}
 
@@ -215,16 +220,14 @@ function GM:Initialize()
 
 	sellBlacklist[1] = {"arccw_go_knife_m9bayonet"}
 	sellBlacklist[2] = {"arccw_eft_1911"}
-	sellBlacklist[3] = {"arccw_mifl_fas2_g20"}
-	sellBlacklist[4] = {"arccw_mifl_fas2_p226"}
 	sellBlacklist[5] = {"arccw_waw_nambu"}
-	sellBlacklist[6] = {"arccw_go_nade_incendiary"}
-	sellBlacklist[7] = {"arccw_go_nade_frag"}
-	sellBlacklist[8] = {"arccw_go_nade_flash"}
-	sellBlacklist[9] = {"arccw_go_nade_smoke"}
-	sellBlacklist[10] = {"arccw_go_nade_molotov"}
-	sellBlacklist[11] = {"arccw_go_nade_knife"}
-	sellBlacklist[12] = {"arccw_waw_tt33"}
+	sellBlacklist[4] = {"arccw_waw_tt33"}
+	sellBlacklist[5] = {"arccw_go_nade_incendiary"}
+	sellBlacklist[6] = {"arccw_go_nade_frag"}
+	sellBlacklist[7] = {"arccw_go_nade_flash"}
+	sellBlacklist[8] = {"arccw_go_nade_smoke"}
+	sellBlacklist[9] = {"arccw_go_nade_molotov"}
+	sellBlacklist[10] = {"arccw_go_nade_knife"}
 
 	-- Temporary array created. This next section will sort the guns by cost, so guns higher to the top will hopefully be better. This is convenient.
 	-- The sort function takes the fourth value of all tempWeaponsArray indexes (the rouble count) and sorts by them from greatest to lowest.

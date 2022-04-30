@@ -273,6 +273,25 @@ function GM:PlayerInitialSpawn(ply)
 	else
 		ply:SetNWInt("charismaEffect", tonumber(ply:GetPData("charismaEffect")))
 	end
+
+	--Covert Movement
+	if (ply:GetPData("covertLevel") == nil) then
+		ply:SetNWInt("covertLevel", 1)
+	else
+		ply:SetNWInt("covertLevel", tonumber(ply:GetPData("covertLevel")))
+	end
+
+	if (ply:GetPData("covertExperience") == nil) then
+		ply:SetNWInt("covertExperience", 0)
+	else
+		ply:SetNWInt("covertExperience", tonumber(ply:GetPData("covertExperience")))
+	end
+
+	if (ply:GetPData("covertEffect") == nil) then
+		ply:SetNWInt("covertEffect", 1)
+	else
+		ply:SetNWInt("covertEffect", tonumber(ply:GetPData("covertEffect")))
+	end
 end
 
 function GM:PlayerDeath(victim, inflictor, attacker)
@@ -383,6 +402,7 @@ function GM:ShowSpare2(ply)
 end
 
 function GM:PlayerDisconnected(ply)
+	--Statistics
 	ply:SetPData("playerLvl", ply:GetNWInt("playerLvl"))
 	ply:SetPData("playerPrestige", ply:GetNWInt("playerPrestige"))
 	ply:SetPData("playerRoubleMulti", ply:GetNWInt("playerRoubleMulti"))
@@ -408,17 +428,27 @@ function GM:PlayerDisconnected(ply)
 	ply:SetPData("playerDistance", ply:GetNWInt("playerDistance"))
 	ply:SetPData("playerStashLevel", ply:GetNWInt("playerStashLevel"))
 	ply:SetPData("playerRoubleForStashUpgrade", ply:GetNWInt("playerRoubleForStashUpgrade"))
+	ply:SetPData("StashLimit", ply:GetNWInt("playerStashLimit"))
 	ply:SetPData("stashMaxed", ply:GetNWInt("stashMaxed"))
 
-	-- PData64
-
-	-- SetPData64(ply, "StashLimit", ply:GetNWInt("playerStashLimit"))
-
-	ply:SetPData("StashLimit", ply:GetNWInt("playerStashLimit"))
+	--Skills
+	ply:SetPData("enduranceLevel", ply:GetNWInt("enduranceLevel"))
+	ply:SetPData("enduranceExperience", ply:GetNWInt("enduranceExperience"))
+	ply:SetPData("enduranceEffect", ply:GetNWInt("enduranceEffect"))
+	ply:SetPData("strengthLevel", ply:GetNWInt("strengthLevel"))
+	ply:SetPData("strengthExperience", ply:GetNWInt("strengthExperience"))
+	ply:SetPData("strengthEffect", ply:GetNWInt("strengthEffect"))
+	ply:SetPData("charismaLevel", ply:GetNWInt("charismaLevel"))
+	ply:SetPData("charismaExperience", ply:GetNWInt("charismaExperience"))
+	ply:SetPData("charismaEffect", ply:GetNWInt("charismaEffect"))
+	ply:SetPData("covertLevel", ply:GetNWInt("covertLevel"))
+	ply:SetPData("covertExperience", ply:GetNWInt("covertExperience"))
+	ply:SetPData("covertEffect", ply:GetNWInt("covertEffect"))
 end
 
 function GM:ShutDown()
 	for k, v in pairs(player.GetHumans()) do
+		--Statistics
 		v:SetPData("playerLvl", v:GetNWInt("playerLvl"))
 		v:SetPData("playerPrestige", v:GetNWInt("playerPrestige"))
 		v:SetPData("playerRoubleMulti", v:GetNWInt("playerRoubleMulti"))
@@ -444,14 +474,22 @@ function GM:ShutDown()
 		v:SetPData("playerDistance", v:GetNWInt("playerDistance"))
 		v:SetPData("playerStashLevel", v:GetNWInt("playerStashLevel"))
 		v:SetPData("playerRoubleForStashUpgrade", v:GetNWInt("playerRoubleForStashUpgrade"))
+		v:SetPData("StashLimit", v:GetNWInt("playerStashLimit"))
 		v:SetPData("stashMaxed", v:GetNWInt("stashMaxed"))
 
-		-- PData64
-
-		-- SetPData64(v, "StashLimit", v:GetNWInt("playerStashLimit"))
-
-		v:SetPData("StashLimit", v:GetNWInt("playerStashLimit"))
-
+		--Skills
+		v:SetPData("enduranceLevel", v:GetNWInt("enduranceLevel"))
+		v:SetPData("enduranceExperience", v:GetNWInt("enduranceExperience"))
+		v:SetPData("enduranceEffect", v:GetNWInt("enduranceEffect"))
+		v:SetPData("strengthLevel", v:GetNWInt("strengthLevel"))
+		v:SetPData("strengthExperience", v:GetNWInt("strengthExperience"))
+		v:SetPData("strengthEffect", v:GetNWInt("strengthEffect"))
+		v:SetPData("charismaLevel", v:GetNWInt("charismaLevel"))
+		v:SetPData("charismaExperience", v:GetNWInt("charismaExperience"))
+		v:SetPData("charismaEffect", v:GetNWInt("charismaEffect"))
+		v:SetPData("covertLevel", v:GetNWInt("covertLevel"))
+		v:SetPData("covertExperience", v:GetNWInt("covertExperience"))
+		v:SetPData("covertEffect", v:GetNWInt("covertEffect"))
 	end
 end
 

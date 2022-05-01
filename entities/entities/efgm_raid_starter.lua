@@ -525,11 +525,11 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 		if self.RaidStarted == false then
 
-			if #player.GetHumans() <= 0 then
+			if #player.GetHumans() <= 1 then
 
 				ply:PrintMessage(3, "Not enough players to spawn into/start a raid!")
 
-			elseif #player.GetHumans() > 0 and self.RaidStarted == false then
+			elseif #player.GetHumans() > 1 and self.RaidStarted == false then
 
 				self:InitializeRaid()
 				hook.Call( "RaidStart", nil )

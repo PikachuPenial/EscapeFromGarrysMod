@@ -214,23 +214,6 @@ function buyGun(ply, cmd, args)
 end
 concommand.Add("buy_gun", buyGun)
 
-function checkForCharisma(ply)
-	local charismaExpToLevel = (ply:GetNWInt("charismaLevel") * 5)
-	local charismaCurExp = ply:GetNWInt("charismaExperience")
-	local charismaCurLvl = ply:GetNWInt("charismaLevel")
-
-	if (charismaCurExp >= charismaExpToLevel) then
-		charismaCurExp = charismaCurExp - charismaExpToLevel
-
-		ply:SetNWInt("charismaExperience", charismaCurExp)
-		ply:SetNWInt("charismaLevel", charismaCurLvl + 1)
-
-		ply:SetNWInt("charismaEffect", ply:GetNWInt("charismaEffect") - 0.01)
-
-		ply:PrintMessage(HUD_PRINTCENTER, "You have leveled Charisma to level " .. (charismaCurLvl + 1) .. ".", Color(85, 0, 255, 255), 0)
-	end
-end
-
 function ResetIndividualProgress(ply, cmd, args)
 
 	ply:SetNWInt("playerLvl", 1)

@@ -11,6 +11,7 @@ include("concommands.lua")
 include("init_spawns.lua")
 include("sv_stash.lua")
 include("sv_tasks.lua")
+include("sv_skills.lua")
 include("sv_party_system.lua")
 
 -- Better PData
@@ -20,16 +21,22 @@ include("sv_pdata.lua")
 --Player stats.
 
 function GM:PlayerSpawn(ply)
+	local walkSpeed = ply:GetNWInt("enduranceEffect") / 2.10
+	local runSpeed = ply:GetNWInt("enduranceEffect") / 1.38
+	local jumpHeight = ply:GetNWInt("strengthEffect") / 1.70
+	local climbSpeed = ply:GetNWInt("strengthEffect")
+	local crouchSpeed = ply:GetNWInt("covertEffect") / 1.65
+
 	ply:SetGravity(.72)
 	ply:SetMaxHealth(100)
-	ply:SetRunSpeed(215)
-	ply:SetWalkSpeed(130)
-	ply:SetJumpPower(125)
+	ply:SetRunSpeed(205 + runSpeed)
+	ply:SetWalkSpeed(125 + walkSpeed)
+	ply:SetJumpPower(125 + jumpHeight)
 
-	ply:SetLadderClimbSpeed(55)
+	ply:SetLadderClimbSpeed(55 + climbSpeed)
 	ply:SetSlowWalkSpeed(78)
 
-	ply:SetCrouchedWalkSpeed(0.45)
+	ply:SetCrouchedWalkSpeed(0.45 + crouchSpeed)
 	ply:SetDuckSpeed(0.53)
 	ply:SetUnDuckSpeed(0.53)
 
@@ -215,6 +222,12 @@ function GM:PlayerInitialSpawn(ply)
 	ply:SetNWInt("raidSuccess", 1)
 	ply:SetNWInt("firstSpawn", 1)
 
+	-- Skills Fatigue
+
+	ply:SetNWInt("enduranceFatigue", 0)
+	ply:SetNWInt("strengthFatigue", 0)
+	ply:SetNWInt("covertFatigue", 0)
+
 	-- Skills
 
 	-- Endurance
@@ -288,7 +301,7 @@ function GM:PlayerInitialSpawn(ply)
 	end
 
 	if (ply:GetPData("covertEffect") == nil) then
-		ply:SetNWInt("covertEffect", 1)
+		ply:SetNWInt("covertEffect", 0)
 	else
 		ply:SetNWInt("covertEffect", tonumber(ply:GetPData("covertEffect")))
 	end

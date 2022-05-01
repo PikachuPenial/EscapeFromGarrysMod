@@ -470,10 +470,10 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		local skillPanel = Menu:Add("SkillPanel")
 
-		local enduranceExpToLevel = (LocalPlayer():GetNWInt("charismaLevel") * 5)
-		local strengthExpToLevel = (LocalPlayer():GetNWInt("charismaLevel") * 5)
+		local enduranceExpToLevel = (LocalPlayer():GetNWInt("enduranceLevel") * 3)
+		local strengthExpToLevel = (LocalPlayer():GetNWInt("strengthLevel") * 2)
 		local charismaExpToLevel = (LocalPlayer():GetNWInt("charismaLevel") * 5)
-		local covertExpToLevel = (LocalPlayer():GetNWInt("charismaLevel") * 5)
+		local covertExpToLevel = (LocalPlayer():GetNWInt("covertLevel") * 2)
 
 		skillPanel.Paint = function()
 			surface.SetDrawColor(50, 50, 50, 255)
@@ -488,8 +488,8 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.SetDrawColor(100, 100, 100, 255)
 			surface.DrawRect(50, 100, 500, 30)
 
-			surface.SetTextPos(270, 100)
-			surface.DrawText(LocalPlayer():GetNWInt("enduranceExperience") .. " / " .. enduranceExpToLevel)
+			surface.SetTextPos(260, 100)
+			surface.DrawText(math.Round(LocalPlayer():GetNWInt("enduranceExperience"), 2) .. " / " .. enduranceExpToLevel)
 
 			--Strength
 			surface.SetFont("DermaLarge")
@@ -499,8 +499,8 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.SetDrawColor(100, 100, 100, 255)
 			surface.DrawRect(50, 250, 500, 30)
 
-			surface.SetTextPos(270, 250)
-			surface.DrawText(LocalPlayer():GetNWInt("strengthExperience") .. " / " .. strengthExpToLevel)
+			surface.SetTextPos(260, 250)
+			surface.DrawText(math.Round(LocalPlayer():GetNWInt("strengthExperience"), 2) .. " / " .. strengthExpToLevel)
 
 			--Charisma
 			surface.SetFont("DermaLarge")
@@ -510,19 +510,19 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.SetDrawColor(100, 100, 100, 255)
 			surface.DrawRect(50, 400, 500, 30)
 
-			surface.SetTextPos(270, 400)
+			surface.SetTextPos(260, 400)
 			surface.DrawText(math.Round(LocalPlayer():GetNWInt("charismaExperience"), 2) .. " / " .. charismaExpToLevel)
 
 			--Covert Movement
 			surface.SetFont("DermaLarge")
 			surface.SetTextPos(50, 500)
-			surface.DrawText("Covert Movement : " .. " Level 1")
+			surface.DrawText("Covert Movement : " .. "  Level " .. LocalPlayer():GetNWInt("covertLevel"))
 
 			surface.SetDrawColor(100, 100, 100, 255)
 			surface.DrawRect(50, 550, 500, 30)
 
-			surface.SetTextPos(270, 550)
-			surface.DrawText(LocalPlayer():GetNWInt("enduranceExperience") .. " / " .. covertExpToLevel)
+			surface.SetTextPos(260, 550)
+			surface.DrawText(math.Round(LocalPlayer():GetNWInt("covertExperience"), 2) .. " / " .. covertExpToLevel)
 		end
 	end
 
@@ -1051,7 +1051,7 @@ function PANEL:Init() -- initializes the panel
 end
 
 function PANEL:Paint(w, h)
-	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 255))
+	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 0))
 end
 
 vgui.Register("SkillPanel", PANEL, "Panel")

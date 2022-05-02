@@ -196,11 +196,12 @@ function buyGun(ply, cmd, args)
 					ply:SetNWInt("playerTotalMoneySpent", ply:GetNWInt("playerTotalMoneySpent") + gunCost)
 					ply:SetNWInt("playerTotalMoneySpentWep", ply:GetNWInt("playerTotalMoneySpentWep") + gunCost)
 
-					ply:SetNWInt("charismaExperience", ply:GetNWInt("charismaExperience") + charExp)
+					if (v:GetNWInt("charismaLevel") < 40) then
+						ply:SetNWInt("charismaExperience", ply:GetNWInt("charismaExperience") + charExp)
+						checkForCharisma(ply)
+					end
 
 					ply:Give(args[1])
-
-					checkForCharisma(ply)
 				else
 					ply:PrintMessage(HUD_PRINTTALK, "You do not have enough roubles to purchase this item.")
 				end

@@ -60,16 +60,17 @@ function ItemSell(ply, weapon, value, weaponName)
 		return
 
 	elseif ply:HasWeapon(weapon) then
+		local charExpGain = (ply:GetNWInt("charismaExperience") + value)
+		local charExp = charExpGain / 1750
 
 		ply:SetNWInt("playerMoney", ply:GetNWInt("playerMoney") + value)
 		ply:SetNWInt("playerTotalEarned", ply:GetNWInt("playerTotalEarned") + value)
 		ply:SetNWInt("playerTotalEarnedSell", ply:GetNWInt("playerTotalEarnedSell") + value)
 
-		local charExpGain = (ply:GetNWInt("charismaExperience") + value)
-		local charExp = charExpGain / 1750
-
-		ply:SetNWInt("charismaExperience", ply:GetNWInt("charismaExperience") + charExp)
-		checkForCharisma(ply)
+		if (ply:GetNWInt("charismaLevel") < 40) then
+			ply:SetNWInt("charismaExperience", ply:GetNWInt("charismaExperience") + charExp)
+			checkForCharisma(ply)
+		end
 
 		ply:StripWeapon(weapon)
 

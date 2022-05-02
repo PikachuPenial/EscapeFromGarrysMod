@@ -470,12 +470,36 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		local skillPanel = Menu:Add("SkillPanel")
 
-		local enduranceExpToLevel = (LocalPlayer():GetNWInt("enduranceLevel") * 3)
-		local strengthExpToLevel = (LocalPlayer():GetNWInt("strengthLevel") * 2)
-		local charismaExpToLevel = (LocalPlayer():GetNWInt("charismaLevel") * 5)
-		local covertExpToLevel = (LocalPlayer():GetNWInt("covertLevel") * 2)
-
 		skillPanel.Paint = function()
+			local enduranceExpToLevel = (LocalPlayer():GetNWInt("enduranceLevel") * 3)
+			local strengthExpToLevel = (LocalPlayer():GetNWInt("strengthLevel") * 2)
+			local charismaExpToLevel = (LocalPlayer():GetNWInt("charismaLevel") * 5)
+			local covertExpToLevel = (LocalPlayer():GetNWInt("covertLevel") * 2)
+
+			if (LocalPlayer():GetNWInt("enduranceLevel") == 40) then
+				enduranceProgressText = "Maxed"
+			else
+				enduranceProgressText = math.Round(LocalPlayer():GetNWInt("enduranceExperience"), 2) .. " / " .. enduranceExpToLevel
+			end
+
+			if (LocalPlayer():GetNWInt("strengthLevel") == 30) then
+				strengthProgressText = "Maxed"
+			else
+				strengthProgressText = math.Round(LocalPlayer():GetNWInt("strengthExperience"), 2) .. " / " .. strengthExpToLevel
+			end
+
+			if (LocalPlayer():GetNWInt("charismaLevel") == 40) then
+				charismaProgressText = "Maxed"
+			else
+				charismaProgressText = math.Round(LocalPlayer():GetNWInt("charismaExperience"), 2) .. " / " .. charismaExpToLevel
+			end
+
+			if (LocalPlayer():GetNWInt("covertLevel") == 20) then
+				covertProgressText = "Maxed"
+			else
+				covertProgressText = math.Round(LocalPlayer():GetNWInt("covertExperience"), 2) .. " / " .. covertExpToLevel
+			end
+
 			surface.SetDrawColor(50, 50, 50, 255)
 			surface.DrawRect(0, 0, skillPanel:GetWide(), skillPanel:GetTall())
 			surface.SetTextColor(255, 255, 255, 255)
@@ -488,8 +512,11 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.SetDrawColor(100, 100, 100, 255)
 			surface.DrawRect(50, 100, 500, 30)
 
+			surface.SetDrawColor(0, 255, 50, 255)
+			surface.DrawRect(51, 102.5, 500 * (LocalPlayer():GetNWInt("enduranceExperience") / enduranceExpToLevel), 25)
+
 			surface.SetTextPos(260, 100)
-			surface.DrawText(math.Round(LocalPlayer():GetNWInt("enduranceExperience"), 2) .. " / " .. enduranceExpToLevel)
+			surface.DrawText(enduranceProgressText)
 
 			--Strength
 			surface.SetFont("DermaLarge")
@@ -499,8 +526,11 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.SetDrawColor(100, 100, 100, 255)
 			surface.DrawRect(50, 250, 500, 30)
 
+			surface.SetDrawColor(0, 255, 50, 255)
+			surface.DrawRect(51, 252.5, 500 * (LocalPlayer():GetNWInt("strengthExperience") / strengthExpToLevel), 25)
+
 			surface.SetTextPos(260, 250)
-			surface.DrawText(math.Round(LocalPlayer():GetNWInt("strengthExperience"), 2) .. " / " .. strengthExpToLevel)
+			surface.DrawText(strengthProgressText)
 
 			--Charisma
 			surface.SetFont("DermaLarge")
@@ -510,8 +540,11 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.SetDrawColor(100, 100, 100, 255)
 			surface.DrawRect(50, 400, 500, 30)
 
+			surface.SetDrawColor(0, 255, 50, 255)
+			surface.DrawRect(51, 402.5, 500 * (LocalPlayer():GetNWInt("charismaExperience") / charismaExpToLevel), 25)
+
 			surface.SetTextPos(260, 400)
-			surface.DrawText(math.Round(LocalPlayer():GetNWInt("charismaExperience"), 2) .. " / " .. charismaExpToLevel)
+			surface.DrawText(charismaProgressText)
 
 			--Covert Movement
 			surface.SetFont("DermaLarge")
@@ -521,8 +554,11 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.SetDrawColor(100, 100, 100, 255)
 			surface.DrawRect(50, 550, 500, 30)
 
+			surface.SetDrawColor(0, 255, 50, 255)
+			surface.DrawRect(51, 552.5, 500 * (LocalPlayer():GetNWInt("covertExperience") / covertExpToLevel), 25)
+
 			surface.SetTextPos(260, 550)
-			surface.DrawText(math.Round(LocalPlayer():GetNWInt("covertExperience"), 2) .. " / " .. covertExpToLevel)
+			surface.DrawText(covertProgressText)
 		end
 	end
 

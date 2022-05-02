@@ -72,13 +72,13 @@ end
 hook.Add("Initialize", "EnduranceLoop", function()
 	timer.Create("EnduranceSkillLoop", 1, 0, function()
 		for k, v in pairs(player.GetHumans()) do
-			if v:GetNWBool("inRaid") == true and v:IsSprinting() == true and (v:GetNWInt("enduranceFatigue") < 240) then
+			if v:GetNWBool("inRaid") == true and v:IsSprinting() == true and (v:GetNWInt("enduranceFatigue") < 360) and (v:GetNWInt("enduranceLevel") < 40) then
 				local enduranceExpGained = math.random(3, 5) / 100
 
 				v:SetNWInt("enduranceExperience", v:GetNWInt("enduranceExperience") + enduranceExpGained)
 				v:SetNWInt("enduranceFatigue", v:GetNWInt("enduranceFatigue") + 1)
 				checkForEndurance(v)
-			elseif v:GetNWBool("inRaid") == true and v:IsSprinting() == true then
+			elseif v:GetNWBool("inRaid") == true and v:IsSprinting() == true and (v:GetNWInt("enduranceLevel") < 40) then
 				local enduranceExpGained = math.random(1, 3) / 100
 
 				v:SetNWInt("enduranceExperience", v:GetNWInt("enduranceExperience") + enduranceExpGained)
@@ -96,13 +96,13 @@ end)
 hook.Add("Initialize", "StrengthLoop", function()
 	timer.Create("StrengthSkillLoop", 1, 0, function()
 		for k, v in pairs(player.GetHumans()) do
-			if v:GetNWBool("inRaid") == true and v:IsOnGround() == false and (v:GetNWInt("strengthFatigue") < 50) then
+			if v:GetNWBool("inRaid") == true and v:IsOnGround() == false and (v:GetNWInt("strengthFatigue") < 90) and (v:GetNWInt("strengthLevel") < 30) then
 				local strengthExpGained = math.random(4, 6) / 100
 
 				v:SetNWInt("strengthExperience", v:GetNWInt("strengthExperience") + strengthExpGained)
 				v:SetNWInt("strengthFatigue", v:GetNWInt("strengthFatigue") + 1)
 				checkForStrength(v)
-			elseif v:GetNWBool("inRaid") == true and v:IsOnGround() == false then
+			elseif v:GetNWBool("inRaid") == true and v:IsOnGround() == false and (v:GetNWInt("strengthLevel") < 30) then
 				local strengthExpGained = math.random(2, 4) / 100
 
 				v:SetNWInt("strengthExperience", v:GetNWInt("strengthExperience") + strengthExpGained)
@@ -120,13 +120,13 @@ end)
 hook.Add("Initialize", "CovertLoop", function()
 	timer.Create("CovertSkillLoop", 1, 0, function()
 		for k, v in pairs(player.GetHumans()) do
-			if v:GetNWBool("inRaid") == true and v:Crouching() == true and (v:GetNWInt("covertFatigue") < 120) then
+			if v:GetNWBool("inRaid") == true and v:Crouching() == true and (v:GetNWInt("covertFatigue") < 180) and (v:GetNWInt("covertLevel") < 20) then
 				local covertExpGained = math.random(3, 4) / 100
 
 				v:SetNWInt("covertExperience", v:GetNWInt("covertExperience") + covertExpGained)
 				v:SetNWInt("covertFatigue", v:GetNWInt("covertFatigue") + 1)
 				checkForCovert(v)
-			elseif v:GetNWBool("inRaid") == true and v:Crouching() == true then
+			elseif v:GetNWBool("inRaid") == true and v:Crouching() == true and (v:GetNWInt("covertLevel") < 20) then
 				local covertExpGained = math.random(1, 2) / 100
 
 				v:SetNWInt("covertExperience", v:GetNWInt("covertExperience") + covertExpGained)

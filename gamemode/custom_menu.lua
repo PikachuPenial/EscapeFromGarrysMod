@@ -559,6 +559,22 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 			surface.SetTextPos(260, 550)
 			surface.DrawText(covertProgressText)
+
+			--Text below the skill progression stuffs
+
+			surface.SetTextColor(255, 255, 255, 255)
+
+			surface.SetTextPos(50, 140)
+			surface.DrawText("Increases your walking and running speed.")
+
+			surface.SetTextPos(50, 290)
+			surface.DrawText("Increases your jump height.")
+
+			surface.SetTextPos(50, 440)
+			surface.DrawText("Decreases the prices of items in the shop.")
+
+			surface.SetTextPos(50, 590)
+			surface.DrawText("Increases your crouch walking speed.")
 		end
 	end
 

@@ -34,6 +34,14 @@ function HUD()
 
 	hudInRaid = client:GetNWBool("inRaid")
 
+-- Team Hud
+
+	if client:GetNWString("playerTeam") != "" then
+
+		draw.SimpleText("Team: " .. client:GetNWString("playerTeam"), "DermaLarge", ScrW() - 10, 10, white, 2, 2)
+
+	end
+
 --Gun Hud
 
 	if (client:GetActiveWeapon():IsValid()) and (client:GetActiveWeapon():GetPrintName() != nil) then

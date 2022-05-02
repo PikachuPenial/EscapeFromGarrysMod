@@ -451,29 +451,29 @@ function ENT:IndividualSpawn(ply, class, raidHasStarted)
 
 end
 
--- function ENT:PartySpawn(players, class)
+function ENT:PartySpawn(players, class)
 
--- 	local randomSpawnTable = self:DetermineSpawnTable(class, true)
+	local randomSpawnTable = self:DetermineSpawnTable(class, true)
 
--- 	local randomSpawn = randomSpawnTable[math.random(#randomSpawnTable)]
+	local randomSpawn = randomSpawnTable[math.random(#randomSpawnTable)]
 
--- 	local spawnVectors = randomSpawn.TeamSpawnVectors
+	local spawnVectors = randomSpawn.TeamSpawnVectors
 
--- 	for k, v in pairs(players) do
+	for k, v in pairs(players) do
 
--- 		if v:GetNWBool("inRaid") == false then
+		if v:GetNWBool("inRaid") == false then
 
--- 			local spawnInt = math.random(#spawnVectors)
+			local spawnInt = math.random(#spawnVectors)
 
--- 			SpawnPlayer(v, randomSpawn.SpawnGroup, class, spawnVectors[spawnInt], randomSpawn:GetAngles())
+			SpawnPlayer(v, randomSpawn.SpawnGroup, class, spawnVectors[spawnInt], randomSpawn:GetAngles())
 
--- 			table.remove(spawnVectors, spawnInt)
+			table.remove(spawnVectors, spawnInt)
 
--- 		end
+		end
 
--- 	end
+	end
 
--- end
+end
 
 hook.Add("PlayerDisconnected", "PlayerLeave", function(ply) RemoveFromTable(ply) end)
 
@@ -525,11 +525,15 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 		if self.RaidStarted == false then
 
-			if #player.GetHumans() <= 1 then
+			if #player.GetHumans() <= 0 then
 
 				ply:PrintMessage(3, "Not enough players to spawn into/start a raid!")
 
-			elseif #player.GetHumans() > 1 and self.RaidStarted == false then
+			elseif ply:GetNWBool("teamLeader") == false then
+
+				ply:PrintMessage(3, "You are not the party leader!")
+
+			elseif #player.GetHumans() > 0 and self.RaidStarted == false and ply:GetNWBool("teamLeader") == true then
 
 				self:InitializeRaid()
 				hook.Call( "RaidStart", nil )
@@ -538,15 +542,19 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 		end
 
-		if ply:GetNWString("playerTeam") == "" then
-
-			-- team logic eventually
-
-		end
-
 		if self.RaidStarted == true then
 
-			self:IndividualSpawn(ply, "PMC", false)
+			if ply:GetNWBool("teamLeader") == false then ply:PrintMessage( HUD_PRINTTALK, "You are not a party leader!" ) return end
+
+			if ply:GetNWString("playerTeam") != "" then
+
+				self:PartySpawn( GetAllFromParty( ply:GetNWString( "playerTeam" ) ), "PMC")
+
+			elseif ply:GetNWString("playerTeam") == "" then
+
+				self:IndividualSpawn(ply, "PMC", false)
+
+			end
 
 		end
 

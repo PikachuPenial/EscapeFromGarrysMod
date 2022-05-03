@@ -1543,3 +1543,151 @@ function MenuInit()
 
 	end
 end
+
+local teamMenuFrame
+
+net.Receive("TeamMenu",function (len, ply)
+
+	CustomTeamMenu()
+
+	DrawMenu()
+
+end)
+
+function CustomTeamMenu()
+
+	-- Constants for easy use
+
+	local blackColor = 		Color(10, 10, 10, 255)
+	local whiteColor = 		Color(250, 250, 250, 255)
+
+	local primaryColor =	Color(30, 30, 30, 255)
+	local secondaryColor =	Color(100, 100, 100, 255)
+
+	local width =			1200
+	local height =			1000
+
+	local margin = 			10
+
+	-- Basic menu shit
+
+	teamMenuFrame = vgui.Create( "DFrame" )
+	teamMenuFrame:SetPos( (ScrW() / 2) - (width / 2), (ScrH() / 2) - (height / 2) ) 
+	teamMenuFrame:SetSize( width, height ) 
+	teamMenuFrame:SetTitle( "Team Menu" ) 
+	teamMenuFrame:SetVisible( true ) 
+	teamMenuFrame:SetDraggable( false ) 
+	teamMenuFrame:ShowCloseButton( true ) 
+	teamMenuFrame:MakePopup()
+
+	-- This is in a function so refreshing works
+
+	function DrawMenu()
+
+		teamMenuFrame.Paint = function(self, w, h)
+			draw.RoundedBox( 0, 0, 0, w, h, blackColor )
+		end
+	
+		local menuPanel = vgui.Create( "DPanel", teamMenuFrame )
+		menuPanel:Dock( BOTTOM )
+		menuPanel:SetSize(0, height - 40)
+	
+		menuPanel.Paint = function(self, w, h)
+	
+			draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+	
+		end
+	
+		-- Member Panel (View your teammates and their statuses)
+	
+		local teamMemberPanel = vgui.Create( "DPanel", menuPanel )
+		teamMemberPanel:Dock( FILL )
+		teamMemberPanel:DockMargin( margin, margin, margin, margin )
+	
+		teamMemberPanel.Paint = function(self, w, h)
+			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+		end
+	
+		-- Invite Panel (View your invites)
+	
+		local teamInvitePanel = vgui.Create( "DPanel", menuPanel )
+		teamInvitePanel:Dock( RIGHT )
+		teamInvitePanel:SetSize( 200, 0 )
+		teamInvitePanel:DockMargin( margin, margin, margin, margin )
+	
+		teamInvitePanel.Paint = function(self, w, h)
+			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+		end
+	
+		-- Browser Panel (View available teams)
+	
+		local teamBrowserPanel = vgui.Create( "DPanel", menuPanel )
+		teamBrowserPanel:Dock( LEFT )
+		teamBrowserPanel:SetSize(300, 0 )
+		teamBrowserPanel:DockMargin( margin, margin, margin, margin )
+	
+		teamBrowserPanel.Paint = function(self, w, h)
+			draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+		end
+
+		-- Search Panel (Search for teams)
+
+		local searchPanel = vgui.Create( "DPanel", teamBrowserPanel )
+		searchPanel:Dock( TOP )
+		searchPanel:SetSize( 0, 40 )
+		searchPanel:DockMargin( margin, margin, margin, margin )
+	
+		searchPanel.Paint = function(self, w, h)
+			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+		end
+		
+		local searchEntry = vgui.Create( "DTextEntry", searchPanel )
+		searchEntry:Dock( FILL )
+		searchEntry:SetPlaceholderText( "Search Teams..." )
+		
+		-- Team Display Panel (Shows the teams you can join)
+
+		local teamDisplayPanel = vgui.Create( "DPanel", teamBrowserPanel )
+		teamDisplayPanel:Dock( FILL )
+		teamDisplayPanel:SetSize( 0, 250 )
+		teamDisplayPanel:DockMargin( margin, margin, margin, margin )
+	
+		teamDisplayPanel.Paint = function(self, w, h)
+			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+		end
+
+		local teamDisplayScroller = vgui.Create( "DScrollPanel", teamDisplayPanel )
+		teamDisplayScroller:Dock( FILL )
+
+		for i = 0, 12 do
+
+			local members = math.random( 2, 5 )
+
+			local teamExamplePanel = vgui.Create( "DPanel", teamDisplayScroller )
+			teamExamplePanel:Dock( TOP )
+			teamExamplePanel:DockMargin(5, 5, 5, 5)
+			teamExamplePanel:SetSize( 0, 70 )
+
+			teamExamplePanel.Paint = function(self, w, h)
+				draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+				draw.SimpleText("Team #" .. i, "DermaLarge", 5, 5, whiteColor)
+				draw.SimpleText(members .. " Members", "DermaDefault", w - 5, 5, whiteColor, 2)
+			end
+
+			local joinTeamButton = vgui.Create( "DButton", teamExamplePanel )
+			joinTeamButton:Dock( BOTTOM )
+			joinTeamButton:DockMargin( 5, 5, 5, 5 )
+			joinTeamButton:SetSize( 0, 25 )
+			joinTeamButton:SetText("Join Team #" .. i)
+
+			joinTeamButton.DoClick = function(teamExamplePanel)
+
+				print("You joined the team!")
+
+			end
+
+		end
+
+	end
+
+end

@@ -403,6 +403,7 @@ function checkForLevel(ply)
 end
 
 util.AddNetworkString("MenuInRaid")
+util.AddNetworkString("TeamMenu")
 
 function GM:ShowSpare2(ply)
 
@@ -411,6 +412,15 @@ function GM:ShowSpare2(ply)
 	net.Send(ply)
 
 	ply:ConCommand("open_game_menu")
+
+end
+
+function GM:ShowTeam(ply)
+
+	print("opening team menu")
+
+	net.Start("TeamMenu")
+	net.Send(ply)
 
 end
 

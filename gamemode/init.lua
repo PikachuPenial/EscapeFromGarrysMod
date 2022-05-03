@@ -1,10 +1,10 @@
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
-AddCSLuaFile("testhud.lua")
+AddCSLuaFile("cl_hud.lua")
 AddCSLuaFile("custom_menu.lua")
 AddCSLuaFile("map_menu.lua")
 AddCSLuaFile("raid_summary_menu.lua")
-AddCSLuaFile("custom_scoreboard.lua")
+AddCSLuaFile("cl_scoreboard.lua")
 
 include("shared.lua")
 include("concommands.lua")
@@ -13,9 +13,6 @@ include("sv_stash.lua")
 include("sv_tasks.lua")
 include("sv_skills.lua")
 include("sv_party_system.lua")
-
--- Better PData
-
 include("sv_pdata.lua")
 
 --Player stats.
@@ -58,20 +55,17 @@ end
 
 function GM:PlayerInitialSpawn(ply)
 
-	-- In Raid Checks
-
+	--In Raid Checks
 	ply:SetNWBool("inRaid", false)
 
-	-- Stash Limiting
-
+	--Stash Limiting
 	if ply:GetPData("StashLimit") == nil then
 		ply:SetNWInt("playerStashLimit", 6)
 	else
 		ply:SetNWInt("playerStashLimit", ply:GetPData("StashLimit"))
 	end
 
-	-- Stash Leveling
-
+	--Stash Leveling
 	if (ply:GetPData("playerStashLevel") == nil) then
 		ply:SetNWInt("playerStashLevel", 1)
 	else
@@ -90,15 +84,13 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetNWInt("stashMaxed", tonumber(ply:GetPData("stashMaxed")))
 	end
 
-	-- Overleveled check (support for prestige during mid-wipes)
-
+	--Overleveled check (support for prestige during mid-wipes)
 	if (ply:GetNWInt("playerLvl") >= 32) then
 		ply:SetNWInt("playerLvl", 32)
 		ply:SetNWInt("playerExp", 0)
 	end
 
-	-- tasks hehe
-
+	--tasks hehe
 	if ply:GetPData("PlayerStartedTasks") == false then
 
 		AssignStartingTasks(ply)
@@ -106,8 +98,7 @@ function GM:PlayerInitialSpawn(ply)
 
 	end
 
-	-- Progression/Stats
-
+	--Progression/Stats
 	if (ply:GetPData("playerLvl") == nil) then
 		ply:SetNWInt("playerLvl", 1)
 	else
@@ -210,8 +201,26 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetNWInt("playerDistance", tonumber(ply:GetPData("playerDistance")))
 	end
 
-	-- Raid Stat Tracking
+	--Streaks
+	if (ply:GetPData("killStreak") == nil) then
+		ply:SetNWInt("killStreak", 0)
+	else
+		ply:SetNWInt("killStreak", tonumber(ply:GetPData("killStreak")))
+	end
 
+	if (ply:GetPData("extractionStreak") == nil) then
+		ply:SetNWInt("extractionStreak", 0)
+	else
+		ply:SetNWInt("extractionStreak", tonumber(ply:GetPData("extractionStreak")))
+	end
+
+	if (ply:GetPData("expMulti") == nil) then
+		ply:SetNWInt("expMulti", 1)
+	else
+		ply:SetNWInt("expMulti", tonumber(ply:GetPData("expMulti")))
+	end
+
+	--Raid Stat Tracking
 	ply:SetNWInt("raidKill", 0)
 	ply:SetNWInt("raidXP", 0)
 	ply:SetNWInt("raidMoney", 0)
@@ -222,15 +231,14 @@ function GM:PlayerInitialSpawn(ply)
 	ply:SetNWInt("raidSuccess", 1)
 	ply:SetNWInt("firstSpawn", 1)
 
-	-- Skills Fatigue
-
+	--Skills Fatigue
 	ply:SetNWInt("enduranceFatigue", 0)
 	ply:SetNWInt("strengthFatigue", 0)
 	ply:SetNWInt("covertFatigue", 0)
 
-	-- Skills
+	--Skills
 
-	-- Endurance
+	--Endurance
 	if (ply:GetPData("enduranceLevel") == nil) then
 		ply:SetNWInt("enduranceLevel", 1)
 	else
@@ -249,7 +257,7 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetNWInt("enduranceEffect", tonumber(ply:GetPData("enduranceEffect")))
 	end
 
-	-- Strength
+	--Strength
 	if (ply:GetPData("strengthLevel") == nil) then
 		ply:SetNWInt("strengthLevel", 1)
 	else
@@ -313,12 +321,13 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 		local deathGained = 1
 
 		victim:SetNWInt("playerDeathsSuicide", victim:GetNWInt("playerDeathsSuicide") + 1)
-
 		victim:SetNWInt("playerDeaths", victim:GetNWInt("playerDeaths") + deathGained)
-
 		victim:SetNWInt("playerKDR", victim:GetNWInt("playerKills") / victim:GetNWInt("playerDeaths"))
 
 		victim:SetNWInt("raidSuccess", 0)
+
+		victim:SetNWInt("killStreak", 0)
+		victim:SetNWInt("extractionStreak", 0)
 	else
 		local moneyGained = math.random(1000, 2500)
 		local expGained = math.random(425, 675)
@@ -329,26 +338,29 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 		attacker:SetNWInt("raidMoney", attacker:GetNWInt("raidMoney") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))
 
 		if (attacker:GetNWInt("playerLvl") < 32) then
-			attacker:SetNWInt("playerExp", attacker:GetNWInt("playerExp") + expGained)
-			attacker:SetNWInt("raidXP", attacker:GetNWInt("raidXP") + expGained)
+			attacker:SetNWInt("playerExp", math.Round(attacker:GetNWInt("playerExp") + (expGained * attacker:GetNWInt("expMulti"))), 1)
+			attacker:SetNWInt("raidXP", math.Round(attacker:GetNWInt("raidXP") + (expGained * attacker:GetNWInt("expMulti"))), 1)
 		end
 
 		attacker:SetNWInt("playerKills", attacker:GetNWInt("playerKills") + killGained)
 		attacker:SetNWInt("raidKill", attacker:GetNWInt("raidKill") + killGained)
 
 		victim:SetNWInt("playerDeaths", victim:GetNWInt("playerDeaths") + deathGained)
-
 		victim:SetNWInt("playerKDR", victim:GetNWInt("playerKills") / victim:GetNWInt("playerDeaths"))
 
 		attacker:SetNWInt("playerKDR", attacker:GetNWInt("playerKills") / attacker:GetNWInt("playerDeaths"))
 
 		attacker:SetNWInt("playerTotalEarned", attacker:GetNWInt("playerTotalEarned") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))
-
 		attacker:SetNWInt("playerTotalXpEarned", attacker:GetNWInt("playerTotalXpEarned") + expGained)
-
 		attacker:SetNWInt("playerTotalEarnedKill", attacker:GetNWInt("playerTotalEarnedKill") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))
 
 		victim:SetNWInt("raidSuccess", 0)
+
+		attacker:SetNWInt("killStreak", attacker:GetNWInt("killStreak") + 1)
+
+		victim:SetNWInt("killStreak", 0)
+		victim:SetNWInt("extractionStreak", 0)
+		victim:SetNWInt("expMulti", 1)
 
 		checkForLevel(attacker)
 	end
@@ -369,20 +381,16 @@ hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
 end )
 
 hook.Add("PlayerHurt", "playerDamage", function(victim, attacker, remainingHealth, dmgTaken)
-
 	attacker:SetNWInt("playerDamageGiven", attacker:GetNWInt("playerDamageGiven") + math.Round(dmgTaken, 0))
 	attacker:SetNWInt("raidDamageGiven", attacker:GetNWInt("raidDamageGiven") + math.Round(dmgTaken, 0))
 
 	victim:SetNWInt("playerDamageRecieved", victim:GetNWInt("playerDamageRecieved") + math.Round(dmgTaken, 0))
 	victim:SetNWInt("raidDamageTaken", victim:GetNWInt("raidDamageTaken") + math.Round(dmgTaken, 0))
-
 end)
 
 hook.Add( "HUDWeaponPickedUp", "WeaponPickedUp", function( weapon )
-
 	ply:SetNWInt("playerItemsPickedUp", ply:GetNWInt("playerItemsPickedUp") + 1)
 	ply:SetNWInt("raidItemsPicked", ply:GetNWInt("raidItemsPicked") + 1)
-
 end )
 
 function checkForLevel(ply)
@@ -406,13 +414,11 @@ util.AddNetworkString("MenuInRaid")
 util.AddNetworkString("TeamMenu")
 
 function GM:ShowSpare2(ply)
-
 	net.Start("MenuInRaid")
 	net.WriteBool(ply:GetNWBool("inRaid"))
 	net.Send(ply)
 
 	ply:ConCommand("open_game_menu")
-
 end
 
 function GM:ShowTeam(ply)
@@ -467,6 +473,11 @@ function GM:PlayerDisconnected(ply)
 	ply:SetPData("covertLevel", ply:GetNWInt("covertLevel"))
 	ply:SetPData("covertExperience", ply:GetNWInt("covertExperience"))
 	ply:SetPData("covertEffect", ply:GetNWInt("covertEffect"))
+
+	--Streaks
+	ply:SetPData("killStreak", ply:GetNWInt("killStreak"))
+	ply:SetPData("extractionStreak", ply:GetNWInt("extractionStreak"))
+	ply:SetPData("expMulti", ply:GetNWInt("expMulti"))
 end
 
 function GM:ShutDown()
@@ -513,6 +524,11 @@ function GM:ShutDown()
 		v:SetPData("covertLevel", v:GetNWInt("covertLevel"))
 		v:SetPData("covertExperience", v:GetNWInt("covertExperience"))
 		v:SetPData("covertEffect", v:GetNWInt("covertEffect"))
+
+		--Streaks
+		v:SetPData("killStreak", v:GetNWInt("killStreak"))
+		v:SetPData("extractionStreak", v:GetNWInt("extractionStreak"))
+		v:SetPData("expMulti", v:GetNWInt("expMulti"))
 	end
 end
 

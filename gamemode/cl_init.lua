@@ -1,6 +1,6 @@
 include("shared.lua")
-include("testhud.lua")
+include("cl_hud.lua")
 include("custom_menu.lua")
 include("map_menu.lua")
 include("raid_summary_menu.lua")
-include("custom_scoreboard.lua")
+include("cl_scoreboard.lua")

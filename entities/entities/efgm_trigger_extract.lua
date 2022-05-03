@@ -94,11 +94,33 @@ function ENT:CheckForPlayers()
 
 							local expGained = math.random(250, 600)
 
+							ply:SetNWInt("extractionStreak", ply:GetNWInt("extractionStreak") + 1)
+
 							if (ply:GetNWInt("playerLvl") < 32) then
-								ply:SetNWInt("playerExp", ply:GetNWInt("playerExp") + expGained)
+								ply:SetNWInt("playerExp", math.Round(ply:GetNWInt("playerExp") + (expGained * ply:GetNWInt("expMulti"))), 1)
 							end
 
 							ply:SetNWInt("raidSuccess", 1)
+
+							if (ply:GetNWInt("extractionStreak") == 1) then
+								ply:SetNWInt("expMulti", 1.10)
+							else
+								if (ply:GetNWInt("extractionStreak") == 2) then
+									ply:SetNWInt("expMulti", 1.20)
+								else
+									if (ply:GetNWInt("extractionStreak") == 3) then
+										ply:SetNWInt("expMulti", 1.30)
+									else
+										if (ply:GetNWInt("extractionStreak") == 4) then
+											ply:SetNWInt("expMulti", 1.40)
+										else
+											if (ply:GetNWInt("extractionStreak") >= 5) then
+												ply:SetNWInt("expMulti", 1.50)
+											end
+										end
+									end
+								end
+							end
 
 							ply:ConCommand("open_raid_summary_menu")
 

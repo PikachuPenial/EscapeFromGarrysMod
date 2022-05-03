@@ -56,7 +56,6 @@ function HUD()
 --Money And Or XP Hud	
 
 	local expToLevel = (client:GetNWInt("playerLvl") * 140) * 5.15
-	--local avatar = vgui.Create("AvatarImage")
 
 	draw.SimpleText("Level " .. client:GetNWInt("playerLvl"), "DermaDefaultBold", 50, ScrH() - 38, white, 0)
 
@@ -95,12 +94,6 @@ function HUD()
 
 	draw.SimpleText(raidTimeLeft, "DermaLarge", 28, ScrH() - 305, timerColor, 0)
 	draw.SimpleText(timeText, "DermaDefaultBold", 28, ScrH() - 275, timerColor, 0)
-
-	-- Steam Profile Picture in the left corner
-
-	--avatar:SetSize(42, 42)
-	--avatar:SetPos(4, 1035)
-	--avatar:SetPlayer(client, 64)
 
 	-- Control hints while in lobby
 	if CLIENT and GetConVar("efgm_hidebinds"):GetInt() == 0 then

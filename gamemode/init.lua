@@ -367,7 +367,7 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 end
 
 hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
-	if (victim == attacker) then
+	if victim == attacker or attacker == nil or victim == nil then
 		victim:PrintMessage(HUD_PRINTCENTER, "You committed suicide.")
 	else
 		local weaponInfo = weapons.Get( attacker:GetActiveWeapon():GetClass() )

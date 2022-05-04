@@ -328,7 +328,7 @@ function ENT:DoSmartSpawnStuff(spawns, minimumDistance)
 
 		for l, b in pairs(player.GetHumans()) do
 
-			print(tostring( "Distance between player and spawn is:" .. v:GetPos():Distance( b:GetPos() ) ))
+			-- print(tostring( "Distance between player and spawn is:" .. v:GetPos():Distance( b:GetPos() ) ))
 
 			if v:GetPos():Distance( b:GetPos() ) < minimumDistance then
 
@@ -354,21 +354,21 @@ function ENT:GetSmartSpawn(class, useTeamSpawns)
 
 	local spawns = self:DetermineSpawnTable(class, useTeamSpawns)
 
-	print("Spawns are:")
-	PrintTable(spawns)
+	-- print("Spawns are:")
+	-- PrintTable(spawns)
 
 	local finalSpawns = self:DoSmartSpawnStuff(spawns, 2048)
 
 	if table.IsEmpty(finalSpawns) == true then
 
-		print("returning regular spawns")
-		PrintTable(spawns)
+		-- print("returning regular spawns")
+		-- PrintTable(spawns)
 
 		return spawns[math.random(#spawns)]
 
 	elseif table.IsEmpty(finalSpawns) == false then
 
-		print("returning final spawns")
+		-- print("returning final spawns")
 
 		return finalSpawns[math.random(#finalSpawns)]
 

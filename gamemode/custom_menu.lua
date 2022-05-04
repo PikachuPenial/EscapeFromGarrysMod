@@ -1558,11 +1558,18 @@ function CustomTeamMenu()
 
 	-- Constants for easy use
 
+	local client = LocalPlayer()
+
 	local blackColor = 		Color(10, 10, 10, 255)
 	local whiteColor = 		Color(250, 250, 250, 255)
+	local offWhiteColor = 	Color(200, 200, 200, 255)
 
 	local primaryColor =	Color(30, 30, 30, 255)
 	local secondaryColor =	Color(100, 100, 100, 255)
+
+	local inRaidColor = 	Color(255, 50, 50, 255)		-- Red
+	local outRaidColor = 	Color(50, 255, 50, 255)		-- Green
+	local deadColor = 		Color(200, 200, 200, 255)	-- Gray
 
 	local width =			1200
 	local height =			1000
@@ -1584,6 +1591,8 @@ function CustomTeamMenu()
 
 	function DrawMenu()
 
+		local currentTeamName = client:GetNWInt("playerTeam")
+
 		teamMenuFrame.Paint = function(self, w, h)
 			draw.RoundedBox( 0, 0, 0, w, h, blackColor )
 		end
@@ -1598,29 +1607,125 @@ function CustomTeamMenu()
 	
 		end
 	
-		-- Member Panel (View your teammates and their statuses)
+		
+		-- MAIN PANEL: Member Panel (View your current team, teammates, and their statuses)
 	
+
 		local teamMemberPanel = vgui.Create( "DPanel", menuPanel )
 		teamMemberPanel:Dock( FILL )
 		teamMemberPanel:DockMargin( margin, margin, margin, margin )
 	
 		teamMemberPanel.Paint = function(self, w, h)
+			draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+		end
+
+		-- SUB PANEL: Team Name Panel (See your team's name and number of members)
+
+		local teamNamePanel = vgui.Create( "DPanel", teamMemberPanel )
+		teamNamePanel:Dock( TOP )
+		teamNamePanel:SetSize(0, 70)
+		teamNamePanel:DockMargin( margin, margin, margin, margin )
+	
+		teamNamePanel.Paint = function(self, w, h)
+
 			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+
+			if currentTeamName == "" then
+
+				draw.SimpleText("Join or create a team here.", "DermaLarge", w / 2, h / 2, offWhiteColor, 1, 1)
+
+			elseif currentTeamName != nil then
+			
+				draw.SimpleText(currentTeamName, "DermaLarge", w / 2, h / 3, whiteColor, 1, 1)
+
+				local members = #FindAllInTeam(currentTeamName)
+
+				if members <= 1 then
+
+					draw.SimpleText( members .. " Member", "DermaDefault", w / 2, (h / 3) * 2, offWhiteColor, 1, 1)
+
+				elseif members > 1 then
+
+					draw.SimpleText( members .. " Members", "DermaDefault", w / 2, (h / 3) * 2, offWhiteColor, 1, 1)
+
+				end
+
+			end
+
+		end
+
+		-- SUB PANEL: Team Info Panel (See your team's members and their statuses, leave your team, or create a team)
+
+		local teamInfoPanel = vgui.Create( "DPanel", teamMemberPanel )
+		teamInfoPanel:Dock( FILL )
+		teamInfoPanel:DockMargin( margin, margin, margin, margin )
+	
+		teamInfoPanel.Paint = function(self, w, h)
+
+			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+
+			if currentTeamName == "" then
+
+				draw.SimpleText("You are not currently in a team.", "DermaLarge", w / 2, h / 8, offWhiteColor, 1, 1)
+
+			elseif currentTeamName != nil then
+
+				local members = FindAllInTeam(currentTeamName)
+
+				if #members <= 1 then
+
+					draw.SimpleText("Current Team Member:", "DermaLarge", 40, h / 16, whiteColor, 0, 1)
+
+				elseif #members > 1 then
+
+					draw.SimpleText("Current Team Members:", "DermaLarge", 40, h / 16, whiteColor, 0, 1)
+
+				end
+
+				local startingHeight = (h / 16) + 30
+				local increment = 15
+
+				for k, v in pairs(members) do
+
+					local currentHeight = startingHeight + ((k - 1) * increment)
+
+					local color = deadColor
+
+					if v:GetNWInt("inRaid") == true and v:Alive() == true then 
+
+						color = inRaidColor
+
+					elseif v:GetNWInt("inRaid") == false and v:Alive() == true then
+
+						color = outRaidColor
+
+					end
+
+					draw.SimpleText("- " .. v:GetName(), "DermaDefaultBold", 40, currentHeight, color, 0, 1)
+
+				end
+	
+			end
+
 		end
 	
-		-- Invite Panel (View your invites)
+
+		-- MAIN PANEL: Invite Panel (View your invites)
 	
-		local teamInvitePanel = vgui.Create( "DPanel", menuPanel )
-		teamInvitePanel:Dock( RIGHT )
-		teamInvitePanel:SetSize( 200, 0 )
-		teamInvitePanel:DockMargin( margin, margin, margin, margin )
+
+		-- local teamInvitePanel = vgui.Create( "DPanel", menuPanel )
+		-- teamInvitePanel:Dock( RIGHT )
+		-- teamInvitePanel:SetSize( 200, 0 )
+		-- teamInvitePanel:DockMargin( margin, margin, margin, margin )
 	
-		teamInvitePanel.Paint = function(self, w, h)
-			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
-		end
+		-- teamInvitePanel.Paint = function(self, w, h)
+		-- 	draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+		-- end
 	
-		-- Browser Panel (View available teams)
+
+		-- MAIN PANEL: Browser Panel (View available teams)
 	
+
 		local teamBrowserPanel = vgui.Create( "DPanel", menuPanel )
 		teamBrowserPanel:Dock( LEFT )
 		teamBrowserPanel:SetSize(300, 0 )
@@ -1630,7 +1735,7 @@ function CustomTeamMenu()
 			draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
 		end
 
-		-- Search Panel (Search for teams)
+		-- SUB PANEL: Search Panel (Search for teams)
 
 		local searchPanel = vgui.Create( "DPanel", teamBrowserPanel )
 		searchPanel:Dock( TOP )
@@ -1645,7 +1750,7 @@ function CustomTeamMenu()
 		searchEntry:Dock( FILL )
 		searchEntry:SetPlaceholderText( "Search Teams..." )
 		
-		-- Team Display Panel (Shows the teams you can join)
+		-- SUB PANEL: Team Display Panel (Shows the teams you can join)
 
 		local teamDisplayPanel = vgui.Create( "DPanel", teamBrowserPanel )
 		teamDisplayPanel:Dock( FILL )
@@ -1659,30 +1764,66 @@ function CustomTeamMenu()
 		local teamDisplayScroller = vgui.Create( "DScrollPanel", teamDisplayPanel )
 		teamDisplayScroller:Dock( FILL )
 
-		for i = 0, 12 do
+		if FindAllTeams() != nil then
 
-			local members = math.random( 2, 5 )
+			for k, v in pairs( FindAllTeams() ) do
 
-			local teamExamplePanel = vgui.Create( "DPanel", teamDisplayScroller )
-			teamExamplePanel:Dock( TOP )
-			teamExamplePanel:DockMargin(5, 5, 5, 5)
-			teamExamplePanel:SetSize( 0, 70 )
+				local teamExamplePanel = vgui.Create( "DPanel", teamDisplayScroller )
+				teamExamplePanel:Dock( TOP )
+				teamExamplePanel:DockMargin(5, 5, 5, 5)
+				teamExamplePanel:SetSize( 0, 70 )
+	
+				teamExamplePanel.Paint = function(self, w, h)
+					draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+					draw.SimpleText(tostring(v), "DermaLarge", 5, 5, whiteColor)
 
-			teamExamplePanel.Paint = function(self, w, h)
-				draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
-				draw.SimpleText("Team #" .. i, "DermaLarge", 5, 5, whiteColor)
-				draw.SimpleText(members .. " Members", "DermaDefault", w - 5, 5, whiteColor, 2)
-			end
+					local members = #FindAllInTeam(v)
 
-			local joinTeamButton = vgui.Create( "DButton", teamExamplePanel )
-			joinTeamButton:Dock( BOTTOM )
-			joinTeamButton:DockMargin( 5, 5, 5, 5 )
-			joinTeamButton:SetSize( 0, 25 )
-			joinTeamButton:SetText("Join Team #" .. i)
+					if members <= 1 then
 
-			joinTeamButton.DoClick = function(teamExamplePanel)
+						draw.SimpleText(members .. " Member", "DermaDefault", w - 5, 5, offWhiteColor, 2)
 
-				print("You joined the team!")
+					elseif members > 1 then
+
+						draw.SimpleText(members .. " Members", "DermaDefault", w - 5, 5, offWhiteColor, 2)
+
+					end
+
+				end
+
+				if v == client:GetNWString("playerTeam") then
+
+					-- If they are already in this team
+
+					local joinTeamPanel = vgui.Create( "DPanel", teamExamplePanel )
+					joinTeamPanel:Dock( BOTTOM )
+					joinTeamPanel:DockMargin( 5, 5, 5, 5 )
+					joinTeamPanel:SetSize( 0, 25 )
+
+					joinTeamPanel.Paint = function(self, w, h)
+						draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+						draw.SimpleText("You are in this team", "DermaDefault", w / 2, h / 2, whiteColor, 1, 1)
+					end
+		
+					
+
+				elseif v != client:GetNWString("playerTeam") then
+
+					-- If they are not in this team
+
+					local joinTeamPassword = vgui.Create( "DTextEntry", teamExamplePanel )
+					joinTeamPassword:Dock( BOTTOM )
+					joinTeamPassword:DockMargin( 5, 5, 5, 5 )
+					joinTeamPassword:SetSize( 0, 25 )
+					joinTeamPassword:SetPlaceholderText("Password for " .. v)
+		
+					joinTeamPassword.OnEnter = function(self)
+		
+						client:ConCommand("party_join " .. v .. " " .. self:GetText())
+		
+					end
+
+				end
 
 			end
 

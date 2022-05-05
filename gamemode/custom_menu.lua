@@ -1549,8 +1549,7 @@ local teamMenuFrame
 net.Receive("TeamMenu",function (len, ply)
 
 	CustomTeamMenu()
-
-	DrawMenu()
+	DrawTeamMenu()
 
 end)
 
@@ -1587,37 +1586,50 @@ function CustomTeamMenu()
 	teamMenuFrame:ShowCloseButton( true ) 
 	teamMenuFrame:MakePopup()
 
-	-- This is in a function so refreshing works
+	-- Other shit
 
-	function DrawMenu()
+	teamMenuFrame.Paint = function(self, w, h)
+		draw.RoundedBox( 0, 0, 0, w, h, blackColor )
+	end
+
+	local menuPanel = vgui.Create( "DPanel", teamMenuFrame )
+	menuPanel:Dock( BOTTOM )
+	menuPanel:SetSize(0, height - 40)
+
+	menuPanel.Paint = function(self, w, h)
+
+		draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+
+	end
+
+	-- MAIN PANEL: Browser Panel (View available teams)
+
+	local teamBrowserPanel = vgui.Create( "DPanel", menuPanel )
+	teamBrowserPanel:Dock( LEFT )
+	teamBrowserPanel:SetSize(300, 0 )
+	teamBrowserPanel:DockMargin( margin, margin, margin, margin )
+
+	teamBrowserPanel.Paint = function(self, w, h)
+		draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+	end
+
+	-- MAIN PANEL: Member Panel (View your current team, teammates, and their statuses)
+
+	local teamMemberPanel = vgui.Create( "DPanel", menuPanel )
+	teamMemberPanel:Dock( FILL )
+	teamMemberPanel:DockMargin( margin, margin, margin, margin )
+
+	teamMemberPanel.Paint = function(self, w, h)
+		draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+	end
+
+	function DrawTeamMenu()
 
 		local currentTeamName = client:GetNWInt("playerTeam")
 
-		teamMenuFrame.Paint = function(self, w, h)
-			draw.RoundedBox( 0, 0, 0, w, h, blackColor )
-		end
-	
-		local menuPanel = vgui.Create( "DPanel", teamMenuFrame )
-		menuPanel:Dock( BOTTOM )
-		menuPanel:SetSize(0, height - 40)
-	
-		menuPanel.Paint = function(self, w, h)
-	
-			draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
-	
-		end
-	
-		
-		-- MAIN PANEL: Member Panel (View your current team, teammates, and their statuses)
-	
+		-- FUCK ME THIS FIXED THE REFRESHING I HAD IT BEFORE THE FUCKING DRAWTEAMMENU IM SO PISSED AT MYSELF AUGHHHHHHHHHH ):<
 
-		local teamMemberPanel = vgui.Create( "DPanel", menuPanel )
-		teamMemberPanel:Dock( FILL )
-		teamMemberPanel:DockMargin( margin, margin, margin, margin )
-	
-		teamMemberPanel.Paint = function(self, w, h)
-			draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
-		end
+		
 
 		-- SUB PANEL: Team Name Panel (See your team's name and number of members)
 
@@ -1636,7 +1648,7 @@ function CustomTeamMenu()
 
 			elseif currentTeamName != nil then
 			
-				draw.SimpleText(currentTeamName, "DermaLarge", w / 2, h / 3, whiteColor, 1, 1)
+				draw.SimpleText(string.Replace(currentTeamName, "_", " "), "DermaLarge", w / 2, h / 3, whiteColor, 1, 1)
 
 				local members = #FindAllInTeam(currentTeamName)
 
@@ -1672,13 +1684,25 @@ function CustomTeamMenu()
 
 				local members = FindAllInTeam(currentTeamName)
 
-				if #members <= 1 then
+				if members == nil or table.IsEmpty(members) == true then
 
-					draw.SimpleText("Current Team Member:", "DermaLarge", 40, h / 16, whiteColor, 0, 1)
+					teamExamplePanel.Think = function()
 
-				elseif #members > 1 then
+						members = FindAllInTeam(v)
 
-					draw.SimpleText("Current Team Members:", "DermaLarge", 40, h / 16, whiteColor, 0, 1)
+					end
+
+				elseif members != nil or table.IsEmpty(members) == false then
+
+					if #members <= 1 then
+
+						draw.SimpleText("Current Team Member:", "DermaLarge", 40, h / 16, whiteColor, 0, 1)
+	
+					elseif #members > 1 then
+	
+						draw.SimpleText("Current Team Members:", "DermaLarge", 40, h / 16, whiteColor, 0, 1)
+	
+					end
 
 				end
 
@@ -1701,39 +1725,109 @@ function CustomTeamMenu()
 
 					end
 
-					draw.SimpleText("- " .. v:GetName(), "DermaDefaultBold", 40, currentHeight, color, 0, 1)
+					if v:GetNWBool("teamLeader") == true then
+
+						draw.SimpleText("- " .. v:GetName() .. " (Leader)", "DermaDefaultBold", 40, currentHeight, color, 0, 1)
+
+					elseif v:GetNWBool("teamLeader") == false then
+
+						draw.SimpleText("- " .. v:GetName(), "DermaDefaultBold", 40, currentHeight, color, 0, 1)
+					
+					end
 
 				end
 	
 			end
 
 		end
-	
 
-		-- MAIN PANEL: Invite Panel (View your invites)
-	
+		if currentTeamName == "" then
 
-		-- local teamInvitePanel = vgui.Create( "DPanel", menuPanel )
-		-- teamInvitePanel:Dock( RIGHT )
-		-- teamInvitePanel:SetSize( 200, 0 )
-		-- teamInvitePanel:DockMargin( margin, margin, margin, margin )
-	
-		-- teamInvitePanel.Paint = function(self, w, h)
-		-- 	draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
-		-- end
-	
+			-- If the player does not belong to a team
 
-		-- MAIN PANEL: Browser Panel (View available teams)
-	
+			local createTeamPanel = vgui.Create( "DPanel", teamInfoPanel )
+			createTeamPanel:Dock(BOTTOM)
+			createTeamPanel:DockMargin( margin, margin, margin, margin )
+			createTeamPanel:SetSize(0, 210)
 
-		local teamBrowserPanel = vgui.Create( "DPanel", menuPanel )
-		teamBrowserPanel:Dock( LEFT )
-		teamBrowserPanel:SetSize(300, 0 )
-		teamBrowserPanel:DockMargin( margin, margin, margin, margin )
-	
-		teamBrowserPanel.Paint = function(self, w, h)
-			draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+			createTeamPanel.Paint = function(self, w, h)
+
+				draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+
+			end
+
+			local teamNameEntry = vgui.Create( "DTextEntry", createTeamPanel )
+			teamNameEntry:Dock(TOP)
+			teamNameEntry:DockMargin( margin, margin, margin, margin )
+			teamNameEntry:SetSize(0, 50)
+			teamNameEntry:SetPlaceholderText(client:GetName() .. "'s Team")
+
+			local teamPasswordEntry = vgui.Create( "DTextEntry", createTeamPanel )
+			teamPasswordEntry:Dock(TOP)
+			teamPasswordEntry:DockMargin( margin, margin, margin, margin )
+			teamPasswordEntry:SetSize(0, 50)
+			teamPasswordEntry:SetPlaceholderText(client:GetName() .. "'s Password (Leave blank to make team public!)")
+
+			local createTeamButton = vgui.Create( "DButton", createTeamPanel )
+			createTeamButton:Dock(TOP)
+			createTeamButton:DockMargin( margin, margin, margin, margin )
+			createTeamButton:SetSize(0, 50)
+			createTeamButton:SetText("Create Team")
+
+			createTeamButton.DoClick = function(self)
+
+				local teamName = teamNameEntry:GetText()
+				local teamPassword = teamPasswordEntry:GetText()
+				if teamName == "" then teamName = client:GetName() .. "s_Team" end
+
+				teamName = string.Replace(teamName, " ", "_")
+				teamPassword = string.Replace(teamPassword, " ", "_")
+
+				teamName = string.Replace(teamName, [["]], "")
+				teamPassword = string.Replace(teamPassword, [["]], "")
+
+				teamName = string.Replace(teamName, [[']], "")
+				teamPassword = string.Replace(teamPassword, [[']], "")
+
+				teamName = string.Replace(teamName, "[", "")
+				teamPassword = string.Replace(teamPassword, "[", "")
+
+				teamName = string.Replace(teamName, "]", "")
+				teamPassword = string.Replace(teamPassword, "]", "")
+
+				print("Name is " .. teamName .. ", password is " .. teamPassword .. ".")
+
+				client:ConCommand("party_create " .. teamName .. " " .. teamPassword .. "")
+
+			end
+
+		elseif currentTeamName != "" then
+
+			-- If the player is already in a team
+
+			local leaveTeamPanel = vgui.Create( "DPanel", teamInfoPanel )
+			leaveTeamPanel:Dock(BOTTOM)
+			leaveTeamPanel:DockMargin( margin, margin, margin, margin )
+			leaveTeamPanel:SetSize(0, 70)
+
+			leaveTeamPanel.Paint = function(self, w, h)
+				draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+			end
+
+			local leaveTeamButton = vgui.Create( "DButton", leaveTeamPanel )
+			leaveTeamButton:Dock(BOTTOM)
+			leaveTeamButton:DockMargin( margin, margin, margin, margin )
+			leaveTeamButton:SetSize(0, 50)
+			leaveTeamButton:SetText("Leave Team")
+
+			leaveTeamButton.DoClick = function(self)
+
+				client:ConCommand("party_leave")
+
+			end
+
 		end
+
 
 		-- SUB PANEL: Search Panel (Search for teams)
 
@@ -1748,7 +1842,13 @@ function CustomTeamMenu()
 		
 		local searchEntry = vgui.Create( "DTextEntry", searchPanel )
 		searchEntry:Dock( FILL )
-		searchEntry:SetPlaceholderText( "Search Teams..." )
+		searchEntry:SetPlaceholderText( "Search Teams (Placeholder, doesn't work yet)" )
+
+		searchEntry.OnEnter = function()
+
+			client:PrintMessage(3, "Can you read???")
+
+		end
 		
 		-- SUB PANEL: Team Display Panel (Shows the teams you can join)
 
@@ -1775,17 +1875,29 @@ function CustomTeamMenu()
 	
 				teamExamplePanel.Paint = function(self, w, h)
 					draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
-					draw.SimpleText(tostring(v), "DermaLarge", 5, 5, whiteColor)
+					draw.SimpleText(string.Replace(tostring(v), "_", " "), "DermaLarge", 5, 5, whiteColor)
 
-					local members = #FindAllInTeam(v)
+					local members = FindAllInTeam(v)
 
-					if members <= 1 then
+					if members == nil or table.IsEmpty(members) == true then
 
-						draw.SimpleText(members .. " Member", "DermaDefault", w - 5, 5, offWhiteColor, 2)
+						teamExamplePanel.Think = function()
 
-					elseif members > 1 then
+							members = FindAllInTeam(v)
 
-						draw.SimpleText(members .. " Members", "DermaDefault", w - 5, 5, offWhiteColor, 2)
+						end
+
+					elseif members != nil or table.IsEmpty(members) == false then
+
+						if #members <= 1 then
+
+							draw.SimpleText(#members .. " Member", "DermaDefault", w - 5, 5, offWhiteColor, 2)
+	
+						elseif #members > 1 then
+	
+							draw.SimpleText(#members .. " Members", "DermaDefault", w - 5, 5, offWhiteColor, 2)
+	
+						end
 
 					end
 
@@ -1815,11 +1927,11 @@ function CustomTeamMenu()
 					joinTeamPassword:Dock( BOTTOM )
 					joinTeamPassword:DockMargin( 5, 5, 5, 5 )
 					joinTeamPassword:SetSize( 0, 25 )
-					joinTeamPassword:SetPlaceholderText("Password for " .. v)
+					joinTeamPassword:SetPlaceholderText("Password for " .. string.Replace(v, "_", " "))
 		
 					joinTeamPassword.OnEnter = function(self)
 		
-						client:ConCommand("party_join " .. v .. " " .. self:GetText())
+						client:ConCommand("party_join " .. v .. " " .. string.Replace(self:GetText(), " ", "_"))
 		
 					end
 
@@ -1829,6 +1941,21 @@ function CustomTeamMenu()
 
 		end
 
+		teamMenuFrame.Think = function()
+
+			local newTeamName = client:GetNWInt("playerTeam")
+	
+			if newTeamName != currentTeamName then
+	
+				teamBrowserPanel:Clear()
+				teamMemberPanel:Clear()
+	
+				DrawTeamMenu()
+
+			end
+	
+		end
+	
 	end
 
 end

@@ -38,7 +38,7 @@ function HUD()
 
 	if client:GetNWString("playerTeam") != "" then
 
-		draw.SimpleText("Team: " .. client:GetNWString("playerTeam"), "DermaLarge", ScrW() - 10, 10, white, 2, 2)
+		draw.SimpleText("Team: " .. string.Replace(client:GetNWString("playerTeam"), "_", " "), "DermaLarge", ScrW() - 10, 10, white, 2, 2)
 
 	end
 

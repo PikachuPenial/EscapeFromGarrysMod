@@ -37,16 +37,19 @@ function GM:PlayerSpawn(ply)
 	ply:SetDuckSpeed(0.53)
 	ply:SetUnDuckSpeed(0.53)
 
-	local playerModels = {"models/player/eft/pmc/eft_bear/models/eft_bear_pm_summer.mdl", "models/player/eft/pmc/eft_bear/models/eft_bear_pm_redux.mdl"}
+	local playerModels = {"models/player/eft/pmc/eft_bear/models/eft_bear_pm_summer.mdl", "models/player/eft/pmc/eft_bear/models/eft_bear_pm_redux.mdl", "models/player/eft/pmc/eft_usec/models/eft_usec_pm_hoody.mdl"}
+	local playerFaces = {0, 1, 2, 3}
 	local spawningWeapon = {"arccw_eft_1911", "arccw_waw_nambu", "arccw_waw_tt33"}
 	local spawningMelee = {"arccw_bo1_sog_knife"}
 
 	ply:SetModel(playerModels[math.random(#playerModels)])
-	ply:SetupHands()
+	ply:SetBodygroup(0, playerFaces[math.random(#playerFaces)])
+	ply:SetBodygroup(1, playerFaces[math.random(#playerFaces)])
 	hook.Call("PlayerLoadout", GAMEMODE, ply)
 	ply:Give(spawningWeapon[math.random(#spawningWeapon)])
 	ply:Give(spawningMelee[math.random(#spawningMelee)])
 	ply:Give("fas2_ifak")
+	ply:SetupHands()
 
 	if (ply:GetNWInt("firstSpawn") == 0) then
 		ply:ConCommand("open_raid_summary_menu")

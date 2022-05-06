@@ -5,6 +5,7 @@ AddCSLuaFile("custom_menu.lua")
 AddCSLuaFile("map_menu.lua")
 AddCSLuaFile("raid_summary_menu.lua")
 AddCSLuaFile("cl_scoreboard.lua")
+AddCSLuaFile("sh_party_system.lua")
 
 include("shared.lua")
 include("concommands.lua")
@@ -14,6 +15,8 @@ include("sv_tasks.lua")
 include("sv_skills.lua")
 include("sv_party_system.lua")
 include("sv_pdata.lua")
+
+include("sh_party_system.lua")
 
 --Player stats.
 

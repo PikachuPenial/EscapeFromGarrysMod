@@ -5,7 +5,7 @@ GM.Website = "https://github.com/PikachuPenial"
 
 DeriveGamemode("sandbox")
 
-include("sh_party_system.lua")
+
 
 sellPriceMultiplier = 0.30
 

@@ -1,6 +1,6 @@
 -- Used mostly for shared functions, I could use this for other stuff but I won't. Okay, maybe for globals but thats it. On god.
 
-local maxTeamSize = 5
+maxTeamSize = 5
 
 function CheckIfTeamExists(teamName)
 

@@ -384,7 +384,11 @@ hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
 		victim:PrintMessage(HUD_PRINTCENTER, attacker:Name() .. " killed you from " .. distance .. "m away.")
 		victim:PrintMessage(HUD_PRINTCENTER, "They had an " .. weaponInfo["PrintName"]  .. ".")
 	end
-end )
+end)
+
+hook.Add("GetFallDamage", "DamageChange", function(ply, speed)
+	return math.max(0, math.ceil( 0.350 * speed - 141.75 ))
+end)
 
 hook.Add("PlayerHurt", "playerDamage", function(victim, attacker, remainingHealth, dmgTaken)
 	attacker:SetNWInt("playerDamageGiven", attacker:GetNWInt("playerDamageGiven") + math.Round(dmgTaken, 0))

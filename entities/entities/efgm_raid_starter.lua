@@ -548,7 +548,7 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 			if ply:GetNWString("playerTeam") != "" then
 
-				self:PartySpawn( GetAllFromParty( ply:GetNWString( "playerTeam" ) ), "PMC")
+				self:PartySpawn( FindAllInTeam( ply:GetNWString( "playerTeam" ) ), "PMC")
 
 			elseif ply:GetNWString("playerTeam") == "" then
 

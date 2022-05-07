@@ -741,6 +741,9 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		shopButton.DoClick = function(shopButton)
 			local shopPanel = Menu:Add("ShopPanel")
 
+			local scroller = vgui.Create("DScrollPanel", shopPanel)
+			scroller:Dock( FILL )
+
 			local entityCategory
 
 			local entityList
@@ -748,7 +751,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			if sellMenuBool == false then
 
 
-				entityCategory = vgui.Create("DCollapsibleCategory", shopPanel)
+				entityCategory = vgui.Create("DCollapsibleCategory", scroller)
 				-- entityCategory:SetPos(0, 0)
 				-- entityCategory:SetSize(shopPanel:GetWide(), 100)
 				entityCategory:Dock( TOP )
@@ -762,7 +765,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				entityList:SetSpaceX(5)
 			end
 
-			local weaponCategory = vgui.Create("DCollapsibleCategory", shopPanel)
+			local weaponCategory = vgui.Create("DCollapsibleCategory", scroller)
 			-- weaponCategory:SetPos(0, 230)
 			-- weaponCategory:SetSize(shopPanel:GetWide(), 200)
 			weaponCategory:Dock( TOP )

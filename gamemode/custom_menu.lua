@@ -1799,6 +1799,8 @@ function CustomTeamMenu()
 
 				client:ConCommand("party_create " .. teamName .. " " .. teamPassword .. "")
 
+				surface.PlaySound( "UI/buttonclick.wav" )
+
 			end
 
 		elseif currentTeamName != "" then
@@ -1823,6 +1825,8 @@ function CustomTeamMenu()
 			leaveTeamButton.DoClick = function(self)
 
 				client:ConCommand("party_leave")
+
+				surface.PlaySound( "UI/buttonclick.wav" )
 
 			end
 
@@ -1932,6 +1936,8 @@ function CustomTeamMenu()
 					joinTeamPassword.OnEnter = function(self)
 		
 						client:ConCommand("party_join " .. v .. " " .. string.Replace(self:GetText(), " ", "_"))
+
+						surface.PlaySound( "UI/buttonclick.wav" )
 		
 					end
 
@@ -2038,8 +2044,17 @@ function EnterRaidMenu()
 
 		draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
 
-		draw.SimpleText(client:GetName(), "DermaLarge", w / 2, 50, primaryColor, TEXT_ALIGN_CENTER)
-		draw.SimpleText("You are the party leader", "DermaDefault", w / 2, 30, primaryColor, TEXT_ALIGN_CENTER)
+		if client:GetNWBool("teamLeader") == true and client:GetNWString("playerTeam") then
+
+			draw.SimpleText(client:GetName(), "DermaLarge", w / 2, 50, primaryColor, TEXT_ALIGN_CENTER)
+			draw.SimpleText("You are the party leader", "DermaDefault", w / 2, 30, primaryColor, TEXT_ALIGN_CENTER)
+			
+		elseif client:GetNWBool("teamLeader") == false then
+
+			draw.SimpleText(client:GetName(), "DermaLarge", w / 2, 50, primaryColor, TEXT_ALIGN_CENTER)
+			draw.SimpleText("You are a member of a party", "DermaDefault", w / 2, 30, primaryColor, TEXT_ALIGN_CENTER)
+
+		end
 
 		draw.RoundedBox( 0, 290 - 64 - 15, 100 - 15, 128 + 30, 128 + 30, primaryColor )
 
@@ -2056,14 +2071,44 @@ function EnterRaidMenu()
 	playerModelDisplay:SetModel( client:GetModel() )
 
 	local enterRaidButton = vgui.Create("DButton", raidInfoPanel)
-	enterRaidButton:Dock( BOTTOM )
-	enterRaidButton:DockMargin(margin, margin, margin, margin)
-	enterRaidButton:SetSize(0, 70)
-	enterRaidButton:SetText("Enter the Raid")
+
+	if client:GetNWBool("teamLeader") == true and client:GetNWString("playerTeam") then
+
+		enterRaidButton:Dock( BOTTOM )
+		enterRaidButton:DockMargin(margin, margin, margin, margin)
+		enterRaidButton:SetSize(0, 70)
+		enterRaidButton:SetText("Enter the Raid")
+		
+	elseif client:GetNWBool("teamLeader") == false then
+
+		enterRaidButton:Dock( BOTTOM )
+		enterRaidButton:DockMargin(margin, margin, margin, margin)
+		enterRaidButton:SetSize(0, 70)
+		enterRaidButton:SetText("Enter the Raid by Yourself")
+
+	end
 
 	enterRaidButton.DoClick = function(self)
 
 		-- enter raid blah blah blah
+
+		surface.PlaySound( "UI/buttonclick.wav" )
+
+		net.Start("EnterRaidProper")
+		net.WriteUInt(0, 4) -- 0 for PMC, 1 for Scav, thats it really, I guess 2 for error?
+		net.SendToServer()
+
+
+
+	end
+
+	enterRaidButton.Think = function()
+
+		if client:GetNWBool("inRaid") == true then
+			
+			raidMenuFrame:Close()
+
+		end
 
 	end
 

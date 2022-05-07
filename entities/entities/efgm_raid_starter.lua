@@ -318,7 +318,7 @@ function ENT:InitializeRaid()
 
 end
 
-function ENT:DoSmartSpawnStuff(spawns, minimumDistance)
+local function DoSmartSpawnStuff(spawns, minimumDistance)
 
 	local finalSpawns = {}
 
@@ -350,33 +350,7 @@ function ENT:DoSmartSpawnStuff(spawns, minimumDistance)
 
 end
 
-function ENT:GetSmartSpawn(class, useTeamSpawns)
-
-	local spawns = self:DetermineSpawnTable(class, useTeamSpawns)
-
-	-- print("Spawns are:")
-	-- PrintTable(spawns)
-
-	local finalSpawns = self:DoSmartSpawnStuff(spawns, 2048)
-
-	if table.IsEmpty(finalSpawns) == true then
-
-		-- print("returning regular spawns")
-		-- PrintTable(spawns)
-
-		return spawns[math.random(#spawns)]
-
-	elseif table.IsEmpty(finalSpawns) == false then
-
-		-- print("returning final spawns")
-
-		return finalSpawns[math.random(#finalSpawns)]
-
-	end
-
-end
-
-function ENT:DetermineSpawnTable(class, useTeamSpawns)
+local function DetermineSpawnTable(class, useTeamSpawns)
 
 	local baseSpawnTable = ents.FindByClass( "efgm_raid_spawn" )
 	local spawnTable = {}
@@ -429,13 +403,42 @@ function ENT:DetermineSpawnTable(class, useTeamSpawns)
 
 	end
 
+	print("Spawn table:")
+	PrintTable(spawnTable)
+
 	return spawnTable
 
 end
 
-function ENT:IndividualSpawn(ply, class, raidHasStarted)
+local function GetSmartSpawn(class, useTeamSpawns)
 
-	local randomSpawn = self:GetSmartSpawn(class, false)
+	local spawns = DetermineSpawnTable(class, useTeamSpawns)
+
+	print("Spawns are:")
+	PrintTable(spawns)
+
+	local finalSpawns = DoSmartSpawnStuff(spawns, 2048)
+
+	if table.IsEmpty(finalSpawns) == true then
+
+		print("returning regular spawns")
+		PrintTable(spawns)
+
+		return spawns[math.random(#spawns)]
+
+	elseif table.IsEmpty(finalSpawns) == false then
+
+		print("returning final spawns")
+
+		return finalSpawns[math.random(#finalSpawns)]
+
+	end
+
+end
+
+local function IndividualSpawn(ply, class, raidHasStarted)
+
+	local randomSpawn = GetSmartSpawn(class, false)
 
 	-- This is for debugging, leave it alone, I'll remove it when it needs to be removed
 
@@ -451,9 +454,9 @@ function ENT:IndividualSpawn(ply, class, raidHasStarted)
 
 end
 
-function ENT:PartySpawn(players, class)
+local function PartySpawn(players, class)
 
-	local randomSpawnTable = self:DetermineSpawnTable(class, true)
+	local randomSpawnTable = DetermineSpawnTable(class, true)
 
 	local randomSpawn = randomSpawnTable[math.random(#randomSpawnTable)]
 
@@ -518,6 +521,40 @@ end
 concommand.Add("efgm_join_team", AssignTeam)
 
 util.AddNetworkString("EnterRaidMenu")
+util.AddNetworkString("EnterRaidProper")
+
+net.Receive("EnterRaidProper", function(len, ply)
+
+	local playerClass = net.ReadUInt(4)
+
+	local playerClassTable = {
+		[0] = "PMC",
+		[1] = "PlayerScav"
+	}
+
+	if ply:GetNWBool("inRaid") == false then
+
+		if ply:GetNWBool("teamLeader") == false then
+		
+		end
+
+		if ply:GetNWString("playerTeam") != "" && ply:GetNWBool("teamLeader") == true then
+
+			PartySpawn( FindAllInTeam( ply:GetNWString( "playerTeam" ) ), playerClassTable[playerClass])
+
+		elseif ply:GetNWString("playerTeam") == "" && ply:GetNWBool("teamLeader") == true then
+
+			IndividualSpawn(ply, playerClassTable[playerClass], false)
+
+		elseif ply:GetNWString("playerTeam") != "" && ply:GetNWBool("teamLeader") == false then
+
+			IndividualSpawn(ply, playerClassTable[playerClass], false)
+
+		end
+		
+	end
+
+end)
 
 function ENT:AcceptInput(name, ply, caller, data)
 
@@ -549,26 +586,15 @@ function ENT:AcceptInput(name, ply, caller, data)
 			net.Start("EnterRaidMenu")
 			net.Send(ply)
 
-			-- if ply:GetNWBool("teamLeader") == false then ply:PrintMessage( HUD_PRINTTALK, "You are not a party leader!" ) return end
-
-			-- if ply:GetNWString("playerTeam") != "" then
-
-			-- 	self:PartySpawn( FindAllInTeam( ply:GetNWString( "playerTeam" ) ), "PMC")
-
-			-- elseif ply:GetNWString("playerTeam") == "" then
-
-			-- 	self:IndividualSpawn(ply, "PMC", false)
-
-			-- end
-
 		end
 
 		-- if ply:GetNWString("playerTeam") != "" then
 		-- 	local partyName = ply:GetNWString("playerTeam")
 		-- 	local partyPlayers = GetAllFromParty(partyName)
-		-- 	self:PartySpawn(partyPlayers, "PMC", false)
+		-- 	PartySpawn(partyPlayers, "PMC", false)
 		-- end
 
 	end
 
 end
+

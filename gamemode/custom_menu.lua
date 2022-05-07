@@ -1959,3 +1959,112 @@ function CustomTeamMenu()
 	end
 
 end
+
+net.Receive("EnterRaidMenu",function (len, ply)
+
+	EnterRaidMenu()
+
+end)
+
+function EnterRaidMenu()
+
+	-- Constants for easy use
+
+	local client = LocalPlayer()
+
+	local blackColor = 		Color(10, 10, 10, 255)
+	local whiteColor = 		Color(250, 250, 250, 255)
+	local offWhiteColor = 	Color(200, 200, 200, 255)
+
+	local primaryColor =	Color(30, 30, 30, 255)
+	local secondaryColor =	Color(100, 100, 100, 255)
+
+	local inRaidColor = 	Color(255, 50, 50, 255)		-- Red
+	local outRaidColor = 	Color(50, 255, 50, 255)		-- Green
+	local deadColor = 		Color(200, 200, 200, 255)		-- Gray
+
+	local width =			600
+	local height =			1000
+
+	local margin = 			10
+
+	local raidMenuFrame = vgui.Create( "DFrame" )
+	raidMenuFrame:SetPos( (ScrW() / 2) - (width / 2), (ScrH() / 2) - (height / 2) ) 
+	raidMenuFrame:SetSize( width, height ) 
+	raidMenuFrame:SetTitle( "Raid Menu" ) 
+	raidMenuFrame:SetVisible( true ) 
+	raidMenuFrame:SetDraggable( false ) 
+	raidMenuFrame:ShowCloseButton( true ) 
+	raidMenuFrame:MakePopup()
+
+	-- Other shit
+
+	raidMenuFrame.Paint = function(self, w, h)
+		draw.RoundedBox( 0, 0, 0, w, h, blackColor )
+	end
+
+	local raidMenuPanel = vgui.Create( "DPanel", raidMenuFrame )
+	raidMenuPanel:Dock( BOTTOM )
+	raidMenuPanel:SetSize(0, height - 40)
+
+	raidMenuPanel.Paint = function(self, w, h)
+
+		draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+
+	end
+
+	-- MAIN PANEL: The time has come text lol. Idk, it builds suspense or something. Fuck dude, get off my back man, tarky does it, im gonna do it. Fuck you, and fuck off, and leave me to my luas
+
+	local topTextPanel = vgui.Create( "DPanel", raidMenuPanel )
+	topTextPanel:Dock( TOP )
+	topTextPanel:DockMargin(margin, margin, margin, margin)
+	topTextPanel:SetSize(0, 80)
+
+	topTextPanel.Paint = function(self, w, h)
+
+		draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+
+		draw.SimpleText("THE TIME HAS COME", "DermaLarge", w / 2, h / 2, primaryColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+
+	end
+
+	-- MAIN PANEL: Raid Info Panel (shit like your team, raid time, your pmc, and a big ol' button for entering the raid)
+
+	local raidInfoPanel = vgui.Create( "DPanel", raidMenuPanel )
+	raidInfoPanel:Dock( FILL )
+	raidInfoPanel:DockMargin(margin, margin, margin, margin)
+
+	raidInfoPanel.Paint = function(self, w, h)
+
+		draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+
+		draw.SimpleText(client:GetName(), "DermaLarge", w / 2, 50, primaryColor, TEXT_ALIGN_CENTER)
+		draw.SimpleText("You are the party leader", "DermaDefault", w / 2, 30, primaryColor, TEXT_ALIGN_CENTER)
+
+		draw.RoundedBox( 0, 290 - 64 - 15, 100 - 15, 128 + 30, 128 + 30, primaryColor )
+
+	end
+
+	local playerAvatar = vgui.Create( "AvatarImage", raidInfoPanel )
+	playerAvatar:SetSize( 128, 128 )
+	playerAvatar:SetPos( 290 - 64, 100 )
+	playerAvatar:SetPlayer( LocalPlayer(), 128 )
+
+	local playerModelDisplay = vgui.Create( "DModelPanel", raidInfoPanel )
+	playerModelDisplay:SetSize(500, 500)
+	playerModelDisplay:SetPos(290 - 250, 250)
+	playerModelDisplay:SetModel( client:GetModel() )
+
+	local enterRaidButton = vgui.Create("DButton", raidInfoPanel)
+	enterRaidButton:Dock( BOTTOM )
+	enterRaidButton:DockMargin(margin, margin, margin, margin)
+	enterRaidButton:SetSize(0, 70)
+	enterRaidButton:SetText("Enter the Raid")
+
+	enterRaidButton.DoClick = function(self)
+
+		-- enter raid blah blah blah
+
+	end
+
+end

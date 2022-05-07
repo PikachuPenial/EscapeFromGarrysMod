@@ -517,6 +517,8 @@ function AssignTeam(ply, cmd, args)
 end
 concommand.Add("efgm_join_team", AssignTeam)
 
+util.AddNetworkString("EnterRaidMenu")
+
 function ENT:AcceptInput(name, ply, caller, data)
 
 	if name == "StartRaid" then
@@ -544,17 +546,20 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 		if self.RaidStarted == true then
 
-			if ply:GetNWBool("teamLeader") == false then ply:PrintMessage( HUD_PRINTTALK, "You are not a party leader!" ) return end
+			net.Start("EnterRaidMenu")
+			net.Send(ply)
 
-			if ply:GetNWString("playerTeam") != "" then
+			-- if ply:GetNWBool("teamLeader") == false then ply:PrintMessage( HUD_PRINTTALK, "You are not a party leader!" ) return end
 
-				self:PartySpawn( FindAllInTeam( ply:GetNWString( "playerTeam" ) ), "PMC")
+			-- if ply:GetNWString("playerTeam") != "" then
 
-			elseif ply:GetNWString("playerTeam") == "" then
+			-- 	self:PartySpawn( FindAllInTeam( ply:GetNWString( "playerTeam" ) ), "PMC")
 
-				self:IndividualSpawn(ply, "PMC", false)
+			-- elseif ply:GetNWString("playerTeam") == "" then
 
-			end
+			-- 	self:IndividualSpawn(ply, "PMC", false)
+
+			-- end
 
 		end
 

@@ -81,7 +81,7 @@ function gameShopMenu(ply, cmd, args)
 
 	if (inPlayerMenu == false) then
 		Menu = vgui.Create("DFrame")
-		Menu:SetSize(860, 1080)
+		Menu:SetSize(800, 800)
 		Menu:Center()
 		Menu:SetTitle("Escape From Garry's Mod")
 		Menu:SetDraggable(false)
@@ -1051,12 +1051,12 @@ end
 PANEL = {} --Creates empty panel
 
 function PANEL:Init() -- initializes the panel
-	self:SetSize(760, 1080)
+	self:SetSize(700, 800)
 	self:SetPos(100, 25)
 end
 
 function PANEL:Paint(w, h)
-	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 255))
+	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 0))
 end
 
 vgui.Register("PlayerPanel", PANEL, "Panel")
@@ -1069,12 +1069,12 @@ vgui.Register("PlayerPanel", PANEL, "Panel")
 PANEL = {} --Creates empty panel
 
 function PANEL:Init() -- initializes the panel
-	self:SetSize(760, 1080)
+	self:SetSize(700, 800)
 	self:SetPos(100, 25)
 end
 
 function PANEL:Paint(w, h)
-	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 255))
+	draw.RoundedBox(0, 0, 0, w, h, Color(50, 50, 50))
 end
 
 vgui.Register("ShopPanel", PANEL, "Panel")
@@ -1084,12 +1084,12 @@ vgui.Register("ShopPanel", PANEL, "Panel")
 PANEL = {} --Creates empty panel
 
 function PANEL:Init() -- initializes the panel
-	self:SetSize(760, 1080)
+	self:SetSize(700, 800)
 	self:SetPos(100, 25)
 end
 
 function PANEL:Paint(w, h)
-	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 255))
+	draw.RoundedBox(0, 0, 0, w, h, Color(50, 50, 50))
 end
 
 vgui.Register("TaskPanel", PANEL, "Panel")
@@ -1101,12 +1101,12 @@ vgui.Register("TaskPanel", PANEL, "Panel")
 PANEL = {} --Creates empty panel
 
 function PANEL:Init() -- initializes the panel
-	self:SetSize(760, 1080)
+	self:SetSize(700, 800)
 	self:SetPos(100, 25)
 end
 
 function PANEL:Paint(w, h)
-	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 0))
+	draw.RoundedBox(0, 0, 0, w, h, Color(50, 50, 50))
 end
 
 vgui.Register("SkillPanel", PANEL, "Panel")
@@ -1118,12 +1118,12 @@ vgui.Register("SkillPanel", PANEL, "Panel")
 PANEL = {} --Creates empty panel
 
 function PANEL:Init() -- initializes the panel
-	self:SetSize(760, 1080)
+	self:SetSize(700, 800)
 	self:SetPos(100, 25)
 end
 
 function PANEL:Paint(w, h)
-	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 255))
+	draw.RoundedBox(0, 0, 0, w, h, Color(50, 50, 50))
 end
 
 vgui.Register("PrestigePanel", PANEL, "Panel")
@@ -1135,12 +1135,12 @@ vgui.Register("PrestigePanel", PANEL, "Panel")
 PANEL = {} --Creates empty panel
 
 function PANEL:Init() -- initializes the panel
-	self:SetSize(760, 1080)
+	self:SetSize(700, 800)
 	self:SetPos(100, 25)
 end
 
 function PANEL:Paint(w, h)
-	draw.RoundedBox(0, 0, 0, w, h, Color(125, 125, 125, 255))
+	draw.RoundedBox(0, 0, 0, w, h, Color(50, 50, 50))
 end
 
 vgui.Register("StashMenuPanel", PANEL, "Panel")
@@ -1632,7 +1632,7 @@ function CustomTeamMenu()
 
 		-- FUCK ME THIS FIXED THE REFRESHING I HAD IT BEFORE THE FUCKING DRAWTEAMMENU IM SO PISSED AT MYSELF AUGHHHHHHHHHH ):<
 
-		
+
 
 		-- SUB PANEL: Team Name Panel (See your team's name and number of members)
 
@@ -1640,7 +1640,7 @@ function CustomTeamMenu()
 		teamNamePanel:Dock( TOP )
 		teamNamePanel:SetSize(0, 70)
 		teamNamePanel:DockMargin( margin, margin, margin, margin )
-	
+
 		teamNamePanel.Paint = function(self, w, h)
 
 			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
@@ -1650,7 +1650,7 @@ function CustomTeamMenu()
 				draw.SimpleText("Join or create a team here.", "DermaLarge", w / 2, h / 2, offWhiteColor, 1, 1)
 
 			elseif currentTeamName != nil then
-			
+
 				draw.SimpleText(string.Replace(currentTeamName, "_", " "), "DermaLarge", w / 2, h / 3, whiteColor, 1, 1)
 
 				local members = #FindAllInTeam(currentTeamName)
@@ -1674,7 +1674,7 @@ function CustomTeamMenu()
 		local teamInfoPanel = vgui.Create( "DPanel", teamMemberPanel )
 		teamInfoPanel:Dock( FILL )
 		teamInfoPanel:DockMargin( margin, margin, margin, margin )
-	
+
 		teamInfoPanel.Paint = function(self, w, h)
 
 			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
@@ -1700,11 +1700,11 @@ function CustomTeamMenu()
 					if #members <= 1 then
 
 						draw.SimpleText("Current Team Member:", "DermaLarge", 40, h / 16, whiteColor, 0, 1)
-	
+
 					elseif #members > 1 then
-	
+
 						draw.SimpleText("Current Team Members:", "DermaLarge", 40, h / 16, whiteColor, 0, 1)
-	
+
 					end
 
 				end
@@ -1735,11 +1735,11 @@ function CustomTeamMenu()
 					elseif v:GetNWBool("teamLeader") == false then
 
 						draw.SimpleText("- " .. v:GetName(), "DermaDefaultBold", 40, currentHeight, color, 0, 1)
-					
+
 					end
 
 				end
-	
+
 			end
 
 		end
@@ -1842,11 +1842,11 @@ function CustomTeamMenu()
 		searchPanel:Dock( TOP )
 		searchPanel:SetSize( 0, 40 )
 		searchPanel:DockMargin( margin, margin, margin, margin )
-	
+
 		searchPanel.Paint = function(self, w, h)
 			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
 		end
-		
+
 		local searchEntry = vgui.Create( "DTextEntry", searchPanel )
 		searchEntry:Dock( FILL )
 		searchEntry:SetPlaceholderText( "Search Teams (Placeholder, doesn't work yet)" )
@@ -1856,14 +1856,14 @@ function CustomTeamMenu()
 			client:PrintMessage(3, "Can you read???")
 
 		end
-		
+
 		-- SUB PANEL: Team Display Panel (Shows the teams you can join)
 
 		local teamDisplayPanel = vgui.Create( "DPanel", teamBrowserPanel )
 		teamDisplayPanel:Dock( FILL )
 		teamDisplayPanel:SetSize( 0, 250 )
 		teamDisplayPanel:DockMargin( margin, margin, margin, margin )
-	
+
 		teamDisplayPanel.Paint = function(self, w, h)
 			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
 		end
@@ -1879,7 +1879,7 @@ function CustomTeamMenu()
 				teamExamplePanel:Dock( TOP )
 				teamExamplePanel:DockMargin(5, 5, 5, 5)
 				teamExamplePanel:SetSize( 0, 70 )
-	
+
 				teamExamplePanel.Paint = function(self, w, h)
 					draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
 					draw.SimpleText(string.Replace(tostring(v), "_", " "), "DermaLarge", 5, 5, whiteColor)
@@ -1899,11 +1899,11 @@ function CustomTeamMenu()
 						if #members <= 1 then
 
 							draw.SimpleText(#members .. " Member", "DermaDefault", w - 5, 5, offWhiteColor, 2)
-	
+
 						elseif #members > 1 then
-	
+
 							draw.SimpleText(#members .. " Members", "DermaDefault", w - 5, 5, offWhiteColor, 2)
-	
+
 						end
 
 					end
@@ -1923,8 +1923,8 @@ function CustomTeamMenu()
 						draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
 						draw.SimpleText("You are in this team", "DermaDefault", w / 2, h / 2, whiteColor, 1, 1)
 					end
-		
-					
+
+
 
 				elseif v != client:GetNWString("playerTeam") then
 
@@ -1935,13 +1935,13 @@ function CustomTeamMenu()
 					joinTeamPassword:DockMargin( 5, 5, 5, 5 )
 					joinTeamPassword:SetSize( 0, 25 )
 					joinTeamPassword:SetPlaceholderText("Password for " .. string.Replace(v, "_", " "))
-		
+
 					joinTeamPassword.OnEnter = function(self)
-		
+
 						client:ConCommand("party_join " .. v .. " " .. string.Replace(self:GetText(), " ", "_"))
 
 						surface.PlaySound( "UI/buttonclick.wav" )
-		
+
 					end
 
 				end
@@ -1953,18 +1953,18 @@ function CustomTeamMenu()
 		teamMenuFrame.Think = function()
 
 			local newTeamName = client:GetNWInt("playerTeam")
-	
+
 			if newTeamName != currentTeamName then
-	
+
 				teamBrowserPanel:Clear()
 				teamMemberPanel:Clear()
-	
+
 				DrawTeamMenu()
 
 			end
-	
+
 		end
-	
+
 	end
 
 end
@@ -2051,7 +2051,7 @@ function EnterRaidMenu()
 
 			draw.SimpleText(client:GetName(), "DermaLarge", w / 2, 50, primaryColor, TEXT_ALIGN_CENTER)
 			draw.SimpleText("You are the party leader", "DermaDefault", w / 2, 30, primaryColor, TEXT_ALIGN_CENTER)
-			
+
 		elseif client:GetNWBool("teamLeader") == false then
 
 			draw.SimpleText(client:GetName(), "DermaLarge", w / 2, 50, primaryColor, TEXT_ALIGN_CENTER)
@@ -2081,7 +2081,7 @@ function EnterRaidMenu()
 		enterRaidButton:DockMargin(margin, margin, margin, margin)
 		enterRaidButton:SetSize(0, 70)
 		enterRaidButton:SetText("Enter the Raid")
-		
+	
 	elseif client:GetNWBool("teamLeader") == false then
 
 		enterRaidButton:Dock( BOTTOM )
@@ -2108,7 +2108,7 @@ function EnterRaidMenu()
 	enterRaidButton.Think = function()
 
 		if client:GetNWBool("inRaid") == true then
-			
+
 			raidMenuFrame:Close()
 
 		end

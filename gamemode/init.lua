@@ -6,6 +6,7 @@ AddCSLuaFile("map_menu.lua")
 AddCSLuaFile("raid_summary_menu.lua")
 AddCSLuaFile("cl_scoreboard.lua")
 AddCSLuaFile("sh_party_system.lua")
+AddCSLuaFile("tutorial_popup.lua")
 
 include("shared.lua")
 include("concommands.lua")

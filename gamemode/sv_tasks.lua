@@ -70,6 +70,47 @@ util.AddNetworkString("RequestTaskInfo")
 
 util.AddNetworkString("TaskComplete")
 
+local function FindValuesInList(lst, spr, key)
+
+    local ex = string.Explode(spr, lst)
+
+    local tbl = {}
+
+    for _, v in pairs(ex) do
+
+        local b = string.Explode("_", v)
+
+        if b[1] == key then
+            table.insert(tbl, b[2])
+        end
+    end
+
+    if table.IsEmpty(tbl) == false then
+        
+        return tbl
+
+    end
+
+    return nil
+
+end
+concommand.Add("efgm_debug_returnvalues", function(ply, cmd, args)
+
+    local list = table.concat(args, " ")
+
+    local values = FindValuesInList(list, " ", "locate")
+
+    if values != nil then
+
+        print( #values .. " instances of key locate found!")
+        PrintTable(values)
+
+    return end
+
+    ply:PrintMessage(HUD_PRINTCONSOLE, "List does not contain the key locate!") return
+
+end)
+
 local function SendTaskInfo(ply)
 
     if sql.Query( "SELECT TaskID FROM TaskTable WHERE TaskUser = " .. SQLStr( ply:SteamID64() ) .. ";" ) == nil then return end
@@ -408,48 +449,69 @@ hook.Add( "PlayerExtract", "PlayerExtracted", function(ply)
 
     if FindPlayerTaskIDs(ply) == nil then return end
 
-    for h, j in pairs(FindPlayerTaskIDs(ply)) do
+    -- previous method (ugly and has no bitches)
 
-        local taskObjectives = taskList[ tonumber( j ) ].TaskInternalObjectives
+    -- for h, j in pairs(FindPlayerTaskIDs(ply)) do
 
-        print(taskObjectives)
+    --     local taskObjectives = taskList[ tonumber( j ) ].TaskInternalObjectives
 
-        -- converts all objectives into singular objectives in a table
+    --     print(taskObjectives)
 
-        local taskObjectivesExploded = string.Explode( " ", taskObjectives )
+    --     -- converts all objectives into singular objectives in a table
 
-        PrintTable(taskObjectivesExploded)
+    --     local taskObjectivesExploded = string.Explode( " ", taskObjectives )
 
-        for k, v in pairs( taskObjectivesExploded ) do
+    --     PrintTable(taskObjectivesExploded)
 
-            if string.find( v, "extract" ) != nil then
+    --     for k, v in pairs( taskObjectivesExploded ) do
 
-                -- v[k] == extract_<mapname>
+    --         if string.find( v, "extract" ) != nil then
 
-                tableForShit = string.Explode( "_", v )
+    --             -- v[k] == extract_<mapname>
 
-                PrintTable(tableForShit)
+    --             tableForShit = string.Explode( "_", v )
 
-                for iter, b in pairs ( tableForShit ) do
+    --             PrintTable(tableForShit)
 
-                    -- b == <mapname>
+    --             for iter, b in pairs ( tableForShit ) do
 
-                    local mapName = "efgm_" .. b
+    --                 -- b == <mapname>
 
-                    if mapName == game.GetMap() then
+    --                 local mapName = "efgm_" .. b
 
-                        print("completing subtask number " .. k)
+    --                 if mapName == game.GetMap() then
 
-                        CompleteSubtask(ply, tonumber( j ), k)
+    --                     print("completing subtask number " .. k)
 
-                    end
+    --                     CompleteSubtask(ply, tonumber( j ), k)
 
-                end
+    --                 end
 
-            end
+    --             end
+
+    --         end
+
+    --     end
+    -- end
+
+    -- new method (beautiful and probably has bitches idk)
+
+    for k, v in pairs(FindPlayerTaskIDs(ply)) do
+
+        local objs = taskList[ tonumber( v ) ].TaskInternalObjectives
+
+        local mapName = FindValuesInList(objs, " ", "extract")
+
+        if mapName == game.GetMap() then
+
+            print("completing subtask number " .. k)
+
+            CompleteSubtask(ply, tonumber( j ), k)
 
         end
+
     end
+
 
 end )
 

@@ -96,6 +96,14 @@ function ENT:CheckForPlayers()
 
 							ply:SetNWInt("extractionStreak", ply:GetNWInt("extractionStreak") + 1)
 
+							if ply:GetNWInt("successfulOperationsComplete") == 0 then
+								ply:SetNWInt("mapExtracts", ply:GetNWInt("mapExtracts") + 1)
+							end
+
+							if ply:GetNWInt("raidKill") >= 3 then
+								ply:SetNWInt("weeklyExtracts", ply:GetNWInt("weeklyExtracts") + 1)
+							end
+
 							if (ply:GetNWInt("playerLvl") < 32) then
 								ply:SetNWInt("playerExp", math.Round(ply:GetNWInt("playerExp") + (expGained * ply:GetNWInt("expMulti"))), 1)
 							end
@@ -124,6 +132,8 @@ function ENT:CheckForPlayers()
 
 							ply:ConCommand("open_raid_summary_menu")
 
+							checkForSuccessfulOperations(ply)
+							checkForWeeklyTwo(ply)
 							checkForLevel(ply)
 
 							ply:SetPos(chosenSpawn:GetPos())

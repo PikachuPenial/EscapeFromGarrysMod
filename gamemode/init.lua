@@ -16,6 +16,7 @@ include("sv_tasks.lua")
 include("sv_skills.lua")
 include("sv_party_system.lua")
 include("sv_pdata.lua")
+include("sv_dailytasks.lua")
 
 include("sh_party_system.lua")
 
@@ -243,6 +244,38 @@ function GM:PlayerInitialSpawn(ply)
 	ply:SetNWInt("strengthFatigue", 0)
 	ply:SetNWInt("covertFatigue", 0)
 
+	--Daily Tasks
+	ply:SetNWInt("mapKills", 0)
+	ply:SetNWInt("mapExtracts", 0)
+
+	ply:SetNWInt("eliminationComplete", 0)
+	ply:SetNWInt("successfulOperationsComplete", 0)
+
+	--Weekly Tasks
+	if (ply:GetPData("weeklyDistance") == nil) then
+		ply:SetNWInt("weeklyDistance", 0)
+	else
+		ply:SetNWInt("weeklyDistance", tonumber(ply:GetPData("weeklyDistance")))
+	end
+
+	if (ply:GetPData("weeklyExtracts") == nil) then
+		ply:SetNWInt("weeklyExtracts", 0)
+	else
+		ply:SetNWInt("weeklyExtracts", tonumber(ply:GetPData("weeklyExtracts")))
+	end
+
+	if (ply:GetPData("weeklyDistanceComplete") == nil) then
+		ply:SetNWInt("weeklyDistanceComplete", 0)
+	else
+		ply:SetNWInt("weeklyDistanceComplete", tonumber(ply:GetPData("weeklyDistanceComplete")))
+	end
+
+	if (ply:GetPData("weeklyExtractsComplete") == nil) then
+		ply:SetNWInt("weeklyExtractsComplete", 0)
+	else
+		ply:SetNWInt("weeklyExtractsComplete", tonumber(ply:GetPData("weeklyExtractsComplete")))
+	end
+
 	--Skills
 
 	--Endurance
@@ -349,6 +382,10 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 			attacker:SetNWInt("raidXP", math.Round(attacker:GetNWInt("raidXP") + (expGained * attacker:GetNWInt("expMulti"))), 1)
 		end
 
+		if (attacker:GetNWInt("eliminationComplete") == 0) then
+			attacker:SetNWInt("mapKills", attacker:GetNWInt("mapKills") + killGained)
+		end
+
 		attacker:SetNWInt("playerKills", attacker:GetNWInt("playerKills") + killGained)
 		attacker:SetNWInt("raidKill", attacker:GetNWInt("raidKill") + killGained)
 
@@ -370,6 +407,7 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 		victim:SetNWInt("expMulti", 1)
 
 		checkForLevel(attacker)
+		checkForElimination(attacker)
 	end
 end
 
@@ -384,6 +422,9 @@ hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
 
 		victim:PrintMessage(HUD_PRINTCENTER, attacker:Name() .. " killed you from " .. distance .. "m away.")
 		victim:PrintMessage(HUD_PRINTCENTER, "They had an " .. weaponInfo["PrintName"]  .. ".")
+
+		attacker:SetNWInt("weeklyDistance", attacker:GetNWInt("weeklyDistance") + distance)
+		checkForWeekly(attacker)
 	end
 end)
 
@@ -489,6 +530,13 @@ function GM:PlayerDisconnected(ply)
 	ply:SetPData("killStreak", ply:GetNWInt("killStreak"))
 	ply:SetPData("extractionStreak", ply:GetNWInt("extractionStreak"))
 	ply:SetPData("expMulti", ply:GetNWInt("expMulti"))
+
+	--Tasks
+	ply:SetPData("weeklyDistance", ply:GetNWInt("weeklyDistance"))
+	ply:SetPData("weeklyExtracts", ply:GetNWInt("weeklyExtracts"))
+
+	ply:SetPData("weeklyDistanceComplete", ply:GetNWInt("weeklyDistanceComplete"))
+	ply:SetPData("weeklyExtractsComplete", ply:GetNWInt("weeklyExtractsComplete"))
 end
 
 function GM:ShutDown()
@@ -540,6 +588,13 @@ function GM:ShutDown()
 		v:SetPData("killStreak", v:GetNWInt("killStreak"))
 		v:SetPData("extractionStreak", v:GetNWInt("extractionStreak"))
 		v:SetPData("expMulti", v:GetNWInt("expMulti"))
+
+		--Tasks
+		v:SetPData("weeklyDistance", v:GetNWInt("weeklyDistance"))
+		v:SetPData("weeklyExtracts", v:GetNWInt("weeklyExtracts"))
+
+		v:SetPData("weeklyDistanceComplete", v:GetNWInt("weeklyDistanceComplete"))
+		v:SetPData("weeklyExtractsComplete", v:GetNWInt("weeklyExtractsComplete"))
 	end
 end
 

@@ -152,7 +152,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		--Draw/write text
 		draw.DrawText(LocalPlayer():GetName(), "DermaLarge", playerButton:GetWide() / 2.1, 10, Color(255, 255, 255, 255), 1)
 	end
-	playerButton.DoClick = function(playerButton)
+	playerButton.DoClick = function()
 		local playerPanel = Menu:Add("PlayerPanel")
 
 		playerPanel.Paint = function()
@@ -280,171 +280,6 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		end
 	end
 
-	local playerButton = vgui.Create("DButton")
-	playerButton:SetParent(Menu)
-	playerButton:SetText("")
-	playerButton:SetSize(100, 300)
-	playerButton:SetPos(0, 400)
-	playerButton.Paint = function()
-		--Color of entire button
-		surface.SetDrawColor(50, 50, 50, 255)
-		surface.DrawRect(0, 0, playerButton:GetWide(), playerButton:GetTall())
-
-
-		--Draw/write text
-		draw.DrawText("HELP", "DermaLarge", playerButton:GetWide() / 2.1, 125, Color(80, 255, 255, 255), 1)
-	end
-	playerButton.DoClick = function(playerButton)
-		local playerPanel = Menu:Add("PlayerPanel")
-
-		playerPanel.Paint = function()
-			surface.SetDrawColor(50, 50, 50, 255)
-			surface.DrawRect(0, 0, playerPanel:GetWide(), playerPanel:GetTall())
-			surface.SetTextColor(255, 255, 255, 255)
-
-			-- Player Name
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 0)
-			surface.DrawText("Welcome to Escape From Garry's Mod!")
-
-			-- Help Text One
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 50)
-			surface.DrawText("For the best experience, input these into your console.")
-
-			-- Help Text Two
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 90)
-			surface.DrawText("bind q +alt1    (Let's you lean to the left.)")
-
-			-- Help Text Three
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 120)
-			surface.DrawText("bind e +alt2    (Let's you lean to the right.)")
-
-			-- Help Text Five
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 200)
-			surface.DrawText("The button on the table at the end of the lobby will put you into")
-
-			-- Help Text Six
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 225)
-			surface.DrawText("the raid, if one is ongoing. If no raid is found, one will start.")
-
-			-- Help Text Seven
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 275)
-			surface.DrawText("The buttons on the computer terminals will let you access your")
-
-			-- Help Text Eight
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 300)
-			surface.DrawText("stash, you can store your weapons/items here safely.")
-
-			-- Help Text Nine
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 350)
-			surface.DrawText("The buttons on the wall near the spawn let you sell gear.")
-
-			-- Help Text Ten
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 400)
-			surface.DrawText("While in the lobby, press (F4) to access the shop!")
-
-			-- Help Text Eleven
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 425)
-			surface.DrawText("You can buy guns, ammo, armor, and other goodies from here!")
-
-			-- Help Text Twelve
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 475)
-			surface.DrawText("Your goal in raid is to go in, get loot, fight others, and get out.")
-
-			-- Help Text Thirteen
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 500)
-			surface.DrawText("You will lose any gear that you had if you die in a raid.")
-
-			-- Help Text Fourteen
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 525)
-			surface.DrawText("You can find loot anywhere around the map.")
-
-			-- Help Text Fifteen
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 575)
-			surface.DrawText("To exit a raid and stay alive, you need to find an extract.")
-
-			-- Help Text Fifteen
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 600)
-			surface.DrawText("Press your spawn menu key to check your list of extracts.")
-
-			-- Help Text Sixteen
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 625)
-			surface.DrawText("If you can extract from a raid, you can then put the loot you")
-
-			-- Help Text Seventeen
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 650)
-			surface.DrawText("found in your stash, or sell it for even more money.")
-
-			-- Help Text Eighteen
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 700)
-			surface.DrawText("Raids will last a total of 30 minutes, and you need to get out by")
-
-			-- Help Text Ninteen
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 725)
-			surface.DrawText("the end of the raid to survive! Anyone still in the raid when it")
-
-			-- Help Text Twenty
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 750)
-			surface.DrawText("ends will be killed, and will lose anything they had.")
-
-			-- Help Text Twenty One
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 800)
-			surface.DrawText("Most maps have special events that can be triggered by doing")
-
-			-- Help Text Twenty One
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 825)
-			surface.DrawText("specific things around the map!")
-
-			-- Help Text Twenty Two
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 875)
-			surface.DrawText("And while teaming is allowed, be aware that you can be")
-
-			-- Help Text Twenty Three
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 900)
-			surface.DrawText("betrayed at any time!")
-
-			-- Help Text Twenty Four
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 950)
-			surface.DrawText("EFGM is currently in BETA, and we appreciate you for")
-
-			-- Help Text Twenty Five
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 975)
-			surface.DrawText("trying it out, if you have any issues, contact us on discord.")
-
-			-- Help Text Twenty Six
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(5, 1020)
-			surface.DrawText("          Portator#6582                                          Penial#3298")
-
-		end
-	end
-
 	local skillButton = vgui.Create("DButton")
 	skillButton:SetParent(Menu)
 	skillButton:SetText("")
@@ -513,7 +348,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.DrawRect(50, 100, 500, 30)
 
 			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(51, 102.5, 500 * (LocalPlayer():GetNWInt("enduranceExperience") / enduranceExpToLevel), 25)
+			surface.DrawRect(51, 102.5, 498.5 * (LocalPlayer():GetNWInt("enduranceExperience") / enduranceExpToLevel), 25)
 
 			surface.SetTextPos(260, 100)
 			surface.DrawText(enduranceProgressText)
@@ -527,7 +362,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.DrawRect(50, 250, 500, 30)
 
 			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(51, 252.5, 500 * (LocalPlayer():GetNWInt("strengthExperience") / strengthExpToLevel), 25)
+			surface.DrawRect(51, 252.5, 498.5 * (LocalPlayer():GetNWInt("strengthExperience") / strengthExpToLevel), 25)
 
 			surface.SetTextPos(260, 250)
 			surface.DrawText(strengthProgressText)
@@ -541,7 +376,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.DrawRect(50, 400, 500, 30)
 
 			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(51, 402.5, 500 * (LocalPlayer():GetNWInt("charismaExperience") / charismaExpToLevel), 25)
+			surface.DrawRect(51, 402.5, 498.5 * (LocalPlayer():GetNWInt("charismaExperience") / charismaExpToLevel), 25)
 
 			surface.SetTextPos(260, 400)
 			surface.DrawText(charismaProgressText)
@@ -555,7 +390,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.DrawRect(50, 550, 500, 30)
 
 			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(51, 552.5, 500 * (LocalPlayer():GetNWInt("covertExperience") / covertExpToLevel), 25)
+			surface.DrawRect(51, 552.5, 498.5 * (LocalPlayer():GetNWInt("covertExperience") / covertExpToLevel), 25)
 
 			surface.SetTextPos(260, 550)
 			surface.DrawText(covertProgressText)
@@ -578,10 +413,147 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		end
 	end
 
+	local dailyButton = vgui.Create("DButton")
+	dailyButton:SetParent(Menu)
+	dailyButton:SetText("")
+	dailyButton:SetSize(100, 50)
+	dailyButton:SetPos(0, 75)
+	dailyButton.Paint = function()
+		--Color of entire button
+		surface.SetDrawColor(50, 50, 50, 255)
+		surface.DrawRect(0, 0, dailyButton:GetWide(), dailyButton:GetTall())
+
+		--Draw bottom and Right borders
+		surface.SetDrawColor(40, 40, 40, 255)
+		surface.DrawRect(0, 49, dailyButton:GetWide(), 1)
+		surface.DrawRect(99, 0, 1, dailyButton:GetTall())
+
+		--Draw/write text
+
+		draw.DrawText("TASKS", "DermaLarge", dailyButton:GetWide() / 2.1, 10, Color(255, 165, 0, 255), 1)
+
+	end
+
+	dailyButton.DoClick = function()
+
+		local skillPanel = Menu:Add("DailyPanel")
+
+		local expToLevel = (LocalPlayer():GetNWInt("playerLvl") * 140) * 5.15
+		local dailyRewardXP = math.Round(expToLevel / 6, 1)
+
+		skillPanel.Paint = function()
+			surface.SetDrawColor(50, 50, 50, 255)
+			surface.DrawRect(0, 0, skillPanel:GetWide(), skillPanel:GetTall())
+			surface.SetTextColor(255, 255, 255, 255)
+
+			surface.SetFont("CloseCaption_BoldItalic")
+			surface.SetTextPos(50, 50)
+			surface.DrawText("Dailies : Resets at the beginning of each map.")
+
+			--Elimination
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(50, 100)
+			surface.DrawText("Elimination : " .. "Get kills on other players")
+
+			surface.SetFont("DermaDefaultBold")
+			surface.SetTextPos(50, 190)
+			surface.DrawText("Rewards : " .. dailyRewardXP .. " EXP, " .. "₽2500")
+
+			surface.SetDrawColor(100, 100, 100, 255)
+			surface.DrawRect(50, 150, 500, 30)
+
+			surface.SetFont("DermaLarge")
+			surface.SetDrawColor(0, 255, 50, 255)
+			surface.DrawRect(51, 152.5, 498.5 * (LocalPlayer():GetNWInt("mapKills") / "6"), 25)
+
+			if LocalPlayer():GetNWInt("eliminationComplete") == 0 then
+				surface.SetTextPos(260, 150)
+				surface.DrawText(LocalPlayer():GetNWInt("mapKills") .. " / " .. "6")
+			else
+				surface.SetTextPos(200, 150)
+				surface.DrawText("Task Completed")
+			end
+
+			--Successful Operations
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(50, 250)
+			surface.DrawText("Successful Operations : " .. "Extract from raids")
+
+			surface.SetFont("DermaDefaultBold")
+			surface.SetTextPos(50, 340)
+			surface.DrawText("Rewards : " .. dailyRewardXP .. " EXP, " .. "₽2500")
+
+			surface.SetDrawColor(100, 100, 100, 255)
+			surface.DrawRect(50, 300, 500, 30)
+
+			surface.SetFont("DermaLarge")
+			surface.SetDrawColor(0, 255, 50, 255)
+			surface.DrawRect(51, 302.5, 498.5 * (LocalPlayer():GetNWInt("mapExtracts") / "2"), 25)
+
+			if LocalPlayer():GetNWInt("successfulOperationsComplete") == 0 then
+				surface.SetTextPos(260, 300)
+				surface.DrawText(LocalPlayer():GetNWInt("mapExtracts") .. " / " .. "2")
+			else
+				surface.SetTextPos(200, 300)
+				surface.DrawText("Task Completed")
+			end
+
+			surface.SetFont("CloseCaption_BoldItalic")
+			surface.SetTextPos(50, 400)
+			surface.DrawText("Weeklies : Resets and changes at the beginning of each wipe.")
+
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(50, 450)
+			surface.DrawText("Rangefinder : " .. "Total kill distance in meters")
+
+			surface.SetFont("DermaDefaultBold")
+			surface.SetTextPos(50, 540)
+			surface.DrawText("Rewards : " .. "₽66666")
+
+			surface.SetDrawColor(100, 100, 100, 255)
+			surface.DrawRect(50, 500, 500, 30)
+
+			surface.SetFont("DermaLarge")
+			surface.SetDrawColor(0, 255, 50, 255)
+			surface.DrawRect(51, 502.5, 498.5 * (LocalPlayer():GetNWInt("weeklyDistance") / "4000"), 25)
+
+			if LocalPlayer():GetNWInt("weeklyDistanceComplete") == 0 then
+				surface.SetTextPos(260, 500)
+				surface.DrawText(LocalPlayer():GetNWInt("weeklyDistance") .. " / " .. "4000")
+			else
+				surface.SetTextPos(200, 500)
+				surface.DrawText("Task Completed")
+			end
+
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(50, 600)
+			surface.DrawText("Wanted : " .. "Extract from raids with more than 3 kills")
+
+			surface.SetFont("DermaDefaultBold")
+			surface.SetTextPos(50, 690)
+			surface.DrawText("Rewards : " .. "₽66666")
+
+			surface.SetDrawColor(100, 100, 100, 255)
+			surface.DrawRect(50, 650, 500, 30)
+
+			surface.SetFont("DermaLarge")
+			surface.SetDrawColor(0, 255, 50, 255)
+			surface.DrawRect(51, 652.5, 498.5 * (LocalPlayer():GetNWInt("weeklyExtracts") / "20"), 25)
+
+			if LocalPlayer():GetNWInt("weeklyExtractsComplete") == 0 then
+				surface.SetTextPos(260, 650)
+				surface.DrawText(LocalPlayer():GetNWInt("weeklyExtracts") .. " / " .. "20")
+			else
+				surface.SetTextPos(200, 500)
+				surface.DrawText("Task Completed")
+			end
+		end
+	end
+
 	local taskButton = vgui.Create("DButton")
 	taskButton:SetParent(Menu)
 	taskButton:SetText("")
-	taskButton:SetSize(100, 50)
+	taskButton:SetSize(0, 0)
 	taskButton:SetPos(0, 75)
 	taskButton.Paint = function()
 		--Color of entire button
@@ -1095,6 +1067,24 @@ end
 vgui.Register("TaskPanel", PANEL, "Panel")
 
 --End task panel
+
+--Dailies Panel
+
+PANEL = {} --Creates empty panel
+
+function PANEL:Init() -- initializes the panel
+	self:SetSize(700, 800)
+	self:SetPos(100, 25)
+end
+
+function PANEL:Paint(w, h)
+	draw.RoundedBox(0, 0, 0, w, h, Color(50, 50, 50))
+end
+
+vgui.Register("DailyPanel", PANEL, "Panel")
+
+--End dailes panel
+
 
 --Skills Panel
 

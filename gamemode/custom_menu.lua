@@ -1924,23 +1924,49 @@ function CustomTeamMenu()
 						draw.SimpleText("You are in this team", "DermaDefault", w / 2, h / 2, whiteColor, 1, 1)
 					end
 
-
-
 				elseif v != client:GetNWString("playerTeam") then
 
 					-- If they are not in this team
 
-					local joinTeamPassword = vgui.Create( "DTextEntry", teamExamplePanel )
-					joinTeamPassword:Dock( BOTTOM )
-					joinTeamPassword:DockMargin( 5, 5, 5, 5 )
-					joinTeamPassword:SetSize( 0, 25 )
-					joinTeamPassword:SetPlaceholderText("Password for " .. string.Replace(v, "_", " "))
+					local teamLeader = FindTeamLeader(v)
 
-					joinTeamPassword.OnEnter = function(self)
+					print("Team leader = " .. teamLeader:GetName())
 
-						client:ConCommand("party_join " .. v .. " " .. string.Replace(self:GetText(), " ", "_"))
+					if teamLeader:GetNWString("teamPassword") == "" then
+						
+						-- If they don't have a password
 
-						surface.PlaySound( "UI/buttonclick.wav" )
+						local joinTeamButton = vgui.Create( "DButton", teamExamplePanel )
+						joinTeamButton:Dock( BOTTOM )
+						joinTeamButton:DockMargin( 5, 5, 5, 5 )
+						joinTeamButton:SetSize( 0, 25 )
+						joinTeamButton:SetText("Join " .. v)
+
+						joinTeamButton.DoClick = function(self)
+
+							client:ConCommand("party_join " .. v)
+
+							surface.PlaySound( "UI/buttonclick.wav" )
+
+						end
+
+					elseif teamLeader:GetNWString("teamPassword") != "" then
+						
+						-- If they use a password
+
+						local joinTeamPassword = vgui.Create( "DTextEntry", teamExamplePanel )
+						joinTeamPassword:Dock( BOTTOM )
+						joinTeamPassword:DockMargin( 5, 5, 5, 5 )
+						joinTeamPassword:SetSize( 0, 25 )
+						joinTeamPassword:SetPlaceholderText("Password for " .. string.Replace(v, "_", " "))
+
+						joinTeamPassword.OnEnter = function(self)
+
+							client:ConCommand("party_join " .. v .. " " .. string.Replace(self:GetText(), " ", "_"))
+
+							surface.PlaySound( "UI/buttonclick.wav" )
+
+						end
 
 					end
 

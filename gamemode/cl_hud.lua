@@ -39,7 +39,21 @@ function HUD()
 
 	if client:GetNWString("playerTeam") != "" then
 
-		draw.SimpleText("Team: " .. string.Replace(client:GetNWString("playerTeam"), "_", " "), "DermaLarge", ScrW() - 10, 10, white, 2, 2)
+		local teamMembers = FindAllInTeam(client:GetNWString("playerTeam"))
+
+		for k, v in pairs(teamMembers) do
+
+			local leaderText = ""
+
+			if v:GetNWBool("teamLeader") == true then
+				
+				leaderText = "* "
+
+			end
+			
+			draw.SimpleText(leaderText .. v:GetName(), "DermaLarge", ScrW() - 10, 5 + ((k - 1) * 35), white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP)
+
+		end
 
 	end
 

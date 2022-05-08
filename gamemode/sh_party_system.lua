@@ -48,6 +48,24 @@ function FindAllInTeam(teamName)
 
 end
 
+function FindTeamLeader(teamName)
+
+	if teamName == nil then return nil end
+
+	for k, v in pairs(player.GetHumans()) do
+
+		if v:GetNWString("playerTeam") == teamName && v:GetNWBool("teamLeader") == true then
+
+			return v
+
+		end
+
+	end
+
+	return nil
+
+end
+
 function FindAllTeams()
 
 	local parties = {}

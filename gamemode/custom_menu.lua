@@ -1840,7 +1840,7 @@ function CustomTeamMenu()
 
 		local searchPanel = vgui.Create( "DPanel", teamBrowserPanel )
 		searchPanel:Dock( TOP )
-		searchPanel:SetSize( 0, 40 )
+		searchPanel:SetSize( 0, 90 )
 		searchPanel:DockMargin( margin, margin, margin, margin )
 
 		searchPanel.Paint = function(self, w, h)
@@ -1848,7 +1848,9 @@ function CustomTeamMenu()
 		end
 
 		local searchEntry = vgui.Create( "DTextEntry", searchPanel )
-		searchEntry:Dock( FILL )
+		searchEntry:Dock( TOP )
+		searchEntry:SetSize( 0, 30 )
+		searchEntry:DockMargin( margin, margin, margin, margin )
 		searchEntry:SetPlaceholderText( "Search Teams (Placeholder, doesn't work yet)" )
 
 		searchEntry.OnEnter = function()
@@ -1856,6 +1858,11 @@ function CustomTeamMenu()
 			client:PrintMessage(3, "Can you read???")
 
 		end
+
+		local refreshButton = vgui.Create( "DButton", searchPanel )
+		refreshButton:Dock( FILL )
+		refreshButton:DockMargin( margin, margin, margin, margin )
+		refreshButton:SetText( "Refresh" )
 
 		-- SUB PANEL: Team Display Panel (Shows the teams you can join)
 
@@ -1871,100 +1878,112 @@ function CustomTeamMenu()
 		local teamDisplayScroller = vgui.Create( "DScrollPanel", teamDisplayPanel )
 		teamDisplayScroller:Dock( FILL )
 
-		if FindAllTeams() != nil then
+		refreshButton.DoClick = function()
 
-			for k, v in pairs( FindAllTeams() ) do
+			teamDisplayScroller:Clear()
 
-				local teamExamplePanel = vgui.Create( "DPanel", teamDisplayScroller )
-				teamExamplePanel:Dock( TOP )
-				teamExamplePanel:DockMargin(5, 5, 5, 5)
-				teamExamplePanel:SetSize( 0, 70 )
+			DrawTeamPanels()
 
-				teamExamplePanel.Paint = function(self, w, h)
-					draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
-					draw.SimpleText(string.Replace(tostring(v), "_", " "), "DermaLarge", 5, 5, whiteColor)
+		end
 
-					local members = FindAllInTeam(v)
+		function DrawTeamPanels()
 
-					if members == nil or table.IsEmpty(members) == true then
+			if FindAllTeams() != nil then
 
-						teamExamplePanel.Think = function()
+				for k, v in pairs( FindAllTeams() ) do
 
-							members = FindAllInTeam(v)
+					local teamExamplePanel = vgui.Create( "DPanel", teamDisplayScroller )
+					teamExamplePanel:Dock( TOP )
+					teamExamplePanel:DockMargin(5, 5, 5, 5)
+					teamExamplePanel:SetSize( 0, 70 )
 
-						end
-
-					elseif members != nil or table.IsEmpty(members) == false then
-
-						if #members <= 1 then
-
-							draw.SimpleText(#members .. " Member", "DermaDefault", w - 5, 5, offWhiteColor, 2)
-
-						elseif #members > 1 then
-
-							draw.SimpleText(#members .. " Members", "DermaDefault", w - 5, 5, offWhiteColor, 2)
-
-						end
-
-					end
-
-				end
-
-				if v == client:GetNWString("playerTeam") then
-
-					-- If they are already in this team
-
-					local joinTeamPanel = vgui.Create( "DPanel", teamExamplePanel )
-					joinTeamPanel:Dock( BOTTOM )
-					joinTeamPanel:DockMargin( 5, 5, 5, 5 )
-					joinTeamPanel:SetSize( 0, 25 )
-
-					joinTeamPanel.Paint = function(self, w, h)
+					teamExamplePanel.Paint = function(self, w, h)
 						draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
-						draw.SimpleText("You are in this team", "DermaDefault", w / 2, h / 2, whiteColor, 1, 1)
-					end
+						draw.SimpleText(string.Replace(tostring(v), "_", " "), "DermaLarge", 5, 5, whiteColor)
 
-				elseif v != client:GetNWString("playerTeam") then
+						local members = FindAllInTeam(v)
 
-					-- If they are not in this team
+						if members == nil or table.IsEmpty(members) == true then
 
-					local teamLeader = FindTeamLeader(v)
+							teamExamplePanel.Think = function()
 
-					print("Team leader = " .. teamLeader:GetName())
+								members = FindAllInTeam(v)
 
-					if teamLeader:GetNWString("teamPassword") == "" then
-						
-						-- If they don't have a password
+							end
 
-						local joinTeamButton = vgui.Create( "DButton", teamExamplePanel )
-						joinTeamButton:Dock( BOTTOM )
-						joinTeamButton:DockMargin( 5, 5, 5, 5 )
-						joinTeamButton:SetSize( 0, 25 )
-						joinTeamButton:SetText("Join " .. v)
+						elseif members != nil or table.IsEmpty(members) == false then
 
-						joinTeamButton.DoClick = function(self)
+							if #members <= 1 then
 
-							client:ConCommand("party_join " .. v)
+								draw.SimpleText(#members .. " Member", "DermaDefault", w - 5, 5, offWhiteColor, 2)
 
-							surface.PlaySound( "UI/buttonclick.wav" )
+							elseif #members > 1 then
+
+								draw.SimpleText(#members .. " Members", "DermaDefault", w - 5, 5, offWhiteColor, 2)
+
+							end
 
 						end
 
-					elseif teamLeader:GetNWString("teamPassword") != "" then
-						
-						-- If they use a password
+					end
 
-						local joinTeamPassword = vgui.Create( "DTextEntry", teamExamplePanel )
-						joinTeamPassword:Dock( BOTTOM )
-						joinTeamPassword:DockMargin( 5, 5, 5, 5 )
-						joinTeamPassword:SetSize( 0, 25 )
-						joinTeamPassword:SetPlaceholderText("Password for " .. string.Replace(v, "_", " "))
+					if v == client:GetNWString("playerTeam") then
 
-						joinTeamPassword.OnEnter = function(self)
+						-- If they are already in this team
 
-							client:ConCommand("party_join " .. v .. " " .. string.Replace(self:GetText(), " ", "_"))
+						local joinTeamPanel = vgui.Create( "DPanel", teamExamplePanel )
+						joinTeamPanel:Dock( BOTTOM )
+						joinTeamPanel:DockMargin( 5, 5, 5, 5 )
+						joinTeamPanel:SetSize( 0, 25 )
 
-							surface.PlaySound( "UI/buttonclick.wav" )
+						joinTeamPanel.Paint = function(self, w, h)
+							draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+							draw.SimpleText("You are in this team", "DermaDefault", w / 2, h / 2, whiteColor, 1, 1)
+						end
+
+					elseif v != client:GetNWString("playerTeam") then
+
+						-- If they are not in this team
+
+						local teamLeader = FindTeamLeader(v)
+
+						print("Team leader = " .. teamLeader:GetName())
+
+						if teamLeader:GetNWString("teamPassword") == "" then
+							
+							-- If they don't have a password
+
+							local joinTeamButton = vgui.Create( "DButton", teamExamplePanel )
+							joinTeamButton:Dock( BOTTOM )
+							joinTeamButton:DockMargin( 5, 5, 5, 5 )
+							joinTeamButton:SetSize( 0, 25 )
+							joinTeamButton:SetText("Join " .. v)
+
+							joinTeamButton.DoClick = function(self)
+
+								client:ConCommand("party_join " .. v)
+
+								surface.PlaySound( "UI/buttonclick.wav" )
+
+							end
+
+						elseif teamLeader:GetNWString("teamPassword") != "" then
+							
+							-- If they use a password
+
+							local joinTeamPassword = vgui.Create( "DTextEntry", teamExamplePanel )
+							joinTeamPassword:Dock( BOTTOM )
+							joinTeamPassword:DockMargin( 5, 5, 5, 5 )
+							joinTeamPassword:SetSize( 0, 25 )
+							joinTeamPassword:SetPlaceholderText("Password for " .. string.Replace(v, "_", " "))
+
+							joinTeamPassword.OnEnter = function(self)
+
+								client:ConCommand("party_join " .. v .. " " .. string.Replace(self:GetText(), " ", "_"))
+
+								surface.PlaySound( "UI/buttonclick.wav" )
+
+							end
 
 						end
 
@@ -1975,6 +1994,8 @@ function CustomTeamMenu()
 			end
 
 		end
+
+		DrawTeamPanels()
 
 		teamMenuFrame.Think = function()
 

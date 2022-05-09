@@ -2116,7 +2116,7 @@ function EnterRaidMenu()
 	local deadColor = 		Color(200, 200, 200, 255)		-- Gray
 
 	local width =			600
-	local height =			1000
+	local height =			600
 
 	local margin = 			10
 
@@ -2187,13 +2187,13 @@ function EnterRaidMenu()
 	end
 
 	local playerAvatar = vgui.Create( "AvatarImage", raidInfoPanel )
-	playerAvatar:SetSize( 128, 128 )
-	playerAvatar:SetPos( 290 - 64, 100 )
-	playerAvatar:SetPlayer( LocalPlayer(), 128 )
+	playerAvatar:SetSize(128, 128)
+	playerAvatar:SetPos(290 - 64, 100)
+	playerAvatar:SetPlayer(LocalPlayer(), 128)
 
 	local playerModelDisplay = vgui.Create( "DModelPanel", raidInfoPanel )
-	playerModelDisplay:SetSize(500, 500)
-	playerModelDisplay:SetPos(290 - 250, 250)
+	playerModelDisplay:SetSize(350, 350)
+	playerModelDisplay:SetPos(120 - 180, -30)
 	playerModelDisplay:SetModel( client:GetModel() )
 
 	local enterRaidButton = vgui.Create("DButton", raidInfoPanel)

@@ -89,23 +89,30 @@ function ENT:CheckForPlayers()
 
 							ply:PrintMessage( HUD_PRINTCENTER, "You have extracted from the raid through " .. self.ExtractName .. "! Good job!" )
 
-							local lobbySpawns = ents.FindByName( "lobby_spawns" )
+							local lobbySpawns = ents.FindByName("lobby_spawns")
 							local chosenSpawn = lobbySpawns[math.random(#lobbySpawns)]
-
 							local expGained = math.random(250, 600)
 
-							ply:SetNWInt("extractionStreak", ply:GetNWInt("extractionStreak") + 1)
+							if (ply:GetNWInt("runThrough") == 0) then
+								ply:SetNWInt("extractionStreak", ply:GetNWInt("extractionStreak") + 1)
 
-							if ply:GetNWInt("successfulOperationsComplete") == 0 then
-								ply:SetNWInt("mapExtracts", ply:GetNWInt("mapExtracts") + 1)
-							end
+								if ply:GetNWInt("successfulOperationsComplete") == 0 then
+									ply:SetNWInt("mapExtracts", ply:GetNWInt("mapExtracts") + 1)
+								end
 
-							if ply:GetNWInt("raidKill") >= 3 then
-								ply:SetNWInt("weeklyExtracts", ply:GetNWInt("weeklyExtracts") + 1)
-							end
+								if ply:GetNWInt("raidKill") >= 3 then
+									ply:SetNWInt("weeklyExtracts", ply:GetNWInt("weeklyExtracts") + 1)
+								end
 
-							if (ply:GetNWInt("playerLvl") < 32) then
-								ply:SetNWInt("playerExp", math.Round(ply:GetNWInt("playerExp") + (expGained * ply:GetNWInt("expMulti"))), 1)
+								if (ply:GetNWInt("playerLvl") < 32) then
+									ply:SetNWInt("playerExp", math.Round(ply:GetNWInt("playerExp") + (expGained * ply:GetNWInt("expMulti"))), 1)
+									ply:SetNWInt("raidXP", math.Round(ply:GetNWInt("raidXP") + (expGained * ply:GetNWInt("expMulti"))), 1)
+									ply:SetNWInt("playerTotalXpEarnedExplore", math.Round(ply:GetNWInt("playerTotalXpEarnedExplore") + (expGained * ply:GetNWInt("expMulti"))), 1)
+								end
+
+								checkForSuccessfulOperations(ply)
+								checkForWeeklyTwo(ply)
+								checkForLevel(ply)
 							end
 
 							ply:SetNWInt("raidSuccess", 1)
@@ -131,10 +138,6 @@ function ENT:CheckForPlayers()
 							end
 
 							ply:ConCommand("open_raid_summary_menu")
-
-							checkForSuccessfulOperations(ply)
-							checkForWeeklyTwo(ply)
-							checkForLevel(ply)
 
 							ply:SetPos(chosenSpawn:GetPos())
 							ply:SetAngles(chosenSpawn:GetAngles())

@@ -403,9 +403,6 @@ local function DetermineSpawnTable(class, useTeamSpawns)
 
 	end
 
-	print("Spawn table:")
-	PrintTable(spawnTable)
-
 	return spawnTable
 
 end
@@ -421,14 +418,9 @@ local function GetSmartSpawn(class, useTeamSpawns)
 
 	if table.IsEmpty(finalSpawns) == true then
 
-		print("returning regular spawns")
-		PrintTable(spawns)
-
 		return spawns[math.random(#spawns)]
 
 	elseif table.IsEmpty(finalSpawns) == false then
-
-		print("returning final spawns")
 
 		return finalSpawns[math.random(#finalSpawns)]
 
@@ -535,7 +527,7 @@ net.Receive("EnterRaidProper", function(len, ply)
 	if ply:GetNWBool("inRaid") == false then
 
 		if ply:GetNWBool("teamLeader") == false then
-		
+
 		end
 
 		if ply:GetNWString("playerTeam") != "" && ply:GetNWBool("teamLeader") == true then
@@ -551,7 +543,7 @@ net.Receive("EnterRaidProper", function(len, ply)
 			IndividualSpawn(ply, playerClassTable[playerClass], false)
 
 		end
-		
+
 	end
 
 end)
@@ -564,7 +556,7 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 		if self.RaidStarted == false then
 
-			if #player.GetHumans() <= 1 then
+			if #player.GetHumans() <= 0 then
 
 				ply:PrintMessage(3, "Not enough players to spawn into/start a raid!")
 
@@ -572,10 +564,11 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 				ply:PrintMessage(3, "You are not the party leader!")
 
-			elseif #player.GetHumans() > 1 and self.RaidStarted == false and ply:GetNWBool("teamLeader") == true then
+			elseif #player.GetHumans() > 0 and self.RaidStarted == false and ply:GetNWBool("teamLeader") == true then
 
 				self:InitializeRaid()
-				hook.Call( "RaidStart", nil )
+				ply:SetNWInt("runThrough", 1)
+				hook.Call("RaidStart", nil)
 
 			end
 

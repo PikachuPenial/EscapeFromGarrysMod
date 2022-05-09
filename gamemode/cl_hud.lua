@@ -11,6 +11,7 @@ local dropBind = input.LookupBinding("+drop")
 local nvgBind = input.LookupBinding("arc_vm_nvg")
 local tacticalBind = input.LookupBinding("impulse 100")
 local fireModeBind = input.LookupBinding("+zoom")
+local helpBind = input.LookupBinding("gm_showhelp")
 local teamBind = input.LookupBinding("gm_showteam")
 local inventoryBind = input.LookupBinding("gm_showspare1")
 local shopBind = input.LookupBinding("gm_showspare2")
@@ -39,6 +40,7 @@ function HUD()
 
 	if client:GetNWString("playerTeam") != "" then
 
+		local playerColor
 		local teamMembers = FindAllInTeam(client:GetNWString("playerTeam"))
 
 		for k, v in pairs(teamMembers) do
@@ -46,12 +48,23 @@ function HUD()
 			local leaderText = ""
 
 			if v:GetNWBool("teamLeader") == true then
-				
 				leaderText = "* "
-
 			end
-			
-			draw.SimpleText(leaderText .. v:GetName(), "DermaLarge", ScrW() - 10, 5 + ((k - 1) * 35), white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP)
+
+			if v:Alive() then
+				if v:GetNWBool("inRaid") == true then
+					playerColor = Color(0, 255, 0)
+				end
+	
+				if v:GetNWBool("inRaid") == false then
+					playerColor = Color(255, 255, 255)
+				end
+			else
+				playerColor = Color(255, 0, 0)
+			end
+
+
+			draw.SimpleText(leaderText .. v:GetName(), "DermaLarge", ScrW() - 10, 5 + ((k - 1) * 35), playerColor, TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP)
 
 		end
 
@@ -145,6 +158,10 @@ function HUD()
 			fireModeBind = "#"
 			fireModeColor = red
 		end
+		if (helpBind == nil) then
+			helpBind = "#"
+			helpBind = red
+		end
 		if (inventoryBind == nil) then
 			inventoryBind = "#"
 			inventoryColor = red
@@ -194,17 +211,21 @@ function HUD()
 				draw.SimpleText("Toggle Firemode", "DermaLarge", 168, ScrH() - 790, white, 0)
 				draw.SimpleText("bind key +zoom", "DermaDefaultBold", 380, ScrH() - 780, white, 0)
 
-				draw.SimpleText("[" .. teamBind .. "]", "DermaLarge", 135, ScrH() - 760, inventoryColor, 0)
-				draw.SimpleText("Create/Join Team", "DermaLarge", 182, ScrH() - 760, white, 0)
-				draw.SimpleText("bind key gm_showteam", "DermaDefaultBold", 410, ScrH() - 750, white, 0)
+				draw.SimpleText("[" .. helpBind .. "]", "DermaLarge", 135, ScrH() - 760, inventoryColor, 0)
+				draw.SimpleText("Help Menu/Learn How To Play", "DermaLarge", 182, ScrH() - 760, white, 0)
+				draw.SimpleText("bind key gm_showhelp", "DermaDefaultBold", 560, ScrH() - 750, white, 0)
 
-				draw.SimpleText("[" .. inventoryBind .. "]", "DermaLarge", 135, ScrH() - 730, inventoryColor, 0)
-				draw.SimpleText("Open Inventory", "DermaLarge", 182, ScrH() - 730, white, 0)
-				draw.SimpleText("bind key gm_showspare1", "DermaDefaultBold", 372, ScrH() - 720, white, 0)
+				draw.SimpleText("[" .. teamBind .. "]", "DermaLarge", 135, ScrH() - 730, inventoryColor, 0)
+				draw.SimpleText("Create/Join Team", "DermaLarge", 182, ScrH() - 730, white, 0)
+				draw.SimpleText("bind key gm_showteam", "DermaDefaultBold", 410, ScrH() - 720, white, 0)
+
+				draw.SimpleText("[" .. inventoryBind .. "]", "DermaLarge", 135, ScrH() - 700, inventoryColor, 0)
+				draw.SimpleText("Open Inventory", "DermaLarge", 182, ScrH() - 700, white, 0)
+				draw.SimpleText("bind key gm_showspare1", "DermaDefaultBold", 372, ScrH() - 690, white, 0)
 			
-				draw.SimpleText("[" .. shopBind .. "]", "DermaLarge", 135, ScrH() - 700, shopColor, 0)
-				draw.SimpleText("Open Menu (Shop/Tasks)", "DermaLarge", 182, ScrH() - 700, white, 0)
-				draw.SimpleText("bind key gm_showspare2", "DermaDefaultBold", 498, ScrH() - 690, white, 0)
+				draw.SimpleText("[" .. shopBind .. "]", "DermaLarge", 135, ScrH() - 670, shopColor, 0)
+				draw.SimpleText("Open Menu (Shop/Tasks)", "DermaLarge", 182, ScrH() - 670, white, 0)
+				draw.SimpleText("bind key gm_showspare2", "DermaDefaultBold", 498, ScrH() - 660, white, 0)
 			end
 		end
 	end

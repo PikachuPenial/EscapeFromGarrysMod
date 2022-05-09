@@ -4,6 +4,7 @@ AddCSLuaFile("cl_hud.lua")
 AddCSLuaFile("custom_menu.lua")
 AddCSLuaFile("map_menu.lua")
 AddCSLuaFile("raid_summary_menu.lua")
+AddCSLuaFile("tutorial_menu.lua")
 AddCSLuaFile("cl_scoreboard.lua")
 AddCSLuaFile("sh_party_system.lua")
 AddCSLuaFile("tutorial_popup.lua")
@@ -17,7 +18,6 @@ include("sv_skills.lua")
 include("sv_party_system.lua")
 include("sv_pdata.lua")
 include("sv_dailytasks.lua")
-
 include("sh_party_system.lua")
 
 --Player stats.
@@ -63,8 +63,15 @@ end
 
 function GM:PlayerInitialSpawn(ply)
 
-	--In Raid Checks
+	--In Raid Check
 	ply:SetNWBool("inRaid", false)
+
+	--First Spawn Check
+	if ply:GetPData("wipeFirstSpawn") == nil then
+		ply:SetNWBool("wipeFirstSpawn", true)
+	else
+		ply:SetNWBool("wipeFirstSpawn", ply:GetPData("wipeFirstSpawn"))
+	end
 
 	--Stash Limiting
 	if ply:GetPData("StashLimit") == nil then
@@ -238,6 +245,7 @@ function GM:PlayerInitialSpawn(ply)
 
 	ply:SetNWInt("raidSuccess", 1)
 	ply:SetNWInt("firstSpawn", 1)
+	ply:SetNWInt("runThrough", 1)
 
 	--Skills Fatigue
 	ply:SetNWInt("enduranceFatigue", 0)
@@ -435,9 +443,11 @@ end)
 hook.Add("PlayerHurt", "playerDamage", function(victim, attacker, remainingHealth, dmgTaken)
 	attacker:SetNWInt("playerDamageGiven", attacker:GetNWInt("playerDamageGiven") + math.Round(dmgTaken, 0))
 	attacker:SetNWInt("raidDamageGiven", attacker:GetNWInt("raidDamageGiven") + math.Round(dmgTaken, 0))
+	attacker:SetNWInt("runThrough", 0)
 
 	victim:SetNWInt("playerDamageRecieved", victim:GetNWInt("playerDamageRecieved") + math.Round(dmgTaken, 0))
 	victim:SetNWInt("raidDamageTaken", victim:GetNWInt("raidDamageTaken") + math.Round(dmgTaken, 0))
+	victim:SetNWInt("runThrough", 0)
 end)
 
 hook.Add( "HUDWeaponPickedUp", "WeaponPickedUp", function( weapon )
@@ -465,21 +475,20 @@ end
 util.AddNetworkString("MenuInRaid")
 util.AddNetworkString("TeamMenu")
 
+function GM:ShowHelp(ply)
+	ply:ConCommand("open_tutorial_menu")
+end
+
 function GM:ShowSpare2(ply)
 	net.Start("MenuInRaid")
 	net.WriteBool(ply:GetNWBool("inRaid"))
 	net.Send(ply)
-
 	ply:ConCommand("open_game_menu")
 end
 
 function GM:ShowTeam(ply)
-
-	print("opening team menu")
-
 	net.Start("TeamMenu")
 	net.Send(ply)
-
 end
 
 function GM:PlayerDisconnected(ply)
@@ -511,6 +520,7 @@ function GM:PlayerDisconnected(ply)
 	ply:SetPData("playerRoubleForStashUpgrade", ply:GetNWInt("playerRoubleForStashUpgrade"))
 	ply:SetPData("StashLimit", ply:GetNWInt("playerStashLimit"))
 	ply:SetPData("stashMaxed", ply:GetNWInt("stashMaxed"))
+	ply:SetPData("wipeFirstSpawn", ply:GetNWBool("wipeFirstSpawn"))
 
 	--Skills
 	ply:SetPData("enduranceLevel", ply:GetNWInt("enduranceLevel"))
@@ -569,6 +579,7 @@ function GM:ShutDown()
 		v:SetPData("playerRoubleForStashUpgrade", v:GetNWInt("playerRoubleForStashUpgrade"))
 		v:SetPData("StashLimit", v:GetNWInt("playerStashLimit"))
 		v:SetPData("stashMaxed", v:GetNWInt("stashMaxed"))
+		v:SetPData("wipeFirstSpawn", v:GetNWBool("wipeFirstSpawn"))
 
 		--Skills
 		v:SetPData("enduranceLevel", v:GetNWInt("enduranceLevel"))

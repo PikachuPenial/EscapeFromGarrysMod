@@ -28,14 +28,20 @@ function raidSummaryMenu(ply, cmd, args)
 			surface.SetTextPos(10, 0)
 			surface.DrawText("RAID SUMMARY")
 
-			if (ply:GetNWInt("raidSuccess") == 1) then
-				surface.SetTextPos(45, 180)
-				surface.SetTextColor(0, 255, 0, 255)
-				surface.DrawText("YOU EXTRACTED!")
+			if (ply:GetNWInt("runThrough") == 1) then
+				surface.SetTextPos(60, 180)
+				surface.SetTextColor(255, 255, 0)
+				surface.DrawText("RUN THROUGH")
 			else
-				surface.SetTextPos(77, 180)
-				surface.SetTextColor(255, 0, 0, 255)
-				surface.DrawText("YOU DIED!")
+				if (ply:GetNWInt("raidSuccess") == 1) then
+					surface.SetTextPos(45, 180)
+					surface.SetTextColor(0, 255, 0, 255)
+					surface.DrawText("YOU EXTRACTED!")
+				else
+					surface.SetTextPos(77, 180)
+					surface.SetTextColor(255, 0, 0, 255)
+					surface.DrawText("YOU DIED!")
+				end
 			end
 
 			surface.SetTextColor(255, 255, 255, 255)
@@ -111,10 +117,14 @@ function raidSummaryMenu(ply, cmd, args)
 			end
 		end
 
-		if (ply:GetNWInt("raidSuccess") == 1) then
+		if (ply:GetNWInt("runThrough") == 1) then
 			surface.PlaySound("taskfinished.wav")
 		else
-			surface.PlaySound("taskfailed.wav")
+			if (ply:GetNWInt("raidSuccess") == 1) then
+				surface.PlaySound("taskcomplete.wav")
+			else
+				surface.PlaySound("taskfailed.wav")
+			end
 		end
 
 		gui.EnableScreenClicker(true)

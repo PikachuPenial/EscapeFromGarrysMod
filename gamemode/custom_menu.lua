@@ -150,7 +150,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		surface.DrawRect(99, 0, 1, playerButton:GetTall())
 
 		--Draw/write text
-		draw.DrawText(LocalPlayer():GetName(), "DermaLarge", playerButton:GetWide() / 2.1, 10, Color(255, 255, 255, 255), 1)
+		draw.DrawText(LocalPlayer():GetName(), "CloseCaption_Normal", playerButton:GetWide() / 2.1, 10, Color(255, 255, 255, 255), 1)
 	end
 	playerButton.DoClick = function()
 		local playerPanel = Menu:Add("PlayerPanel")
@@ -161,122 +161,108 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.SetTextColor(255, 255, 255)
 
 			-- Player Name
-			surface.SetFont("Trebuchet24")
-			surface.SetTextPos(5, 0)
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(285, 25)
 			surface.DrawText(LocalPlayer():GetName())
 
 			-- Stats Text
-			surface.SetFont("Trebuchet24")
-			surface.SetTextPos(5, 320)
-			surface.DrawText("Your Stats")
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(255, 75)
+			surface.DrawText("Your Stats :")
 
 			-- Player EXP and level
 			local expToLevel = (LocalPlayer():GetNWInt("playerLvl") * 140) * 5.15
 
-			surface.SetFont("Default")
-			surface.SetTextPos(8, 35)
+			surface.SetFont("DermaLarge")
+			surface.SetTextPos(25, 125)
 			surface.SetTextColor(228, 255, 0, 255)
-			surface.DrawText("Level " .. LocalPlayer():GetNWInt("playerLvl"))
+			surface.DrawText("Level : " .. LocalPlayer():GetNWInt("playerLvl"))
 
-			surface.SetTextPos(58, 35)
+			surface.SetTextPos(150, 125)
 			surface.SetTextColor(0, 255, 209 , 255)
-			surface.DrawText("Experience " .. LocalPlayer():GetNWInt("playerExp") .. "/" .. expToLevel)
+			surface.DrawText("Experience : " .. LocalPlayer():GetNWInt("playerExp") .. "/" .. expToLevel)
 
 			-- Balance
-			surface.SetTextPos(8, 55)
+			surface.SetTextPos(450, 125)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Roubles/Balance: " .. LocalPlayer():GetNWInt("playerMoney"))
+			surface.DrawText("Roubles : " .. LocalPlayer():GetNWInt("playerMoney"))
+
+			surface.SetFont("CloseCaption_Bold")
 
 			-- Stats (Kills)
-			surface.SetTextPos(8, 350)
+			surface.SetTextPos(38, 350)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Total Kills: " .. LocalPlayer():GetNWInt("playerKills"))
 
 			-- Stats (Deaths)
-			surface.SetTextPos(8, 370)
+			surface.SetTextPos(228, 350)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Total Deaths: " .. LocalPlayer():GetNWInt("playerDeaths"))
 
 			-- Stats (KDR)
-			surface.SetTextPos(8, 390)
+			surface.SetTextPos(448, 350)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Kill/Death Ratio: " .. LocalPlayer():GetNWInt("playerKDR"))
+			surface.DrawText("K/D Ratio: " .. math.Round(LocalPlayer():GetNWInt("playerKDR")), 2)
 
 			-- Stats (Total Earned)
-			surface.SetTextPos(8, 410)
+			surface.SetTextPos(8, 400)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Total Roubles Earned: " .. LocalPlayer():GetNWInt("playerTotalEarned"))
 
 			-- Stats (Total Roubles From Kills)
-			surface.SetTextPos(8, 430)
+			surface.SetTextPos(308, 400)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Roubles Earned From Kills: " .. LocalPlayer():GetNWInt("playerTotalEarnedKill"))
+			surface.DrawText("Roubles Earned From Kills: " .. LocalPlayer():GetNWInt("playerTotalEarnedKill"))
 
 			-- Stats (Total Roubles From Selling)
-			surface.SetTextPos(8, 450)
+			surface.SetTextPos(168, 450)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Roubles Earned From Selling: " .. LocalPlayer():GetNWInt("playerTotalEarnedSell"))
+			surface.DrawText("Roubles Earned From Selling: " .. LocalPlayer():GetNWInt("playerTotalEarnedSell"))
 
 			-- Stats (Total Experience Gained)
-			surface.SetTextPos(252, 350)
+			surface.SetTextPos(178, 500)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Total Experience Gained: " .. LocalPlayer():GetNWInt("playerTotalXpEarned"))
 
 			-- Stats (Total Experience Gained From Killing)
-			surface.SetTextPos(252, 370)
+			surface.SetTextPos(168, 550)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Experience Gained From Kills: " .. LocalPlayer():GetNWInt("playerTotalXpEarnedKill"))
+			surface.DrawText("Experience Gained From Kills: " .. LocalPlayer():GetNWInt("playerTotalXpEarnedKill"))
 
 			-- Stats (Total Experience Gained From Exploration)
-			surface.SetTextPos(252, 390)
+			surface.SetTextPos(138, 600)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Experience Gained From Exploration: " .. LocalPlayer():GetNWInt("playerTotalXpEarnedExplore"))
+			surface.DrawText("Experience Gained From Extracting: " .. LocalPlayer():GetNWInt("playerTotalXpEarnedExplore"))
 
 			-- Stats (Total Money Spent)
-			surface.SetTextPos(252, 410)
+			surface.SetTextPos(8, 700)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Total Money Spent: " .. LocalPlayer():GetNWInt("playerTotalMoneySpent"))
 
 			-- Stats (Total Money Spent On Weapons)
-			surface.SetTextPos(252, 430)
+			surface.SetTextPos(8, 725)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Money Spent On Weapons: " .. LocalPlayer():GetNWInt("playerTotalMoneySpentWep"))
+			surface.DrawText("Money Spent On Weapons: " .. LocalPlayer():GetNWInt("playerTotalMoneySpentWep"))
 
 			-- Stats (Total Money Spent On Ammo/Armor)
-			surface.SetTextPos(252, 450)
+			surface.SetTextPos(8, 750)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Money Spent On Ammo/Armor: " .. LocalPlayer():GetNWInt("playerTotalMoneySpentItem"))
+			surface.DrawText("Money Spent On Ammo/Armor: " .. LocalPlayer():GetNWInt("playerTotalMoneySpentItem"))
 
 			-- Stats (Deaths By Suicide)
-			surface.SetTextPos(496, 350)
+			surface.SetTextPos(388, 700)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Deaths By Suicide: " .. LocalPlayer():GetNWInt("playerDeathsSuicide"))
+			surface.DrawText("Deaths By Suicide: " .. LocalPlayer():GetNWInt("playerDeathsSuicide"))
 
 			-- Stats (Damage Given)
-			surface.SetTextPos(496, 370)
+			surface.SetTextPos(388, 725)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Damage Given: " .. LocalPlayer():GetNWInt("playerDamageGiven"))
+			surface.DrawText("Damage Inflicted: " .. LocalPlayer():GetNWInt("playerDamageGiven"))
 
 			-- Stats (Damage Recieved)
-			surface.SetTextPos(496, 390)
+			surface.SetTextPos(388, 750)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Damage Recieved: " .. LocalPlayer():GetNWInt("playerDamageRecieved"))
-
-			-- Stats (Damage Healed)
-			surface.SetTextPos(496, 410)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Damage Healed: " .. LocalPlayer():GetNWInt("playerDamageHealed"))
-
-			-- Stats (Items Picked Up)
-			surface.SetTextPos(496, 430)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Weapons Picked Up: " .. LocalPlayer():GetNWInt("playerItemsPickedUp"))
-
-			-- Stats (Distance Travelled)
-			surface.SetTextPos(496, 450)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Distance Travelled: " .. LocalPlayer():GetNWInt("playerDistance"))
-
 		end
 	end
 
@@ -411,6 +397,106 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.SetTextPos(50, 590)
 			surface.DrawText("Increases your crouch walking speed.")
 		end
+	end
+
+	local extractsButton = vgui.Create("DButton")
+	extractsButton:SetParent(Menu)
+	extractsButton:SetText("")
+	extractsButton:SetSize(100, 100)
+	extractsButton:SetPos(0, 450)
+	extractsButton.Paint = function()
+		--Color of entire button
+		surface.SetDrawColor(50, 50, 50, 255)
+		surface.DrawRect(0, 0, extractsButton:GetWide(), extractsButton:GetTall())
+
+		--Draw bottom and Right borders
+		surface.SetDrawColor(40, 40, 40, 255)
+		surface.DrawRect(0, 99, extractsButton:GetWide(), 1)
+		surface.DrawRect(99, 0, 1, extractsButton:GetTall())
+
+		--Draw/write text
+
+		draw.DrawText("EXTRACTS", "CloseCaption_Normal", extractsButton:GetWide() / 2.1, 35, Color(0, 255, 76), 1)
+
+	end
+
+	extractsButton.DoClick = function()
+		gui.OpenURL("https://steamcommunity.com/sharedfiles/filedetails/?id=2799844989")
+	end
+
+	local serverButton = vgui.Create("DButton")
+	serverButton:SetParent(Menu)
+	serverButton:SetText("")
+	serverButton:SetSize(100, 50)
+	serverButton:SetPos(0, 650)
+	serverButton.Paint = function()
+		--Color of entire button
+		surface.SetDrawColor(50, 50, 50, 255)
+		surface.DrawRect(0, 0, serverButton:GetWide(), serverButton:GetTall())
+
+		--Draw bottom and Right borders
+		surface.SetDrawColor(40, 40, 40, 255)
+		surface.DrawRect(0, 49, serverButton:GetWide(), 1)
+		surface.DrawRect(99, 0, 1, serverButton:GetTall())
+
+		--Draw/write text
+
+		draw.DrawText("DISCORD", "CloseCaption_Normal", serverButton:GetWide() / 2.1, 10, Color(140, 0, 255), 1)
+
+	end
+
+	serverButton.DoClick = function()
+		gui.OpenURL("https://discord.gg/GRfvt27uGF")
+	end
+
+	local supportButton = vgui.Create("DButton")
+	supportButton:SetParent(Menu)
+	supportButton:SetText("")
+	supportButton:SetSize(100, 50)
+	supportButton:SetPos(0, 700)
+	supportButton.Paint = function()
+		--Color of entire button
+		surface.SetDrawColor(50, 50, 50, 255)
+		surface.DrawRect(0, 0, supportButton:GetWide(), supportButton:GetTall())
+
+		--Draw bottom and Right borders
+		surface.SetDrawColor(40, 40, 40, 255)
+		surface.DrawRect(0, 49, supportButton:GetWide(), 1)
+		surface.DrawRect(99, 0, 1, supportButton:GetTall())
+
+		--Draw/write text
+
+		draw.DrawText("SUPPORT", "CloseCaption_Normal", supportButton:GetWide() / 2.1, 10, Color(255, 0, 179), 1)
+
+	end
+
+	supportButton.DoClick = function()
+		gui.OpenURL("https://discord.gg/GRfvt27uGF")
+	end
+	
+	local settingsButton = vgui.Create("DButton")
+	settingsButton:SetParent(Menu)
+	settingsButton:SetText("")
+	settingsButton:SetSize(100, 50)
+	settingsButton:SetPos(0, 750)
+	settingsButton.Paint = function()
+		--Color of entire button
+		surface.SetDrawColor(50, 50, 50, 255)
+		surface.DrawRect(0, 0, settingsButton:GetWide(), settingsButton:GetTall())
+
+		--Draw bottom and Right borders
+		surface.SetDrawColor(40, 40, 40, 255)
+		surface.DrawRect(0, 49, settingsButton:GetWide(), 1)
+		surface.DrawRect(99, 0, 1, settingsButton:GetTall())
+
+		--Draw/write text
+
+		draw.DrawText("SETTINGS", "CloseCaption_Normal", settingsButton:GetWide() / 2.1, 10, Color(100, 100, 100), 1)
+
+	end
+
+	settingsButton.DoClick = function()
+		--Not Ready
 	end
 
 	local dailyButton = vgui.Create("DButton")
@@ -672,7 +758,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 						net.WriteInt(v[6], 12)
 						net.SendToServer()
 
-	
+
 					end
 
 				end
@@ -883,24 +969,24 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				surface.SetTextColor(255, 255, 255, 255)
 	
 				surface.SetFont("DermaLarge")
-				surface.SetTextPos(260, 250)
+				surface.SetTextPos(245, 150)
 				surface.DrawText("Upgrade Stash")
 
-				surface.SetTextPos(40, 300)
+				surface.SetTextPos(10, 250)
 				surface.DrawText("For each level, you gain an addition 6 slots in your stash!")
 
-				surface.SetTextPos(230, 375)
+				surface.SetTextPos(210, 350)
 				surface.DrawText("Current stash level: " .. LocalPlayer():GetNWInt("playerStashLevel"))
 
-				surface.SetTextPos(230, 415)
+				surface.SetTextPos(210, 390)
 				surface.DrawText("Current ₽ Count: " .. LocalPlayer():GetNWInt("playerMoney"))
 
 				if (LocalPlayer():GetNWInt("stashMaxed") == 0) then
-					surface.SetTextPos(200, 600)
+					surface.SetTextPos(190, 525)
 					surface.DrawText("Required ₽ to upgrade: " .. LocalPlayer():GetNWInt("playerRoubleForStashUpgrade"))
 				end
 
-				surface.SetTextPos(200, 640)
+				surface.SetTextPos(200, 565)
 				surface.DrawText("Current stash limt : " .. LocalPlayer():GetNWInt("playerStashLimit") .. " / " .. "60")
 
 			end
@@ -910,7 +996,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				doStashUpgrade:SetParent(Menu)
 				doStashUpgrade:SetText("")
 				doStashUpgrade:SetSize(225, 50)
-				doStashUpgrade:SetPos(340, 500)
+				doStashUpgrade:SetPos(330, 475)
 				doStashUpgrade.Paint = function()
 					--Color of entire button
 					surface.SetDrawColor(150, 150, 150, 10)
@@ -962,30 +1048,30 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				surface.SetTextColor(255, 0, 0, 255)
 
 				surface.SetFont("DermaLarge")
-				surface.SetTextPos(290, 360)
+				surface.SetTextPos(275, 150)
 				surface.DrawText("PRESTIGE")
 
 				surface.SetTextColor(255, 255, 255, 255)
 
 				surface.SetFont("DermaLarge")
-				surface.SetTextPos(100, 410)
+				surface.SetTextPos(90, 230)
 				surface.DrawText("Once you hit level 32, you can prestige, which")
 
-				surface.SetTextPos(25, 440)
-				surface.DrawText("resets your level to get a permanent rouble boost until wipe!")
+				surface.SetTextPos(65, 270)
+				surface.DrawText("resets your level to get a permanent rouble boost.")
 
-				surface.SetTextPos(195, 600)
+				surface.SetTextPos(205, 450)
 				surface.DrawText("Current ₽ Multiplier:")
 
 				surface.SetTextColor(255, 255, 0, 255)
-				surface.SetTextPos(440, 600)
+				surface.SetTextPos(450, 450)
 				surface.DrawText(LocalPlayer():GetNWInt("playerRoubleMulti") .. "x")
 
 				surface.SetTextColor(255, 255, 255, 255)
-				surface.SetTextPos(195, 650)
+				surface.SetTextPos(205, 500)
 				surface.DrawText("Current Prestige: " .. (LocalPlayer():GetNWInt("playerPrestige")))
 
-				surface.SetTextPos(195, 700)
+				surface.SetTextPos(205, 550)
 				surface.DrawText("Current Level: " .. (LocalPlayer():GetNWInt("playerLvl")))
 			end
 
@@ -993,7 +1079,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			doPrestigeButton:SetParent(Menu)
 			doPrestigeButton:SetText("")
 			doPrestigeButton:SetSize(225, 50)
-			doPrestigeButton:SetPos(340, 550)
+			doPrestigeButton:SetPos(340, 375)
 			doPrestigeButton.Paint = function()
 				--Color of entire button
 				surface.SetDrawColor(150, 150, 150, 10)

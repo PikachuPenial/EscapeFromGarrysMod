@@ -1649,16 +1649,17 @@ function CustomTeamMenu()
 	local outRaidColor = 	Color(50, 255, 50, 255)		-- Green
 	local deadColor = 		Color(200, 200, 200, 255)	-- Gray
 
-	local width =			1200
-	local height =			1000
+	local width =			math.Round( ScrW() * 0.8 )	-- Around 1520 for normal people
+	local height =			math.Round( ScrH() * 0.9 )	-- Around 980
 
-	local margin = 			10
+	local margin = 			math.Round( ScrH() * 0.01 )
 
 	-- Basic menu shit
 
 	teamMenuFrame = vgui.Create( "DFrame" )
-	teamMenuFrame:SetPos( (ScrW() / 2) - (width / 2), (ScrH() / 2) - (height / 2) ) 
+	-- teamMenuFrame:SetPos( (ScrW() / 2) - (width / 2), (ScrH() / 2) - (height / 2) ) 
 	teamMenuFrame:SetSize( width, height ) 
+	teamMenuFrame:Center()
 	teamMenuFrame:SetTitle( "Team Menu" ) 
 	teamMenuFrame:SetVisible( true ) 
 	teamMenuFrame:SetDraggable( false ) 
@@ -1685,7 +1686,7 @@ function CustomTeamMenu()
 
 	local teamBrowserPanel = vgui.Create( "DPanel", menuPanel )
 	teamBrowserPanel:Dock( LEFT )
-	teamBrowserPanel:SetSize(300, 0 )
+	teamBrowserPanel:SetSize(math.Round( ScrW() * 0.2 ), 0 )
 	teamBrowserPanel:DockMargin( margin, margin, margin, margin )
 
 	teamBrowserPanel.Paint = function(self, w, h)

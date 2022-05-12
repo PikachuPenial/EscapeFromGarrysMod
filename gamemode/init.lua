@@ -59,6 +59,8 @@ function GM:PlayerSpawn(ply)
 	if (ply:GetNWInt("firstSpawn") == 0) then
 		ply:ConCommand("open_raid_summary_menu")
 	end
+
+	ply:SetNWInt("playerLvl", 31)
 end
 
 function GM:PlayerInitialSpawn(ply)

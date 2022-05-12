@@ -81,7 +81,9 @@ function gameShopMenu(ply, cmd, args)
 
 	if (inPlayerMenu == false) then
 		Menu = vgui.Create("DFrame")
-		Menu:SetSize(800, 800)
+		local width = math.Round(ScrW() * 0.42)
+		local height = math.Round(ScrH() * 0.75)
+		Menu:SetSize(width, height)
 		Menu:Center()
 		Menu:SetTitle("Escape From Garry's Mod")
 		Menu:SetDraggable(false)
@@ -1108,8 +1110,11 @@ end
 
 PANEL = {} --Creates empty panel
 
+local playerPanelWidth = math.Round(ScrW() * 0.42)
+local playerPanelHeight = math.Round(ScrH() * 0.75)
+
 function PANEL:Init() -- initializes the panel
-	self:SetSize(700, 800)
+	self:SetSize(playerPanelWidth, playerPanelHeight)
 	self:SetPos(100, 25)
 end
 
@@ -1126,8 +1131,11 @@ vgui.Register("PlayerPanel", PANEL, "Panel")
 
 PANEL = {} --Creates empty panel
 
+local shopPanelWidth = math.Round(ScrW() * 0.4)
+local shopPanelHeight = math.Round(ScrH() * 0.75)
+
 function PANEL:Init() -- initializes the panel
-	self:SetSize(700, 800)
+	self:SetSize(shopPanelWidth, shopPanelHeight)
 	self:SetPos(100, 25)
 end
 
@@ -1141,8 +1149,11 @@ vgui.Register("ShopPanel", PANEL, "Panel")
 
 PANEL = {} --Creates empty panel
 
+local taskPanelWidth = math.Round(ScrW() * 0.42)
+local taskPanelHeight = math.Round(ScrH() * 0.75)
+
 function PANEL:Init() -- initializes the panel
-	self:SetSize(700, 800)
+	self:SetSize(taskPanelWidth, taskPanelHeight)
 	self:SetPos(100, 25)
 end
 
@@ -1158,8 +1169,11 @@ vgui.Register("TaskPanel", PANEL, "Panel")
 
 PANEL = {} --Creates empty panel
 
+local dailyPanelWidth = math.Round(ScrW() * 0.42)
+local dailyPanelHeight = math.Round(ScrH() * 0.75)
+
 function PANEL:Init() -- initializes the panel
-	self:SetSize(700, 800)
+	self:SetSize(dailyPanelWidth, dailyPanelHeight)
 	self:SetPos(100, 25)
 end
 
@@ -1176,8 +1190,11 @@ vgui.Register("DailyPanel", PANEL, "Panel")
 
 PANEL = {} --Creates empty panel
 
+local skillsPanelWidth = math.Round(ScrW() * 0.42)
+local skillsPanelHeight = math.Round(ScrH() * 0.75)
+
 function PANEL:Init() -- initializes the panel
-	self:SetSize(700, 800)
+	self:SetSize(skillsPanelWidth, skillsPanelHeight)
 	self:SetPos(100, 25)
 end
 
@@ -1193,8 +1210,11 @@ vgui.Register("SkillPanel", PANEL, "Panel")
 
 PANEL = {} --Creates empty panel
 
+local prestigePanelWidth = math.Round(ScrW() * 0.42)
+local prestigePanelHeight = math.Round(ScrH() * 0.75)
+
 function PANEL:Init() -- initializes the panel
-	self:SetSize(700, 800)
+	self:SetSize(prestigePanelWidth, prestigePanelHeight)
 	self:SetPos(100, 25)
 end
 
@@ -1210,8 +1230,11 @@ vgui.Register("PrestigePanel", PANEL, "Panel")
 
 PANEL = {} --Creates empty panel
 
+local stashPanelWidth = math.Round(ScrW() * 0.42)
+local stashPanelHeight = math.Round(ScrH() * 0.75)
+
 function PANEL:Init() -- initializes the panel
-	self:SetSize(700, 800)
+	self:SetSize(stashPanelWidth, stashPanelHeight)
 	self:SetPos(100, 25)
 end
 

@@ -196,7 +196,7 @@ function buyGun(ply, cmd, args)
 					ply:SetNWInt("playerTotalMoneySpent", ply:GetNWInt("playerTotalMoneySpent") + gunCost)
 					ply:SetNWInt("playerTotalMoneySpentWep", ply:GetNWInt("playerTotalMoneySpentWep") + gunCost)
 
-					if (v:GetNWInt("charismaLevel") < 40) then
+					if (ply:GetNWInt("charismaLevel") < 40) then
 						ply:SetNWInt("charismaExperience", ply:GetNWInt("charismaExperience") + charExp)
 						checkForCharisma(ply)
 					end

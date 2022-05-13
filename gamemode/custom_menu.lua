@@ -81,9 +81,7 @@ function gameShopMenu(ply, cmd, args)
 
 	if (inPlayerMenu == false) then
 		Menu = vgui.Create("DFrame")
-		local width = math.Round(ScrW() * 0.42)
-		local height = math.Round(ScrH() * 0.75)
-		Menu:SetSize(width, height)
+		Menu:SetSize(800, 768)
 		Menu:Center()
 		Menu:SetTitle("Escape From Garry's Mod")
 		Menu:SetDraggable(false)
@@ -102,7 +100,7 @@ function gameShopMenu(ply, cmd, args)
 		inPlayerMenu = true
 
 		gui.EnableScreenClicker(true)
-		surface.PlaySound( "common/wpn_select.wav" )
+		surface.PlaySound("common/wpn_select.wav")
 
 		Menu.OnClose = function()
 
@@ -110,7 +108,7 @@ function gameShopMenu(ply, cmd, args)
 				inPlayerMenu = false
 
 				gui.EnableScreenClicker(false)
-				surface.PlaySound( "common/wpn_denyselect.wav" )
+				surface.PlaySound("common/wpn_denyselect.wav")
 
 				inPlayerMenu = false
 
@@ -118,7 +116,7 @@ function gameShopMenu(ply, cmd, args)
 				isSellMenu = false
 				seller = nil
 			else
-				surface.PlaySound( "common/wpn_denyselect.wav" )
+				surface.PlaySound("common/wpn_denyselect.wav")
 
 				inPlayerMenu = false
 
@@ -405,7 +403,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	extractsButton:SetParent(Menu)
 	extractsButton:SetText("")
 	extractsButton:SetSize(100, 100)
-	extractsButton:SetPos(0, 450)
+	extractsButton:SetPos(0, 518)
 	extractsButton.Paint = function()
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
@@ -430,7 +428,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	serverButton:SetParent(Menu)
 	serverButton:SetText("")
 	serverButton:SetSize(100, 50)
-	serverButton:SetPos(0, 650)
+	serverButton:SetPos(0, 618)
 	serverButton.Paint = function()
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
@@ -455,7 +453,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	supportButton:SetParent(Menu)
 	supportButton:SetText("")
 	supportButton:SetSize(100, 50)
-	supportButton:SetPos(0, 700)
+	supportButton:SetPos(0, 668)
 	supportButton.Paint = function()
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
@@ -480,7 +478,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	settingsButton:SetParent(Menu)
 	settingsButton:SetText("")
 	settingsButton:SetSize(100, 50)
-	settingsButton:SetPos(0, 750)
+	settingsButton:SetPos(0, 718)
 	settingsButton.Paint = function()
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
@@ -1110,11 +1108,8 @@ end
 
 PANEL = {} --Creates empty panel
 
-local playerPanelWidth = math.Round(ScrW() * 0.42)
-local playerPanelHeight = math.Round(ScrH() * 0.75)
-
 function PANEL:Init() -- initializes the panel
-	self:SetSize(playerPanelWidth, playerPanelHeight)
+	self:SetSize(700, 768)
 	self:SetPos(100, 25)
 end
 
@@ -1131,11 +1126,8 @@ vgui.Register("PlayerPanel", PANEL, "Panel")
 
 PANEL = {} --Creates empty panel
 
-local shopPanelWidth = math.Round(ScrW() * 0.4)
-local shopPanelHeight = math.Round(ScrH() * 0.75)
-
 function PANEL:Init() -- initializes the panel
-	self:SetSize(shopPanelWidth, shopPanelHeight)
+	self:SetSize(700, 746)
 	self:SetPos(100, 25)
 end
 
@@ -1149,11 +1141,8 @@ vgui.Register("ShopPanel", PANEL, "Panel")
 
 PANEL = {} --Creates empty panel
 
-local taskPanelWidth = math.Round(ScrW() * 0.42)
-local taskPanelHeight = math.Round(ScrH() * 0.75)
-
 function PANEL:Init() -- initializes the panel
-	self:SetSize(taskPanelWidth, taskPanelHeight)
+	self:SetSize(700, 768)
 	self:SetPos(100, 25)
 end
 
@@ -1169,11 +1158,8 @@ vgui.Register("TaskPanel", PANEL, "Panel")
 
 PANEL = {} --Creates empty panel
 
-local dailyPanelWidth = math.Round(ScrW() * 0.42)
-local dailyPanelHeight = math.Round(ScrH() * 0.75)
-
 function PANEL:Init() -- initializes the panel
-	self:SetSize(dailyPanelWidth, dailyPanelHeight)
+	self:SetSize(700, 768)
 	self:SetPos(100, 25)
 end
 
@@ -1190,11 +1176,8 @@ vgui.Register("DailyPanel", PANEL, "Panel")
 
 PANEL = {} --Creates empty panel
 
-local skillsPanelWidth = math.Round(ScrW() * 0.42)
-local skillsPanelHeight = math.Round(ScrH() * 0.75)
-
 function PANEL:Init() -- initializes the panel
-	self:SetSize(skillsPanelWidth, skillsPanelHeight)
+	self:SetSize(700, 768)
 	self:SetPos(100, 25)
 end
 
@@ -1210,11 +1193,8 @@ vgui.Register("SkillPanel", PANEL, "Panel")
 
 PANEL = {} --Creates empty panel
 
-local prestigePanelWidth = math.Round(ScrW() * 0.42)
-local prestigePanelHeight = math.Round(ScrH() * 0.75)
-
 function PANEL:Init() -- initializes the panel
-	self:SetSize(prestigePanelWidth, prestigePanelHeight)
+	self:SetSize(700, 768)
 	self:SetPos(100, 25)
 end
 
@@ -1230,11 +1210,8 @@ vgui.Register("PrestigePanel", PANEL, "Panel")
 
 PANEL = {} --Creates empty panel
 
-local stashPanelWidth = math.Round(ScrW() * 0.42)
-local stashPanelHeight = math.Round(ScrH() * 0.75)
-
 function PANEL:Init() -- initializes the panel
-	self:SetSize(stashPanelWidth, stashPanelHeight)
+	self:SetSize(700, 768)
 	self:SetPos(100, 25)
 end
 

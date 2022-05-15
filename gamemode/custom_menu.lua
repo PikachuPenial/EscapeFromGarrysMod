@@ -522,118 +522,192 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 	dailyButton.DoClick = function()
 
-		local skillPanel = Menu:Add("DailyPanel")
+		local dailyPanel = Menu:Add("DailyPanel")
+
+
+		local blackColor = 		Color(10, 10, 10, 255)
+		local whiteColor = 		Color(250, 250, 250, 255)
+		local offWhiteColor = 	Color(200, 200, 200, 255)
+
+		local primaryColor =	Color(30, 30, 30, 255)
+		local secondaryColor =	Color(100, 100, 100, 255)
+
+		local margin = 			math.Round( ScrH() * 0.01 )
+
 
 		local expToLevel = (LocalPlayer():GetNWInt("playerLvl") * 140) * 5.15
 		local dailyRewardXP = math.Round(expToLevel / 6, 1)
 
-		skillPanel.Paint = function()
-			surface.SetDrawColor(50, 50, 50, 255)
-			surface.DrawRect(0, 0, skillPanel:GetWide(), skillPanel:GetTall())
-			surface.SetTextColor(255, 255, 255, 255)
+		local eliminationText = LocalPlayer():GetNWInt("mapKills") .. " / " .. "6"
+		local extractText = LocalPlayer():GetNWInt("mapExtracts") .. " / " .. "2"
 
-			surface.SetFont("CloseCaption_BoldItalic")
-			surface.SetTextPos(50, 50)
-			surface.DrawText("Dailies : Resets at the beginning of each map.")
+		local distanceText = LocalPlayer():GetNWInt("weeklyDistance") .. " / " .. "4000m"
+		local weeklyExtractText = LocalPlayer():GetNWInt("weeklyExtracts") .. " / " .. "20"
+
+		
+		-- new method so scrolling works
+
+		dailyPanel.Paint = function(self, w, h)
+			draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+		end
+
+		local scrollPanel = vgui.Create("DScrollPanel", dailyPanel)
+		scrollPanel:Dock(FILL)
+
+
+		local dailyTaskPanel = vgui.Create("DPanel", scrollPanel)
+		dailyTaskPanel:Dock(TOP)
+		dailyTaskPanel:DockMargin(margin, margin, margin, margin)
+		dailyTaskPanel:SetSize(0, 50)
+
+		dailyTaskPanel.Paint = function(self, w, h)
+			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+
+			draw.SimpleText("Dailies : Resets at the beginning of each map.", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+
+		-- DAILY TASKS
+
+		local dailyKillPanel = vgui.Create("DPanel", scrollPanel)
+		dailyKillPanel:Dock(TOP)
+		dailyKillPanel:DockMargin(margin, margin, margin, margin)
+		dailyKillPanel:SetSize(0, 120)
+
+		dailyKillPanel.Paint = function(self, w, h)
+
+			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
 
 			--Elimination
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(50, 100)
-			surface.DrawText("Elimination : " .. "Get kills on other players")
 
-			surface.SetFont("DermaDefaultBold")
-			surface.SetTextPos(50, 190)
-			surface.DrawText("Rewards : " .. dailyRewardXP .. " EXP, " .. "₽2500")
+			draw.SimpleText("Elimination : Get kills on other players", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
-			surface.SetDrawColor(100, 100, 100, 255)
-			surface.DrawRect(50, 150, 500, 30)
+			draw.SimpleText("Rewards : " .. dailyRewardXP .. " EXP, " .. "₽2500", "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
-			surface.SetFont("DermaLarge")
+			surface.SetDrawColor(65, 65, 65)
+			surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
 			surface.SetDrawColor(0, 255, 50, 255)
 			surface.DrawRect(51, 152.5, 498.5 * (LocalPlayer():GetNWInt("mapKills") / "6"), 25)
 
 			if LocalPlayer():GetNWInt("eliminationComplete") == 0 then
-				surface.SetTextPos(260, 150)
-				surface.DrawText(LocalPlayer():GetNWInt("mapKills") .. " / " .. "6")
+				draw.SimpleText(eliminationText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			else
-				surface.SetTextPos(200, 150)
-				surface.DrawText("Task Completed")
+				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			end
 
+		end
+
+		local dailyExtractPanel = vgui.Create("DPanel", scrollPanel)
+		dailyExtractPanel:Dock(TOP)
+		dailyExtractPanel:DockMargin(margin, margin, margin, margin)
+		dailyExtractPanel:SetSize(0, 120)
+
+		dailyExtractPanel.Paint = function(self, w, h)
+
+			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+
 			--Successful Operations
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(50, 250)
-			surface.DrawText("Successful Operations : " .. "Extract from raids")
 
-			surface.SetFont("DermaDefaultBold")
-			surface.SetTextPos(50, 340)
-			surface.DrawText("Rewards : " .. dailyRewardXP .. " EXP, " .. "₽2500")
+			draw.SimpleText("Successful Operations : Extract from raids", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
-			surface.SetDrawColor(100, 100, 100, 255)
-			surface.DrawRect(50, 300, 500, 30)
+			draw.SimpleText("Rewards : " .. dailyRewardXP .. " EXP, " .. "₽2500", "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
-			surface.SetFont("DermaLarge")
+			surface.SetDrawColor(65, 65, 65)
+			surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
 			surface.SetDrawColor(0, 255, 50, 255)
 			surface.DrawRect(51, 302.5, 498.5 * (LocalPlayer():GetNWInt("mapExtracts") / "2"), 25)
 
 			if LocalPlayer():GetNWInt("successfulOperationsComplete") == 0 then
-				surface.SetTextPos(260, 300)
-				surface.DrawText(LocalPlayer():GetNWInt("mapExtracts") .. " / " .. "2")
+				draw.SimpleText(extractText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			else
-				surface.SetTextPos(200, 300)
-				surface.DrawText("Task Completed")
+				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			end
+			
+		end
 
-			surface.SetFont("CloseCaption_BoldItalic")
-			surface.SetTextPos(50, 400)
-			surface.DrawText("Weeklies : Resets and changes at the beginning of each wipe.")
 
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(50, 450)
-			surface.DrawText("Rangefinder : " .. "Total kill distance in meters")
+		local weeklyTaskPanel = vgui.Create("DPanel", scrollPanel)
+		weeklyTaskPanel:Dock(TOP)
+		weeklyTaskPanel:DockMargin(margin, margin, margin, margin)
+		weeklyTaskPanel:SetSize(0, 50)
 
-			surface.SetFont("DermaDefaultBold")
-			surface.SetTextPos(50, 540)
-			surface.DrawText("Rewards : " .. "₽66666")
+		weeklyTaskPanel.Paint = function(self, w, h)
+			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
 
-			surface.SetDrawColor(100, 100, 100, 255)
-			surface.DrawRect(50, 500, 500, 30)
+			draw.SimpleText("Weeklies : Resets and changes at the beginning of each wipe.", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
 
-			surface.SetFont("DermaLarge")
+		-- WEEKLY TASKS
+		
+		local weeklyKillPanel = vgui.Create("DPanel", scrollPanel)
+		weeklyKillPanel:Dock(TOP)
+		weeklyKillPanel:DockMargin(margin, margin, margin, margin)
+		weeklyKillPanel:SetSize(0, 120)
+
+		weeklyKillPanel.Paint = function(self, w, h)
+			
+			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+
+			--Elimination
+
+			draw.SimpleText("Rangefinder : Total kill distance in meters", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+			draw.SimpleText("Rewards : " .. "₽66666", "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+			surface.SetDrawColor(65, 65, 65)
+			surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
 			surface.SetDrawColor(0, 255, 50, 255)
 			surface.DrawRect(51, 502.5, 498.5 * (LocalPlayer():GetNWInt("weeklyDistance") / "4000"), 25)
 
 			if LocalPlayer():GetNWInt("weeklyDistanceComplete") == 0 then
-				surface.SetTextPos(260, 500)
-				surface.DrawText(LocalPlayer():GetNWInt("weeklyDistance") .. " / " .. "4000")
+				draw.SimpleText(distanceText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			else
-				surface.SetTextPos(200, 500)
-				surface.DrawText("Task Completed")
+				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			end
 
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(50, 600)
-			surface.DrawText("Wanted : " .. "Extract from raids with more than 3 kills")
+		end
 
-			surface.SetFont("DermaDefaultBold")
-			surface.SetTextPos(50, 690)
-			surface.DrawText("Rewards : " .. "₽66666")
+		local weeklyExtractPanel = vgui.Create("DPanel", scrollPanel)
+		weeklyExtractPanel:Dock(TOP)
+		weeklyExtractPanel:DockMargin(margin, margin, margin, margin)
+		weeklyExtractPanel:SetSize(0, 120)
 
-			surface.SetDrawColor(100, 100, 100, 255)
-			surface.DrawRect(50, 650, 500, 30)
+		weeklyExtractPanel.Paint = function(self, w, h)
+			
+			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
 
-			surface.SetFont("DermaLarge")
+			--Elimination
+
+			draw.SimpleText("Wanted : Extract from raids with more than 3 kills", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+			draw.SimpleText("Rewards : " .. "₽66666", "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+			surface.SetDrawColor(65, 65, 65)
+			surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
 			surface.SetDrawColor(0, 255, 50, 255)
 			surface.DrawRect(51, 652.5, 498.5 * (LocalPlayer():GetNWInt("weeklyExtracts") / "20"), 25)
 
 			if LocalPlayer():GetNWInt("weeklyExtractsComplete") == 0 then
-				surface.SetTextPos(260, 650)
-				surface.DrawText(LocalPlayer():GetNWInt("weeklyExtracts") .. " / " .. "20")
+				draw.SimpleText(weeklyExtractText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			else
-				surface.SetTextPos(200, 500)
-				surface.DrawText("Task Completed")
+				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			end
+
 		end
+
+
+		-- local bottomMarginPanel = vgui.Create("DPanel", scrollPanel)
+		-- bottomMarginPanel:Dock(BOTTOM)
+		-- bottomMarginPanel:DockMargin(margin, margin, margin, margin)
+		-- bottomMarginPanel:SetSize(0, margin * 2)
+
+		-- bottomMarginPanel.Paint = function(self, w, h)
+		-- 	draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+		-- end
+
 	end
 
 	local taskButton = vgui.Create("DButton")
@@ -659,8 +733,8 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 	taskButton.DoClick = function()
 
-		net.Start("RequestTaskInfo")
-		net.SendToServer()
+		-- net.Start("RequestTaskInfo")
+		-- net.SendToServer()
 
 		local taskPanel = Menu:Add("TaskPanel")
 
@@ -1167,7 +1241,7 @@ function PANEL:Paint(w, h)
 	draw.RoundedBox(0, 0, 0, w, h, Color(50, 50, 50))
 end
 
-vgui.Register("DailyPanel", PANEL, "Panel")
+vgui.Register("DailyPanel", PANEL, "DPanel")
 
 --End dailes panel
 

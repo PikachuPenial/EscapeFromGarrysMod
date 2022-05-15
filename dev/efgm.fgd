@@ -32,6 +32,15 @@
 	input	Respawn(void)	: "This spawns an item when there is no current item spawned"
 ]
 
+@SolidClass base(Trigger) = efgm_trigger_task : "Task Trigger"
+[
+
+	location_name(string)			: "Location Name"			: ""											: "This is the name of the location, used by sv_tasks to complete the locate subtask."
+
+	location_daily(boolean)			: "Is Location Daily"		: 1												: "Used by the task script to generate operational tasks. Set this to "
+	
+]
+
 @PointClass base(Weapon) studio("models/player/helmet_maska_1sh_killa/maska_killa.mdl") = efgm_random_helmet : "Spawns a random helmet"
 [
 	spawn_chance(integer) : "Helmet Spawn Chance" : 0 : "The chance a helmet will be spawned from this. (1 is a guranteed spawn, 2 will spawn a helmet half the time, etc.)"

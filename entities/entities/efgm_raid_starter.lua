@@ -363,18 +363,18 @@ local function DetermineSpawnTable(class, useTeamSpawns)
 
 			if v.SpawnType != 2 then
 
-				-- if useTeamSpawns == true then
+				if useTeamSpawns == true then
 
-				-- 	if v.IsTeamSpawn == true then table.insert(spawnTable, v) end
+					if v.IsTeamSpawn == true then table.insert(spawnTable, v) end
 
-				-- end
+				end
 
-				-- if useTeamSpawns == false then
+				if useTeamSpawns == false then
 
-				-- end
+					table.insert(spawnTable, v)
 
-				table.insert(spawnTable, v)
-
+				end
+				
 			end
 
 		end
@@ -383,19 +383,17 @@ local function DetermineSpawnTable(class, useTeamSpawns)
 
 			if v.SpawnType != 1 then
 
-				-- if useTeamSpawns == true then
+				if useTeamSpawns == true then
 
-				-- 	if v.IsTeamSpawn == true then table.insert(spawnTable, v) end
+					if v.IsTeamSpawn == true then table.insert(spawnTable, v) end
 
-				-- end
+				end
 
-				-- if useTeamSpawns == false then
+				if useTeamSpawns == false then
 
-				-- 	table.insert(spawnTable, v)
+					table.insert(spawnTable, v)
 
-				-- end
-
-				table.insert(spawnTable, v)
+				end
 
 			end
 
@@ -458,11 +456,7 @@ local function PartySpawn(players, class)
 
 		if v:GetNWBool("inRaid") == false then
 
-			local spawnInt = math.random(#spawnVectors)
-
-			SpawnPlayer(v, randomSpawn.SpawnGroup, class, spawnVectors[spawnInt], randomSpawn:GetAngles())
-
-			table.remove(spawnVectors, spawnInt)
+			SpawnPlayer(v, randomSpawn.SpawnGroup, class, spawnVectors[k], randomSpawn:GetAngles())
 
 		end
 

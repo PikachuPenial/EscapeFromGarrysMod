@@ -1,18 +1,33 @@
 function buyEntity(ply, cmd, args)
-    if (args[1] != nil) then
-        local ent = ents.Create(args[1])
-        local tr = ply:GetEyeTrace()
-		local balance = ply:GetNWInt("playerMoney")
+	local entityPrices = {}
+	entityPrices[1] = {"efgm_weapon_crate_low", "5555", "2"}
+	entityPrices[2] = {"efgm_weapon_crate_mid", "13000", "4"}
+	entityPrices[3] = {"efgm_weapon_crate_high", "20000", "8"}
+	entityPrices[4] = {"ent_jack_gmod_ezarmor_6b13", "12900", "5"}
+	entityPrices[5] = {"ent_jack_gmod_ezarmor_cryeairframe", "11500", "5"}
 
-        if (IsValid(ent)) then
+	for k, v in pairs(entityPrices) do
+		if (args[1] == v[1]) then
+			local balance = (ply:GetNWInt("playerMoney"))
+			local playerLvl = ply:GetNWInt("playerLvl")
+			local levelReq = tonumber(v[3])
 
-            local ClassName = ent:GetClass()
-            if (!tr.Hit) then return end
+			local ent = ents.Create(args[1])
+			local tr = ply:GetEyeTrace()
 
-            local entCount = ply:GetNWInt(ClassName .. "count")
+			if (!tr.Hit) then return end
 
-            if (!ent.limit or entCount < ent.Limit) then
-				if (balance >= ent.Cost) then
+			if (ply:GetNWInt("charismaEffect") == 0) then
+				entCost = tonumber(v[2])
+			else
+				entCost = math.Round(tonumber(v[2]) * ply:GetNWInt("charismaEffect"), 0)
+			end
+
+			if (playerLvl >= levelReq) then
+				if (balance >= entCost) then
+					local charExpGain = (ply:GetNWInt("charismaExperience") + entCost)
+					local charExp = charExpGain / 1750
+
 					local SpawnPos = ply:GetShootPos() + ply:GetForward() * 80
 
 					ent.Owner = ply
@@ -21,24 +36,19 @@ function buyEntity(ply, cmd, args)
 					ent:Spawn()
 					ent:Activate()
 
-					ply:SetNWInt("playerMoney", balance - ent.Cost)
-					ply:SetNWInt("playerTotalMoneySpent", ply:GetNWInt("playerTotalMoneySpent") + ent.Cost)
-					ply:SetNWInt("playerTotalMoneySpentItem", ply:GetNWInt("playerTotalMoneySpentItem") + ent.Cost)
+					ply:SetNWInt("playerMoney", balance - entCost)
+					ply:SetNWInt("playerTotalMoneySpent", ply:GetNWInt("playerTotalMoneySpent") + entCost)
+					ply:SetNWInt("playerTotalMoneySpentItem", ply:GetNWInt("playerTotalMoneySpentItem") + entCost)
 
-					local charExpGain = (ply:GetNWInt("charismaExperience") + ent.Cost)
-					local charExp = charExpGain / 1750
-
-					ply:SetNWInt("charismaExperience", ply:GetNWInt("charismaExperience") + charExp)
-					checkForCharisma(ply)
-
-					ply:SetNWInt(ClassName .. "count", entCount + 1)
-
-					return ent
+					if (ply:GetNWInt("charismaLevel") < 40) then
+						ply:SetNWInt("charismaExperience", ply:GetNWInt("charismaExperience") + charExp)
+						checkForCharisma(ply)
+					end
 				else
 					ply:PrintMessage(HUD_PRINTTALK, "You do not have enough roubles to purchase this item.")
 				end
 			else
-				ply:PrintMessage(HUD_PRINTTALK, "You already have the maximum amount of this specific entity. MAX = " .. ent.Limit)
+				ply:PrintMessage(HUD_PRINTTALK, "You must be level " .. levelReq .. " to purchase this item.")
 			end
 
 			return
@@ -181,7 +191,7 @@ function buyGun(ply, cmd, args)
 			local playerLvl = ply:GetNWInt("playerLvl")
 			local levelReq = tonumber(v[3])
 
-			if (ply:GetNWInt("charismaEffect") == 1) then
+			if (ply:GetNWInt("charismaEffect") == 0) then
 				gunCost = tonumber(v[2])
 			else
 				gunCost = math.Round(tonumber(v[2]) * ply:GetNWInt("charismaEffect"), 0)

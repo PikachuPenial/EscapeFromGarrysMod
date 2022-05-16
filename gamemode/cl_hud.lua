@@ -53,14 +53,14 @@ function HUD()
 
 			if v:Alive() then
 				if v:GetNWBool("inRaid") == true then
-					playerColor = Color(0, 255, 0)
+					playerColor = Color(50, 255, 50, 255)
 				end
 	
 				if v:GetNWBool("inRaid") == false then
 					playerColor = Color(255, 255, 255)
 				end
 			else
-				playerColor = Color(255, 0, 0)
+				playerColor = Color(255, 50, 50, 255)
 			end
 
 
@@ -117,7 +117,7 @@ function HUD()
 	if timerRed == true then
 		timeText = mapSwitchText
 
-		draw.SimpleText("MAP IS RESETING: TRANSFER ANYTHING YOU WANT TO KEEP INTO YOUR STASH, OR YOU WILL LOSE YOUR ITEMS.", "DermaLarge", ScrW() / 2, 50, colorRed, 1)
+		draw.SimpleText("MAP IS RESETING: TRANSFER ANYTHING YOU WANT TO KEEP INTO YOUR STASH, OR YOU WILL LOSE YOUR ITEMS.", "DermaLarge", ScrW() / 2, 775, colorRed, 1)
 	end
 
 	draw.SimpleText(raidTimeLeft, "DermaLarge", 28, ScrH() - 305, timerColor, 0)
@@ -176,56 +176,57 @@ function HUD()
 		end
 
 		if (inPlayerMenu == false) and (inMapVoteMenu == false) and (inStashMenu == false) and (inRaidSummaryMenu == false) then
-				draw.SimpleText("[Controls]", "DermaLarge", 135, ScrH() - 1060, Color(0, 200, 255, 255), 0)
-				draw.SimpleText("# = Not Binded", "DermaLarge", 135, ScrH() - 1030, red, 0)
+				draw.SimpleText("[Controls]", "DermaLarge", 135, 20, Color(0, 200, 255, 255), 0)
+				draw.SimpleText("# = Not Binded", "DermaLarge", 135, 50, red, 0)
+				draw.SimpleText("Use the developer console to set binds", "Trebuchet24", 325, 54, red, 0)
 			
-				draw.SimpleText("[" .. spawnMenuBind .. "]", "DermaLarge", 135, ScrH() - 1000, spawnMenuColor, 0)
-				draw.SimpleText("Check Extracts", "DermaLarge", 170, ScrH() - 1000, white, 0)
-				draw.SimpleText("bind key +menu", "DermaDefaultBold", 360, ScrH() - 990, white, 0)
+				draw.SimpleText("[" .. spawnMenuBind .. "]", "Trebuchet24", 135, 80, spawnMenuColor, 0)
+				draw.SimpleText("Check Extracts", "Trebuchet24", 165, 80, white, 0)
+				draw.SimpleText("bind key +menu", "DermaDefaultBold", 310, 86, white, 0)
 
-				draw.SimpleText("[" .. contextMenuBind .. "]", "DermaLarge", 135, ScrH() - 970, contextMenuColor, 0)
-				draw.SimpleText("Change Attachments", "DermaLarge", 165, ScrH() - 970, white, 0)
-				draw.SimpleText("bind key +menu_context", "DermaDefaultBold", 425, ScrH() - 960, white, 0)
+				draw.SimpleText("[" .. contextMenuBind .. "]", "Trebuchet24", 135, 105, contextMenuColor, 0)
+				draw.SimpleText("Change Attachments", "Trebuchet24", 160, 105, white, 0)
+				draw.SimpleText("bind key +menu_context", "DermaDefaultBold", 353, 111, white, 0)
 
-				draw.SimpleText("[" .. leanLeftBind .. "]", "DermaLarge", 135, ScrH() - 940, leanLeftColor, 0)
-				draw.SimpleText("Lean Left", "DermaLarge", 170, ScrH() - 940, white, 0)
-				draw.SimpleText("bind key +alt1", "DermaDefaultBold", 290, ScrH() - 930, white, 0)
+				draw.SimpleText("[" .. leanLeftBind .. "]", "Trebuchet24", 135, 130, leanLeftColor, 0)
+				draw.SimpleText("Lean Left", "Trebuchet24", 165, 130, white, 0)
+				draw.SimpleText("bind key +alt1", "DermaDefaultBold", 265, 136, white, 0)
 
-				draw.SimpleText("[" .. leanRightBind .. "]", "DermaLarge", 135, ScrH() - 910, leanRightColor, 0)
-				draw.SimpleText("Lean Right", "DermaLarge", 170, ScrH() - 910, white, 0)
-				draw.SimpleText("bind key +alt2", "DermaDefaultBold", 305, ScrH() - 900, white, 0)
+				draw.SimpleText("[" .. leanRightBind .. "]", "Trebuchet24", 135, 155, leanRightColor, 0)
+				draw.SimpleText("Lean Right", "Trebuchet24", 165, 155, white, 0)
+				draw.SimpleText("bind key +alt2", "DermaDefaultBold", 275, 161, white, 0)
 
-				draw.SimpleText("[" .. dropBind .. "]", "DermaLarge", 135, ScrH() - 880, dropColor, 0)
-				draw.SimpleText("Drop Held Item", "DermaLarge", 170, ScrH() - 880, white, 0)
-				draw.SimpleText("bind key +drop", "DermaDefaultBold", 356, ScrH() - 870, white, 0)
+				draw.SimpleText("[" .. dropBind .. "]", "Trebuchet24", 135, 180, dropColor, 0)
+				draw.SimpleText("Drop Held Item", "Trebuchet24", 165, 180, white, 0)
+				draw.SimpleText("bind key +drop", "DermaDefaultBold", 310, 186, white, 0)
 
-				draw.SimpleText("[" .. nvgBind .. "]", "DermaLarge", 135, ScrH() - 850, nvgColor, 0)
-				draw.SimpleText("Toggle NVG", "DermaLarge", 175, ScrH() - 850, white, 0)
-				draw.SimpleText("bind key arc_vm_nvg", "DermaDefaultBold", 325, ScrH() - 840, white, 0)
+				draw.SimpleText("[" .. nvgBind .. "]", "Trebuchet24", 135, 205, nvgColor, 0)
+				draw.SimpleText("Inventory", "Trebuchet24", 170, 205, white, 0)
+				draw.SimpleText("bind key arc_vm_nvg", "DermaDefaultBold", 270, 211, white, 0)
 
-				draw.SimpleText("[" .. tacticalBind .. "]", "DermaLarge", 135, ScrH() - 820, tacticalColor, 0)
-				draw.SimpleText("Toggle Laser/Light", "DermaLarge", 162, ScrH() - 820, white, 0)
-				draw.SimpleText("bind key impulse 100", "DermaDefaultBold", 400, ScrH() - 810, white, 0)
+				draw.SimpleText("[" .. tacticalBind .. "]", "Trebuchet24", 135, 230, tacticalColor, 0)
+				draw.SimpleText("Toggle Laser/Light", "Trebuchet24", 162, 230, white, 0)
+				draw.SimpleText("bind key impulse 100", "DermaDefaultBold", 340, 236, white, 0)
 
-				draw.SimpleText("[" .. fireModeBind .. "]", "DermaLarge", 135, ScrH() - 790, fireModeColor, 0)
-				draw.SimpleText("Toggle Firemode", "DermaLarge", 168, ScrH() - 790, white, 0)
-				draw.SimpleText("bind key +zoom", "DermaDefaultBold", 380, ScrH() - 780, white, 0)
+				draw.SimpleText("[" .. fireModeBind .. "]", "Trebuchet24", 135, 255, fireModeColor, 0)
+				draw.SimpleText("Toggle Firemode", "Trebuchet24", 165, 255, white, 0)
+				draw.SimpleText("bind key +zoom", "DermaDefaultBold", 330, 261, white, 0)
 
-				draw.SimpleText("[" .. helpBind .. "]", "DermaLarge", 135, ScrH() - 760, inventoryColor, 0)
-				draw.SimpleText("Help Menu/Learn How To Play", "DermaLarge", 182, ScrH() - 760, white, 0)
-				draw.SimpleText("bind key gm_showhelp", "DermaDefaultBold", 560, ScrH() - 750, white, 0)
+				draw.SimpleText("[" .. helpBind .. "]", "Trebuchet24", 135, 280, inventoryColor, 0)
+				draw.SimpleText("Help Menu/Learn How To Play", "Trebuchet24", 175, 280, white, 0)
+				draw.SimpleText("bind key gm_showhelp", "DermaDefaultBold", 460, 286, white, 0)
 
-				draw.SimpleText("[" .. teamBind .. "]", "DermaLarge", 135, ScrH() - 730, inventoryColor, 0)
-				draw.SimpleText("Create/Join Team", "DermaLarge", 182, ScrH() - 730, white, 0)
-				draw.SimpleText("bind key gm_showteam", "DermaDefaultBold", 410, ScrH() - 720, white, 0)
+				draw.SimpleText("[" .. teamBind .. "]", "Trebuchet24", 135, 305, inventoryColor, 0)
+				draw.SimpleText("Create/Join Team", "Trebuchet24", 175, 305, white, 0)
+				draw.SimpleText("bind key gm_showteam", "DermaDefaultBold", 350, 311, white, 0)
 
-				draw.SimpleText("[" .. inventoryBind .. "]", "DermaLarge", 135, ScrH() - 700, inventoryColor, 0)
-				draw.SimpleText("Open Inventory", "DermaLarge", 182, ScrH() - 700, white, 0)
-				draw.SimpleText("bind key gm_showspare1", "DermaDefaultBold", 372, ScrH() - 690, white, 0)
+				draw.SimpleText("[" .. inventoryBind .. "]", "Trebuchet24", 135, 330, inventoryColor, 0)
+				draw.SimpleText("Open Inventory", "Trebuchet24", 175, 330, white, 0)
+				draw.SimpleText("bind key gm_showspare1", "DermaDefaultBold", 330, 336, white, 0)
 			
-				draw.SimpleText("[" .. shopBind .. "]", "DermaLarge", 135, ScrH() - 670, shopColor, 0)
-				draw.SimpleText("Open Menu (Shop/Tasks)", "DermaLarge", 182, ScrH() - 670, white, 0)
-				draw.SimpleText("bind key gm_showspare2", "DermaDefaultBold", 498, ScrH() - 660, white, 0)
+				draw.SimpleText("[" .. shopBind .. "]", "Trebuchet24", 135, 355, shopColor, 0)
+				draw.SimpleText("Open Menu (Shop/Tasks)", "Trebuchet24", 175, 355, white, 0)
+				draw.SimpleText("bind key gm_showspare2", "DermaDefaultBold", 410, 361, white, 0)
 			end
 		end
 	end
@@ -237,7 +238,7 @@ function DrawTarget()
 		return false
 	end
 end
-hook.Add( "HUDDrawTargetID", "HidePlayerInfo", DrawTarget )
+hook.Add("HUDDrawTargetID", "HidePlayerInfo", DrawTarget)
 
 function HideHud(name)
 	for k, v in pairs({"CHudHealth", "CHudBattery", "CHudAmmo", "CHudSecondaryAmmo"}) do

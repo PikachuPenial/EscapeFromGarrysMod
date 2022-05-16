@@ -31,11 +31,11 @@ function GM:PlayerSpawn(ply)
 
 	ply:SetGravity(.72)
 	ply:SetMaxHealth(100)
-	ply:SetRunSpeed(205 + runSpeed)
-	ply:SetWalkSpeed(125 + walkSpeed)
+	ply:SetRunSpeed(207 + runSpeed)
+	ply:SetWalkSpeed(127 + walkSpeed)
 	ply:SetJumpPower(125 + jumpHeight)
 
-	ply:SetLadderClimbSpeed(55 + climbSpeed)
+	ply:SetLadderClimbSpeed(66 + climbSpeed)
 	ply:SetSlowWalkSpeed(78)
 
 	ply:SetCrouchedWalkSpeed(0.45 + crouchSpeed)
@@ -60,7 +60,7 @@ function GM:PlayerSpawn(ply)
 		ply:ConCommand("open_raid_summary_menu")
 	end
 
-	ply:SetNWInt("playerLvl", 31)
+	ply:SetNWInt("playerLvl", 1)
 end
 
 function GM:PlayerInitialSpawn(ply)
@@ -182,6 +182,24 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetNWInt("playerTotalEarnedSell", tonumber(ply:GetPData("playerTotalEarnedSell")))
 	end
 
+	if (ply:GetPData("playerTotalXpEarned") == nil) then
+		ply:SetNWInt("playerTotalXpEarned", 0)
+	else
+		ply:SetNWInt("playerTotalXpEarned", tonumber(ply:GetPData("playerTotalXpEarned")))
+	end
+
+	if (ply:GetPData("playerTotalXpEarnedKill") == nil) then
+		ply:SetNWInt("playerTotalXpEarnedKill", 0)
+	else
+		ply:SetNWInt("playerTotalXpEarnedKill", tonumber(ply:GetPData("playerTotalXpEarnedKill")))
+	end
+
+	if (ply:GetPData("playerTotalXpEarnedExplore") == nil) then
+		ply:SetNWInt("playerTotalXpEarnedExplore", 0)
+	else
+		ply:SetNWInt("playerTotalXpEarnedExplore", tonumber(ply:GetPData("playerTotalXpEarnedExplore")))
+	end
+
 	if (ply:GetPData("playerDeathsSuicide") == nil) then
 		ply:SetNWInt("playerDeathsSuicide", 0)
 	else
@@ -274,6 +292,18 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetNWInt("weeklyExtracts", tonumber(ply:GetPData("weeklyExtracts")))
 	end
 
+	if (ply:GetPData("weeklyNuclear") == nil) then
+		ply:SetNWInt("weeklyNuclear", 0)
+	else
+		ply:SetNWInt("weeklyNuclear", tonumber(ply:GetPData("weeklyNuclear")))
+	end
+
+	if (ply:GetPData("weeklyAddict") == nil) then
+		ply:SetNWInt("weeklyAddict", 0)
+	else
+		ply:SetNWInt("weeklyAddict", tonumber(ply:GetPData("weeklyAddict")))
+	end
+
 	if (ply:GetPData("weeklyDistanceComplete") == nil) then
 		ply:SetNWInt("weeklyDistanceComplete", 0)
 	else
@@ -284,6 +314,18 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetNWInt("weeklyExtractsComplete", 0)
 	else
 		ply:SetNWInt("weeklyExtractsComplete", tonumber(ply:GetPData("weeklyExtractsComplete")))
+	end
+
+	if (ply:GetPData("weeklyNuclearComplete") == nil) then
+		ply:SetNWInt("weeklyNuclearComplete", 0)
+	else
+		ply:SetNWInt("weeklyNuclearComplete", tonumber(ply:GetPData("weeklyNuclearComplete")))
+	end
+
+	if (ply:GetPData("weeklyAddictComplete") == nil) then
+		ply:SetNWInt("weeklyAddictComplete", 0)
+	else
+		ply:SetNWInt("weeklyAddictComplete", tonumber(ply:GetPData("weeklyAddictComplete")))
 	end
 
 	--Skills
@@ -380,7 +422,7 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 		victim:SetNWInt("extractionStreak", 0)
 	else
 		local moneyGained = math.random(1000, 2500)
-		local expGained = math.random(425, 675)
+		local expGained = math.random(450, 700)
 		local killGained = 1
 		local deathGained = 1
 
@@ -433,6 +475,8 @@ hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
 		victim:PrintMessage(HUD_PRINTCENTER, attacker:Name() .. " killed you from " .. distance .. "m away.")
 		victim:PrintMessage(HUD_PRINTCENTER, "They had an " .. weaponInfo["PrintName"]  .. ".")
 
+		print(victim:LastHitGroup())
+
 		attacker:SetNWInt("weeklyDistance", attacker:GetNWInt("weeklyDistance") + distance)
 		checkForWeekly(attacker)
 	end
@@ -452,7 +496,7 @@ hook.Add("PlayerHurt", "playerDamage", function(victim, attacker, remainingHealt
 	victim:SetNWInt("runThrough", 0)
 end)
 
-hook.Add( "HUDWeaponPickedUp", "WeaponPickedUp", function( weapon )
+hook.Add("HUDWeaponPickedUp", "WeaponPickedUp", function(weapon)
 	ply:SetNWInt("playerItemsPickedUp", ply:GetNWInt("playerItemsPickedUp") + 1)
 	ply:SetNWInt("raidItemsPicked", ply:GetNWInt("raidItemsPicked") + 1)
 end )
@@ -546,9 +590,13 @@ function GM:PlayerDisconnected(ply)
 	--Tasks
 	ply:SetPData("weeklyDistance", ply:GetNWInt("weeklyDistance"))
 	ply:SetPData("weeklyExtracts", ply:GetNWInt("weeklyExtracts"))
+	ply:SetPData("weeklyNuclear", ply:GetNWInt("weeklyNuclear"))
+	ply:SetPData("weeklyAddict", ply:GetNWInt("weeklyAddict"))
 
 	ply:SetPData("weeklyDistanceComplete", ply:GetNWInt("weeklyDistanceComplete"))
 	ply:SetPData("weeklyExtractsComplete", ply:GetNWInt("weeklyExtractsComplete"))
+	ply:SetPData("weeklyNuclearComplete", ply:GetNWInt("weeklyNuclearComplete"))
+	ply:SetPData("weeklyAddictComplete", ply:GetNWInt("weeklyAddictComplete"))
 end
 
 function GM:ShutDown()
@@ -605,9 +653,13 @@ function GM:ShutDown()
 		--Tasks
 		v:SetPData("weeklyDistance", v:GetNWInt("weeklyDistance"))
 		v:SetPData("weeklyExtracts", v:GetNWInt("weeklyExtracts"))
+		v:SetPData("weeklyNuclear", v:GetNWInt("weeklyNuclear"))
+		v:SetPData("weeklyAddict", v:GetNWInt("weeklyAddict"))
 
 		v:SetPData("weeklyDistanceComplete", v:GetNWInt("weeklyDistanceComplete"))
 		v:SetPData("weeklyExtractsComplete", v:GetNWInt("weeklyExtractsComplete"))
+		v:SetPData("weeklyNuclearComplete", v:GetNWInt("weeklyNuclearComplete"))
+		v:SetPData("weeklyAddictComplete", v:GetNWInt("weeklyAddictComplete"))
 	end
 end
 

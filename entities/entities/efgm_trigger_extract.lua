@@ -100,8 +100,12 @@ function ENT:CheckForPlayers()
 									ply:SetNWInt("mapExtracts", ply:GetNWInt("mapExtracts") + 1)
 								end
 
-								if ply:GetNWInt("raidKill") >= 3 then
+								if ply:GetNWInt("raidKill") >= 3 and ply:GetNWInt("weeklyExtractsComplete") == 0 then
 									ply:SetNWInt("weeklyExtracts", ply:GetNWInt("weeklyExtracts") + 1)
+								end
+
+								if ply:GetNWInt("raidKill") >= 12 and ply:GetNWInt("weeklyNuclearComplete") == 0 then
+									ply:SetNWInt("weeklyNuclear", ply:GetNWInt("weeklyNuclear") + 1)
 								end
 
 								if (ply:GetNWInt("playerLvl") < 32) then
@@ -112,6 +116,7 @@ function ENT:CheckForPlayers()
 
 								checkForSuccessfulOperations(ply)
 								checkForWeeklyTwo(ply)
+								checkForWeeklyThree(ply)
 								checkForLevel(ply)
 							end
 

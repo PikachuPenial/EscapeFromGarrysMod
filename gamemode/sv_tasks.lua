@@ -196,8 +196,6 @@ local function FindPlayerTaskIDs(player)
 
     local taskIDs = sql.Query( "SELECT TaskID FROM TaskTable WHERE TaskUser = " .. SQLStr( player:SteamID64() ) .. ";" )
 
-    print("Last SQL Error = " .. tostring(sql.LastError()))
-
     if taskIDs == false then return nil end
     if taskIDs == nil then return nil end
 
@@ -228,8 +226,6 @@ function FinishTask(ply, taskID)
 
             sql.Query( "INSERT INTO TaskTable ( TaskUser, TaskID, TaskObjectives, TaskCompleted ) VALUES( " .. ply:SteamID64() .. ", " .. nextTaskId .. ", " .. SQLStr( taskList[nextTaskId].TaskInternalObjectiveLayout ) .. ", " .. 0 .. " )" )
 
-            print("Last SQL Error = " .. tostring(sql.LastError()))
-
         end
 
         return true
@@ -256,8 +252,6 @@ function AssignStartingTasks(ply)
     if ply:IsAdmin() == false then return end
 
     sql.Query( "INSERT INTO TaskTable ( TaskUser, TaskID, TaskObjectives, TaskCompleted ) VALUES( " .. ply:SteamID64() .. ", " .. 2 .. ", " .. SQLStr( taskList[2].TaskInternalObjectiveLayout ) .. ", " .. 0 .. " )" )
-
-    print("Last SQL Error = " .. tostring(sql.LastError()))
 
 end
 concommand.Add("efgm_assign_tasks", AssignStartingTasks)
@@ -383,8 +377,6 @@ end
 local function CreateTaskTable()
 
     sql.Query( "CREATE TABLE IF NOT EXISTS TaskTable ( TaskUser INTEGER, TaskID INTEGER, TaskObjectives TEXT, TaskCompleted INTEGER )" )
-
-    print("Last SQL Error = " .. tostring(sql.LastError()))
 
 end
 
@@ -521,8 +513,6 @@ local function ResetTaskTable(ply, cmd, args)
 
     sql.Query( "DROP TABLE TaskTable;" )
 
-    print("Last SQL Error = " .. tostring(sql.LastError()))
-
     CreateTaskTable()
 
 end
@@ -537,7 +527,6 @@ local function CheckCurrentTasks(ply, cmd, args)
         local taskTable = { taskList[ value ].TaskName, taskList[ value ].TaskDescription, taskList[ value ].TaskObjectives, taskList[ value ].TaskGiver, }
 
         PrintTable( taskTable )
-        print("Last SQL Error = " .. tostring(sql.LastError()))
     end
 
 end

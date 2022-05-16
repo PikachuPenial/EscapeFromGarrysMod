@@ -155,68 +155,36 @@ function GM:Initialize()
 	tempWeaponsArray[124] = {"models/weapons/arccw/c_mw3e_qbz97.mdl", "arccw_mw3e_qbz97", "QBZ-97", 15000, "13", "MID", "Rifle"}
 	tempWeaponsArray[125] = {"models/viper/mw/weapons/p320_arccw.mdl", "arccw_mw_p320", "SIG P320 RX", 4000, "3", "LOW", "Pistol"}
 
+	local tempEntityArray = {}
+
+	tempEntityArray[1] = {"models/efgm/low_crate01.mdl", "efgm_weapon_crate_low", "Low Tier Weapon Crate", 5555, "2", "LOW", "Container"}
+	tempEntityArray[2] = {"models/efgm/mid_crate01.mdl", "efgm_weapon_crate_mid", "Mid Tier Weapon Crate", 13000, "4", "MID", "Container"}
+	tempEntityArray[3] = {"models/efgm/high_crate01.mdl", "efgm_weapon_crate_high", "High Tier Weapon Crate", 20000, "8", "HIGH", "Container"}
+	tempEntityArray[4] = {"models/armor_6b13_digital/6b13.mdl", "ent_jack_gmod_ezarmor_6b13", "6B13 (Class 4)", 12900, "5", "MID", "Armor"}
+	tempEntityArray[5] = {"models/helmet_cryeairframe/helmet_crye_airframe.mdl", "ent_jack_gmod_ezarmor_cryeairframe", "Crye AirFrame (Class 4)", 11500, "5", "MID", "Helmet"}
+
 	local tempArmorArray = {}
 
-	tempArmorArray[1] = scripted_ents.Get("vest_6b13_1")
-	tempArmorArray[2] = scripted_ents.Get("vest_6b13_2")
-	tempArmorArray[3] = scripted_ents.Get("vest_6b13_m")
-	tempArmorArray[4] = scripted_ents.Get("vest_6b23_1")
-	tempArmorArray[5] = scripted_ents.Get("vest_6b23_2")
-	tempArmorArray[6] = scripted_ents.Get("vest_6b43")
-	tempArmorArray[7] = scripted_ents.Get("helmet_6b47")
-	tempArmorArray[8] = scripted_ents.Get("helmet_6b47_2")
-	tempArmorArray[9] = scripted_ents.Get("vest_6b5")
-	tempArmorArray[10] = scripted_ents.Get("helmet_achhc_black")
-	tempArmorArray[11] = scripted_ents.Get("helmet_achhc_green")
-	tempArmorArray[12] = scripted_ents.Get("vest_m2")
-	tempArmorArray[13] = scripted_ents.Get("vest_a18")
-	tempArmorArray[14] = scripted_ents.Get("vest_bnti_gzhel_k")
-	tempArmorArray[15] = scripted_ents.Get("vest_bnti_kirasa")
-	tempArmorArray[16] = scripted_ents.Get("vest_iotv_gen4_full")
-	tempArmorArray[17] = scripted_ents.Get("helmet_kiver")
-	tempArmorArray[18] = scripted_ents.Get("helmet_lzsh")
-	tempArmorArray[19] = scripted_ents.Get("helmet_maska_1sch")
-	tempArmorArray[20] = scripted_ents.Get("helmet_maska_1sch_killa")
-	tempArmorArray[21] = scripted_ents.Get("vest_3m")
-	tempArmorArray[22] = scripted_ents.Get("helmet_opscore")
-	tempArmorArray[23] = scripted_ents.Get("helmet_opscore_visor")
-	tempArmorArray[24] = scripted_ents.Get("vest_paca")
-	tempArmorArray[25] = scripted_ents.Get("helmet_psh97")
-	tempArmorArray[26] = scripted_ents.Get("helmet_shpm")
-	tempArmorArray[27] = scripted_ents.Get("vest_trooper")
-	tempArmorArray[28] = scripted_ents.Get("helmet_ulach")
-	tempArmorArray[29] = scripted_ents.Get("helmet_untar")
-	tempArmorArray[30] = scripted_ents.Get("vest_untar")
-	tempArmorArray[31] = scripted_ents.Get("vest_wartech_tv110")
-	tempArmorArray[32] = scripted_ents.Get("vest_zhuk3")
-	tempArmorArray[33] = scripted_ents.Get("vest_zhuk6")
-	tempArmorArray[34] = scripted_ents.Get("helmet_zsh1_2m")
-	tempArmorArray[35] = scripted_ents.Get("arctic_nvg_shades")
-	tempArmorArray[36] = scripted_ents.Get("arctic_nvg_pnv10")
-	tempArmorArray[37] = scripted_ents.Get("arctic_nvg_pvs14")
-	tempArmorArray[38] = scripted_ents.Get("arctic_nvg_t7")
-	tempArmorArray[39] = scripted_ents.Get("arctic_nvg_n15")
-	tempArmorArray[40] = scripted_ents.Get("arctic_nvg_gpnvg")
-	tempArmorArray[41] = scripted_ents.Get("efgm_weapon_crate_low")
-	tempArmorArray[42] = scripted_ents.Get("efgm_weapon_crate_mid")
-	tempArmorArray[43] = scripted_ents.Get("efgm_weapon_crate_high")
-	tempArmorArray[44] = scripted_ents.Get("arccw_ammo_smg1")
-	tempArmorArray[45] = scripted_ents.Get("arccw_ammo_smg1_large")
-	tempArmorArray[46] = scripted_ents.Get("arccw_ammo_357")
-	tempArmorArray[47] = scripted_ents.Get("arccw_ammo_357_large")
-	tempArmorArray[48] = scripted_ents.Get("arccw_ammo_pistol")
-	tempArmorArray[49] = scripted_ents.Get("arccw_ammo_pistol_large")
-	tempArmorArray[50] = scripted_ents.Get("arccw_ammo_ar2")
-	tempArmorArray[51] = scripted_ents.Get("arccw_ammo_ar2_large")
-	tempArmorArray[52] = scripted_ents.Get("arccw_ammo_smg1_grenade")
-	tempArmorArray[53] = scripted_ents.Get("arccw_ammo_smg1_grenade_large")
-	tempArmorArray[54] = scripted_ents.Get("arccw_ammo_buckshot")
-	tempArmorArray[55] = scripted_ents.Get("arccw_ammo_buckshot_large")
-	tempArmorArray[56] = scripted_ents.Get("arccw_ammo_sniper")
-	tempArmorArray[57] = scripted_ents.Get("arccw_ammo_sniper_large")
-	tempArmorArray[58] = scripted_ents.Get("fas2_ammo_bandages")
-	tempArmorArray[59] = scripted_ents.Get("fas2_ammo_quikclots")
-	tempArmorArray[60] = scripted_ents.Get("fas2_ammo_hemostats")
+	tempArmorArray[1] = scripted_ents.Get("efgm_weapon_crate_low")
+	tempArmorArray[2] = scripted_ents.Get("efgm_weapon_crate_mid")
+	tempArmorArray[3] = scripted_ents.Get("efgm_weapon_crate_high")
+	tempArmorArray[4] = scripted_ents.Get("arccw_ammo_smg1")
+	tempArmorArray[5] = scripted_ents.Get("arccw_ammo_smg1_large")
+	tempArmorArray[6] = scripted_ents.Get("arccw_ammo_357")
+	tempArmorArray[7] = scripted_ents.Get("arccw_ammo_357_large")
+	tempArmorArray[8] = scripted_ents.Get("arccw_ammo_pistol")
+	tempArmorArray[9] = scripted_ents.Get("arccw_ammo_pistol_large")
+	tempArmorArray[10] = scripted_ents.Get("arccw_ammo_ar2")
+	tempArmorArray[11] = scripted_ents.Get("arccw_ammo_ar2_large")
+	tempArmorArray[12] = scripted_ents.Get("arccw_ammo_smg1_grenade")
+	tempArmorArray[13] = scripted_ents.Get("arccw_ammo_smg1_grenade_large")
+	tempArmorArray[14] = scripted_ents.Get("arccw_ammo_buckshot")
+	tempArmorArray[15] = scripted_ents.Get("arccw_ammo_buckshot_large")
+	tempArmorArray[16] = scripted_ents.Get("arccw_ammo_sniper")
+	tempArmorArray[17] = scripted_ents.Get("arccw_ammo_sniper_large")
+	tempArmorArray[18] = scripted_ents.Get("fas2_ammo_bandages")
+	tempArmorArray[19] = scripted_ents.Get("fas2_ammo_quikclots")
+	tempArmorArray[20] = scripted_ents.Get("fas2_ammo_hemostats")
 
 	-- Any weapon in this array cannot be sold. Put any starting equipment here.
 
@@ -242,7 +210,7 @@ function GM:Initialize()
 	-- I think thats it
 
 	weaponsArr = tempWeaponsArray
-	entsArr = tempArmorArray
+	entsArr = tempEntityArray
 
 end
 
@@ -282,6 +250,10 @@ RunConsoleCommand("mp_falldamage", "1")
 --Killfeed Disable
 
 RunConsoleCommand("hud_deathnotice_time", "0")
+
+--Armor
+RunConsoleCommand("jmod_eft_wghtmult", "0.32")
+RunConsoleCommand("jmod_eft_durmult", "1.50")
 
 --View Bobbing
 RunConsoleCommand("viewbob_crouch_enable", "1")
@@ -375,7 +347,7 @@ RunConsoleCommand("arccw_desync", "0")
 RunConsoleCommand("arccw_doorbust", "1")
 RunConsoleCommand("arccw_drawbarrel", "1")
 RunConsoleCommand("arccw_enable_customization", "1")
-RunConsoleCommand("arccw_enable_dropping", "1")
+RunConsoleCommand("arccw_enable_dropping", "0")
 RunConsoleCommand("arccw_enable_penetration", "1")
 RunConsoleCommand("arccw_enable_ricochet", "1")
 RunConsoleCommand("arccw_enable_sway", "1")

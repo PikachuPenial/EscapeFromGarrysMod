@@ -190,6 +190,12 @@ function ENT:EndRaid()
 
 		v:PrintMessage( HUD_PRINTCENTER, "The raid is over!\nIf you did not exit the raid in time, you have lost everything you brought in." )
 
+		if v:GetNWInt("weeklyAddictComplete") == 0 then
+			v:SetNWInt("weeklyAddict", v:GetNWInt("weeklyAddict") + 1)
+		end
+
+		checkForWeeklyFour(v)
+
 	end
 
 	self:TriggerOutput("OnRaidEnd", self, nil)
@@ -408,9 +414,6 @@ end
 local function GetSmartSpawn(class, useTeamSpawns)
 
 	local spawns = DetermineSpawnTable(class, useTeamSpawns)
-
-	print("Spawns are:")
-	PrintTable(spawns)
 
 	local finalSpawns = DoSmartSpawnStuff(spawns, 2048)
 

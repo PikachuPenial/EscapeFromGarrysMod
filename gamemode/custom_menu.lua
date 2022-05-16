@@ -473,7 +473,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	supportButton.DoClick = function()
 		gui.OpenURL("https://discord.gg/GRfvt27uGF")
 	end
-	
+
 	local settingsButton = vgui.Create("DButton")
 	settingsButton:SetParent(Menu)
 	settingsButton:SetText("")
@@ -541,10 +541,12 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		local eliminationText = LocalPlayer():GetNWInt("mapKills") .. " / " .. "6"
 		local extractText = LocalPlayer():GetNWInt("mapExtracts") .. " / " .. "2"
 
-		local distanceText = LocalPlayer():GetNWInt("weeklyDistance") .. " / " .. "4000m"
-		local weeklyExtractText = LocalPlayer():GetNWInt("weeklyExtracts") .. " / " .. "20"
+		local distanceText = LocalPlayer():GetNWInt("weeklyDistance") .. " / " .. "3000m"
+		local weeklyExtractText = LocalPlayer():GetNWInt("weeklyExtracts") .. " / " .. "15"
+		local nuclearText = LocalPlayer():GetNWInt("weeklyNuclear") .. " / " .. "1"
+		local addictText = LocalPlayer():GetNWInt("weeklyAddict") .. " / " .. "10"
 
-		
+
 		-- new method so scrolling works
 
 		dailyPanel.Paint = function(self, w, h)
@@ -563,7 +565,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		dailyTaskPanel.Paint = function(self, w, h)
 			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
 
-			draw.SimpleText("Dailies : Resets at the beginning of each map.", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Dailies : Reset at the beginning of each map.", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
 		-- DAILY TASKS
@@ -581,13 +583,13 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 			draw.SimpleText("Elimination : Get kills on other players", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
-			draw.SimpleText("Rewards : " .. dailyRewardXP .. " EXP, " .. "₽2500", "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Rewards: " .. dailyRewardXP .. " EXP, " .. "₽ 2500", "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
 			surface.SetDrawColor(65, 65, 65)
 			surface.DrawRect(w / 2 - 250, 60, 500, 30)
 
 			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(51, 152.5, 498.5 * (LocalPlayer():GetNWInt("mapKills") / "6"), 25)
+			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("mapKills") / "6"), 25)
 
 			if LocalPlayer():GetNWInt("eliminationComplete") == 0 then
 				draw.SimpleText(eliminationText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
@@ -610,20 +612,19 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 			draw.SimpleText("Successful Operations : Extract from raids", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
-			draw.SimpleText("Rewards : " .. dailyRewardXP .. " EXP, " .. "₽2500", "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Rewards: " .. dailyRewardXP .. " EXP, " .. "₽ 2500", "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
 			surface.SetDrawColor(65, 65, 65)
 			surface.DrawRect(w / 2 - 250, 60, 500, 30)
 
 			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(51, 302.5, 498.5 * (LocalPlayer():GetNWInt("mapExtracts") / "2"), 25)
+			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("mapExtracts") / "2"), 25)
 
 			if LocalPlayer():GetNWInt("successfulOperationsComplete") == 0 then
 				draw.SimpleText(extractText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			else
 				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			end
-			
 		end
 
 
@@ -635,31 +636,31 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		weeklyTaskPanel.Paint = function(self, w, h)
 			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
 
-			draw.SimpleText("Weeklies : Resets and changes at the beginning of each wipe.", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Specials : Reset at the beginning of each wipe.", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
-		-- WEEKLY TASKS
-		
+		-- SPECIAL TASKS
+
 		local weeklyKillPanel = vgui.Create("DPanel", scrollPanel)
 		weeklyKillPanel:Dock(TOP)
 		weeklyKillPanel:DockMargin(margin, margin, margin, margin)
 		weeklyKillPanel:SetSize(0, 120)
 
 		weeklyKillPanel.Paint = function(self, w, h)
-			
+
 			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
 
-			--Elimination
+			--Rangefinder
 
 			draw.SimpleText("Rangefinder : Total kill distance in meters", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
-			draw.SimpleText("Rewards : " .. "₽66666", "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Rewards: " .. "₽ 50000", "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
 			surface.SetDrawColor(65, 65, 65)
 			surface.DrawRect(w / 2 - 250, 60, 500, 30)
 
 			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(51, 502.5, 498.5 * (LocalPlayer():GetNWInt("weeklyDistance") / "4000"), 25)
+			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("weeklyDistance") / "3000"), 25)
 
 			if LocalPlayer():GetNWInt("weeklyDistanceComplete") == 0 then
 				draw.SimpleText(distanceText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
@@ -675,20 +676,20 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		weeklyExtractPanel:SetSize(0, 120)
 
 		weeklyExtractPanel.Paint = function(self, w, h)
-			
+
 			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
 
-			--Elimination
+			--Wanted
 
 			draw.SimpleText("Wanted : Extract from raids with more than 3 kills", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
-			draw.SimpleText("Rewards : " .. "₽66666", "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Rewards: " .. "₽ 60000", "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
 			surface.SetDrawColor(65, 65, 65)
 			surface.DrawRect(w / 2 - 250, 60, 500, 30)
 
 			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(51, 652.5, 498.5 * (LocalPlayer():GetNWInt("weeklyExtracts") / "20"), 25)
+			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("weeklyExtracts") / "15"), 25)
 
 			if LocalPlayer():GetNWInt("weeklyExtractsComplete") == 0 then
 				draw.SimpleText(weeklyExtractText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
@@ -696,6 +697,73 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			end
 
+		end
+
+		local addictPanel = vgui.Create("DPanel", scrollPanel)
+		addictPanel:Dock(TOP)
+		addictPanel:DockMargin(margin, margin, margin, margin)
+		addictPanel:SetSize(0, 120)
+
+		addictPanel.Paint = function(self, w, h)
+
+			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+
+			--Nuclear
+
+			draw.SimpleText("Addiction : Play through 10 maps", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+			draw.SimpleText("Rewards: " .. "₽ 40000", "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+			surface.SetDrawColor(65, 65, 65)
+			surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+			surface.SetDrawColor(0, 255, 50, 255)
+			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("weeklyAddict") / "10"), 25)
+
+			if LocalPlayer():GetNWInt("weeklyAddictComplete") == 0 then
+				draw.SimpleText(addictText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			else
+				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			end
+
+		end
+
+		local nuclearPanel = vgui.Create("DPanel", scrollPanel)
+		nuclearPanel:Dock(TOP)
+		nuclearPanel:DockMargin(margin, margin, margin, margin)
+		nuclearPanel:SetSize(0, 120)
+
+		nuclearPanel.Paint = function(self, w, h)
+
+			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+
+			--Nuclear
+
+			draw.SimpleText("Nuclear : Extract from a raid with 12 or more kills", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+			draw.SimpleText("Rewards: " .. "₽ 70000", "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+			surface.SetDrawColor(65, 65, 65)
+			surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+			surface.SetDrawColor(0, 255, 50, 255)
+			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("weeklyNuclear") / "1"), 25)
+
+			if LocalPlayer():GetNWInt("weeklyNuclearComplete") == 0 then
+				draw.SimpleText(nuclearText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			else
+				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			end
+
+		end
+
+		local endPanel = vgui.Create("DPanel", scrollPanel)
+		endPanel:Dock(TOP)
+		endPanel:DockMargin(margin, margin, margin, margin)
+		endPanel:SetSize(0, 60)
+
+		endPanel.Paint = function(self, w, h)
+			draw.SimpleText("(leaving the server will reset your current daily task progress!)", "CloseCaption_Bold", w / 2, h / 5, Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
 
@@ -986,12 +1054,12 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				for k, v in pairs(entsArr) do
 					local icon = vgui.Create("SpawnIcon", entityList)
 
-					icon:SetModel(v["Model"])
-					icon:SetToolTip(v["PrintName"] .. "\nCost: " .. v["Cost"])
+					icon:SetModel(v[1])
+					icon:SetToolTip(v[3] .. "\nCategory: " .. v[7] .. "\nRarity: " .. v[6] .. "\nCost: " .. math.Round(v[4] *  LocalPlayer():GetNWInt("charismaEffect"), 0) .. "\nLevel Req: " .. v[5])
 					entityList:Add(icon)
 
 					icon.DoClick = function(icon)
-						LocalPlayer():ConCommand("buy_entity " .. v["ClassName"])
+						LocalPlayer():ConCommand("buy_entity " .. v[2])
 					end
 				end
 
@@ -1719,9 +1787,9 @@ function CustomTeamMenu()
 	local primaryColor =	Color(30, 30, 30, 255)
 	local secondaryColor =	Color(100, 100, 100, 255)
 
-	local inRaidColor = 	Color(255, 50, 50, 255)		-- Red
-	local outRaidColor = 	Color(50, 255, 50, 255)		-- Green
-	local deadColor = 		Color(200, 200, 200, 255)	-- Gray
+	local inRaidColor = 	Color(50, 255, 50, 255)		-- Red
+	local outRaidColor = 	Color(255, 255, 255, 255)		-- Green
+	local deadColor = 		Color(255, 50, 50, 255)	-- Gray
 
 	local width =			math.Round( ScrW() * 0.8 )	-- Around 1520 for normal people
 	local height =			math.Round( ScrH() * 0.9 )	-- Around 980
@@ -1732,12 +1800,12 @@ function CustomTeamMenu()
 
 	teamMenuFrame = vgui.Create( "DFrame" )
 	-- teamMenuFrame:SetPos( (ScrW() / 2) - (width / 2), (ScrH() / 2) - (height / 2) ) 
-	teamMenuFrame:SetSize( width, height ) 
+	teamMenuFrame:SetSize( width, height )
 	teamMenuFrame:Center()
-	teamMenuFrame:SetTitle( "Team Menu" ) 
-	teamMenuFrame:SetVisible( true ) 
-	teamMenuFrame:SetDraggable( false ) 
-	teamMenuFrame:ShowCloseButton( true ) 
+	teamMenuFrame:SetTitle("Team Menu")
+	teamMenuFrame:SetVisible( true )
+	teamMenuFrame:SetDraggable( false )
+	teamMenuFrame:ShowCloseButton( true )
 	teamMenuFrame:MakePopup()
 
 	-- Other shit

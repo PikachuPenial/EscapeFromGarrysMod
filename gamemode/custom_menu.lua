@@ -1427,6 +1427,9 @@ function MenuInit()
 		playerInventoryPanel:Dock( LEFT )
 		playerInventoryPanel:SetSize(96, 0)
 
+		local playerInventoryPanelScroller = vgui.Create("DScrollPanel", playerInventoryPanel)
+		playerInventoryPanelScroller:Dock( FILL )
+
 		function playerInventoryPanel:Paint(w, h)
 
 			draw.RoundedBox(0, 0, 0, w, h, Color( 120, 120, 120, 255 ))
@@ -1491,6 +1494,9 @@ function MenuInit()
 
 		end
 
+		local stashScroller = vgui.Create("DScrollPanel", StashMenu)
+		stashScroller:Dock(FILL)
+
 		local stashPanel = vgui.Create("DPanel", StashMenu)
 		stashPanel:Dock( FILL )
 
@@ -1505,7 +1511,7 @@ function MenuInit()
 		stashIconLayout:SetSpaceY(5)
 		stashIconLayout:SetSpaceX(5)
 
-		local inventoryIconLayout = vgui.Create("DIconLayout", playerInventoryPanel)
+		local inventoryIconLayout = vgui.Create("DIconLayout", playerInventoryPanelScroller)
 		inventoryIconLayout:Dock( FILL )
 		inventoryIconLayout:SetSpaceY(5)
 		inventoryIconLayout:SetSpaceX(5)

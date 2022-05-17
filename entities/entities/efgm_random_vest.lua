@@ -7,19 +7,19 @@ ENT.SpawnChance = 1
 ENT.SpawnTier = 0
 
 function ENT:KeyValue(key, value)
-   if key == "spawn_chance" then
-      self.SpawnChance = tonumber(value)
-   end
+	if key == "spawn_chance" then
+		self.SpawnChance = tonumber(value)
+	end
 
-   if key == "vest_tier" then
+	if key == "vest_tier" then
 		self.SpawnTier = tonumber(value)
-   end
+	end
 end
 
 function ENT:Initialize()
 
-	local midTierVests =	{"vest_3m", "vest_6b5", "vest_6b23_1", "vest_bnti_kirasa", "vest_paca", "vest_untar", "vest_zhuk3"}
-	local highTierVests =	{"vest_6b13_1", "vest_6b13_2", "vest_6b13_m", "vest_6b23_2", "vest_6b43", "vest_a18", "vest_bnti_gzhel_k", "vest_iotv_gen4_full", "vest_m2", "vest_trooper", "vest_wartech_tv110", "vest_zhuk6"}
+	local midTierVests =	{"ent_jack_gmod_ezarmor_module3m", "ent_jack_gmod_ezarmor_paca", "ent_jack_gmod_ezarmor_untar", "ent_jack_gmod_ezarmor_zhukpress", "ent_jack_gmod_ezarmor_trooper"}
+	local highTierVests =	{"ent_jack_gmod_ezarmor_6b13flora", "ent_jack_gmod_ezarmor_korundvm", "ent_jack_gmod_ezarmor_6b13m", "ent_jack_gmod_ezarmor_hexgrid", "ent_jack_gmod_ezarmor_slicktan"}
 
 	local vests
 
@@ -32,6 +32,8 @@ function ENT:Initialize()
 	end
 
 	if vests then
+
+		print("efgm_random_vest: Spawning Vests")
 
 		local spawnChance = math.random(1, 100)
 

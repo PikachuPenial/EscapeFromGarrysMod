@@ -157,34 +157,67 @@ function GM:Initialize()
 
 	local tempEntityArray = {}
 
-	tempEntityArray[1] = {"models/efgm/low_crate01.mdl", "efgm_weapon_crate_low", "Low Tier Weapon Crate", 5555, "2", "LOW", "Container"}
+	--Crates
+	tempEntityArray[1] = {"models/efgm/low_crate02.mdl", "efgm_weapon_crate_low", "Low Tier Weapon Crate", 5555, "2", "LOW", "Container"}
 	tempEntityArray[2] = {"models/efgm/mid_crate01.mdl", "efgm_weapon_crate_mid", "Mid Tier Weapon Crate", 13000, "4", "MID", "Container"}
 	tempEntityArray[3] = {"models/efgm/high_crate01.mdl", "efgm_weapon_crate_high", "High Tier Weapon Crate", 20000, "8", "HIGH", "Container"}
-	tempEntityArray[4] = {"models/armor_6b13_digital/6b13.mdl", "ent_jack_gmod_ezarmor_6b13", "6B13 (Class 4)", 12900, "5", "MID", "Armor"}
-	tempEntityArray[5] = {"models/helmet_cryeairframe/helmet_crye_airframe.mdl", "ent_jack_gmod_ezarmor_cryeairframe", "Crye AirFrame (Class 4)", 11500, "5", "MID", "Helmet"}
 
-	local tempArmorArray = {}
+	--Ammo
+	tempEntityArray[4] = {"models/items/arccw/smg_ammo.mdl", "arccw_ammo_smg1", "60 Carbine (SMG1) Ammo", 4000, "2", "MID", "Ammo"}
+	tempEntityArray[5] = {"models/items/arccw/smg_ammo.mdl", "arccw_ammo_smg1_large", "300 Carbine (SMG1) Ammo", 9000, "5", "MID", "Ammo"}
+	tempEntityArray[6] = {"models/items/arccw/magnum_ammo.mdl", "arccw_ammo_357", "12 Magnum (357) Ammo", 4000, "2", "LOW", "Ammo"}
+	tempEntityArray[7] = {"models/items/arccw/magnum_ammo_closed.mdl", "arccw_ammo_357_large", "60 Magnum (357) Ammo", 9000, "5", "MID", "Ammo"}
+	tempEntityArray[8] = {"models/items/arccw/pistol_ammo.mdl", "arccw_ammo_pistol", "40 Pistol Ammo", 4000, "2", "LOW", "Ammo"}
+	tempEntityArray[9] = {"models/items/arccw/pistol_ammo.mdl", "arccw_ammo_pistol_large", "200 Pistol Ammo", 9000, "5", "MID", "Ammo"}
+	tempEntityArray[10] = {"models/items/arccw/rifle_ammo.mdl", "arccw_ammo_ar2", "30 Rifle (AR2) Ammo", 4000, "2", "LOW", "Ammo"}
+	tempEntityArray[11] = {"models/items/arccw/rifle_ammo.mdl", "arccw_ammo_ar2_large", "150 Rifle (AR2) Ammo", 9000, "5", "MID", "Ammo"}
+	tempEntityArray[12] = {"models/items/arccw/shotgun_ammo.mdl", "arccw_ammo_buckshot", "20 Buckshot Shells", 4000, "2", "LOW", "Ammo"}
+	tempEntityArray[13] = {"models/items/arccw/shotgun_ammo_closed.mdl", "arccw_ammo_buckshot_large", "100 Buckshot Shells", 9000, "5", "MID", "Ammo"}
+	tempEntityArray[14] = {"models/items/arccw/sniper_ammo.mdl", "arccw_ammo_sniper", "10 Sniper Rounds", 4000, "2", "LOW", "Ammo"}
+	tempEntityArray[15] = {"models/items/arccw/sniper_ammo.mdl", "arccw_ammo_sniper_large", "50 Sniper Rounds", 9000, "5", "MID", "Ammo"}
+	tempEntityArray[16] = {"models/Items/AR2_Grenade.mdl", "arccw_ammo_smg1_grenade", "40mm (SMG Grenade)", 4000, "5", "MID", "Ammo"}
+	tempEntityArray[17] = {"models/items/arccw/riflegrenade_ammo.mdl", "arccw_ammo_smg1_grenade_large", "5 40mm (SMG Grenades)", 12000, "10", "HIGH", "Ammo"}
 
-	tempArmorArray[1] = scripted_ents.Get("efgm_weapon_crate_low")
-	tempArmorArray[2] = scripted_ents.Get("efgm_weapon_crate_mid")
-	tempArmorArray[3] = scripted_ents.Get("efgm_weapon_crate_high")
-	tempArmorArray[4] = scripted_ents.Get("arccw_ammo_smg1")
-	tempArmorArray[5] = scripted_ents.Get("arccw_ammo_smg1_large")
-	tempArmorArray[6] = scripted_ents.Get("arccw_ammo_357")
-	tempArmorArray[7] = scripted_ents.Get("arccw_ammo_357_large")
-	tempArmorArray[8] = scripted_ents.Get("arccw_ammo_pistol")
-	tempArmorArray[9] = scripted_ents.Get("arccw_ammo_pistol_large")
-	tempArmorArray[10] = scripted_ents.Get("arccw_ammo_ar2")
-	tempArmorArray[11] = scripted_ents.Get("arccw_ammo_ar2_large")
-	tempArmorArray[12] = scripted_ents.Get("arccw_ammo_smg1_grenade")
-	tempArmorArray[13] = scripted_ents.Get("arccw_ammo_smg1_grenade_large")
-	tempArmorArray[14] = scripted_ents.Get("arccw_ammo_buckshot")
-	tempArmorArray[15] = scripted_ents.Get("arccw_ammo_buckshot_large")
-	tempArmorArray[16] = scripted_ents.Get("arccw_ammo_sniper")
-	tempArmorArray[17] = scripted_ents.Get("arccw_ammo_sniper_large")
-	tempArmorArray[18] = scripted_ents.Get("fas2_ammo_bandages")
-	tempArmorArray[19] = scripted_ents.Get("fas2_ammo_quikclots")
-	tempArmorArray[20] = scripted_ents.Get("fas2_ammo_hemostats")
+	--Medical
+	tempEntityArray[18] = {"models/Items/BoxMRounds.mdl", "fas2_ammo_bandages", "Bandage", 1250, "2", "LOW", "Medication"}
+	tempEntityArray[19] = {"models/Items/BoxMRounds.mdl", "fas2_ammo_quikclots", "Quikclot", 2750, "4", "LOW", "Medication"}
+	tempEntityArray[20] = {"models/Items/BoxMRounds.mdl", "fas2_ammo_hemostats", "Hemostat", 4000, "6", "MID", "Medication"}
+
+	--Armor
+	tempEntityArray[21] = {"models/armor_module3m/module3m.mdl", "ent_jack_gmod_ezarmor_module3m", "Module 3M (Class 2)", 7350, "3", "LOW", "Armored Vest"}
+	tempEntityArray[22] = {"models/eft_paca_armor/paca_soft_armor.mdl", "ent_jack_gmod_ezarmor_paca", "Paca Soft Armor (Class 2)", 8275, "5", "LOW", "Armored Vest"}
+	tempEntityArray[23] = {"models/armor_un/un.mdl", "ent_jack_gmod_ezarmor_untar", "UNTAR Vest (Class 3)", 8890, "6", "LOW", "Armored Vest"}
+	tempEntityArray[24] = {"models/armor_zhuk3/beetle3.mdl", "ent_jack_gmod_ezarmor_zhukpress", "Zhuk-3 Pressa (Class 3)", 10000, "8", "LOW", "Armored Vest"}
+	tempEntityArray[25] = {"models/eft_trooper/trooper.mdl", "ent_jack_gmod_ezarmor_trooper", "Tropper TFO (Class 4)", 11705, "10", "MID", "Armored Vest"}
+	tempEntityArray[26] = {"models/armor_6b13_flora/6b13_flora.mdl", "ent_jack_gmod_ezarmor_6b13flora", "6B13 (Class 4)", 13200, "12", "MID", "Armored Vest"}
+	tempEntityArray[27] = {"models/armor_korundvm/armor_korundvm.mdl", "ent_jack_gmod_ezarmor_korundvm", "Korund-VM (Class 5)", 16555, "14", "HIGH", "Armored Vest"}
+	tempEntityArray[28] = {"models/eft_6b13_killa/6b13_killa.mdl", "ent_jack_gmod_ezarmor_6b13m", "6B13 M Killa (Class 5)", 19950, "16", "HIGH", "Armored Vest"}
+	tempEntityArray[29] = {"models/armor_custom_hexgrid/custom_hexgrid.mdl", "ent_jack_gmod_ezarmor_hexgrid", "5.11 Hexgrid (Class 6)", 25555, "19", "HIGH", "Armored Vest"}
+	tempEntityArray[30] = {"models/armor_slick/armor_slick_tan.mdl", "ent_jack_gmod_ezarmor_slicktan", "Slick Plate Carrier (Class 6)", 31000, "23", "HIGH", "Armored Vest"}
+
+	--Helmets
+	tempEntityArray[31] = {"models/helmet_tsh_4m2/tsh_4m2.mdl", "ent_jack_gmod_ezarmor_shlemofon", "Soft Tank Helmet (Class 1)", 6805, "3", "LOW", "Helmet"}
+	tempEntityArray[32] = {"models/helmet_shpm/shpm.mdl", "ent_jack_gmod_ezarmor_shpmhelm", "SHPM Firefighter Helmet (Class 2)", 7790, "5", "LOW", "Helmet"}
+	tempEntityArray[33] = {"models/helmet_un/un_helmet.mdl", "ent_jack_gmod_ezarmor_untarhelm", "UNTAR Helmet (Class 3)", 8400, "6", "LOW", "Helmet"}
+	tempEntityArray[34] = {"models/helmet_ssh_68/item_equipment_helmet_ssh-68_lod0.mdl", "ent_jack_gmod_ezarmor_ssh68", "SSH-68 Helmet (Class 3)", 9310, "8", "LOW", "Helmet"}
+	tempEntityArray[35] = {"models/helmet_mich/helmet_mich2001.mdl", "ent_jack_gmod_ezarmor_mich2001", "TC-2001 Helmet (Class 4)", 11250, "10", "MID", "Helmet"}
+	tempEntityArray[36] = {"models/helmet_team_wendy_exfil/helmet_team_wendy_exfil_black.mdl", "ent_jack_gmod_ezarmor_twexfilb", "Wendy Exfil Helmet (Class 4)", 12705, "12", "MID", "Helmet"}
+	tempEntityArray[37] = {"models/helmet_ulach_black/ulach_coyote.mdl", "ent_jack_gmod_ezarmor_ulachcoyote", "ULACH IIIA Helmet (Class 4)", 14950, "14", "HIGH", "Helmet"}
+	tempEntityArray[38] = {"models/helmet_maska_1sh_killa/maska_killa.mdl", "ent_jack_gmod_ezarmor_maska1shkilla", "Maska-1SCh Helmet (Class 4)", 18400, "16", "HIGH", "Helmet"}
+	tempEntityArray[39] = {"models/helmet_altyn/helmlet_altyn_lod1.mdl", "ent_jack_gmod_ezarmor_altyn", "Altyn (Class 5)", 23335, "19", "HIGH", "Helmet"}
+	tempEntityArray[40] = {"models/helmet_rys_t/helmet_rys_t.mdl", "ent_jack_gmod_ezarmor_ryst", "Rys-T (Class 5)", 29995, "23", "HIGH", "Helmet"}
+
+	--Accessories/Face
+	tempEntityArray[41] = {"models/customizable/nvg_alfa_pnv-10t/nvg_alfa_pnv_10t.mdl", "ent_jack_gmod_ezarmor_pnv10t", "PNV-10T NVG", 25000, "10", "HIGH", "Goggles"}
+	tempEntityArray[42] = {"models/customizable/thermal_spi_t7/thermal_spi_t7.mdl", "ent_jack_gmod_ezarmor_t7thermal", "T-7 Thermal Goggles", 40000, "15", "HIGH", "Goggles"}
+	tempEntityArray[43] = {"models/facecover_gasmask_gp5/gasmask_gp5.mdl", "ent_jack_gmod_ezarmor_gp5", "GP-5 (No functionality yet)", 6000, "3", "LOW", "Gas Mask"}
+	tempEntityArray[44] = {"models/facecover_gasmask_opscore/ops_core_sotr_respirator.mdl", "ent_jack_gmod_ezarmor_sotr", "Ops-Core SOTR (No functionality yet)", 12500, "6", "MID", "Gas Mask"}
+	tempEntityArray[45] = {"models/helmet_shpm_shield/shpm_shield.mdl", "ent_jack_gmod_ezarmor_shpmface", "SHPM Face Shield", 6500, "4", "LOW", "Face Shield"}
+	tempEntityArray[46] = {"models/helmet_team_wendy_exfil/helmet_team_wendy_exfil_face_shield_coyote.mdl", "ent_jack_gmod_ezarmor_twexfilshieldc", "Wendy Exfil Face Shield", 6500, "8", "MID", "Face Shield"}
+	tempEntityArray[47] = {"models/helmet_altynshield/helmet_altyn_face_shield_metal_lod0.mdl", "ent_jack_gmod_ezarmor_altynface", "Altyn Face Shield", 12950, "12", "HIGH", "Face Shield"}
+	tempEntityArray[48] = {"models/helmet_rys_t/helmet_rys_t_shield.mdl", "ent_jack_gmod_ezarmor_rystface", "Rys-T Face Shield", 16005, "16", "HIGH", "Face Shield"}
+	tempEntityArray[49] = {"models/facecover_welding/facecover_tagilla_kill.mdl", "ent_jack_gmod_ezarmor_weldingkill", "Tagilla's Welding Mask", 22555, "20", "HIGH", "Face Shield"}
+	tempEntityArray[50] = {"models/helmet_maska_1sh_shield_killa/maska_shield_killa.mdl", "ent_jack_gmod_ezarmor_shlemmaskkilla", "Maska-1SCh Face Shield", 29995, "24", "HIGH", "Face Shield"}
 
 	-- Any weapon in this array cannot be sold. Put any starting equipment here.
 
@@ -205,7 +238,7 @@ function GM:Initialize()
 	-- If you want it in descending order instead of ascending, change the > to a <. If you want it to sort by level requirement, change the [4] to [5].
 	-- Do you want it sorted alphabetically? Too bad!
 
-	table.sort( tempWeaponsArray, function(a, b) return a[4] > b[4] end )
+	table.sort(tempWeaponsArray, function(a, b) return a[4] > b[4] end)
 
 	-- I think thats it
 
@@ -215,6 +248,65 @@ function GM:Initialize()
 end
 
 if !ConVarExists("efgm_hidebinds") then CreateConVar( "efgm_hidebinds", "0", FCVAR_ARCHIVE, "Show or hide binds, while you are not in Raid",0,1 ) end
+
+--Disable the context menu.
+function GM:ContextMenuOpen()
+	return false
+end
+
+-- Disable Spawn Menu and show the extract list when the bind is pressed.
+function GM:SpawnMenuEnabled()
+	return false
+end
+
+function GM:SpawnMenuOpen()
+	RunConsoleCommand("efgm_extract_list")
+	return false
+end
+
+-- Disabling console commands that allow prop/entity abuse.
+hook.Add("PlayerGiveSWEP", "BlockPlayerSWEPs", function(ply, class, swep)
+	if (!ply:IsAdmin()) then
+		return false
+	end
+end)
+
+function GM:PlayerSpawnEffect(ply)
+	return false
+end
+
+function GM:PlayerSpawnNPC(ply)
+	return false
+end
+
+function GM:PlayerSpawnObject(ply)
+	return false
+end
+
+function GM:PlayerSpawnProp(ply)
+	return false
+end
+
+function GM:PlayerSpawnRagdoll(ply)
+	return false
+end
+
+function GM:PlayerSpawnSENT(ply)
+	return false
+end
+
+function GM:PlayerSpawnSWEP(ply)
+	return false
+end
+
+function GM:PlayerSpawnVehicle(ply)
+	return false
+end
+
+-- Removing problematic console commmands.
+
+concommand.Remove("ent_create")
+concommand.Remove("gmod_spawnnpc")
 
 -- This is where the console commands are ran when a client joins a game running the gamemode.
 
@@ -253,7 +345,8 @@ RunConsoleCommand("hud_deathnotice_time", "0")
 
 --Armor
 RunConsoleCommand("jmod_eft_wghtmult", "0.32")
-RunConsoleCommand("jmod_eft_durmult", "1.50")
+RunConsoleCommand("jmod_eft_durmult", "1.90")
+RunConsoleCommand("jmod_armorprotectionmult", "0.85")
 
 --View Bobbing
 RunConsoleCommand("viewbob_crouch_enable", "1")
@@ -267,7 +360,6 @@ RunConsoleCommand("viewbob_land_jump_enable", "1")
 RunConsoleCommand("viewbob_multiplier", "0.400000")
 RunConsoleCommand("viewbob_tools_enable", "0")
 RunConsoleCommand("viewbob_walk_enable", "0")
-
 RunConsoleCommand("suppression_viewpunch", "0")
 
 --Damage Slow Config
@@ -305,6 +397,8 @@ RunConsoleCommand("sv_ec2_dynamicheight_max", "64")
 --GWS Config
 
 RunConsoleCommand("sv_drop_loot_on_death", "1")
+RunConsoleCommand("sv_gws_needinv", "1")
+
 
 --Proximity Voice Chat
 

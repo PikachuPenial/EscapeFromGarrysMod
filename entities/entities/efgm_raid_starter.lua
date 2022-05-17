@@ -82,6 +82,10 @@ function SpawnPlayer(player, spawnGroup, status, pos, angles)
 	player:SetNWInt("raidSuccess", 0)
 	player:SetNWInt("firstSpawn", 0)
 
+	player:SetNWInt("runThrough", 1)
+
+	player:SetNWInt("raidsPlayed", player:GetNWInt("raidsPlayed") + 1)
+
 	player:SetPos(pos)
 	player:SetAngles(angles)
 
@@ -473,6 +477,12 @@ hook.Add( "PlayerDeath", "PlayerDie", function( victim, inflictor, attacker )
 
 	SetPlayerStatus(victim, nil, noClass)
 
+	victim:SetNWInt("runThrough", 0)
+
+	if (victim:GetNWBool("inRaid") == true) then
+		victim:SetNWInt("raidsDied", victim:GetNWInt("raidsDied") + 1)
+	end
+
 	victim:SetNWBool("inRaid", false)
 
 end )
@@ -553,7 +563,7 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 		if self.RaidStarted == false then
 
-			if #player.GetHumans() <= 0 then
+			if #player.GetHumans() <= 1 then
 
 				ply:PrintMessage(3, "Not enough players to spawn into/start a raid!")
 
@@ -561,10 +571,9 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 				ply:PrintMessage(3, "You are not the party leader!")
 
-			elseif #player.GetHumans() > 0 and self.RaidStarted == false and ply:GetNWBool("teamLeader") == true then
+			elseif #player.GetHumans() > 1 and self.RaidStarted == false and ply:GetNWBool("teamLeader") == true then
 
 				self:InitializeRaid()
-				ply:SetNWInt("runThrough", 1)
 				hook.Call("RaidStart", nil)
 
 			end

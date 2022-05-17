@@ -7,21 +7,21 @@ ENT.SpawnChance = 1
 ENT.SpawnTier = 0
 
 function ENT:KeyValue(key, value)
-   if key == "spawn_chance" then
-      self.SpawnChance = tonumber(value)
-   end
+	if key == "spawn_chance" then
+		self.SpawnChance = tonumber(value)
+	end
 
-   if key == "attach_tier" then
+	if key == "attach_tier" then
 		self.SpawnTier = tonumber(value)
-   end
+	end
 end
 
 function ENT:Initialize()
 
-    local all = {"acwatt_go_optic_barska", "acwatt_go_supp_osprey", "acwatt_go_foregrip_stubby"}
+	local all = {"acwatt_go_optic_barska", "acwatt_go_supp_osprey", "acwatt_go_foregrip_stubby"}
 	local optics = {"acwatt_go_optic_barska"}
 	local barrels = {"acwatt_go_supp_osprey"}
-    local foregrips = {"acwatt_go_foregrip_stubby"}
+	local foregrips = {"acwatt_go_foregrip_stubby"}
 
 	local attach
 
@@ -33,15 +33,17 @@ function ENT:Initialize()
 		attach = optics
 	end
 
-    if self.SpawnTier == 2 then
+	if self.SpawnTier == 2 then
 		attach = barrels
 	end
 
-    if self.SpawnTier == 3 then
+	if self.SpawnTier == 3 then
 		attach = foregrips
 	end
 
 	if attach then
+
+		print("efgm_random_attach: Spawning Weapon Attachments")
 
 		local spawnChance = math.random(1, 100)
 

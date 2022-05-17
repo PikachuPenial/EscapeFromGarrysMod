@@ -7,21 +7,21 @@ ENT.SpawnChance = 1
 ENT.SpawnTier = 0
 
 function ENT:KeyValue(key, value)
-   if key == "spawn_chance" then
-      self.SpawnChance = tonumber(value)
-   end
+	if key == "spawn_chance" then
+		self.SpawnChance = tonumber(value)
+	end
 
-   if key == "med_tier" then
+	if key == "med_tier" then
 		self.SpawnTier = tonumber(value)
-   end
+	end
 end
 
 function ENT:Initialize()
 
-    local random = {"fas2_ammo_bandages", "fas2_ammo_quikclots", "fas2_ammo_hemostats"}
+	local random = {"fas2_ammo_bandages", "fas2_ammo_quikclots", "fas2_ammo_hemostats"}
 	local bandages = {"fas2_ammo_bandages"}
 	local quikclots = {"fas2_ammo_quikclots"}
-    local hemostats = {"fas2_ammo_hemostats"}
+	local hemostats = {"fas2_ammo_hemostats"}
 
 	local med
 
@@ -33,20 +33,20 @@ function ENT:Initialize()
 		med = bandages
 	end
 
-    if self.SpawnTier == 2 then
+	if self.SpawnTier == 2 then
 		med = quikclots
 	end
 
-    if self.SpawnTier == 3 then
+	if self.SpawnTier == 3 then
 		med = hemostats
 	end
 
 	if med then
 
-		print("efgm_random_medical: med does not equal nil, proceeding...")
+		print("efgm_random_medical: Spawning Medical Ammo")
 
 		local spawnChance = math.random(1, 100)
-		
+
 		if spawnChance <= self.SpawnChance then
 
 			local ent = ents.Create(med[math.random(#med)])

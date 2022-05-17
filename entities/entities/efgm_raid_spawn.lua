@@ -36,8 +36,6 @@ end
 
 function ENT:SetupTeamSpawnVectors()
 
-    print("Setting Up Team Spawn Vectors")
-
     local xSpawns = 3
     local ySpawns = 3
 

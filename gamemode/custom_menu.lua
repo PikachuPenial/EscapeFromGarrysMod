@@ -183,86 +183,126 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.DrawText("Experience : " .. LocalPlayer():GetNWInt("playerExp") .. "/" .. expToLevel)
 
 			-- Balance
-			surface.SetTextPos(450, 125)
+			surface.SetTextPos(475, 125)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Roubles : " .. LocalPlayer():GetNWInt("playerMoney"))
 
 			surface.SetFont("CloseCaption_Bold")
 
 			-- Stats (Kills)
-			surface.SetTextPos(38, 350)
+			surface.SetTextPos(25, 200)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Total Kills: " .. LocalPlayer():GetNWInt("playerKills"))
 
 			-- Stats (Deaths)
-			surface.SetTextPos(228, 350)
+			surface.SetTextPos(25, 225)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Total Deaths: " .. LocalPlayer():GetNWInt("playerDeaths"))
 
 			-- Stats (KDR)
-			surface.SetTextPos(448, 350)
+			surface.SetTextPos(25, 250)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("K/D Ratio: " .. math.Round(LocalPlayer():GetNWInt("playerKDR")), 2)
 
 			-- Stats (Total Earned)
-			surface.SetTextPos(8, 400)
+			surface.SetTextPos(25, 275)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Total Roubles Earned: " .. LocalPlayer():GetNWInt("playerTotalEarned"))
 
 			-- Stats (Total Roubles From Kills)
-			surface.SetTextPos(308, 400)
+			surface.SetTextPos(25, 300)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Roubles Earned From Kills: " .. LocalPlayer():GetNWInt("playerTotalEarnedKill"))
 
 			-- Stats (Total Roubles From Selling)
-			surface.SetTextPos(168, 450)
+			surface.SetTextPos(25, 325)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Roubles Earned From Selling: " .. LocalPlayer():GetNWInt("playerTotalEarnedSell"))
 
 			-- Stats (Total Experience Gained)
-			surface.SetTextPos(178, 500)
+			surface.SetTextPos(25, 350)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Total Experience Gained: " .. LocalPlayer():GetNWInt("playerTotalXpEarned"))
 
 			-- Stats (Total Experience Gained From Killing)
-			surface.SetTextPos(168, 550)
+			surface.SetTextPos(25, 375)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Experience Gained From Kills: " .. LocalPlayer():GetNWInt("playerTotalXpEarnedKill"))
 
 			-- Stats (Total Experience Gained From Exploration)
-			surface.SetTextPos(138, 600)
+			surface.SetTextPos(25, 400)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Experience Gained From Extracting: " .. LocalPlayer():GetNWInt("playerTotalXpEarnedExplore"))
 
 			-- Stats (Total Money Spent)
-			surface.SetTextPos(8, 700)
+			surface.SetTextPos(25, 425)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Total Money Spent: " .. LocalPlayer():GetNWInt("playerTotalMoneySpent"))
 
 			-- Stats (Total Money Spent On Weapons)
-			surface.SetTextPos(8, 725)
+			surface.SetTextPos(25, 450)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Money Spent On Weapons: " .. LocalPlayer():GetNWInt("playerTotalMoneySpentWep"))
 
 			-- Stats (Total Money Spent On Ammo/Armor)
-			surface.SetTextPos(8, 750)
+			surface.SetTextPos(25, 475)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Money Spent On Ammo/Armor: " .. LocalPlayer():GetNWInt("playerTotalMoneySpentItem"))
 
 			-- Stats (Deaths By Suicide)
-			surface.SetTextPos(388, 700)
+			surface.SetTextPos(25, 500)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Deaths By Suicide: " .. LocalPlayer():GetNWInt("playerDeathsSuicide"))
 
 			-- Stats (Damage Given)
-			surface.SetTextPos(388, 725)
+			surface.SetTextPos(25, 525)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Damage Inflicted: " .. LocalPlayer():GetNWInt("playerDamageGiven"))
 
 			-- Stats (Damage Recieved)
-			surface.SetTextPos(388, 750)
+			surface.SetTextPos(25, 550)
 			surface.SetTextColor(255, 0, 220, 255)
 			surface.DrawText("Damage Recieved: " .. LocalPlayer():GetNWInt("playerDamageRecieved"))
+
+			-- Stats (Raids Player)
+			surface.SetTextPos(25, 625)
+			surface.SetTextColor(50, 255, 0)
+			surface.DrawText("Raids Played: " .. LocalPlayer():GetNWInt("raidsPlayed"))
+
+			-- Stats (Extractions)
+			surface.SetTextPos(25, 650)
+			surface.SetTextColor(50, 255, 0)
+			surface.DrawText("Extractions: " .. LocalPlayer():GetNWInt("raidsExtracted"))
+
+			-- Stats (Run Throughs)
+			surface.SetTextPos(25, 675)
+			surface.SetTextColor(50, 255, 0)
+			surface.DrawText("Run Throughs: " .. LocalPlayer():GetNWInt("raidsRanThrough"))
+
+			-- Stats (MIA's)
+			surface.SetTextPos(25, 700)
+			surface.SetTextColor(50, 255, 0)
+			surface.DrawText("Missing In Actions: " .. LocalPlayer():GetNWInt("raidsDied"))
+
+			-- Stats (Raids Player)
+			surface.SetTextPos(375, 625)
+			surface.SetTextColor(255, 159, 0)
+			surface.DrawText("Current Kill Streak: " .. LocalPlayer():GetNWInt("killStreak"))
+
+			-- Stats (Extractions)
+			surface.SetTextPos(375, 650)
+			surface.SetTextColor(255, 159, 0)
+			surface.DrawText("Current Extract Streak: " .. LocalPlayer():GetNWInt("extractionStreak"))
+
+			-- Stats (Run Throughs)
+			surface.SetTextPos(375, 675)
+			surface.SetTextColor(255, 159, 0)
+			surface.DrawText("Highest Kill Streak: " .. LocalPlayer():GetNWInt("highestKillStreak"))
+
+			-- Stats (MIA's)
+			surface.SetTextPos(375, 700)
+			surface.SetTextColor(255, 159, 0)
+			surface.DrawText("Highest Extract Streak: " .. LocalPlayer():GetNWInt("highestExtractionStreak"))
 		end
 	end
 

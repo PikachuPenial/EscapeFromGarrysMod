@@ -94,7 +94,12 @@ function ENT:CheckForPlayers()
 							local expGained = math.random(250, 600)
 
 							if (ply:GetNWInt("runThrough") == 0) then
+								ply:SetNWInt("raidsExtracted", ply:GetNWInt("raidsExtracted") + 1)
 								ply:SetNWInt("extractionStreak", ply:GetNWInt("extractionStreak") + 1)
+
+								if ply:GetNWInt("extractionStreak") >= ply:GetNWInt("highestExtractionStreak") then
+									ply:SetNWInt("highestExtractionStreak", ply:GetNWInt("extractionStreak"))
+								end
 
 								if ply:GetNWInt("successfulOperationsComplete") == 0 then
 									ply:SetNWInt("mapExtracts", ply:GetNWInt("mapExtracts") + 1)
@@ -118,6 +123,10 @@ function ENT:CheckForPlayers()
 								checkForWeeklyTwo(ply)
 								checkForWeeklyThree(ply)
 								checkForLevel(ply)
+							end
+
+							if (ply:GetNWInt("runThrough") == 1) then
+								ply:SetNWInt("raidsRanThrough", ply:GetNWInt("raidsRanThrough") + 1)
 							end
 
 							ply:SetNWInt("raidSuccess", 1)

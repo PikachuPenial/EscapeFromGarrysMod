@@ -3,8 +3,54 @@ function buyEntity(ply, cmd, args)
 	entityPrices[1] = {"efgm_weapon_crate_low", "5555", "2"}
 	entityPrices[2] = {"efgm_weapon_crate_mid", "13000", "4"}
 	entityPrices[3] = {"efgm_weapon_crate_high", "20000", "8"}
-	entityPrices[4] = {"ent_jack_gmod_ezarmor_6b13", "12900", "5"}
-	entityPrices[5] = {"ent_jack_gmod_ezarmor_cryeairframe", "11500", "5"}
+	entityPrices[4] = {"arccw_ammo_smg1", "4000", "2"}
+	entityPrices[5] = {"arccw_ammo_smg1_large", "9000", "5"}
+	entityPrices[6] = {"arccw_ammo_357", "4000", "2"}
+	entityPrices[7] = {"arccw_ammo_357_large", "9000", "5"}
+	entityPrices[8] = {"arccw_ammo_pistol", "4000", "2"}
+	entityPrices[9] = {"arccw_ammo_pistol_large", "9000", "5"}
+	entityPrices[10] = {"arccw_ammo_ar2", "4000", "2"}
+	entityPrices[11] = {"arccw_ammo_ar2_large", "9000", "5"}
+	entityPrices[12] = {"arccw_ammo_buckshot", "4000", "2"}
+	entityPrices[13] = {"arccw_ammo_buckshot_large", "9000", "5"}
+	entityPrices[14] = {"arccw_ammo_sniper", "4000", "2"}
+	entityPrices[15] = {"arccw_ammo_sniper_large", "9000", "5"}
+	entityPrices[16] = {"arccw_ammo_smg1_grenade", "4000", "5"}
+	entityPrices[17] = {"arccw_ammo_smg1_grenade_large", "12000", "10"}
+	entityPrices[18] = {"fas2_ammo_bandages", "1250", "2"}
+	entityPrices[19] = {"fas2_ammo_quikclots", "2750", "4"}
+	entityPrices[20] = {"fas2_ammo_hemostats", "4000", "6"}
+	entityPrices[21] = {"ent_jack_gmod_ezarmor_module3m", "7350", "3"}
+	entityPrices[22] = {"ent_jack_gmod_ezarmor_paca", "8275", "5"}
+	entityPrices[23] = {"ent_jack_gmod_ezarmor_untar", "8890", "6"}
+	entityPrices[24] = {"ent_jack_gmod_ezarmor_zhukpress", "10000", "8"}
+	entityPrices[25] = {"ent_jack_gmod_ezarmor_trooper", "11705", "10"}
+	entityPrices[26] = {"ent_jack_gmod_ezarmor_6b13flora", "13200", "12"}
+	entityPrices[27] = {"ent_jack_gmod_ezarmor_korundvm", "16555", "14"}
+	entityPrices[28] = {"ent_jack_gmod_ezarmor_6b13m", "19950", "16"}
+	entityPrices[29] = {"ent_jack_gmod_ezarmor_hexgrid", "25555", "19"}
+	entityPrices[30] = {"ent_jack_gmod_ezarmor_slicktan", "32555", "23"}
+	entityPrices[31] = {"ent_jack_gmod_ezarmor_shlemofon", "6805", "3"}
+	entityPrices[32] = {"ent_jack_gmod_ezarmor_shpmhelm", "7790", "5"}
+	entityPrices[33] = {"ent_jack_gmod_ezarmor_untarhelm", "8400", "6"}
+	entityPrices[34] = {"ent_jack_gmod_ezarmor_ssh68", "9310", "8"}
+	entityPrices[35] = {"ent_jack_gmod_ezarmor_mich2001", "11250", "10"}
+	entityPrices[36] = {"ent_jack_gmod_ezarmor_twexfilb", "12705", "12"}
+	entityPrices[37] = {"ent_jack_gmod_ezarmor_ulachcoyote", "14950", "14"}
+	entityPrices[38] = {"ent_jack_gmod_ezarmor_maska1shkilla", "18400", "16"}
+	entityPrices[39] = {"ent_jack_gmod_ezarmor_altyn", "23335", "19"}
+	entityPrices[40] = {"ent_jack_gmod_ezarmor_ryst", "29995", "23"}
+	entityPrices[41] = {"ent_jack_gmod_ezarmor_pnv10t", "25000", "10"}
+	entityPrices[42] = {"ent_jack_gmod_ezarmor_t7thermal", "40000", "15"}
+	entityPrices[43] = {"ent_jack_gmod_ezarmor_gp5", "6000", "3"}
+	entityPrices[44] = {"ent_jack_gmod_ezarmor_sotr", "12500", "6"}
+	entityPrices[45] = {"ent_jack_gmod_ezarmor_shpmface", "6500", "4"}
+	entityPrices[46] = {"ent_jack_gmod_ezarmor_twexfilshieldc", "6500", "8"}
+	entityPrices[47] = {"ent_jack_gmod_ezarmor_altynface", "12950", "12"}
+	entityPrices[48] = {"ent_jack_gmod_ezarmor_rystface", "16005", "16"}
+	entityPrices[49] = {"ent_jack_gmod_ezarmor_weldingkill", "22555", "20"}
+	entityPrices[50] = {"ent_jack_gmod_ezarmor_shlemmaskkilla", "29995", "24"}
+
 
 	for k, v in pairs(entityPrices) do
 		if (args[1] == v[1]) then

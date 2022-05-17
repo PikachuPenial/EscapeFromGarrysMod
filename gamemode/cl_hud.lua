@@ -8,13 +8,15 @@ local contextMenuBind = input.LookupBinding("+menu_context")
 local leanLeftBind = input.LookupBinding("+alt1")
 local leanRightBind = input.LookupBinding("+alt2")
 local dropBind = input.LookupBinding("+drop")
-local nvgBind = input.LookupBinding("arc_vm_nvg")
+local inventoryBind = "i"
 local tacticalBind = input.LookupBinding("impulse 100")
 local fireModeBind = input.LookupBinding("+zoom")
 local helpBind = input.LookupBinding("gm_showhelp")
 local teamBind = input.LookupBinding("gm_showteam")
-local inventoryBind = input.LookupBinding("gm_showspare1")
+local armorBind = input.LookupBinding("gm_showspare1")
 local shopBind = input.LookupBinding("gm_showspare2")
+local walkBind = input.LookupBinding("+walk")
+local interactBind = input.LookupBinding("+use")
 
 --color array, saving space
 local white = Color(255, 255, 255, 255)
@@ -95,7 +97,7 @@ function HUD()
 
 	draw.SimpleText("₽ " .. client:GetNWInt("playerMoney"), "DermaDefaultBold", 100, ScrH() - 38, white, 0)
 	draw.SimpleText("JOIN OUR DISCORD - discord.gg/Wb9cVUwvTV", "DermaDefaultBold", 375, ScrH() - 22, Color(58, 235, 52, 255), 0)
-	draw.SimpleText("Press " .. inventoryBind .. " to access your inventory", "DermaDefaultBold", 170, ScrH() - 38, Color(255, 166, 0, 255), 0)
+	draw.SimpleText("Press " .. "I" .. " to access your inventory", "DermaDefaultBold", 170, ScrH() - 38, Color(255, 166, 0, 255), 0)
 	draw.SimpleText("Press " .. shopBind .. " for shop, stats, and help", "DermaDefaultBold", 170, ScrH() - 22, Color(255, 166, 0, 255), 0)
 
 	-- Timer
@@ -146,10 +148,6 @@ function HUD()
 			dropBind = "#"
 			dropColor = red
 		end
-		if (nvgBind == nil) then
-			nvgBind = "#"
-			nvgColor = red
-		end
 		if (tacticalBind == nil) then
 			tacticalBind = "#"
 			tacticalColor = red
@@ -162,9 +160,9 @@ function HUD()
 			helpBind = "#"
 			helpBind = red
 		end
-		if (inventoryBind == nil) then
-			inventoryBind = "#"
-			inventoryColor = red
+		if (armorBind == nil) then
+			armorBind = "#"
+			armorBind = red
 		end
 		if (teamBind == nil) then
 			teamBind = "#"
@@ -176,7 +174,7 @@ function HUD()
 		end
 
 		if (inPlayerMenu == false) and (inMapVoteMenu == false) and (inStashMenu == false) and (inRaidSummaryMenu == false) then
-				draw.SimpleText("[Controls]", "DermaLarge", 135, 20, Color(0, 200, 255, 255), 0)
+				draw.SimpleText("[Controls] : " .. "efgm_hidebinds to toggle UI", "DermaLarge", 135, 20, Color(0, 200, 255, 255), 0)
 				draw.SimpleText("# = Not Binded", "DermaLarge", 135, 50, red, 0)
 				draw.SimpleText("Use the developer console to set binds", "Trebuchet24", 325, 54, red, 0)
 			
@@ -200,33 +198,44 @@ function HUD()
 				draw.SimpleText("Drop Held Item", "Trebuchet24", 165, 180, white, 0)
 				draw.SimpleText("bind key +drop", "DermaDefaultBold", 310, 186, white, 0)
 
-				draw.SimpleText("[" .. nvgBind .. "]", "Trebuchet24", 135, 205, nvgColor, 0)
-				draw.SimpleText("Inventory", "Trebuchet24", 170, 205, white, 0)
-				draw.SimpleText("bind key arc_vm_nvg", "DermaDefaultBold", 270, 211, white, 0)
+				draw.SimpleText("[" .. tacticalBind .. "]", "Trebuchet24", 135, 205, tacticalColor, 0)
+				draw.SimpleText("Toggle Laser/Light", "Trebuchet24", 162, 205, white, 0)
+				draw.SimpleText("bind key impulse 100", "DermaDefaultBold", 340, 211, white, 0)
 
-				draw.SimpleText("[" .. tacticalBind .. "]", "Trebuchet24", 135, 230, tacticalColor, 0)
-				draw.SimpleText("Toggle Laser/Light", "Trebuchet24", 162, 230, white, 0)
-				draw.SimpleText("bind key impulse 100", "DermaDefaultBold", 340, 236, white, 0)
+				draw.SimpleText("[" .. fireModeBind .. "]", "Trebuchet24", 135, 230, fireModeColor, 0)
+				draw.SimpleText("Toggle Firemode", "Trebuchet24", 165, 230, white, 0)
+				draw.SimpleText("bind key +zoom", "DermaDefaultBold", 330, 236, white, 0)
 
-				draw.SimpleText("[" .. fireModeBind .. "]", "Trebuchet24", 135, 255, fireModeColor, 0)
-				draw.SimpleText("Toggle Firemode", "Trebuchet24", 165, 255, white, 0)
-				draw.SimpleText("bind key +zoom", "DermaDefaultBold", 330, 261, white, 0)
+				draw.SimpleText("[" .. helpBind .. "]", "Trebuchet24", 135, 255, inventoryColor, 0)
+				draw.SimpleText("Help Menu/Learn How To Play", "Trebuchet24", 175, 255, white, 0)
+				draw.SimpleText("bind key gm_showhelp", "DermaDefaultBold", 460, 261, white, 0)
 
-				draw.SimpleText("[" .. helpBind .. "]", "Trebuchet24", 135, 280, inventoryColor, 0)
-				draw.SimpleText("Help Menu/Learn How To Play", "Trebuchet24", 175, 280, white, 0)
-				draw.SimpleText("bind key gm_showhelp", "DermaDefaultBold", 460, 286, white, 0)
+				draw.SimpleText("[" .. teamBind .. "]", "Trebuchet24", 135, 280, inventoryColor, 0)
+				draw.SimpleText("Create/Join Team", "Trebuchet24", 175, 280, white, 0)
+				draw.SimpleText("bind key gm_showteam", "DermaDefaultBold", 350, 286, white, 0)
 
-				draw.SimpleText("[" .. teamBind .. "]", "Trebuchet24", 135, 305, inventoryColor, 0)
-				draw.SimpleText("Create/Join Team", "Trebuchet24", 175, 305, white, 0)
-				draw.SimpleText("bind key gm_showteam", "DermaDefaultBold", 350, 311, white, 0)
-
-				draw.SimpleText("[" .. inventoryBind .. "]", "Trebuchet24", 135, 330, inventoryColor, 0)
-				draw.SimpleText("Open Inventory", "Trebuchet24", 175, 330, white, 0)
-				draw.SimpleText("bind key gm_showspare1", "DermaDefaultBold", 330, 336, white, 0)
+				draw.SimpleText("[" .. armorBind .. "]", "Trebuchet24", 135, 305, inventoryColor, 0)
+				draw.SimpleText("Armor Management (View/Drop)", "Trebuchet24", 175, 305, white, 0)
+				draw.SimpleText("bind key gm_showspare1", "DermaDefaultBold", 470, 311, white, 0)
 			
-				draw.SimpleText("[" .. shopBind .. "]", "Trebuchet24", 135, 355, shopColor, 0)
-				draw.SimpleText("Open Menu (Shop/Tasks)", "Trebuchet24", 175, 355, white, 0)
-				draw.SimpleText("bind key gm_showspare2", "DermaDefaultBold", 410, 361, white, 0)
+				draw.SimpleText("[" .. shopBind .. "]", "Trebuchet24", 135, 330, shopColor, 0)
+				draw.SimpleText("Open Menu (Shop/Tasks)", "Trebuchet24", 175, 330, white, 0)
+				draw.SimpleText("bind key gm_showspare2", "DermaDefaultBold", 410, 336, white, 0)
+
+				draw.SimpleText("Items from body bags need to be equiped in the inventory", "Trebuchet24", 135, 370, Color(50, 255, 0), 0)
+
+				draw.SimpleText("[" .. inventoryBind .. "]", "Trebuchet24", 135, 400, inventoryColor, 0)
+				draw.SimpleText("Inventory", "Trebuchet24", 160, 400, white, 0)
+
+				draw.SimpleText("Walk + Interact will pick up dropped armor", "Trebuchet24", 135, 440, Color(255, 175, 0), 0)
+
+				draw.SimpleText("[" .. walkBind .. "]", "Trebuchet24", 135, 470, inventoryColor, 0)
+				draw.SimpleText("Walk", "Trebuchet24", 190, 470, white, 0)
+				draw.SimpleText("bind key +walk", "DermaDefaultBold", 250, 476, white, 0)
+			
+				draw.SimpleText("[" .. interactBind .. "]", "Trebuchet24", 135, 495, shopColor, 0)
+				draw.SimpleText("Interact (Loot/Buttons)", "Trebuchet24", 160, 495, white, 0)
+				draw.SimpleText("bind key +use", "DermaDefaultBold", 385, 501, white, 0)
 			end
 		end
 	end

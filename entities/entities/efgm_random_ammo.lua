@@ -38,7 +38,7 @@ function ENT:Initialize()
 
 	if ammo then
 
-		print("efgm_random_ammo: ammo does not equal nil, proceeding...")
+		print("efgm_random_ammo: Spawning Ammunition")
 
 		local spawnChance = math.random(1, 100)
 

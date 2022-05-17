@@ -9,7 +9,7 @@
 
 @PointClass base(Weapon)	studio("models/weapons/w_smg1.mdl")	= efgm_random_weapon	: "Spawns a random weapon"
 [
-	spawn_chance(integer)	: "Weapon Spawn Chance"	: 0	: "The chance a weapon will be spawned from this. (1 is a guranteed spawn, 2 will spawn a gun half the time, etc.)"
+	spawn_chance(integer)	: "Weapon Spawn Chance"	: 0	: "The chance a weapon will be spawned from this. (100 is a guranteed spawn, 50 will spawn a gun half the time, etc.)"
 
 	start_disabled(choices)	: "Start Disabled"		: 0	: "Will this spawn start disabled or not." =
 	[
@@ -32,6 +32,28 @@
 	input	Respawn(void)	: "This spawns an item when there is no current item spawned"
 ]
 
+@PointClass base(Weapon)	studio("models/weapons/w_grenade.mdl")	= efgm_random_nade	: "Spawns a random grenade"
+[
+	spawn_chance(integer)	: "Weapon Spawn Chance"	: 0	: "The chance a grenade will be spawned from this. (100 is a guranteed spawn, 50 will spawn a grenade half the time, etc.)"
+
+	start_disabled(choices)	: "Start Disabled"		: 0	: "Will this spawn start disabled or not." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	nade_tier(choices)	: "Weapon Tier"			: 0	: "The weapon spawned from this entity will depend on what tier it's set to." =
+	[
+		0 : "Grenades"
+	]
+
+	// Outputs
+	output	OnSpawn(void)	: "Fires when the item spawns. (Includes respawns)"
+
+	// Inputs
+	input	Respawn(void)	: "This spawns an item when there is no current item spawned"
+]
+
 @SolidClass base(Trigger) = efgm_trigger_task : "Task Trigger"
 [
 
@@ -43,7 +65,7 @@
 
 @PointClass base(Weapon) studio("models/player/helmet_maska_1sh_killa/maska_killa.mdl") = efgm_random_helmet : "Spawns a random helmet"
 [
-	spawn_chance(integer) : "Helmet Spawn Chance" : 0 : "The chance a helmet will be spawned from this. (1 is a guranteed spawn, 2 will spawn a helmet half the time, etc.)"
+	spawn_chance(integer) : "Helmet Spawn Chance" : 0 : "The chance a helmet will be spawned from this. (100 is a guranteed spawn, 50 will spawn a helmet half the time, etc.)"
 
 	helmet_tier(choices) : "Helmet Tier" : 0 : "The helmet spawned from this entity will depend on what tier it's set to." =
 	[
@@ -54,7 +76,7 @@
 
 @PointClass base(Weapon) studio("models/eft_paca_armor/paca_soft_armor.mdl") = efgm_random_vest : "Spawns a random vest"
 [
-	spawn_chance(integer) : "Vest Spawn Chance" : 0 : "The chance a vest will be spawned from this. (1 is a guranteed spawn, 2 will spawn a vest half the time, etc.)"
+	spawn_chance(integer) : "Vest Spawn Chance" : 0 : "The chance a vest will be spawned from this. (100 is a guranteed spawn, 50 will spawn a vest half the time, etc.)"
 
 	vest_tier(choices) : "Vest Tier" : 0 : "The vest spawned from this entity will depend on what tier it's set to." =
 	[
@@ -65,7 +87,7 @@
 
 @PointClass base(Weapon) studio("models/player/armor_6b34/6b34.mdl") = efgm_random_armor : "Spawns a random armor item, can be either a helmet or vest."
 [
-	spawn_chance(integer) : "Armor Spawn Chance" : 0 : "The chance a armor will be spawned from this. (1 is a guranteed spawn, 2 will spawn armor half the time, etc.)"
+	spawn_chance(integer) : "Armor Spawn Chance" : 0 : "The chance a armor will be spawned from this. (100 is a guranteed spawn, 50 will spawn armor half the time, etc.)"
 
 	armor_tier(choices) : "Armor Tier" : 0 : "The armor spawned from this entity will depend on what tier it's set to." =
 	[
@@ -74,9 +96,33 @@
 	]
 ]
 
-@PointClass base(Weapon) studio("models/illusion/eftcontainers/magbox.mdl") = efgm_random_ammo : "Spawns a random ammo item."
+@PointClass base(Weapon) studio("models/player/items/humans/graduation_cap.mdl") = efgm_random_shield : "Spawns a random face shield."
 [
-	spawn_chance(integer) : "Ammo Spawn Chance" : 0 : "The chance a ammo will be spawned from this. (1 is a guranteed spawn, 2 will spawn ammo half the time, etc.)"
+	spawn_chance(integer) : "Shield Spawn Chance" : 0 : "The chance a shield will be spawned from this. (100 is a guranteed spawn, 50 will spawn shield half the time, etc.)"
+
+	shield_tier(choices) : "Shield Tier" : 0 : "The shield spawned from this entity will depend on what tier it's set to." =
+	[
+		0 : "Weak Shields"
+		1 : "Strong Shields"
+        2 : "Mixed"
+	]
+]
+
+@PointClass base(Weapon) studio("models/player/items/humans/top_hat.mdl") = efgm_random_wearable : "Spawns a random wearable."
+[
+	spawn_chance(integer) : "Wearable Spawn Chance" : 0 : "The chance a wearable will be spawned from this. (100 is a guranteed spawn, 50 will spawn wearable half the time, etc.)"
+
+	wearable_tier(choices) : "Shield Tier" : 0 : "The wearable spawned from this entity will depend on what tier it's set to." =
+	[
+		0 : "Gas Masks"
+		1 : "Googles"
+        2 : "Mixed"
+	]
+]
+
+@PointClass base(Weapon) studio("models/weapons/w_357.mdl") = efgm_random_ammo : "Spawns a random ammo item."
+[
+	spawn_chance(integer) : "Ammo Spawn Chance" : 0 : "The chance a ammo will be spawned from this. (100 is a guranteed spawn, 50 will spawn ammo half the time, etc.)"
 
 	ammo_tier(choices) : "Ammo Tier" : 0 : "The ammo spawned from this entity will depend on what tier it's set to." =
 	[
@@ -86,9 +132,9 @@
 	]
 ]
 
-@PointClass base(Weapon) studio("models/illusion/eftcontainers/magbox.mdl") = efgm_random_medical : "Spawns a random medical item."
+@PointClass base(Weapon) studio("models/weapons/w_medkit.mdl") = efgm_random_medical : "Spawns a random medical item."
 [
-	spawn_chance(integer) : "Medical Item Spawn Chance" : 0 : "The chance a medical item will be spawned from this. (1 is a guranteed spawn, 2 will spawn medical items half the time, etc.)"
+	spawn_chance(integer) : "Medical Item Spawn Chance" : 0 : "The chance a medical item will be spawned from this. (100 is a guranteed spawn, 50 will spawn medical items half the time, etc.)"
 
 	med_tier(choices) : "Medical Item" : 0 : "The medical item spawned from this entity will depend on what tier it's set to." =
 	[
@@ -101,7 +147,7 @@
 
 @PointClass base(Weapon) studio("models/weapons/w_smg1.mdl") = efgm_random_attach : "Spawns a random attachment."
 [
-	spawn_chance(integer) : "Attachment Spawn Chance" : 0 : "The chance a attachment will be spawned from this. (1 is a guranteed spawn, 2 will spawn attachments half the time, etc.)"
+	spawn_chance(integer) : "Attachment Spawn Chance" : 0 : "The chance a attachment will be spawned from this. (100 is a guranteed spawn, 50 will spawn attachments half the time, etc.)"
 
 	attach_tier(choices) : "Attachment Type" : 0 : "The attachment spawned from this entity will depend on what tier it's set to." =
 	[

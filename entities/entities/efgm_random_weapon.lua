@@ -9,7 +9,7 @@ ENT.SpawnedEnt = nil
 
 function ENT:KeyValue(key, value)
 	if key == "spawn_chance" then
-    	self.SpawnChance = tonumber(value)
+		self.SpawnChance = tonumber(value)
 	end
 
 	if key == "weapon_tier" then
@@ -53,7 +53,7 @@ function ENT:SpawnItem()
 
 		if weps then
 
-			print("efgm_random_weapon: weps does not equal nil, proceeding...")
+			print("efgm_random_weapon: Spawning Weapons")
 
 			local ent = ents.Create(weps[math.random(#weps)])
 

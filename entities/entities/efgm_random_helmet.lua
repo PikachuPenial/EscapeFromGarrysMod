@@ -7,19 +7,19 @@ ENT.SpawnChance = 1
 ENT.SpawnTier = 0
 
 function ENT:KeyValue(key, value)
-   if key == "spawn_chance" then
-      self.SpawnChance = tonumber(value)
-   end
+	if key == "spawn_chance" then
+		self.SpawnChance = tonumber(value)
+	end
 
-   if key == "helmet_tier" then
+	if key == "helmet_tier" then
 		self.SpawnTier = tonumber(value)
-   end
+	end
 end
 
 function ENT:Initialize()
 
-	local midTierHelmets =	{"helmet_6b47", "helmet_6b47_2", "helmet_kiver", "helmet_lzsh", "helmet_psh97", "helmet_shpm", "helmet_untar"}
-	local highTierHelmets =	{"helmet_achhc_black", "helmet_achhc_green","helmet_maska_1sch", "helmet_maska_1sch_killa", "helmet_opscore", "helmet_opscore_visor", "helmet_ulach", "helmet_zsh1_2m"}
+	local midTierHelmets =	{"ent_jack_gmod_ezarmor_shlemofon", "ent_jack_gmod_ezarmor_shpmhelm", "ent_jack_gmod_ezarmor_untarhelm", "ent_jack_gmod_ezarmor_ssh68", "ent_jack_gmod_ezarmor_mich2001"}
+	local highTierHelmets =	{"ent_jack_gmod_ezarmor_twexfilb", "ent_jack_gmod_ezarmor_ulachcoyote", "ent_jack_gmod_ezarmor_maska1shkilla", "ent_jack_gmod_ezarmor_altyn", "ent_jack_gmod_ezarmor_ryst"}
 
 	local helmets
 
@@ -32,6 +32,8 @@ function ENT:Initialize()
 	end
 
 	if helmets then
+
+		print("efgm_random_helmet: Spawning Helmets")
 
 		local spawnChance = math.random(1, 100)
 

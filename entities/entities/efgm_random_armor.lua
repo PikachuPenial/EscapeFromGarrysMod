@@ -7,13 +7,13 @@ ENT.SpawnChance = 1
 ENT.SpawnTier = 0
 
 function ENT:KeyValue(key, value)
-   if key == "spawn_chance" then
-      self.SpawnChance = tonumber(value)
-   end
+	if key == "spawn_chance" then
+		self.SpawnChance = tonumber(value)
+	end
 
-   if key == "armor_tier" then
+	if key == "armor_tier" then
 		self.SpawnTier = tonumber(value)
-   end
+	end
 end
 
 function ENT:Initialize()
@@ -38,6 +38,8 @@ function ENT:Initialize()
 	end
 
 	if armor then
+
+		print("efgm_random_armor: Spawning Armor (Helmets/Vests)")
 
 		local spawnChance = math.random(1, 100)
 

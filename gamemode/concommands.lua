@@ -51,7 +51,6 @@ function buyEntity(ply, cmd, args)
 	entityPrices[49] = {"ent_jack_gmod_ezarmor_weldingkill", "22555", "20"}
 	entityPrices[50] = {"ent_jack_gmod_ezarmor_shlemmaskkilla", "29995", "24"}
 
-
 	for k, v in pairs(entityPrices) do
 		if (args[1] == v[1]) then
 			local balance = (ply:GetNWInt("playerMoney"))

@@ -704,6 +704,8 @@ function GM:ShutDown()
 		--Streaks
 		v:SetPData("killStreak", v:GetNWInt("killStreak"))
 		v:SetPData("extractionStreak", v:GetNWInt("extractionStreak"))
+		v:SetPData("highestKillStreak", v:GetNWInt("highestKillStreak"))
+		v:SetPData("highestExtractionStreak", v:GetNWInt("highestExtractionStreak"))
 		v:SetPData("expMulti", v:GetNWInt("expMulti"))
 
 		--Tasks
@@ -716,6 +718,12 @@ function GM:ShutDown()
 		v:SetPData("weeklyExtractsComplete", v:GetNWInt("weeklyExtractsComplete"))
 		v:SetPData("weeklyNuclearComplete", v:GetNWInt("weeklyNuclearComplete"))
 		v:SetPData("weeklyAddictComplete", v:GetNWInt("weeklyAddictComplete"))
+
+		--Raids
+		v:SetPData("raidsPlayed", v:GetNWInt("raidsPlayed"))
+		v:SetPData("raidsExtracted", v:GetNWInt("raidsExtracted"))
+		v:SetPData("raidsRanThrough", v:GetNWInt("raidsRanThrough"))
+		v:SetPData("raidsDied", v:GetNWInt("raidsDied"))
 	end
 end
 

@@ -202,7 +202,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			-- Stats (KDR)
 			surface.SetTextPos(25, 250)
 			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("K/D Ratio: " .. math.Round(LocalPlayer():GetNWInt("playerKDR")), 2)
+			surface.DrawText("K/D Ratio: " .. math.Round(LocalPlayer():GetNWInt("playerKDR"), 2))
 
 			-- Stats (Total Earned)
 			surface.SetTextPos(25, 275)

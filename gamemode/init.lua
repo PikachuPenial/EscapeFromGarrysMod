@@ -181,6 +181,24 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetNWInt("playerTotalEarnedSell", tonumber(ply:GetPData("playerTotalEarnedSell")))
 	end
 
+	if (ply:GetPData("playerTotalMoneySpent") == nil) then
+		ply:SetNWInt("playerTotalMoneySpent", 0)
+	else
+		ply:SetNWInt("playerTotalMoneySpent", tonumber(ply:GetPData("playerplayerTotalMoneySpentTotalEarned")))
+	end
+
+	if (ply:GetPData("playerTotalMoneySpentWep") == nil) then
+		ply:SetNWInt("playerTotalMoneySpentWep", 0)
+	else
+		ply:SetNWInt("playerTotalMoneySpentWep", tonumber(ply:GetPData("playerTotalMoneySpentWep")))
+	end
+
+	if (ply:GetPData("playerTotalMoneySpentItem") == nil) then
+		ply:SetNWInt("playerTotalMoneySpentItem", 0)
+	else
+		ply:SetNWInt("playerTotalMoneySpentItem", tonumber(ply:GetPData("playerTotalMoneySpentItem")))
+	end
+
 	if (ply:GetPData("playerTotalXpEarned") == nil) then
 		ply:SetNWInt("playerTotalXpEarned", 0)
 	else
@@ -487,8 +505,9 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 		attacker:SetNWInt("playerKDR", attacker:GetNWInt("playerKills") / attacker:GetNWInt("playerDeaths"))
 
 		attacker:SetNWInt("playerTotalEarned", attacker:GetNWInt("playerTotalEarned") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))
-		attacker:SetNWInt("playerTotalXpEarned", attacker:GetNWInt("playerTotalXpEarned") + expGained)
 		attacker:SetNWInt("playerTotalEarnedKill", attacker:GetNWInt("playerTotalEarnedKill") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))
+		attacker:SetNWInt("playerTotalXpEarned", attacker:GetNWInt("playerTotalXpEarned") + (expGained * attacker:GetNWInt("expMulti")), 1)
+		attacker:SetNWInt("playerTotalXpEarnedKill", attacker:GetNWInt("playerTotalXpEarnedKill") + (expGained * attacker:GetNWInt("expMulti")), 1)
 
 		victim:SetNWInt("raidSuccess", 0)
 

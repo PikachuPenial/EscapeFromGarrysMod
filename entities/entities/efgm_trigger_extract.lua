@@ -116,6 +116,7 @@ function ENT:CheckForPlayers()
 								if (ply:GetNWInt("playerLvl") < 32) then
 									ply:SetNWInt("playerExp", math.Round(ply:GetNWInt("playerExp") + (expGained * ply:GetNWInt("expMulti"))), 1)
 									ply:SetNWInt("raidXP", math.Round(ply:GetNWInt("raidXP") + (expGained * ply:GetNWInt("expMulti"))), 1)
+									ply:SetNWInt("playerTotalXpEarned", math.Round(ply:GetNWInt("playerTotalXpEarned") + (expGained * ply:GetNWInt("expMulti"))), 1)
 									ply:SetNWInt("playerTotalXpEarnedExplore", math.Round(ply:GetNWInt("playerTotalXpEarnedExplore") + (expGained * ply:GetNWInt("expMulti"))), 1)
 								end
 

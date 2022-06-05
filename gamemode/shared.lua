@@ -154,6 +154,11 @@ function GM:Initialize()
 	tempWeaponsArray[123] = {"models/weapons/arccw/c_mw3e_mk46.mdl", "arccw_mw3e_mk46", "FN M249 Para", 24000, "17", "HIGH", "Heavy"}
 	tempWeaponsArray[124] = {"models/weapons/arccw/c_mw3e_qbz97.mdl", "arccw_mw3e_qbz97", "QBZ-97", 15000, "13", "MID", "Rifle"}
 	tempWeaponsArray[125] = {"models/viper/mw/weapons/p320_arccw.mdl", "arccw_mw_p320", "SIG P320 RX", 4000, "3", "LOW", "Pistol"}
+	tempWeaponsArray[126] = {"models/weapons/arccw/c_mw3e_mp9.mdl", "arccw_mw3e_mp9", "B&T MP9", 11550, "10", "MID", "SMG"}
+	tempWeaponsArray[127] = {"models/weapons/arccw/c_mw2e_pp2000.mdl", "arccw_mw2e_pp2000", "PP-2000", 9995, "9", "LOW", "Pistol"}
+	tempWeaponsArray[128] = {"models/weapons/arccw/c_mw3e_pp90m1.mdl", "arccw_mw3e_pp90m1", "PP-90M1", 10900, "10", "LOW", "SMG"}
+	tempWeaponsArray[129] = {"models/weapons/arccw/c_mw3e_acr.mdl", "arccw_mw3e_acr", "Remington ACR", 17000, "15", "MID", "Rifle"}
+	tempWeaponsArray[130] = {"models/weapons/arccw/c_bo1_crossbow.mdl", "arccw_bo1_crossbow", "Crossbow", 20000, "15", "MID", "Heavy"}
 
 	local tempEntityArray = {}
 

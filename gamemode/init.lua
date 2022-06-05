@@ -47,6 +47,8 @@ function GM:PlayerSpawn(ply)
 	local spawningWeapon = {"arccw_eft_1911", "arccw_waw_nambu", "arccw_waw_tt33"}
 	local spawningMelee = {"arccw_bo1_sog_knife"}
 
+	local lights = {"go_flashlight", "uc_tac_flashlight3"}
+
 	ply:SetModel(playerModels[math.random(#playerModels)])
 	ply:SetBodygroup(0, playerFaces[math.random(#playerFaces)])
 	ply:SetBodygroup(1, playerFaces[math.random(#playerFaces)])
@@ -56,10 +58,13 @@ function GM:PlayerSpawn(ply)
 	ply:Give("fas2_ifak")
 	ply:SetupHands()
 
+	ArcCW:PlayerGiveAtt(ply, lights[math.random(#lights)], 1)
+
 	if (ply:GetNWInt("firstSpawn") == 0) then
 		ply:ConCommand("open_raid_summary_menu")
 	end
 
+	ArcCW:PlayerSendAttInv(ply)
 end
 
 function GM:PlayerInitialSpawn(ply)

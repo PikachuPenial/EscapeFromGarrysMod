@@ -249,75 +249,14 @@ end
 
 if !ConVarExists("efgm_hidebinds") then CreateConVar( "efgm_hidebinds", "0", FCVAR_ARCHIVE, "Show or hide binds, while you are not in Raid",0,1 ) end
 
---Disable the context menu.
-function GM:ContextMenuOpen()
-	return false
-end
-
--- Disable Spawn Menu and show the extract list when the bind is pressed.
-function GM:SpawnMenuEnabled()
-	return false
-end
-
-function GM:SpawnMenuOpen()
-	RunConsoleCommand("efgm_extract_list")
-	return false
-end
-
--- Disabling console commands that allow prop/entity abuse.
-hook.Add("PlayerGiveSWEP", "BlockPlayerSWEPs", function(ply, class, swep)
-	if (!ply:IsAdmin()) then
-		return false
-	end
-end)
-
-function GM:PlayerSpawnEffect(ply)
-	return false
-end
-
-function GM:PlayerSpawnNPC(ply)
-	return false
-end
-
-function GM:PlayerSpawnObject(ply)
-	return false
-end
-
-function GM:PlayerSpawnProp(ply)
-	return false
-end
-
-function GM:PlayerSpawnRagdoll(ply)
-	return false
-end
-
-function GM:PlayerSpawnSENT(ply)
-	return false
-end
-
-function GM:PlayerSpawnSWEP(ply)
-	return false
-end
-
-function GM:PlayerSpawnVehicle(ply)
-	return false
-end
-
--- Removing problematic console commmands.
-
-concommand.Remove("ent_create")
-concommand.Remove("gmod_spawnnpc")
-
 -- This is where the console commands are ran when a client joins a game running the gamemode.
 
 --Anti-Bunnyhopping
-
 RunConsoleCommand("vk_enabled", "1")
 RunConsoleCommand("vk_suppressor", "1")
 RunConsoleCommand("vk_speedlimit", "1")
 
 --Day/Night System
-
 RunConsoleCommand("atmos_dnc_length_day", "480")
 RunConsoleCommand("atmos_dnc_length_night", "300")
 RunConsoleCommand("atmos_weather_length", "300")
@@ -327,7 +266,6 @@ RunConsoleCommand("atmos_weather_lighting", "1")
 RunConsoleCommand("atmos_snowenabled", "0")
 
 --Tarkov Hud Configuration
-
 RunConsoleCommand("tarkovhud_enabled", "1")
 RunConsoleCommand("tarkovhud_hp_colored", "1")
 RunConsoleCommand("tarkovhud_autohide_hp", "0")
@@ -336,12 +274,19 @@ RunConsoleCommand("tarkovhud_blur", "1")
 RunConsoleCommand("tarkovhud_blur_neardeath", "1")
 
 --Realistic Fall Damage
-
 RunConsoleCommand("mp_falldamage", "1")
 
 --Killfeed Disable
-
 RunConsoleCommand("hud_deathnotice_time", "0")
+
+--Free Look
+
+RunConsoleCommand("altlook", "1")
+RunConsoleCommand("altlook_block_ads", "1")
+RunConsoleCommand("altlook_block_fire", "1")
+RunConsoleCommand("altlook_limit_horizontal", "70")
+RunConsoleCommand("altlook_limit_vertical", "36")
+RunConsoleCommand("altlook_smoothness_mult", "1.25")
 
 --Armor
 RunConsoleCommand("jmod_eft_wghtmult", "0.32")
@@ -363,33 +308,27 @@ RunConsoleCommand("viewbob_walk_enable", "0")
 RunConsoleCommand("suppression_viewpunch", "0")
 
 --Damage Slow Config
-
 RunConsoleCommand("stoppower_dmg_mult", "0.05")
 RunConsoleCommand("stoppower_minimum_speed_mult", "0.55")
 RunConsoleCommand("stoppower_recovery_speed", "0.66")
 RunConsoleCommand("stoppower_recovery_delay", "0.25")
 
 --Disabling NoClip/Tinnitus
-
 RunConsoleCommand("sbox_noclip", "0")
 RunConsoleCommand("dsp_off", "1")
 
 --Auto Respawning
-
 RunConsoleCommand("sv_autorespawn_enabled", "1")
 RunConsoleCommand("sv_respawntime", "15")
 RunConsoleCommand("cl_drawownshadow", "1")
 
 --Death Screen Settings
-
 RunConsoleCommand("cl_pomer_text", "[You Died]")
 
 --Loot Rings/Attachment Menu Configuration
-
 RunConsoleCommand("cl_vmanip_pickups_halo", "1")
 
 --Dynamic Height
-
 RunConsoleCommand("sv_ec2_dynamicheight", "0")
 RunConsoleCommand("sv_ec2_dynamicheight_min", "42")
 RunConsoleCommand("sv_ec2_dynamicheight_max", "64")
@@ -401,15 +340,12 @@ RunConsoleCommand("sv_gws_needinv", "1")
 
 
 --Proximity Voice Chat
-
 RunConsoleCommand("sv_maxVoiceAudible", "1500")
 
 --Inventory Blacklist
-
 RunConsoleCommand("gws_blacklist_load")
 
 --ARC CW Stuff
-
 RunConsoleCommand("arccw_2d3d", "0")
 RunConsoleCommand("arccw_add_sway", "0.40")
 RunConsoleCommand("arccw_adjustsensthreshold", "0.00")
@@ -484,7 +420,7 @@ RunConsoleCommand("arccw_shelltime", "15")
 RunConsoleCommand("arccw_thermalpp", "1")
 RunConsoleCommand("arccw_throwinertia", "1")
 RunConsoleCommand("arccw_truenames", "1")
-RunConsoleCommand("arccw_visibility", "8000")
+RunConsoleCommand("arccw_visibility", "2500")
 RunConsoleCommand("arccw_vm_add_ads", "1.00")
 RunConsoleCommand("arccw_vm_bob_sprint", "3.00")
 RunConsoleCommand("arccw_vm_coolsway", "1")

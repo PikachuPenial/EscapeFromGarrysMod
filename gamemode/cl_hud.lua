@@ -172,6 +172,14 @@ function HUD()
 			shopBind = "#"
 			shopColor = red
 		end
+		if (walkBind == nil) then
+			walkBind = "#"
+			walkBind = red
+		end
+		if (interactBind == nil) then
+			interactBind = "#"
+			interactBind = red
+		end
 
 		if (inPlayerMenu == false) and (inMapVoteMenu == false) and (inStashMenu == false) and (inRaidSummaryMenu == false) then
 				draw.SimpleText("[Controls] : " .. "efgm_hidebinds to toggle UI", "DermaLarge", 135, 20, Color(0, 200, 255, 255), 0)

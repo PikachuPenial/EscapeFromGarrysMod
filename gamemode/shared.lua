@@ -159,7 +159,7 @@ function GM:Initialize()
 	tempWeaponsArray[128] = {"models/weapons/arccw/c_mw3e_pp90m1.mdl", "arccw_mw3e_pp90m1", "PP-90M1", 10900, "10", "LOW", "SMG"}
 	tempWeaponsArray[129] = {"models/weapons/arccw/c_mw3e_acr.mdl", "arccw_mw3e_acr", "Remington ACR", 17000, "15", "MID", "Rifle"}
 	tempWeaponsArray[130] = {"models/weapons/arccw/c_bo1_crossbow.mdl", "arccw_bo1_crossbow", "Crossbow", 20000, "15", "MID", "Heavy"}
-	tempWeaponsArray[131] = {"models/weapons/arccw/c_cod4e_r700.mdl", "arccw_cod4e_r700", "Remington 700", 14995, "14", "MID", "Sniper"}
+	tempWeaponsArray[131] = {"models/weapons/arccw/c_cod4_r700.mdl", "arccw_cod4e_r700", "Remington 700", 14995, "14", "MID", "Sniper"}
 	tempWeaponsArray[132] = {"models/weapons/arccw/c_bo1_ak47.mdl", "arccw_bo1_ak47", "AK-47", 14500, "12", "MID", "Rifle"}
 
 	local tempEntityArray = {}
@@ -464,14 +464,14 @@ RunConsoleCommand("arccw_mult_crouchrecoil", "0.85")
 RunConsoleCommand("arccw_mult_damage", "0.90")
 RunConsoleCommand("arccw_mult_defaultammo", "3")
 RunConsoleCommand("arccw_mult_heat", "1.00")
-RunConsoleCommand("arccw_mult_hipfire", "1.75")
+RunConsoleCommand("arccw_mult_hipfire", "1.00")
 RunConsoleCommand("arccw_mult_infiniteammo", "0")
 RunConsoleCommand("arccw_mult_malfunction", "1.65")
 RunConsoleCommand("arccw_mult_movedisp", "0.50")
 RunConsoleCommand("arccw_mult_penetration", "1.00")
 RunConsoleCommand("arccw_mult_range", "1.00")
-RunConsoleCommand("arccw_mult_recoil", "1.30")
-RunConsoleCommand("arccw_mult_reloadtime", "1.65")
+RunConsoleCommand("arccw_mult_recoil", "1.32")
+RunConsoleCommand("arccw_mult_reloadtime", "1.60")
 RunConsoleCommand("arccw_mult_shootwhilesprinting", "0")
 RunConsoleCommand("arccw_mult_sighttime", "1.30")
 RunConsoleCommand("arccw_mult_startunloaded", "0")

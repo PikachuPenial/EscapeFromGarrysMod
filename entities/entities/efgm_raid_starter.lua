@@ -563,7 +563,7 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 		if self.RaidStarted == false then
 
-			if #player.GetHumans() <= 0 then
+			if #player.GetHumans() <= 1 then
 
 				ply:PrintMessage(3, "Not enough players to spawn into/start a raid!")
 
@@ -571,7 +571,7 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 				ply:PrintMessage(3, "You are not the party leader!")
 
-			elseif #player.GetHumans() > 0 and self.RaidStarted == false and ply:GetNWBool("teamLeader") == true then
+			elseif #player.GetHumans() > 1 and self.RaidStarted == false and ply:GetNWBool("teamLeader") == true then
 
 				self:InitializeRaid()
 				hook.Call("RaidStart", nil)

@@ -20,8 +20,7 @@ include("sv_pdata.lua")
 include("sv_dailytasks.lua")
 include("sh_party_system.lua")
 
---Player stats.
-
+--Player setup
 function GM:PlayerSpawn(ply)
 	local walkSpeed = ply:GetNWInt("enduranceEffect") / 2.10
 	local runSpeed = ply:GetNWInt("enduranceEffect") / 1.38
@@ -44,7 +43,8 @@ function GM:PlayerSpawn(ply)
 
 	local playerModels = {"models/player/eft/pmc/eft_bear/models/eft_bear_pm_summer.mdl", "models/player/eft/pmc/eft_bear/models/eft_bear_pm_redux.mdl", "models/player/eft/pmc/eft_usec/models/eft_usec_pm_hoody.mdl"}
 	local playerFaces = {0, 1, 2, 3}
-	local spawningWeapon = {"arccw_eft_1911", "arccw_waw_nambu", "arccw_waw_tt33"}
+	local spawningWeapon = {"arccw_eft_1911", "arccw_waw_p38", "arccw_waw_tt33"}
+	local spawningGrenade = {"arccw_go_nade_frag", "arccw_go_nade_smoke", "arccw_go_nade_incendiary"}
 	local spawningMelee = {"arccw_bo1_sog_knife"}
 
 	local lights = {"go_flashlight", "uc_tac_flashlight3"}
@@ -54,17 +54,17 @@ function GM:PlayerSpawn(ply)
 	ply:SetBodygroup(1, playerFaces[math.random(#playerFaces)])
 	hook.Call("PlayerLoadout", GAMEMODE, ply)
 	ply:Give(spawningWeapon[math.random(#spawningWeapon)])
+	ply:Give(spawningGrenade[math.random(#spawningGrenade)])
 	ply:Give(spawningMelee[math.random(#spawningMelee)])
 	ply:Give("fas2_ifak")
 	ply:SetupHands()
 
 	ArcCW:PlayerGiveAtt(ply, lights[math.random(#lights)], 1)
+	ArcCW:PlayerSendAttInv(ply)
 
 	if (ply:GetNWInt("firstSpawn") == 0) then
 		ply:ConCommand("open_raid_summary_menu")
 	end
-
-	ArcCW:PlayerSendAttInv(ply)
 end
 
 function GM:PlayerInitialSpawn(ply)

@@ -1,11 +1,9 @@
 GM.Name = "Escape From Garry's Mod"
-GM.Author = "Pikachu/Penial"
-GM.Email = "jacksonwassermann55@icloud.com"
+GM.Author = "Penial & Porty"
+GM.Email = "pissoff"
 GM.Website = "https://github.com/PikachuPenial"
 
 DeriveGamemode("sandbox")
-
-
 
 sellPriceMultiplier = 0.30
 
@@ -23,9 +21,9 @@ function GM:Initialize()
 	isSellMenu = false
 	clientPlayer = nil
 
-	-- Creating a temporary array to sort through for the actual array seen in the shop
+	--Creating a temporary array to sort through for the actual array seen in the shop
 
-	-- Array Formatting (Model, Item Name, Shop Print Name, Cost, Level, Rarity/Tier, Category)
+	--Array Formatting (Model, Item Name, Shop Print Name, Cost, Level, Rarity/Tier, Category)
 
 	local tempWeaponsArray = {}
 
@@ -226,28 +224,25 @@ function GM:Initialize()
 	tempEntityArray[49] = {"models/facecover_welding/facecover_tagilla_kill.mdl", "ent_jack_gmod_ezarmor_weldingkill", "Tagilla's Welding Mask", 22555, "20", "HIGH", "Face Shield"}
 	tempEntityArray[50] = {"models/helmet_maska_1sh_shield_killa/maska_shield_killa.mdl", "ent_jack_gmod_ezarmor_shlemmaskkilla", "Maska-1SCh Face Shield", 29995, "24", "HIGH", "Face Shield"}
 
-	-- Any weapon in this array cannot be sold. Put any starting equipment here.
+	--Any weapon in this array cannot be sold. Put any starting equipment here.
 
 	sellBlacklist[1] = {"arccw_go_knife_m9bayonet"}
 	sellBlacklist[2] = {"arccw_eft_1911"}
-	sellBlacklist[5] = {"arccw_waw_nambu"}
+	sellBlacklist[3] = {"arccw_waw_p38"}
 	sellBlacklist[4] = {"arccw_waw_tt33"}
-	sellBlacklist[5] = {"arccw_go_nade_incendiary"}
-	sellBlacklist[6] = {"arccw_go_nade_frag"}
-	sellBlacklist[7] = {"arccw_go_nade_flash"}
-	sellBlacklist[8] = {"arccw_go_nade_smoke"}
-	sellBlacklist[9] = {"arccw_go_nade_molotov"}
-	sellBlacklist[10] = {"arccw_go_nade_knife"}
+	sellBlacklist[5] = {"arccw_go_nade_frag"}
+	sellBlacklist[6] = {"arccw_go_nade_smoke"}
+	sellBlacklist[7] = {"arccw_go_nade_incendiary"}
 
-	-- Temporary array created. This next section will sort the guns by cost, so guns higher to the top will hopefully be better. This is convenient.
-	-- The sort function takes the fourth value of all tempWeaponsArray indexes (the rouble count) and sorts by them from greatest to lowest.
+	--Temporary array created. This next section will sort the guns by cost, so guns higher to the top will hopefully be better. This is convenient.
+	--The sort function takes the fourth value of all tempWeaponsArray indexes (the rouble count) and sorts by them from greatest to lowest.
 
-	-- If you want it in descending order instead of ascending, change the > to a <. If you want it to sort by level requirement, change the [4] to [5].
-	-- Do you want it sorted alphabetically? Too bad!
+	--If you want it in descending order instead of ascending, change the > to a <. If you want it to sort by level requirement, change the [4] to [5].
+	--Do you want it sorted alphabetically? Too bad!
 
 	table.sort(tempWeaponsArray, function(a, b) return a[4] > b[4] end)
 
-	-- I think thats it
+	--I think thats it
 
 	weaponsArr = tempWeaponsArray
 	entsArr = tempEntityArray
@@ -256,67 +251,7 @@ end
 
 if !ConVarExists("efgm_hidebinds") then CreateConVar( "efgm_hidebinds", "0", FCVAR_ARCHIVE, "Show or hide binds, while you are not in Raid",0,1 ) end
 
---Disable the context menu.
-function GM:ContextMenuOpen()
-	return false
-end
-
--- Disable Spawn Menu and show the extract list when the bind is pressed.
-function GM:SpawnMenuEnabled()
-	return false
-end
-
-function GM:SpawnMenuOpen()
-	RunConsoleCommand("efgm_extract_list")
-	return false
-end
-
--- Disabling console commands that allow prop/entity abuse.
-hook.Add("PlayerGiveSWEP", "BlockPlayerSWEPs", function(ply, class, swep)
-	if (!ply:IsAdmin()) then
-		return false
-	end
-end)
-
-function GM:PlayerSpawnEffect(ply)
-	return false
-end
-
-function GM:PlayerSpawnNPC(ply)
-	return false
-end
-
-function GM:PlayerSpawnObject(ply)
-	return false
-end
-
-function GM:PlayerSpawnProp(ply)
-	return false
-end
-
-function GM:PlayerSpawnRagdoll(ply)
-	return false
-end
-
-function GM:PlayerSpawnSENT(ply)
-	return false
-end
-
-function GM:PlayerSpawnSWEP(ply)
-	return false
-end
-
-function GM:PlayerSpawnVehicle(ply)
-	return false
-end
-
--- Removing problematic console commmands.
-
-concommand.Remove("ent_create")
-concommand.Remove("gmod_spawnnpc")
-
-
--- This is where the console commands are ran when a client joins a game running the gamemode.
+--This is where the console commands are ran when a client joins a game running the gamemode.
 
 --Anti-Bunnyhopping
 RunConsoleCommand("vk_enabled", "1")

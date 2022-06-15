@@ -913,7 +913,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 						else
 							surface.SetDrawColor(taskIncompleteColor)
 						end
-	
+
 						surface.DrawRect(0, 0, objectivePanel:GetWide(), objectivePanel:GetTall())
 
 						draw.SimpleText( taskObjectivesExploded[l], "DermaDefaultBold", objectivePanel:GetWide() / 2, objectivePanel:GetTall() / 2, textColor, 1 )
@@ -952,7 +952,6 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	end
 
 	if menuInRaid == false then
-
 		local shopButton = vgui.Create("DButton")
 		shopButton:SetParent(Menu)
 		shopButton:SetText("")
@@ -975,7 +974,6 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			if sellMenuBool == true then shopText = "SELL" else shopText = "SHOP" end
 
 			draw.DrawText(shopText, "DermaLarge", shopButton:GetWide() / 2.1, 10, Color(102, 255, 102, 255), 1)
-
 		end
 
 		shopButton.DoClick = function(shopButton)

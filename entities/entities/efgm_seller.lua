@@ -34,6 +34,8 @@ function ENT:OpenMenu(ply)
 
 	local sellTable = {ply, self}
 
+	ply:SetNWBool("inRaid", false)
+
 	net.Start("SellMenuTable")
 	net.WriteTable(sellTable)
 	net.Send(ply)

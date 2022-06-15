@@ -338,11 +338,15 @@ local function DoSmartSpawnStuff(spawns, minimumDistance)
 
 		for l, b in pairs(player.GetHumans()) do
 
-			-- print(tostring( "Distance between player and spawn is:" .. v:GetPos():Distance( b:GetPos() ) ))
+			if ply:GetNWBool("inRaid") == true then
 
-			if v:GetPos():Distance( b:GetPos() ) < minimumDistance then
+				-- print(tostring( "Distance between player and spawn is:" .. v:GetPos():Distance( b:GetPos() ) ))
 
-				willTableBeAdded = false
+				if v:GetPos():Distance( b:GetPos() ) < minimumDistance then
+
+					willTableBeAdded = false
+
+				end
 
 			end
 

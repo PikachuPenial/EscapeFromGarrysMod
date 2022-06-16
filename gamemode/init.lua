@@ -569,6 +569,18 @@ hook.Add("HUDWeaponPickedUp", "WeaponPickedUp", function(weapon)
 	ply:SetNWInt("raidItemsPicked", ply:GetNWInt("raidItemsPicked") + 1)
 end)
 
+hook.Add("KeyPress", "disableWepSprintStrafe", function(ply, key)
+	local runSpeed = ply:GetNWInt("enduranceEffect") / 1.38
+
+	if ply:KeyDown(IN_SPEED) then
+		if ( ply:KeyDown(IN_MOVELEFT) or ply:KeyDown(IN_MOVERIGHT) or ply:KeyDown(IN_BACK)) and !ply:KeyDown(IN_FORWARD) then
+			ply:SetRunSpeed(ply:GetWalkSpeed())
+		else
+			ply:SetRunSpeed(207 + runSpeed)
+		end
+	end
+end)
+
 function checkForLevel(ply)
 	if (ply:GetNWInt("playerLvl") < 26) then
 		local expToLevel = (ply:GetNWInt("playerLvl") * 140) * 5.15

@@ -1235,7 +1235,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 				surface.SetFont("DermaLarge")
 				surface.SetTextPos(90, 230)
-				surface.DrawText("Once you hit level 32, you can prestige, which")
+				surface.DrawText("Once you hit level 26, you can prestige, which")
 
 				surface.SetTextPos(65, 270)
 				surface.DrawText("resets your level to get a permanent rouble boost.")

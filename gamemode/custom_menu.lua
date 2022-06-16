@@ -581,7 +581,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		local eliminationText = LocalPlayer():GetNWInt("mapKills") .. " / " .. "6"
 		local extractText = LocalPlayer():GetNWInt("mapExtracts") .. " / " .. "2"
 
-		local distanceText = LocalPlayer():GetNWInt("weeklyDistance") .. " / " .. "3000m"
+		local distanceText = math.Round(LocalPlayer():GetNWInt("weeklyDistance"), 2) .. " / " .. "3000m"
 		local weeklyExtractText = LocalPlayer():GetNWInt("weeklyExtracts") .. " / " .. "15"
 		local nuclearText = LocalPlayer():GetNWInt("weeklyNuclear") .. " / " .. "1"
 		local addictText = LocalPlayer():GetNWInt("weeklyAddict") .. " / " .. "10"

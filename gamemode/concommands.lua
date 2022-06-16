@@ -104,137 +104,137 @@ concommand.Add("buy_entity", buyEntity)
 
 function buyGun(ply, cmd, args)
 	local weaponPrices = {}
-	weaponPrices[1] = {"arccw_dmi_b92f_auto", "13005", "10"}
-	weaponPrices[2] = {"arccw_dmi_c7a2_inftry", "16955", "14"}
-	weaponPrices[3] = {"arccw_dp28", "21370", "17"}
-	weaponPrices[4] = {"arccw_eft_aks74u", "9980", "7"}
-	weaponPrices[5] = {"arccw_eft_1911", "4140", "3"}
-	weaponPrices[6] = {"arccw_eft_mp5", "10995", "9"}
-	weaponPrices[7] = {"arccw_eft_mp5sd", "9995", "8"}
-	weaponPrices[8] = {"arccw_eft_mp7", "13195", "10"}
+	weaponPrices[1] = {"arccw_dmi_b92f_auto", "13005", "7"}
+	weaponPrices[2] = {"arccw_dmi_c7a2_inftry", "16955", "10"}
+	weaponPrices[3] = {"arccw_dp28", "21370", "14"}
+	weaponPrices[4] = {"arccw_eft_aks74u", "9980", "5"}
+	weaponPrices[5] = {"arccw_eft_1911", "4140", "1"}
+	weaponPrices[6] = {"arccw_eft_mp5", "10995", "6"}
+	weaponPrices[7] = {"arccw_eft_mp5sd", "9995", "5"}
+	weaponPrices[8] = {"arccw_eft_mp7", "13195", "7"}
 	weaponPrices[9] = {"arccw_eft_ppsh", "8440", "5"}
-	weaponPrices[10] = {"arccw_eft_t5000", "18050", "13"}
+	weaponPrices[10] = {"arccw_eft_t5000", "18050", "12"}
 	weaponPrices[11] = {"arccw_eft_ump", "10050", "6"}
-	weaponPrices[12] = {"arccw_eap_aek", "17120", "15"}
-	weaponPrices[13] = {"arccw_eap_brenten", "6010", "4"}
-	weaponPrices[14] = {"arccw_eap_csls5", "10510", "8"}
-	weaponPrices[15] = {"arccw_eap_fmg9", "13080", "9"}
+	weaponPrices[12] = {"arccw_eap_aek", "17120", "11"}
+	weaponPrices[13] = {"arccw_eap_brenten", "6010", "2"}
+	weaponPrices[14] = {"arccw_eap_csls5", "10510", "6"}
+	weaponPrices[15] = {"arccw_eap_fmg9", "15555", "10"}
 	weaponPrices[16] = {"arccw_eap_groza", "13580", "10"}
-	weaponPrices[17] = {"arccw_eap_lebedev", "4630", "3"}
-	weaponPrices[18] = {"arccw_eap_spectre", "11010", "8"}
-	weaponPrices[19] = {"arccw_eap_stg44", "13100", "10"}
-	weaponPrices[20] = {"arccw_eap_usas", "27510", "20"}
-	weaponPrices[21] = {"arccw_eap_vp70", "5005", "4"}
-	weaponPrices[22] = {"arccw_eap_xm29", "18005", "15"}
-	weaponPrices[23] = {"arccw_slog_altor", "5005", "5"}
-	weaponPrices[24] = {"arccw_fml_blast_fc5_arc", "15005", "13"}
-	weaponPrices[25] = {"arccw_krissvector", "20005", "15"}
-	weaponPrices[26] = {"arccw_asval", "17990", "13"}
-	weaponPrices[27] = {"arccw_mifl_mds9", "6200", "5"}
-	weaponPrices[28] = {"arccw_blast_pindadss2", "18200", "14"}
-	weaponPrices[29] = {"arccw_go_nade_incendiary", "2500", "3"}
-	weaponPrices[30] = {"arccw_go_nade_frag", "2500", "3"}
-	weaponPrices[31] = {"arccw_go_nade_flash", "2500", "3"}
-	weaponPrices[32] = {"arccw_go_nade_smoke", "2500", "3"}
-	weaponPrices[33] = {"arccw_go_nade_molotov", "2500", "3"}
-	weaponPrices[34] = {"arccw_go_nade_knife", "2500", "3"}
-	weaponPrices[35] = {"weapon_csgo_flashbang", "2500", "3"}
-	weaponPrices[36] = {"arccw_ur_deagle", "6005", "5"}
-	weaponPrices[37] = {"midnights_gso_xm8", "18920", "17"}
-	weaponPrices[38] = {"arccw_midnightwolf_type20", "17880", "15"}
-	weaponPrices[39] = {"arccw_725", "8950", "7"}
-	weaponPrices[40] = {"arccw_mifl_fas2_g36c", "14445", "13"}
-	weaponPrices[41] = {"arccw_kilo141", "15690", "14"}
+	weaponPrices[17] = {"arccw_eap_lebedev", "4630", "1"}
+	weaponPrices[18] = {"arccw_eap_spectre", "11010", "7"}
+	weaponPrices[19] = {"arccw_eap_stg44", "13100", "9"}
+	weaponPrices[20] = {"arccw_eap_usas", "27510", "16"}
+	weaponPrices[21] = {"arccw_eap_vp70", "5005", "2"}
+	weaponPrices[22] = {"arccw_eap_xm29", "18005", "12"}
+	weaponPrices[23] = {"arccw_slog_altor", "5005", "2"}
+	weaponPrices[24] = {"arccw_fml_blast_fc5_arc", "15005", "12"}
+	weaponPrices[25] = {"arccw_krissvector", "20005", "14"}
+	weaponPrices[26] = {"arccw_asval", "17990", "12"}
+	weaponPrices[27] = {"arccw_mifl_mds9", "6200", "3"}
+	weaponPrices[28] = {"arccw_blast_pindadss2", "18200", "11"}
+	weaponPrices[29] = {"arccw_go_nade_incendiary", "2500", "2"}
+	weaponPrices[30] = {"arccw_go_nade_frag", "2500", "2"}
+	weaponPrices[31] = {"arccw_go_nade_flash", "2500", "2"}
+	weaponPrices[32] = {"arccw_go_nade_smoke", "2500", "2"}
+	weaponPrices[33] = {"arccw_go_nade_molotov", "2500", "2"}
+	weaponPrices[34] = {"arccw_go_nade_knife", "2500", "2"}
+	weaponPrices[35] = {"weapon_csgo_flashbang", "2500", "2"}
+	weaponPrices[36] = {"arccw_ur_deagle", "6005", "4"}
+	weaponPrices[37] = {"midnights_gso_xm8", "18920", "14"}
+	weaponPrices[38] = {"arccw_midnightwolf_type20", "17880", "13"}
+	weaponPrices[39] = {"arccw_725", "8950", "4"}
+	weaponPrices[40] = {"arccw_mifl_fas2_g36c", "14445", "11"}
+	weaponPrices[41] = {"arccw_kilo141", "15690", "12"}
 	weaponPrices[42] = {"arccw_fml_mk2k", "11050", "8"}
-	weaponPrices[43] = {"arccw_grau", "13005", "13"}
-	weaponPrices[44] = {"arccw_ud_glock", "6005", "5"}
-	weaponPrices[45] = {"arccw_ud_m16", "16995", "14"}
-	weaponPrices[46] = {"arccw_ud_m1014", "12995", "12"}
-	weaponPrices[47] = {"arccw_ud_m79", "22555", "20"}
-	weaponPrices[48] = {"arccw_ud_mini14", "16420", "14"}
-	weaponPrices[49] = {"arccw_ud_870", "10240", "9"}
-	weaponPrices[50] = {"arccw_ud_uzi", "11040", "8"}
-	weaponPrices[51] = {"arccw_ww1_smg0818", "27500", "22"}
-	weaponPrices[52] = {"arccw_ur_ak", "17005", "15"}
-	weaponPrices[53] = {"arccw_mifl_fas2_famas", "16990", "14"}
-	weaponPrices[54] = {"arccw_mifl_fas2_g3", "16310", "14"}
-	weaponPrices[55] = {"arccw_mifl_fas2_ks23", "13005", "13"}
-	weaponPrices[56] = {"arccw_mifl_fas2_m24", "18900", "15"}
-	weaponPrices[57] = {"arccw_mifl_fas2_m3", "14505", "14"}
-	weaponPrices[58] = {"arccw_mifl_fas2_m82", "20999", "20"}
-	weaponPrices[59] = {"arccw_mifl_fas2_mac11", "8100", "6"}
-	weaponPrices[60] = {"arccw_fml_fas2_custom_mass26", "14895", "15"}
-	weaponPrices[61] = {"arccw_mifl_fas2_minimi", "19995", "20"}
-	weaponPrices[62] = {"arccw_mifl_fas2_ragingbull", "7020", "7"}
-	weaponPrices[63] = {"arccw_mifl_fas2_rpk", "14765", "14"}
-	weaponPrices[64] = {"arccw_mifl_fas2_sg55x", "15490", "14"}
-	weaponPrices[65] = {"arccw_mifl_fas2_sr25", "17420", "16"}
-	weaponPrices[66] = {"arccw_mifl_fas2_toz34", "12690", "12"}
+	weaponPrices[43] = {"arccw_grau", "13005", "10"}
+	weaponPrices[44] = {"arccw_ud_glock", "6005", "3"}
+	weaponPrices[45] = {"arccw_ud_m16", "16995", "12"}
+	weaponPrices[46] = {"arccw_ud_m1014", "12995", "8"}
+	weaponPrices[47] = {"arccw_ud_m79", "22555", "18"}
+	weaponPrices[48] = {"arccw_ud_mini14", "16420", "12"}
+	weaponPrices[49] = {"arccw_ud_870", "10240", "6"}
+	weaponPrices[50] = {"arccw_ud_uzi", "11040", "6"}
+	weaponPrices[51] = {"arccw_ww1_smg0818", "27500", "20"}
+	weaponPrices[52] = {"arccw_ur_ak", "17005", "13"}
+	weaponPrices[53] = {"arccw_mifl_fas2_famas", "16990", "12"}
+	weaponPrices[54] = {"arccw_mifl_fas2_g3", "16310", "12"}
+	weaponPrices[55] = {"arccw_mifl_fas2_ks23", "13005", "8"}
+	weaponPrices[56] = {"arccw_mifl_fas2_m24", "18900", "14"}
+	weaponPrices[57] = {"arccw_mifl_fas2_m3", "14505", "12"}
+	weaponPrices[58] = {"arccw_mifl_fas2_m82", "20999", "18"}
+	weaponPrices[59] = {"arccw_mifl_fas2_mac11", "8100", "5"}
+	weaponPrices[60] = {"arccw_fml_fas2_custom_mass26", "17550", "14"}
+	weaponPrices[61] = {"arccw_mifl_fas2_minimi", "19995", "16"}
+	weaponPrices[62] = {"arccw_mifl_fas2_ragingbull", "7020", "4"}
+	weaponPrices[63] = {"arccw_mifl_fas2_rpk", "14765", "10"}
+	weaponPrices[64] = {"arccw_mifl_fas2_sg55x", "15490", "12"}
+	weaponPrices[65] = {"arccw_mifl_fas2_sr25", "17420", "13"}
+	weaponPrices[66] = {"arccw_mifl_fas2_toz34", "12690", "9"}
 	weaponPrices[67] = {"arccw_claymorelungemine", "5555", "5"}
-	weaponPrices[68] = {"arccw_eft_usp", "5555", "5"}
-	weaponPrices[69] = {"arccw_eft_mp153", "15005", "13"}
-	weaponPrices[70] = {"arccw_eft_mp155", "14005", "12"}
-	weaponPrices[71] = {"arccw_eft_scarh", "17090", "15"}
-	weaponPrices[72] = {"arccw_eft_scarl", "15995", "14"}
-	weaponPrices[73] = {"arccw_fml_mw_fo12", "20999", "18"}
-	weaponPrices[74] = {"arccw_oden", "18505", "16"}
-	weaponPrices[75] = {"arccw_ur_mp5", "10005", "8"}
-	weaponPrices[76] = {"arccw_ur_aw", "13095", "12"}
-	weaponPrices[77] = {"arccw_sov_tkb011", "16000", "14"}
-	weaponPrices[78] = {"midnights_gso_type89", "18005", "15"}
-	weaponPrices[79] = {"arccwsviinfinite", "5555", "5"}
-	weaponPrices[80] = {"arccw_waw_thompson", "11565", "9"}
-	weaponPrices[81] = {"arccw_waw_mp40", "9895", "8"}
-	weaponPrices[82] = {"arccw_waw_type100", "12995", "12"}
-	weaponPrices[83] = {"arccw_bo1_mpl", "9205", "7"}
-	weaponPrices[84] = {"arccw_bo1_pm63", "8995", "7"}
-	weaponPrices[85] = {"arccw_bo1_g11", "15900", "13"}
-	weaponPrices[86] = {"arccw_bo1_law", "33333", "24"}
-	weaponPrices[87] = {"arccw_mifl_fas2_g20", "4700", "4"}
-	weaponPrices[88] = {"arccw_mifl_fas2_p226", "4700", "4"}
-	weaponPrices[89] = {"arccw_waw_nambu", "4250", "4"}
-	weaponPrices[90] = {"arccw_bo1_aug", "14250", "12"}
-	weaponPrices[91] = {"arccw_bo1_xl60", "13905", "11"}
-	weaponPrices[92] = {"arccw_bo1_famas", "14505", "13"}
-	weaponPrices[93] = {"arccw_bo1_fal", "17050", "15"}
-	weaponPrices[94] = {"arccw_bo1_hk21", "26000", "20"}
-	weaponPrices[95] = {"arccw_bo1_galil", "14005", "13"}
-	weaponPrices[96] = {"arccw_bo1_spas12", "16000", "14"}
-	weaponPrices[97] = {"arccw_cde_ak5", "14940", "13"}
-	weaponPrices[98] = {"arccw_waw_mosin", "15000", "13"}
-	weaponPrices[99] = {"arccw_waw_garand", "15500", "14"}
-	weaponPrices[100] = {"arccw_waw_357", "6995", "5"}
-	weaponPrices[101] = {"arccw_waw_ptrs41", "45999", "30"}
-	weaponPrices[102] = {"arccw_waw_tt33", "4500", "4"}
-	weaponPrices[103] = {"arccw_bo1_sten", "11000", "9"}
-	weaponPrices[104] = {"arccw_waw_fg42", "40999", "27"}
-	weaponPrices[105] = {"arccw_bo1_m60", "32999", "24"}
-	weaponPrices[106] = {"arccw_waw_trenchgun", "14995", "13"}
-	weaponPrices[107] = {"arccw_bo1_stoner", "15400", "14"}
-	weaponPrices[108] = {"arccw_bo2_fiveseven", "4750", "4"}
-	weaponPrices[109] = {"arccw_cde_m93r", "5000", "4"}
-	weaponPrices[110] = {"arccw_waw_mg42", "52500", "32"}
-	weaponPrices[111] = {"arccw_bo1_kiparis", "9550", "8"}
-	weaponPrices[112] = {"arccw_bo1_skorpion", "9250", "7"}
-	weaponPrices[113] = {"arccw_bo2_vector", "24000", "17"}
-	weaponPrices[114] = {"arccw_bo1_dragunov", "25000", "17"}
+	weaponPrices[68] = {"arccw_eft_usp", "5555", "3"}
+	weaponPrices[69] = {"arccw_eft_mp153", "15005", "10"}
+	weaponPrices[70] = {"arccw_eft_mp155", "14005", "10"}
+	weaponPrices[71] = {"arccw_eft_scarh", "17090", "13"}
+	weaponPrices[72] = {"arccw_eft_scarl", "15995", "12"}
+	weaponPrices[73] = {"arccw_fml_mw_fo12", "20999", "15"}
+	weaponPrices[74] = {"arccw_oden", "18505", "14"}
+	weaponPrices[75] = {"arccw_ur_mp5", "10005", "5"}
+	weaponPrices[76] = {"arccw_ur_aw", "13095", "9"}
+	weaponPrices[77] = {"arccw_sov_tkb011", "16000", "12"}
+	weaponPrices[78] = {"midnights_gso_type89", "18005", "14"}
+	weaponPrices[79] = {"arccwsviinfinite", "5555", "3"}
+	weaponPrices[80] = {"arccw_waw_thompson", "11565", "7"}
+	weaponPrices[81] = {"arccw_waw_mp40", "9895", "6"}
+	weaponPrices[82] = {"arccw_waw_type100", "12995", "8"}
+	weaponPrices[83] = {"arccw_bo1_mpl", "9205", "6"}
+	weaponPrices[84] = {"arccw_bo1_pm63", "8995", "5"}
+	weaponPrices[85] = {"arccw_bo1_g11", "15900", "11"}
+	weaponPrices[86] = {"arccw_bo1_law", "33333", "20"}
+	weaponPrices[87] = {"arccw_mifl_fas2_g20", "4700", "2"}
+	weaponPrices[88] = {"arccw_mifl_fas2_p226", "4700", "2"}
+	weaponPrices[89] = {"arccw_waw_nambu", "4250", "1"}
+	weaponPrices[90] = {"arccw_bo1_aug", "14250", "10"}
+	weaponPrices[91] = {"arccw_bo1_xl60", "13905", "10"}
+	weaponPrices[92] = {"arccw_bo1_famas", "14505", "10"}
+	weaponPrices[93] = {"arccw_bo1_fal", "17050", "12"}
+	weaponPrices[94] = {"arccw_bo1_hk21", "26000", "16"}
+	weaponPrices[95] = {"arccw_bo1_galil", "14005", "11"}
+	weaponPrices[96] = {"arccw_bo1_spas12", "16000", "13"}
+	weaponPrices[97] = {"arccw_cde_ak5", "14940", "12"}
+	weaponPrices[98] = {"arccw_waw_mosin", "15000", "10"}
+	weaponPrices[99] = {"arccw_waw_garand", "15500", "11"}
+	weaponPrices[100] = {"arccw_waw_357", "6995", "3"}
+	weaponPrices[101] = {"arccw_waw_ptrs41", "45999", "24"}
+	weaponPrices[102] = {"arccw_waw_tt33", "4500", "1"}
+	weaponPrices[103] = {"arccw_bo1_sten", "11000", "8"}
+	weaponPrices[104] = {"arccw_waw_fg42", "40999", "22"}
+	weaponPrices[105] = {"arccw_bo1_m60", "32999", "20"}
+	weaponPrices[106] = {"arccw_waw_trenchgun", "14995", "11"}
+	weaponPrices[107] = {"arccw_bo1_stoner", "15400", "12"}
+	weaponPrices[108] = {"arccw_bo2_fiveseven", "4750", "2"}
+	weaponPrices[109] = {"arccw_cde_m93r", "5000", "3"}
+	weaponPrices[110] = {"arccw_waw_mg42", "52500", "26"}
+	weaponPrices[111] = {"arccw_bo1_kiparis", "9550", "4"}
+	weaponPrices[112] = {"arccw_bo1_skorpion", "9250", "4"}
+	weaponPrices[113] = {"arccw_bo2_vector", "24000", "18"}
+	weaponPrices[114] = {"arccw_bo1_dragunov", "25000", "18"}
 	weaponPrices[115] = {"arccw_bo1_rpk", "19500", "15"}
-	weaponPrices[116] = {"arccw_bo2_lsat", "15005", "14"}
+	weaponPrices[116] = {"arccw_bo2_lsat", "15005", "13"}
 	weaponPrices[117] = {"arccw_bo2_smr", "26500", "18"}
-	weaponPrices[118] = {"arccw_mw2e_f2000", "17900", "16"}
+	weaponPrices[118] = {"arccw_mw2e_f2000", "17900", "14"}
 	weaponPrices[119] = {"arccw_mw3e_rsass", "22255", "17"}
-	weaponPrices[120] = {"arccw_mw3e_p90", "14900", "13"}
+	weaponPrices[120] = {"arccw_mw3e_p90", "14900", "11"}
 	weaponPrices[121] = {"arccw_mw3e_mk14", "19995", "15"}
 	weaponPrices[122] = {"arccw_mw3e_l86", "16555", "14"}
-	weaponPrices[123] = {"arccw_mw3e_mk46", "24000", "17"}
-	weaponPrices[124] = {"arccw_mw3e_qbz97", "15000", "13"}
-	weaponPrices[125] = {"arccw_mw_p320", "4000", "3"}
-	weaponPrices[126] = {"arccw_mw3e_mp9", "11550", "10"}
-	weaponPrices[127] = {"arccw_mw2e_pp2000", "9995", "9"}
-	weaponPrices[128] = {"arccw_mw3e_pp90m1", "10900", "10"}
-	weaponPrices[129] = {"arccw_mw3e_acr", "17000", "15"}
-	weaponPrices[130] = {"arccw_bo1_crossbow", "20000", "15"}
-	weaponPrices[131] = {"arccw_cod4e_r700", "14995", "14"}
+	weaponPrices[123] = {"arccw_mw3e_mk46", "24000", "18"}
+	weaponPrices[124] = {"arccw_mw3e_qbz97", "15000", "11"}
+	weaponPrices[125] = {"arccw_mw_p320", "4000", "1"}
+	weaponPrices[126] = {"arccw_mw3e_mp9", "11550", "6"}
+	weaponPrices[127] = {"arccw_mw2e_pp2000", "9995", "5"}
+	weaponPrices[128] = {"arccw_mw3e_pp90m1", "10900", "6"}
+	weaponPrices[129] = {"arccw_mw3e_acr", "17000", "13"}
+	weaponPrices[130] = {"arccw_bo1_crossbow", "20000", "12"}
+	weaponPrices[131] = {"arccw_cod4e_r700", "14995", "13"}
 	weaponPrices[132] = {"arccw_bo1_ak47", "14500", "12"}
 
 	for k, v in pairs(weaponPrices) do
@@ -277,105 +277,6 @@ function buyGun(ply, cmd, args)
 end
 concommand.Add("buy_gun", buyGun)
 
-function ResetIndividualProgress(ply, cmd, args)
-
-	ply:SetNWInt("playerLvl", 1)
-
-	ply:SetNWInt("playerExp", 0)
-
-	ply:SetNWInt("playerMoney", 10000)
-
-end
-concommand.Add("efgm_reset_progress", ResetIndividualProgress)
-
-function ResetIndividualStats(ply, cmd, args)
-
-	ply:SetNWInt("playerLvl", 1)
-
-	ply:SetNWInt("playerExp", 0)
-
-	ply:SetNWInt("playerMoney", 10000)
-
-	ply:SetNWInt("playerKills", 0)
-
-	ply:SetNWInt("playerDeaths", 0)
-
-	ply:SetNWInt("playerKDR", 1)
-
-	ply:SetNWInt("playerTotalEarned", 0)
-
-	ply:SetNWInt("playerTotalEarnedKill", 0)
-
-	ply:SetNWInt("playerTotalEarnedSell", 0)
-
-	ply:SetNWInt("playerTotalXpEarned", 0)
-
-	ply:SetNWInt("playerTotalXpEarnedKill", 0)
-
-	ply:SetNWInt("playerTotalXpEarnedExplore", 0)
-
-	ply:SetNWInt("playerTotalMoneySpent", 0)
-
-	ply:SetNWInt("playerTotalMoneySpentWep", 0)
-
-	ply:SetNWInt("playerTotalMoneySpentItem", 0)
-
-	ply:SetNWInt("playerDeathsSuicide", 0)
-
-	ply:SetNWInt("playerDamageGiven", 0)
-
-	ply:SetNWInt("playerDamageRecieved", 0)
-
-	ply:SetNWInt("playerDamageHealed", 0)
-
-	ply:SetNWInt("playerItemsPickedUp", 0)
-
-	ply:SetNWInt("playerDistance", 0)
-
-end
-concommand.Add("efgm_reset_stats", ResetIndividualStats)
-
-function ResetIndividualAll(ply, cmd, args)
-
-	ply:SetNWInt("playerKills", 0)
-
-	ply:SetNWInt("playerDeaths", 0)
-
-	ply:SetNWInt("playerKDR", 1)
-
-	ply:SetNWInt("playerTotalEarned", 0)
-
-	ply:SetNWInt("playerTotalEarnedKill", 0)
-
-	ply:SetNWInt("playerTotalEarnedSell", 0)
-
-	ply:SetNWInt("playerTotalXpEarned", 0)
-
-	ply:SetNWInt("playerTotalXpEarnedKill", 0)
-
-	ply:SetNWInt("playerTotalXpEarnedExplore", 0)
-
-	ply:SetNWInt("playerTotalMoneySpent", 0)
-
-	ply:SetNWInt("playerTotalMoneySpentWep", 0)
-
-	ply:SetNWInt("playerTotalMoneySpentItem", 0)
-
-	ply:SetNWInt("playerDeathsSuicide", 0)
-
-	ply:SetNWInt("playerDamageGiven", 0)
-
-	ply:SetNWInt("playerDamageRecieved", 0)
-
-	ply:SetNWInt("playerDamageHealed", 0)
-
-	ply:SetNWInt("playerItemsPickedUp", 0)
-
-	ply:SetNWInt("playerDistance", 0)
-
-end
-concommand.Add("efgm_reset_everything", ResetIndividualAll)
-
 function CheckExtracts(ply, cmd, args)
 
 	local extractNames = "\nYour available extract locations are:"
@@ -399,7 +300,7 @@ end
 concommand.Add("efgm_extract_list", CheckExtracts)
 
 function PlayerPrestige(ply, cmd, args)
-	if (ply:GetNWInt("playerLvl") >= 32) then
+	if (ply:GetNWInt("playerLvl") >= 26) then
 
 		local prestigeGained = 1
 		local roubleMulti = 0.25

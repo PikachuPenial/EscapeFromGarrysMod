@@ -106,8 +106,8 @@ function GM:PlayerInitialSpawn(ply)
 	end
 
 	--Overleveled check (support for prestige during mid-wipes)
-	if (ply:GetNWInt("playerLvl") >= 32) then
-		ply:SetNWInt("playerLvl", 32)
+	if (ply:GetNWInt("playerLvl") >= 26) then
+		ply:SetNWInt("playerLvl", 26)
 		ply:SetNWInt("playerExp", 0)
 	end
 
@@ -492,7 +492,7 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 		attacker:SetNWInt("playerMoney", attacker:GetNWInt("playerMoney") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))
 		attacker:SetNWInt("raidMoney", attacker:GetNWInt("raidMoney") + moneyGained * attacker:GetNWInt("playerRoubleMulti"))
 
-		if (attacker:GetNWInt("playerLvl") < 32) then
+		if (attacker:GetNWInt("playerLvl") < 26) then
 			attacker:SetNWInt("playerExp", math.Round(attacker:GetNWInt("playerExp") + (expGained * attacker:GetNWInt("expMulti"))), 1)
 			attacker:SetNWInt("raidXP", math.Round(attacker:GetNWInt("raidXP") + (expGained * attacker:GetNWInt("expMulti"))), 1)
 		end
@@ -570,7 +570,7 @@ hook.Add("HUDWeaponPickedUp", "WeaponPickedUp", function(weapon)
 end)
 
 function checkForLevel(ply)
-	if (ply:GetNWInt("playerLvl") < 32) then
+	if (ply:GetNWInt("playerLvl") < 26) then
 		local expToLevel = (ply:GetNWInt("playerLvl") * 140) * 5.15
 		local curExp = ply:GetNWInt("playerExp")
 		local curLvl = ply:GetNWInt("playerLvl")

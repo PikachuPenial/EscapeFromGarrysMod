@@ -569,11 +569,11 @@ hook.Add("HUDWeaponPickedUp", "WeaponPickedUp", function(weapon)
 	ply:SetNWInt("raidItemsPicked", ply:GetNWInt("raidItemsPicked") + 1)
 end)
 
-hook.Add("KeyPress", "disableWepSprintStrafe", function(ply, key)
+hook.Add("KeyPress", "disableSprint", function(ply, key)
 	local runSpeed = ply:GetNWInt("enduranceEffect") / 1.38
 
 	if ply:KeyDown(IN_SPEED) then
-		if ( ply:KeyDown(IN_MOVELEFT) or ply:KeyDown(IN_MOVERIGHT) or ply:KeyDown(IN_BACK)) and !ply:KeyDown(IN_FORWARD) then
+		if ply:KeyDown(IN_BACK) then
 			ply:SetRunSpeed(ply:GetWalkSpeed())
 		else
 			ply:SetRunSpeed(207 + runSpeed)

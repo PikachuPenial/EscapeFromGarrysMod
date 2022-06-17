@@ -28,7 +28,7 @@ function ENT:SpawnItem()
 
 	if spawnChance <= self.SpawnChance then
 
-		local grenadeTierWeapons = {"arccw_go_nade_incendiary", "arccw_go_nade_frag", "arccw_go_nade_flash", "arccw_go_nade_smoke", "arccw_go_nade_molotov", "arccw_go_nade_knife"}
+		local grenadeTierWeapons = {"arccw_go_nade_incendiary", "arccw_go_nade_frag", "arccw_go_nade_flash", "arccw_go_nade_smoke", "arccw_go_nade_molotov"}
 
 		local nades
 

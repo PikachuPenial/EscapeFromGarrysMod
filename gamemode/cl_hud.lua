@@ -57,7 +57,7 @@ function HUD()
 				if v:GetNWBool("inRaid") == true then
 					playerColor = Color(50, 255, 50, 255)
 				end
-	
+
 				if v:GetNWBool("inRaid") == false then
 					playerColor = Color(255, 255, 255)
 				end

@@ -116,7 +116,7 @@ concommand.Add("open_tutorial_menu", tutorialMenu)
 
 function addAdButtons(helpMenu)
 
-    local serverButton = vgui.Create("DButton")
+	local serverButton = vgui.Create("DButton")
 	serverButton:SetParent(helpMenu)
 	serverButton:SetText("")
 	serverButton:SetSize(200, 50)
@@ -133,9 +133,9 @@ function addAdButtons(helpMenu)
 
 		--Draw/write text
 		draw.DrawText("Discord", "Trebuchet24", serverButton:GetWide() / 2, 10, Color(255, 0, 255), 1)
-    end
+	end
 
-    serverButton.DoClick = function(serverButton)
+	serverButton.DoClick = function(serverButton)
 		gui.OpenURL("https://discord.gg/GRfvt27uGF")
 	end
 
@@ -156,9 +156,9 @@ function addAdButtons(helpMenu)
 
 		--Draw/write text
 		draw.DrawText("Extracts", "Trebuchet24", extractButton:GetWide() / 2, 10, Color(0, 255, 0), 1)
-    end
+	end
 
-    extractButton.DoClick = function(extractButton)
+	extractButton.DoClick = function(extractButton)
 		gui.OpenURL("https://steamcommunity.com/sharedfiles/filedetails/?id=2799844989")
 	end
 end

@@ -75,7 +75,7 @@ function addMapButtons(MapMenu)
             surface.PlaySound( "common/wpn_select.wav" )
             inMapVoteMenu = false
         end
-	end
+    end
 
     local concreteButton = vgui.Create("DImageButton")
     concreteButton:SetParent(MapMenu)

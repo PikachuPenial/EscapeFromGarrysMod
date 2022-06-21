@@ -564,10 +564,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		local dailyPanel = Menu:Add("DailyPanel")
 
-
-		local blackColor = 		Color(10, 10, 10, 255)
 		local whiteColor = 		Color(250, 250, 250, 255)
-		local offWhiteColor = 	Color(200, 200, 200, 255)
 
 		local primaryColor =	Color(30, 30, 30, 255)
 		local secondaryColor =	Color(100, 100, 100, 255)
@@ -590,7 +587,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		-- new method so scrolling works
 
 		dailyPanel.Paint = function(self, w, h)
-			draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+			draw.RoundedBox(0, 0, 0, w, h, primaryColor)
 		end
 
 		local scrollPanel = vgui.Create("DScrollPanel", dailyPanel)
@@ -603,7 +600,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		dailyTaskPanel:SetSize(0, 50)
 
 		dailyTaskPanel.Paint = function(self, w, h)
-			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
 			draw.SimpleText("Dailies : Reset at the beginning of each map.", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
@@ -617,7 +614,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		dailyKillPanel.Paint = function(self, w, h)
 
-			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
 			--Elimination
 
@@ -646,7 +643,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		dailyExtractPanel.Paint = function(self, w, h)
 
-			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
 			--Successful Operations
 
@@ -674,7 +671,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		weeklyTaskPanel:SetSize(0, 50)
 
 		weeklyTaskPanel.Paint = function(self, w, h)
-			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
 			draw.SimpleText("Specials : Reset at the beginning of each wipe.", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
@@ -688,7 +685,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		weeklyKillPanel.Paint = function(self, w, h)
 
-			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
 			--Rangefinder
 
@@ -717,7 +714,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		weeklyExtractPanel.Paint = function(self, w, h)
 
-			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
 			--Wanted
 
@@ -746,7 +743,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		addictPanel.Paint = function(self, w, h)
 
-			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
 			--Nuclear
 
@@ -775,7 +772,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		nuclearPanel.Paint = function(self, w, h)
 
-			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
 			--Nuclear
 
@@ -860,34 +857,34 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			for k, v in pairs(taskInfo) do
 
 				local taskCollapsible = vgui.Create("DCollapsibleCategory", taskPanel)
-				taskCollapsible:Dock( TOP )
-				taskCollapsible:SetSize( taskPanel:GetWide(), 450 )
+				taskCollapsible:Dock(TOP)
+				taskCollapsible:SetSize(taskPanel:GetWide(), 450)
 				taskCollapsible:SetLabel(v[1])
-				taskCollapsible:SetExpanded( true )	-- Start collapsed
+				taskCollapsible:SetExpanded(true)	-- Start collapsed
 
 				local taskInfoPanel = vgui.Create("DPanel", taskPanel)
 
-				taskCollapsible:SetContents( taskInfoPanel )
+				taskCollapsible:SetContents(taskInfoPanel)
 
-				taskInfoPanel:Dock( FILL )
-				taskInfoPanel:SetSize( taskPanel:GetWide(), 450 )
+				taskInfoPanel:Dock(FILL)
+				taskInfoPanel:SetSize(taskPanel:GetWide(), 450)
 
 				taskInfoPanel.Paint = function()
 
 					surface.SetDrawColor(80,80,80,255)
 					surface.DrawRect(0, 0, taskInfoPanel:GetWide(), taskInfoPanel:GetTall())
 
-					draw.SimpleText( v[1], "DermaLarge", taskInfoPanel:GetWide() / 2, 30, textColor, 1 )
+					draw.SimpleText(v[1], "DermaLarge", taskInfoPanel:GetWide() / 2, 30, textColor, 1)
 
-					draw.SimpleText( v[2], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 70, textColor, 1 )
+					draw.SimpleText(v[2], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 70, textColor, 1)
 
-					draw.SimpleText( "Client:", "DermaLarge", taskInfoPanel:GetWide() / 2, 100, textColor, 1 )
+					draw.SimpleText("Client:", "DermaLarge", taskInfoPanel:GetWide() / 2, 100, textColor, 1)
 
-					draw.SimpleText( v[4], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 130, textColor, 1 )
+					draw.SimpleText(v[4], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 130, textColor, 1)
 
-					draw.SimpleText( "Mission Rewards:", "DermaLarge", taskInfoPanel:GetWide() / 2, 160, textColor, 1 )
+					draw.SimpleText("Mission Rewards:", "DermaLarge", taskInfoPanel:GetWide() / 2, 160, textColor, 1)
 
-					draw.SimpleText( v[5], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 190, textColor, 1 )
+					draw.SimpleText(v[5], "DermaDefaultBold", taskInfoPanel:GetWide() / 2, 190, textColor, 1)
 
 				end
 
@@ -916,7 +913,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 						surface.DrawRect(0, 0, objectivePanel:GetWide(), objectivePanel:GetTall())
 
-						draw.SimpleText( taskObjectivesExploded[l], "DermaDefaultBold", objectivePanel:GetWide() / 2, objectivePanel:GetTall() / 2, textColor, 1 )
+						draw.SimpleText(taskObjectivesExploded[l], "DermaDefaultBold", objectivePanel:GetWide() / 2, objectivePanel:GetTall() / 2, textColor, 1)
 
 					end
 
@@ -931,7 +928,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 					print("Task completed = " .. v[8])
 
 					local taskCompleteButton = vgui.Create("DButton", taskInfoPanel)
-					taskCompleteButton:SetText( "Complete Task" )
+					taskCompleteButton:SetText("Complete Task")
 					taskCompleteButton:SetPos( taskInfoPanel:GetWide() / 2 - 125, completeButtonPosition)
 					taskCompleteButton:SetSize( 250, 50 )
 
@@ -980,7 +977,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			local shopPanel = Menu:Add("ShopPanel")
 
 			local scroller = vgui.Create("DScrollPanel", shopPanel)
-			scroller:Dock( FILL )
+			scroller:Dock(FILL)
 
 			local entityCategory
 
@@ -992,13 +989,13 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				entityCategory = vgui.Create("DCollapsibleCategory", scroller)
 				-- entityCategory:SetPos(0, 0)
 				-- entityCategory:SetSize(shopPanel:GetWide(), 100)
-				entityCategory:Dock( TOP )
+				entityCategory:Dock(TOP)
 				entityCategory:SetLabel("Ammo/Armor/Crates")
 
 				entityList = vgui.Create("DIconLayout", entityCategory)
 				-- entityList:SetPos(0, 20)
 				-- entityList:SetSize(entityCategory:GetWide(), entityCategory:GetTall())
-				entityList:Dock( TOP )
+				entityList:Dock(TOP)
 				entityList:SetSpaceY(5)
 				entityList:SetSpaceX(5)
 			end
@@ -1006,13 +1003,13 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			local weaponCategory = vgui.Create("DCollapsibleCategory", scroller)
 			-- weaponCategory:SetPos(0, 230)
 			-- weaponCategory:SetSize(shopPanel:GetWide(), 200)
-			weaponCategory:Dock( TOP )
+			weaponCategory:Dock(TOP)
 			weaponCategory:SetLabel("Firearms/Weapons")
 
 			local weaponList = vgui.Create("DIconLayout", weaponCategory)
 			-- weaponList:SetPos(0, 20)
 			-- weaponList:SetSize(weaponCategory:GetWide(), weaponCategory:GetTall())
-			weaponList:Dock( TOP )
+			weaponList:Dock(TOP)
 			weaponList:SetSpaceY(5)
 			weaponList:SetSpaceX(5)
 
@@ -1034,7 +1031,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 					local icon = vgui.Create("SpawnIcon", weaponList)
 					icon:SetModel(v[1])
-					icon:SetToolTip(v[3] .. "\nCategory: " .. v[7] .. "\nRarity: " .. v[6] .. "\nSell Price: " .. math.Round(v[4] * sellPriceMultiplier, 0))
+					icon:SetTooltip(v[3] .. "\nCategory: " .. v[7] .. "\nRarity: " .. v[6] .. "\nSell Price: " .. math.Round(v[4] * sellPriceMultiplier, 0))
 
 					-- this lets players visually distinguish items they can sell
 
@@ -1093,7 +1090,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 					local icon = vgui.Create("SpawnIcon", entityList)
 
 					icon:SetModel(v[1])
-					icon:SetToolTip(v[3] .. "\nCategory: " .. v[7] .. "\nRarity: " .. v[6] .. "\nCost: " .. math.Round(v[4] *  LocalPlayer():GetNWInt("charismaEffect"), 0) .. "\nLevel Req: " .. v[5])
+					icon:SetTooltip(v[3] .. "\nCategory: " .. v[7] .. "\nRarity: " .. v[6] .. "\nCost: " .. math.Round(v[4] *  LocalPlayer():GetNWInt("charismaEffect"), 0) .. "\nLevel Req: " .. v[5])
 					entityList:Add(icon)
 
 					icon.DoClick = function(icon)
@@ -1107,7 +1104,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 					local icon = vgui.Create("SpawnIcon", weaponList)
 					icon:SetModel(v[1])
-					icon:SetToolTip(v[3] .. "\nCategory: " .. v[7] .. "\nRarity: " .. v[6] .. "\nCost: " .. math.Round(v[4] *  LocalPlayer():GetNWInt("charismaEffect"), 0) .. "\nLevel Req: " .. v[5])
+					icon:SetTooltip(v[3] .. "\nCategory: " .. v[7] .. "\nRarity: " .. v[6] .. "\nCost: " .. math.Round(v[4] *  LocalPlayer():GetNWInt("charismaEffect"), 0) .. "\nLevel Req: " .. v[5])
 					weaponList:Add(icon)
 
 					icon.DoClick = function(icon)
@@ -1142,12 +1139,12 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		stashMenuButton.DoClick = function(stashMenuButton)
 			local stashMenuPanel = Menu:Add("StashMenuPanel")
-	
+
 			stashMenuPanel.Paint = function()
 				surface.SetDrawColor(50, 50, 50, 255)
 				surface.DrawRect(0, 0, stashMenuPanel:GetWide(), stashMenuPanel:GetTall())
 				surface.SetTextColor(255, 255, 255, 255)
-	
+
 				surface.SetFont("DermaLarge")
 				surface.SetTextPos(245, 150)
 				surface.DrawText("Upgrade Stash")
@@ -1451,37 +1448,37 @@ function MenuInit()
 				inStashMenu = false
 
 				gui.EnableScreenClicker(false)
-				surface.PlaySound( "common/wpn_denyselect.wav" )
+				surface.PlaySound("common/wpn_denyselect.wav")
 			else
 				inStashMenu = false
 
-				surface.PlaySound( "common/wpn_denyselect.wav" )
+				surface.PlaySound("common/wpn_denyselect.wav")
 			end
 		end
 
 		inventoryTable = stashClient:GetWeapons()
 
 		local playerInventoryPanel = vgui.Create("DPanel", StashMenu)
-		playerInventoryPanel:Dock( LEFT )
+		playerInventoryPanel:Dock(LEFT)
 		playerInventoryPanel:SetSize(96, 0)
 
 		local playerInventoryPanelScroller = vgui.Create("DScrollPanel", playerInventoryPanel)
-		playerInventoryPanelScroller:Dock( FILL )
+		playerInventoryPanelScroller:Dock(FILL)
 
 		function playerInventoryPanel:Paint(w, h)
 
-			draw.RoundedBox(0, 0, 0, w, h, Color( 120, 120, 120, 255 ))
+			draw.RoundedBox(0, 0, 0, w, h, Color(120, 120, 120, 255))
 
 		end
 
 		local optionsPanel = vgui.Create("DPanel", StashMenu)
 
-		optionsPanel:Dock( RIGHT )
+		optionsPanel:Dock(RIGHT)
 		optionsPanel:SetSize(150, 50)
 
 		function optionsPanel:Paint(w, h)
 
-			draw.RoundedBox(0, 0, 0, w, 150, Color( 120, 120, 120, 255 ))
+			draw.RoundedBox(0, 0, 0, w, 150, Color(120, 120, 120, 255))
 
 
 			local Avatar = vgui.Create("AvatarImage", optionsPanel)
@@ -1507,28 +1504,28 @@ function MenuInit()
 			draw.DrawText("Stash Level " .. client:GetNWInt("playerStashLevel"), "Trebuchet24", 0, 610, Color(255, 255, 255, 255))
 			draw.DrawText(" Upgrade your \n stash in the F4 \n menu!", "Trebuchet24", -5, 650, Color(255, 255, 255, 255))
 
-			draw.RoundedBox(0, 0, 750, w, 350, Color( 120, 120, 120, 255 ))
-			draw.RoundedBox(0, 145, 150, 5, 650, Color( 120, 120, 120, 255 ))
+			draw.RoundedBox(0, 0, 750, w, 350, Color(120, 120, 120, 255))
+			draw.RoundedBox(0, 145, 150, 5, 650, Color(120, 120, 120, 255))
 
 		end
 
 		local separatePanel = vgui.Create("DPanel", StashMenu)
-		separatePanel:Dock( LEFT )
+		separatePanel:Dock(LEFT)
 		separatePanel:SetSize(30, 0)
 
 		function separatePanel:Paint(w, h)
 
-			draw.RoundedBox(0, 0, 0, w, h, Color( 30, 30, 30, 255 ))
+			draw.RoundedBox(0, 0, 0, w, h, Color(30, 30, 30, 255))
 
 		end
 
 		local separateTwoPanel = vgui.Create("DPanel", StashMenu)
-		separateTwoPanel:Dock( RIGHT )
+		separateTwoPanel:Dock(RIGHT)
 		separateTwoPanel:SetSize(30, 0)
 
 		function separateTwoPanel:Paint(w, h)
 
-			draw.RoundedBox(0, 0, 0, w, h, Color( 30, 30, 30, 255 ))
+			draw.RoundedBox(0, 0, 0, w, h, Color(30, 30, 30, 255))
 
 		end
 
@@ -1536,26 +1533,26 @@ function MenuInit()
 		stashScroller:Dock(FILL)
 
 		local stashPanel = vgui.Create("DPanel", StashMenu)
-		stashPanel:Dock( FILL )
+		stashPanel:Dock(FILL)
 
 		function stashPanel:Paint(w, h)
 
-			draw.RoundedBox(0, 0, 0, w, h, Color( 120, 120, 120, 255 ))
+			draw.RoundedBox(0, 0, 0, w, h, Color(120, 120, 120, 255))
 
 		end
 
 		local stashIconLayout = vgui.Create("DIconLayout", stashPanel)
-		stashIconLayout:Dock( FILL )
+		stashIconLayout:Dock(FILL)
 		stashIconLayout:SetSpaceY(5)
 		stashIconLayout:SetSpaceX(5)
 
 		local inventoryIconLayout = vgui.Create("DIconLayout", playerInventoryPanelScroller)
-		inventoryIconLayout:Dock( FILL )
+		inventoryIconLayout:Dock(FILL)
 		inventoryIconLayout:SetSpaceY(5)
 		inventoryIconLayout:SetSpaceX(5)
 
 		local ammoIconLayout = vgui.Create("DIconLayout", ammoInventoryPanel)
-		ammoIconLayout:Dock( FILL )
+		ammoIconLayout:Dock(FILL)
 		ammoIconLayout:SetSpaceY(5)
 		ammoIconLayout:SetSpaceX(5)
 
@@ -1570,9 +1567,9 @@ function MenuInit()
 			for k, v in pairs(stashClient:GetWeapons()) do
 				-- Creates buttons for the weapons
 
-				if weapons.Get( v:GetClass() ) == nil then return end
+				if weapons.Get(v:GetClass()) == nil then return end
 
-				local weaponInfo = weapons.Get( v:GetClass() )
+				local weaponInfo = weapons.Get(v:GetClass())
 
 				-- PrintTable(stashClient:GetWeapons())
 
@@ -1582,13 +1579,13 @@ function MenuInit()
 
 				local icon = vgui.Create("SpawnIcon", stashIconLayout)
 				icon:SetModel(weaponInfo["WorldModel"])
-				icon:SetToolTip(wepName)
+				icon:SetTooltip(wepName)
 				icon:SetSize(96, 96)
 
 				function icon:Paint(w, h)
 
-					draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
-					draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
+					draw.RoundedBox(0, 0, 0, w, h, Color(80, 80, 80, 255))
+					draw.RoundedBox(0, 0, 75, w, h - 75, Color(40, 40, 40, 255))
 					draw.SimpleText(wepName, "DermaDefault", w / 2, 80, Color(255, 255, 255, 255), 1)
 
 					local currentItemPrice = nil
@@ -1650,7 +1647,7 @@ function MenuInit()
 					net.WriteString(v:GetClass())
 					net.SendToServer()
 
-					surface.PlaySound( "UI/buttonclick.wav" )
+					surface.PlaySound("UI/buttonclick.wav")
 
 					-- icon:Remove()
 
@@ -1693,7 +1690,7 @@ function MenuInit()
 
 			-- end
 
-			net.Start( "RequestStash" )
+			net.Start("RequestStash")
 			net.SendToServer()
 
 			function ShowStashTable()
@@ -1703,7 +1700,7 @@ function MenuInit()
 					if v["ItemOwner"] != LocalPlayer():SteamID64() then	print(LocalPlayer():SteamID64() .. " does not equal " .. v["ItemOwner"])	return end
 					if v["ItemType"] != "wep" then						print("ammo bad")															return end
 
-					local weaponInfo = weapons.Get( v["ItemName"] )
+					local weaponInfo = weapons.Get(v["ItemName"])
 
 					local wepName
 
@@ -1711,14 +1708,14 @@ function MenuInit()
 
 					local icon = vgui.Create("SpawnIcon", stashIconLayout)
 					icon:SetModel(weaponInfo["WorldModel"])
-					icon:SetToolTip(wepName)
+					icon:SetTooltip(wepName)
 					icon:SetSize(96, 96)
 
 					function icon:Paint(w, h)
 
 						-- Weapon Name
-						draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
-						draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
+						draw.RoundedBox( 0, 0, 0, w, h, Color(80, 80, 80, 255))
+						draw.RoundedBox( 0, 0, 75, w, h - 75, Color(40, 40, 40, 255))
 						draw.SimpleText(wepName, "DermaDefault", w / 2, 80, Color(255, 255, 255, 255), 1)
 
 						local currentItemPrice = nil
@@ -1784,7 +1781,7 @@ function MenuInit()
 
 						else
 
-							surface.PlaySound( "common/wpn_denyselect.wav" )
+							surface.PlaySound("common/wpn_denyselect.wav")
 
 						end
 
@@ -2022,21 +2019,21 @@ function CustomTeamMenu()
 
 			end
 
-			local teamNameEntry = vgui.Create( "DTextEntry", createTeamPanel )
+			local teamNameEntry = vgui.Create("DTextEntry", createTeamPanel)
 			teamNameEntry:Dock(TOP)
-			teamNameEntry:DockMargin( margin, margin, margin, margin )
+			teamNameEntry:DockMargin(margin, margin, margin, margin)
 			teamNameEntry:SetSize(0, 50)
-			teamNameEntry:SetPlaceholderText(client:GetName() .. "'s Team")
+			teamNameEntry:SetPlaceholderText("Team name")
 
-			local teamPasswordEntry = vgui.Create( "DTextEntry", createTeamPanel )
+			local teamPasswordEntry = vgui.Create("DTextEntry", createTeamPanel)
 			teamPasswordEntry:Dock(TOP)
-			teamPasswordEntry:DockMargin( margin, margin, margin, margin )
+			teamPasswordEntry:DockMargin(margin, margin, margin, margin)
 			teamPasswordEntry:SetSize(0, 50)
-			teamPasswordEntry:SetPlaceholderText(client:GetName() .. "'s Password (Leave blank to make team public!)")
+			teamPasswordEntry:SetPlaceholderText("Team Password (Leave blank to make the team public!)")
 
-			local createTeamButton = vgui.Create( "DButton", createTeamPanel )
+			local createTeamButton = vgui.Create("DButton", createTeamPanel)
 			createTeamButton:Dock(TOP)
-			createTeamButton:DockMargin( margin, margin, margin, margin )
+			createTeamButton:DockMargin(margin, margin, margin, margin)
 			createTeamButton:SetSize(0, 50)
 			createTeamButton:SetText("Create Team")
 
@@ -2044,7 +2041,7 @@ function CustomTeamMenu()
 
 				local teamName = teamNameEntry:GetText()
 				local teamPassword = teamPasswordEntry:GetText()
-				if teamName == "" then teamName = client:GetName() .. "s_Team" end
+				if teamName == "" then teamName = client:GetName() .. "'s_Team" end
 
 				teamName = string.Replace(teamName, " ", "_")
 				teamPassword = string.Replace(teamPassword, " ", "_")
@@ -2061,11 +2058,9 @@ function CustomTeamMenu()
 				teamName = string.Replace(teamName, "]", "")
 				teamPassword = string.Replace(teamPassword, "]", "")
 
-				print("Name is " .. teamName .. ", password is " .. teamPassword .. ".")
-
 				client:ConCommand("party_create " .. teamName .. " " .. teamPassword .. "")
 
-				surface.PlaySound( "UI/buttonclick.wav" )
+				surface.PlaySound("UI/buttonclick.wav")
 
 			end
 
@@ -2073,18 +2068,18 @@ function CustomTeamMenu()
 
 			-- If the player is already in a team
 
-			local leaveTeamPanel = vgui.Create( "DPanel", teamInfoPanel )
+			local leaveTeamPanel = vgui.Create("DPanel", teamInfoPanel)
 			leaveTeamPanel:Dock(BOTTOM)
-			leaveTeamPanel:DockMargin( margin, margin, margin, margin )
+			leaveTeamPanel:DockMargin(margin, margin, margin, margin)
 			leaveTeamPanel:SetSize(0, 70)
 
 			leaveTeamPanel.Paint = function(self, w, h)
-				draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+				draw.RoundedBox(0, 0, 0, w, h, primaryColor)
 			end
 
-			local leaveTeamButton = vgui.Create( "DButton", leaveTeamPanel )
+			local leaveTeamButton = vgui.Create("DButton", leaveTeamPanel)
 			leaveTeamButton:Dock(BOTTOM)
-			leaveTeamButton:DockMargin( margin, margin, margin, margin )
+			leaveTeamButton:DockMargin(margin, margin, margin, margin)
 			leaveTeamButton:SetSize(0, 50)
 			leaveTeamButton:SetText("Leave Team")
 
@@ -2092,7 +2087,7 @@ function CustomTeamMenu()
 
 				client:ConCommand("party_leave")
 
-				surface.PlaySound( "UI/buttonclick.wav" )
+				surface.PlaySound("UI/buttonclick.wav")
 
 			end
 
@@ -2101,20 +2096,20 @@ function CustomTeamMenu()
 
 		-- SUB PANEL: Search Panel (Search for teams)
 
-		local searchPanel = vgui.Create( "DPanel", teamBrowserPanel )
-		searchPanel:Dock( TOP )
-		searchPanel:SetSize( 0, 90 )
-		searchPanel:DockMargin( margin, margin, margin, margin )
+		local searchPanel = vgui.Create("DPanel", teamBrowserPanel)
+		searchPanel:Dock(TOP)
+		searchPanel:SetSize(0, 90)
+		searchPanel:DockMargin(margin, margin, margin, margin)
 
 		searchPanel.Paint = function(self, w, h)
-			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 		end
 
-		local searchEntry = vgui.Create( "DTextEntry", searchPanel )
-		searchEntry:Dock( TOP )
-		searchEntry:SetSize( 0, 30 )
-		searchEntry:DockMargin( margin, margin, margin, margin )
-		searchEntry:SetPlaceholderText( "Search Teams (Placeholder, doesn't work yet)" )
+		local searchEntry = vgui.Create("DTextEntry", searchPanel)
+		searchEntry:Dock(TOP)
+		searchEntry:SetSize(0, 30)
+		searchEntry:DockMargin(margin, margin, margin, margin)
+		searchEntry:SetPlaceholderText("Search Teams (Placeholder, doesn't work yet)")
 
 		searchEntry.OnEnter = function()
 
@@ -2122,24 +2117,24 @@ function CustomTeamMenu()
 
 		end
 
-		local refreshButton = vgui.Create( "DButton", searchPanel )
-		refreshButton:Dock( FILL )
-		refreshButton:DockMargin( margin, margin, margin, margin )
-		refreshButton:SetText( "Refresh" )
+		local refreshButton = vgui.Create("DButton", searchPanel)
+		refreshButton:Dock(FILL)
+		refreshButton:DockMargin(margin, margin, margin, margin)
+		refreshButton:SetText("Refresh")
 
 		-- SUB PANEL: Team Display Panel (Shows the teams you can join)
 
-		local teamDisplayPanel = vgui.Create( "DPanel", teamBrowserPanel )
-		teamDisplayPanel:Dock( FILL )
-		teamDisplayPanel:SetSize( 0, 250 )
-		teamDisplayPanel:DockMargin( margin, margin, margin, margin )
+		local teamDisplayPanel = vgui.Create("DPanel", teamBrowserPanel)
+		teamDisplayPanel:Dock(FILL)
+		teamDisplayPanel:SetSize(0, 250)
+		teamDisplayPanel:DockMargin(margin, margin, margin, margin)
 
 		teamDisplayPanel.Paint = function(self, w, h)
-			draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 		end
 
-		local teamDisplayScroller = vgui.Create( "DScrollPanel", teamDisplayPanel )
-		teamDisplayScroller:Dock( FILL )
+		local teamDisplayScroller = vgui.Create("DScrollPanel", teamDisplayPanel)
+		teamDisplayScroller:Dock(FILL)
 
 		refreshButton.DoClick = function()
 
@@ -2153,15 +2148,14 @@ function CustomTeamMenu()
 
 			if FindAllTeams() != nil then
 
-				for k, v in pairs( FindAllTeams() ) do
-
-					local teamExamplePanel = vgui.Create( "DPanel", teamDisplayScroller )
-					teamExamplePanel:Dock( TOP )
+				for k, v in pairs(FindAllTeams()) do
+					local teamExamplePanel = vgui.Create("DPanel", teamDisplayScroller)
+					teamExamplePanel:Dock(TOP)
 					teamExamplePanel:DockMargin(5, 5, 5, 5)
-					teamExamplePanel:SetSize( 0, 70 )
+					teamExamplePanel:SetSize(0, 70)
 
 					teamExamplePanel.Paint = function(self, w, h)
-						draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+						draw.RoundedBox(0, 0, 0, w, h, primaryColor)
 						draw.SimpleText(string.Replace(tostring(v), "_", " "), "DermaLarge", 5, 5, whiteColor)
 
 						local members = FindAllInTeam(v)
@@ -2194,13 +2188,13 @@ function CustomTeamMenu()
 
 						-- If they are already in this team
 
-						local joinTeamPanel = vgui.Create( "DPanel", teamExamplePanel )
-						joinTeamPanel:Dock( BOTTOM )
-						joinTeamPanel:DockMargin( 5, 5, 5, 5 )
-						joinTeamPanel:SetSize( 0, 25 )
+						local joinTeamPanel = vgui.Create("DPanel", teamExamplePanel)
+						joinTeamPanel:Dock(BOTTOM)
+						joinTeamPanel:DockMargin(5, 5, 5, 5)
+						joinTeamPanel:SetSize(0, 25)
 
 						joinTeamPanel.Paint = function(self, w, h)
-							draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+							draw.RoundedBox(0, 0, 0, w, h, primaryColor)
 							draw.SimpleText("You are in this team", "DermaDefault", w / 2, h / 2, whiteColor, 1, 1)
 						end
 
@@ -2213,38 +2207,38 @@ function CustomTeamMenu()
 						print("Team leader = " .. teamLeader:GetName())
 
 						if teamLeader:GetNWString("teamPassword") == "" then
-							
+
 							-- If they don't have a password
 
-							local joinTeamButton = vgui.Create( "DButton", teamExamplePanel )
-							joinTeamButton:Dock( BOTTOM )
-							joinTeamButton:DockMargin( 5, 5, 5, 5 )
-							joinTeamButton:SetSize( 0, 25 )
+							local joinTeamButton = vgui.Create("DButton", teamExamplePanel)
+							joinTeamButton:Dock(BOTTOM)
+							joinTeamButton:DockMargin(5, 5, 5, 5)
+							joinTeamButton:SetSize(0, 25)
 							joinTeamButton:SetText("Join " .. v)
 
 							joinTeamButton.DoClick = function(self)
 
 								client:ConCommand("party_join " .. v)
 
-								surface.PlaySound( "UI/buttonclick.wav" )
+								surface.PlaySound("UI/buttonclick.wav")
 
 							end
 
 						elseif teamLeader:GetNWString("teamPassword") != "" then
-							
+
 							-- If they use a password
 
-							local joinTeamPassword = vgui.Create( "DTextEntry", teamExamplePanel )
-							joinTeamPassword:Dock( BOTTOM )
-							joinTeamPassword:DockMargin( 5, 5, 5, 5 )
-							joinTeamPassword:SetSize( 0, 25 )
+							local joinTeamPassword = vgui.Create("DTextEntry", teamExamplePanel)
+							joinTeamPassword:Dock(BOTTOM)
+							joinTeamPassword:DockMargin(5, 5, 5, 5)
+							joinTeamPassword:SetSize(0, 25)
 							joinTeamPassword:SetPlaceholderText("Password for " .. string.Replace(v, "_", " "))
 
 							joinTeamPassword.OnEnter = function(self)
 
 								client:ConCommand("party_join " .. v .. " " .. string.Replace(self:GetText(), " ", "_"))
 
-								surface.PlaySound( "UI/buttonclick.wav" )
+								surface.PlaySound("UI/buttonclick.wav")
 
 							end
 
@@ -2292,56 +2286,54 @@ function EnterRaidMenu()
 	local client = LocalPlayer()
 
 	local blackColor = 		Color(10, 10, 10, 255)
-	local whiteColor = 		Color(250, 250, 250, 255)
-	local offWhiteColor = 	Color(200, 200, 200, 255)
 
 	local primaryColor =	Color(30, 30, 30, 255)
 	local secondaryColor =	Color(100, 100, 100, 255)
 
-	local inRaidColor = 	Color(255, 50, 50, 255)		-- Red
-	local outRaidColor = 	Color(50, 255, 50, 255)		-- Green
-	local deadColor = 		Color(200, 200, 200, 255)		-- Gray
+	local inRaidColor = 	Color(50, 255, 50, 255)	-- Green
+	local outRaidColor = 	Color(255, 255, 255)		-- White
+	local deadColor = 		Color(255, 50, 50, 255)	-- Red
 
 	local width =			600
 	local height =			600
 
 	local margin = 			10
 
-	local raidMenuFrame = vgui.Create( "DFrame" )
-	raidMenuFrame:SetPos( (ScrW() / 2) - (width / 2), (ScrH() / 2) - (height / 2) ) 
-	raidMenuFrame:SetSize( width, height ) 
-	raidMenuFrame:SetTitle( "Raid Menu" ) 
-	raidMenuFrame:SetVisible( true ) 
-	raidMenuFrame:SetDraggable( false ) 
-	raidMenuFrame:ShowCloseButton( true ) 
+	local raidMenuFrame = vgui.Create("DFrame")
+	raidMenuFrame:SetPos((ScrW() / 2) - (width / 2), (ScrH() / 2) - (height / 2))
+	raidMenuFrame:SetSize(width, height)
+	raidMenuFrame:SetTitle("Raid Menu")
+	raidMenuFrame:SetVisible(true)
+	raidMenuFrame:SetDraggable(false)
+	raidMenuFrame:ShowCloseButton(true)
 	raidMenuFrame:MakePopup()
 
 	-- Other shit
 
 	raidMenuFrame.Paint = function(self, w, h)
-		draw.RoundedBox( 0, 0, 0, w, h, blackColor )
+		draw.RoundedBox(0, 0, 0, w, h, blackColor)
 	end
 
-	local raidMenuPanel = vgui.Create( "DPanel", raidMenuFrame )
-	raidMenuPanel:Dock( BOTTOM )
+	local raidMenuPanel = vgui.Create("DPanel", raidMenuFrame)
+	raidMenuPanel:Dock(BOTTOM)
 	raidMenuPanel:SetSize(0, height - 40)
 
 	raidMenuPanel.Paint = function(self, w, h)
 
-		draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+		draw.RoundedBox(0, 0, 0, w, h, primaryColor)
 
 	end
 
 	-- MAIN PANEL: The time has come text lol. Idk, it builds suspense or something. Fuck dude, get off my back man, tarky does it, im gonna do it. Fuck you, and fuck off, and leave me to my luas
 
-	local topTextPanel = vgui.Create( "DPanel", raidMenuPanel )
-	topTextPanel:Dock( TOP )
+	local topTextPanel = vgui.Create("DPanel", raidMenuPanel)
+	topTextPanel:Dock(TOP)
 	topTextPanel:DockMargin(margin, margin, margin, margin)
 	topTextPanel:SetSize(0, 80)
 
 	topTextPanel.Paint = function(self, w, h)
 
-		draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+		draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
 		draw.SimpleText("THE TIME HAS COME", "DermaLarge", w / 2, h / 2, primaryColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
@@ -2349,13 +2341,13 @@ function EnterRaidMenu()
 
 	-- MAIN PANEL: Raid Info Panel (shit like your team, raid time, your pmc, and a big ol' button for entering the raid)
 
-	local raidInfoPanel = vgui.Create( "DPanel", raidMenuPanel )
-	raidInfoPanel:Dock( FILL )
+	local raidInfoPanel = vgui.Create("DPanel", raidMenuPanel)
+	raidInfoPanel:Dock(FILL)
 	raidInfoPanel:DockMargin(margin, margin, margin, margin)
 
 	raidInfoPanel.Paint = function(self, w, h)
 
-		draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+		draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
 		if client:GetNWBool("teamLeader") == true and client:GetNWString("playerTeam") then
 
@@ -2369,16 +2361,16 @@ function EnterRaidMenu()
 
 		end
 
-		draw.RoundedBox( 0, 290 - 64 - 15, 100 - 15, 128 + 30, 128 + 30, primaryColor )
+		draw.RoundedBox(0, 290 - 64 - 15, 100 - 15, 128 + 30, 128 + 30, primaryColor)
 
 	end
 
-	local playerAvatar = vgui.Create( "AvatarImage", raidInfoPanel )
+	local playerAvatar = vgui.Create("AvatarImage", raidInfoPanel)
 	playerAvatar:SetSize(128, 128)
 	playerAvatar:SetPos(290 - 64, 100)
 	playerAvatar:SetPlayer(LocalPlayer(), 128)
 
-	local playerModelDisplay = vgui.Create( "DModelPanel", raidInfoPanel )
+	local playerModelDisplay = vgui.Create("DModelPanel", raidInfoPanel)
 	playerModelDisplay:SetSize(350, 350)
 	playerModelDisplay:SetPos(120 - 180, -30)
 	playerModelDisplay:SetModel( client:GetModel() )
@@ -2387,14 +2379,14 @@ function EnterRaidMenu()
 
 	if client:GetNWBool("teamLeader") == true and client:GetNWString("playerTeam") then
 
-		enterRaidButton:Dock( BOTTOM )
+		enterRaidButton:Dock(BOTTOM)
 		enterRaidButton:DockMargin(margin, margin, margin, margin)
 		enterRaidButton:SetSize(0, 70)
 		enterRaidButton:SetText("Enter the Raid")
 	
 	elseif client:GetNWBool("teamLeader") == false then
 
-		enterRaidButton:Dock( BOTTOM )
+		enterRaidButton:Dock(BOTTOM)
 		enterRaidButton:DockMargin(margin, margin, margin, margin)
 		enterRaidButton:SetSize(0, 70)
 		enterRaidButton:SetText("Enter the Raid by Yourself")
@@ -2405,7 +2397,7 @@ function EnterRaidMenu()
 
 		-- enter raid blah blah blah
 
-		surface.PlaySound( "UI/buttonclick.wav" )
+		surface.PlaySound("UI/buttonclick.wav")
 
 		net.Start("EnterRaidProper")
 		net.WriteUInt(0, 4) -- 0 for PMC, 1 for Scav, thats it really, I guess 2 for error?

@@ -338,15 +338,11 @@ local function DoSmartSpawnStuff(spawns, minimumDistance)
 
 		for l, b in pairs(player.GetHumans()) do
 
-			if ply:GetNWBool("inRaid") == true then
+			-- print(tostring( "Distance between player and spawn is:" .. v:GetPos():Distance( b:GetPos() ) ))
 
-				-- print(tostring( "Distance between player and spawn is:" .. v:GetPos():Distance( b:GetPos() ) ))
+			if v:GetPos():Distance( b:GetPos() ) < minimumDistance then
 
-				if v:GetPos():Distance( b:GetPos() ) < minimumDistance then
-
-					willTableBeAdded = false
-
-				end
+				willTableBeAdded = false
 
 			end
 
@@ -585,7 +581,7 @@ function ENT:AcceptInput(name, ply, caller, data)
 		end
 
 		if self.RaidStarted == true then
- 
+
 			net.Start("EnterRaidMenu")
 			net.Send(ply)
 
@@ -600,4 +596,3 @@ function ENT:AcceptInput(name, ply, caller, data)
 	end
 
 end
-

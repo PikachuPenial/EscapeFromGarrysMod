@@ -1570,91 +1570,104 @@ function MenuInit()
 			for k, v in pairs(stashClient:GetWeapons()) do
 				-- Creates buttons for the weapons
 
-				if weapons.Get( v:GetClass() ) == nil then return end
+				local isWeaponValid = true
 
-				local weaponInfo = weapons.Get( v:GetClass() )
+				for l, b in pairs( inventoryBlacklist ) do
+					
+					if b == v:GetClass() then isWeaponValid = false end
 
-				-- PrintTable(stashClient:GetWeapons())
+				end
 
-				local wepName
+				if isWeaponValid == true then
+					
+					if weapons.Get( v:GetClass() ) == nil then return end
 
-				if weaponInfo["TrueName"] == nil then wepName = weaponInfo["PrintName"] else wepName = weaponInfo["TrueName"] end
+					local weaponInfo = weapons.Get( v:GetClass() )
 
-				local icon = vgui.Create("SpawnIcon", stashIconLayout)
-				icon:SetModel(weaponInfo["WorldModel"])
-				icon:SetToolTip(wepName)
-				icon:SetSize(96, 96)
+					-- PrintTable(stashClient:GetWeapons())
 
-				function icon:Paint(w, h)
+					local wepName
 
-					draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
-					draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
-					draw.SimpleText(wepName, "DermaDefault", w / 2, 80, Color(255, 255, 255, 255), 1)
+					if weaponInfo["TrueName"] == nil then wepName = weaponInfo["PrintName"] else wepName = weaponInfo["TrueName"] end
 
-					local currentItemPrice = nil
-					local currentItemLevel = nil
-					local currentItemTier = nil
-					local currentItemCategory = nil
+					local icon = vgui.Create("SpawnIcon", stashIconLayout)
+					icon:SetModel(weaponInfo["WorldModel"])
+					icon:SetToolTip(wepName)
+					icon:SetSize(96, 96)
 
-					local currentItemSellPrice = nil
+					function icon:Paint(w, h)
 
-					for l, b in pairs(weaponsArr) do
+						draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
+						draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
+						draw.SimpleText(wepName, "DermaDefault", w / 2, 80, Color(255, 255, 255, 255), 1)
 
-						-- if names match (v.ItemName is same as v["ItemName"])
-						if b[2] == v.ItemName then
+						local currentItemPrice = nil
+						local currentItemLevel = nil
+						local currentItemTier = nil
+						local currentItemCategory = nil
 
-							currentItemPrice = tostring(b[4])
-							currentItemLevel = tostring(b[5])
-							currentItemTier = tostring(b[6])
-							currentItemCategory = tostring(b[7])
+						local currentItemSellPrice = nil
 
-							currentItemSellPrice = (currentItemPrice * sellPriceMultiplier)
+						for l, b in pairs(weaponsArr) do
 
-							break
+							-- if names match (v.ItemName is same as v["ItemName"])
+							if b[2] == v.ItemName then
 
+								currentItemPrice = tostring(b[4])
+								currentItemLevel = tostring(b[5])
+								currentItemTier = tostring(b[6])
+								currentItemCategory = tostring(b[7])
+
+								currentItemSellPrice = (currentItemPrice * sellPriceMultiplier)
+
+								break
+
+							end
+
+						end
+
+						if currentItemPrice != nil then
+							draw.SimpleText("₽", "DermaDefault", 5, 0, Color(255, 255, 0, 255), 0)
+							draw.SimpleText(currentItemSellPrice, "DermaDefault", 15, 0, Color(255, 255, 255, 255), 0)
+
+							draw.SimpleText("Sell Price", "HudHintTextSmall", 5, 10, Color(255, 255, 255, 255), 0)
+							draw.SimpleText("Rarity", "HudHintTextSmall", w / 1.05, 10, Color(255, 255, 255, 255), 2)
+						end
+
+						if currentItemTier == "LOW" then
+							draw.SimpleText("LOW", "DermaDefault", w / 1.05, 0, Color(255, 0, 0, 255), 2)
+						end
+
+						if currentItemTier == "MID" then
+							draw.SimpleText("MID", "DermaDefault", w / 1.05, 0, Color(255, 255, 0, 255), 2)
+						end
+
+						if currentItemTier == "HIGH" then
+							draw.SimpleText("HIGH", "DermaDefault", w / 1.05, 0, Color(0, 255, 0, 255), 2)
+						end
+
+						if currentItemTier == "UTIL" then
+							draw.SimpleText("UTIL", "DermaDefault", w / 1.05, 0, Color(0, 0, 255, 255), 2)
 						end
 
 					end
 
-					if currentItemPrice != nil then
-						draw.SimpleText("₽", "DermaDefault", 5, 0, Color(255, 255, 0, 255), 0)
-						draw.SimpleText(currentItemSellPrice, "DermaDefault", 15, 0, Color(255, 255, 255, 255), 0)
+					inventoryIconLayout:Add(icon)
 
-						draw.SimpleText("Sell Price", "HudHintTextSmall", 5, 10, Color(255, 255, 255, 255), 0)
-						draw.SimpleText("Rarity", "HudHintTextSmall", w / 1.05, 10, Color(255, 255, 255, 255), 2)
-					end
+					icon.DoClick = function(icon)
 
-					if currentItemTier == "LOW" then
-						draw.SimpleText("LOW", "DermaDefault", w / 1.05, 0, Color(255, 0, 0, 255), 2)
-					end
+						net.Start("PutWepInStash")
+						net.WriteString(v:GetClass())
+						net.SendToServer()
 
-					if currentItemTier == "MID" then
-						draw.SimpleText("MID", "DermaDefault", w / 1.05, 0, Color(255, 255, 0, 255), 2)
-					end
+						surface.PlaySound( "UI/buttonclick.wav" )
 
-					if currentItemTier == "HIGH" then
-						draw.SimpleText("HIGH", "DermaDefault", w / 1.05, 0, Color(0, 255, 0, 255), 2)
-					end
+						-- icon:Remove()
 
-					if currentItemTier == "UTIL" then
-						draw.SimpleText("UTIL", "DermaDefault", w / 1.05, 0, Color(0, 0, 255, 255), 2)
 					end
 
 				end
 
-				inventoryIconLayout:Add(icon)
-
-				icon.DoClick = function(icon)
-
-					net.Start("PutWepInStash")
-					net.WriteString(v:GetClass())
-					net.SendToServer()
-
-					surface.PlaySound( "UI/buttonclick.wav" )
-
-					-- icon:Remove()
-
-				end
 			end
 
 			-- PrintTable(LocalPlayer():GetAmmo())

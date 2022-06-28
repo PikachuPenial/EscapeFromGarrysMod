@@ -87,83 +87,88 @@ function ENT:CheckForPlayers()
 
 						timer.Create( ply:GetName() .. self.ExtractName .. "_timer" , self.ExtractTime, 1, function()
 
-							ply:PrintMessage( HUD_PRINTCENTER, "You have extracted from the raid through " .. self.ExtractName .. "! Good job!" )
+							if ply:Alive() then
 
-							local lobbySpawns = ents.FindByName("lobby_spawns")
-							local chosenSpawn = lobbySpawns[math.random(#lobbySpawns)]
-							local expGained = math.random(250, 600)
+								ply:PrintMessage( HUD_PRINTCENTER, "You have extracted from the raid through " .. self.ExtractName .. "! Good job!" )
 
-							if (ply:GetNWInt("runThrough") == 0) then
-								ply:SetNWInt("raidsExtracted", ply:GetNWInt("raidsExtracted") + 1)
-								ply:SetNWInt("extractionStreak", ply:GetNWInt("extractionStreak") + 1)
+								local lobbySpawns = ents.FindByName("lobby_spawns")
+								local chosenSpawn = lobbySpawns[math.random(#lobbySpawns)]
+								local expGained = math.random(250, 600)
 
-								if ply:GetNWInt("extractionStreak") >= ply:GetNWInt("highestExtractionStreak") then
-									ply:SetNWInt("highestExtractionStreak", ply:GetNWInt("extractionStreak"))
+								if (ply:GetNWInt("runThrough") == 0) then
+									ply:SetNWInt("raidsExtracted", ply:GetNWInt("raidsExtracted") + 1)
+									ply:SetNWInt("extractionStreak", ply:GetNWInt("extractionStreak") + 1)
+
+									if ply:GetNWInt("extractionStreak") >= ply:GetNWInt("highestExtractionStreak") then
+										ply:SetNWInt("highestExtractionStreak", ply:GetNWInt("extractionStreak"))
+									end
+
+									if ply:GetNWInt("successfulOperationsComplete") == 0 then
+										ply:SetNWInt("mapExtracts", ply:GetNWInt("mapExtracts") + 1)
+									end
+
+									if ply:GetNWInt("raidKill") >= 3 and ply:GetNWInt("weeklyExtractsComplete") == 0 then
+										ply:SetNWInt("weeklyExtracts", ply:GetNWInt("weeklyExtracts") + 1)
+									end
+
+									if ply:GetNWInt("raidKill") >= 12 and ply:GetNWInt("weeklyNuclearComplete") == 0 then
+										ply:SetNWInt("weeklyNuclear", ply:GetNWInt("weeklyNuclear") + 1)
+									end
+
+									if (ply:GetNWInt("playerLvl") < 32) then
+										ply:SetNWInt("playerExp", math.Round(ply:GetNWInt("playerExp") + (expGained * ply:GetNWInt("expMulti"))), 1)
+										ply:SetNWInt("raidXP", math.Round(ply:GetNWInt("raidXP") + (expGained * ply:GetNWInt("expMulti"))), 1)
+										ply:SetNWInt("playerTotalXpEarned", math.Round(ply:GetNWInt("playerTotalXpEarned") + (expGained * ply:GetNWInt("expMulti"))), 1)
+										ply:SetNWInt("playerTotalXpEarnedExplore", math.Round(ply:GetNWInt("playerTotalXpEarnedExplore") + (expGained * ply:GetNWInt("expMulti"))), 1)
+									end
+
+									checkForSuccessfulOperations(ply)
+									checkForWeeklyTwo(ply)
+									checkForWeeklyThree(ply)
+									checkForLevel(ply)
 								end
 
-								if ply:GetNWInt("successfulOperationsComplete") == 0 then
-									ply:SetNWInt("mapExtracts", ply:GetNWInt("mapExtracts") + 1)
+								if (ply:GetNWInt("runThrough") == 1) then
+									ply:SetNWInt("raidsRanThrough", ply:GetNWInt("raidsRanThrough") + 1)
 								end
 
-								if ply:GetNWInt("raidKill") >= 3 and ply:GetNWInt("weeklyExtractsComplete") == 0 then
-									ply:SetNWInt("weeklyExtracts", ply:GetNWInt("weeklyExtracts") + 1)
-								end
+								ply:SetNWInt("raidSuccess", 1)
 
-								if ply:GetNWInt("raidKill") >= 12 and ply:GetNWInt("weeklyNuclearComplete") == 0 then
-									ply:SetNWInt("weeklyNuclear", ply:GetNWInt("weeklyNuclear") + 1)
-								end
-
-								if (ply:GetNWInt("playerLvl") < 32) then
-									ply:SetNWInt("playerExp", math.Round(ply:GetNWInt("playerExp") + (expGained * ply:GetNWInt("expMulti"))), 1)
-									ply:SetNWInt("raidXP", math.Round(ply:GetNWInt("raidXP") + (expGained * ply:GetNWInt("expMulti"))), 1)
-									ply:SetNWInt("playerTotalXpEarned", math.Round(ply:GetNWInt("playerTotalXpEarned") + (expGained * ply:GetNWInt("expMulti"))), 1)
-									ply:SetNWInt("playerTotalXpEarnedExplore", math.Round(ply:GetNWInt("playerTotalXpEarnedExplore") + (expGained * ply:GetNWInt("expMulti"))), 1)
-								end
-
-								checkForSuccessfulOperations(ply)
-								checkForWeeklyTwo(ply)
-								checkForWeeklyThree(ply)
-								checkForLevel(ply)
-							end
-
-							if (ply:GetNWInt("runThrough") == 1) then
-								ply:SetNWInt("raidsRanThrough", ply:GetNWInt("raidsRanThrough") + 1)
-							end
-
-							ply:SetNWInt("raidSuccess", 1)
-
-							if (ply:GetNWInt("extractionStreak") == 1) then
-								ply:SetNWInt("expMulti", 1.10)
-							else
-								if (ply:GetNWInt("extractionStreak") == 2) then
-									ply:SetNWInt("expMulti", 1.20)
+								if (ply:GetNWInt("extractionStreak") == 1) then
+									ply:SetNWInt("expMulti", 1.10)
 								else
-									if (ply:GetNWInt("extractionStreak") == 3) then
-										ply:SetNWInt("expMulti", 1.30)
+									if (ply:GetNWInt("extractionStreak") == 2) then
+										ply:SetNWInt("expMulti", 1.20)
 									else
-										if (ply:GetNWInt("extractionStreak") == 4) then
-											ply:SetNWInt("expMulti", 1.40)
+										if (ply:GetNWInt("extractionStreak") == 3) then
+											ply:SetNWInt("expMulti", 1.30)
 										else
-											if (ply:GetNWInt("extractionStreak") >= 5) then
-												ply:SetNWInt("expMulti", 1.50)
+											if (ply:GetNWInt("extractionStreak") == 4) then
+												ply:SetNWInt("expMulti", 1.40)
+											else
+												if (ply:GetNWInt("extractionStreak") >= 5) then
+													ply:SetNWInt("expMulti", 1.50)
+												end
 											end
 										end
 									end
 								end
+
+								ply:ConCommand("open_raid_summary_menu")
+
+								ply:SetPos(chosenSpawn:GetPos())
+								ply:SetAngles(chosenSpawn:GetAngles())
+
+								SetPlayerStatus(ply, nil, "NotInRaid")
+
+								ply:SetNWBool("inRaid", false)
+
+								hook.Run("PlayerExtract", ply, self.ExtractName)
+
 							end
 
-							ply:ConCommand("open_raid_summary_menu")
-
-							ply:SetPos(chosenSpawn:GetPos())
-							ply:SetAngles(chosenSpawn:GetAngles())
-
-							SetPlayerStatus(ply, nil, "NotInRaid")
-
-							ply:SetNWBool("inRaid", false)
-
-							hook.Run("PlayerExtract", ply, self.ExtractName)
-
 						end)
+
 					end
 
 				elseif not VectorInside(pos, mins, maxs) then

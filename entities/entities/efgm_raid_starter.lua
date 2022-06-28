@@ -24,6 +24,8 @@ local mapVotes = {0, 0, 0, 0}
 
 local voterTable = {}
 
+local minPlayers = CreateConVar("efgm_minplayers", "2", FCVAR_NOTIFY)
+
 -- Classes: "PMC", "PlayerScav", "NotInRaid"
 
 -- {player, spawnGroup, class}
@@ -441,16 +443,6 @@ local function IndividualSpawn(ply, class, raidHasStarted)
 
 	local randomSpawn = GetSmartSpawn(class, false)
 
-	-- This is for debugging, leave it alone, I'll remove it when it needs to be removed
-
-	-- for k, v in pairs( randomSpawn.TeamSpawnVectors ) do
-
-	-- 	local totallyFriendlyTeammateForDebugging = ents.Create( "npc_combine_s" )
-	-- 	totallyFriendlyTeammateForDebugging:SetPos( v )
-	-- 	totallyFriendlyTeammateForDebugging:Spawn( )
-
-	-- end
-
 	SpawnPlayer(ply, randomSpawn.SpawnGroup, class, randomSpawn:GetPos(), randomSpawn:GetAngles())
 
 end
@@ -567,15 +559,15 @@ function ENT:AcceptInput(name, ply, caller, data)
 
 		if self.RaidStarted == false then
 
-			if #player.GetHumans() <= 1 then
+			if #player.GetHumans() < minPlayers:GetInt() then
 
-				ply:PrintMessage(3, "Not enough players to spawn into/start a raid!")
+				ply:PrintMessage(3, "Not enough players to spawn into or start a raid, " .. minPlayers:GetInt() .. " needed!")
 
 			elseif ply:GetNWBool("teamLeader") == false then
 
 				ply:PrintMessage(3, "You are not the party leader!")
 
-			elseif #player.GetHumans() > 1 and self.RaidStarted == false and ply:GetNWBool("teamLeader") == true then
+			elseif #player.GetHumans() >= minPlayers:GetInt() and self.RaidStarted == false and ply:GetNWBool("teamLeader") == true then
 
 				self:InitializeRaid()
 				hook.Call("RaidStart", nil)

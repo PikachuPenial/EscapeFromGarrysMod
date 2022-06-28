@@ -15,7 +15,16 @@
 			"text"		"Sell Price Multiplier"
 			"help"		"Changes the money that players will receive when they sell an item, multiplied by the buy price"
 			"type"		"Numeric"
-			"default"	"0.30"
+			"default"		"0.30"
+		}
+
+		2
+		{
+			"name"		"efgm_minplayers"
+			"text"		"Minimum Players for Raid Start"
+			"help"		"Changes the minimum number of players needed to start a raid. Mostly for developer purposes, I would not be suprised if this broke stuff at higher or lower values."
+			"type"		"Numeric"
+			"default"		"2"
 		}
 	}
 }

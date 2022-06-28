@@ -15,6 +15,7 @@ inRaidSummaryMenu = false
 weaponsArr = {}
 entsArr = {}
 sellBlacklist = {}
+inventoryBlacklist = {}
 
 function GM:Initialize()
 
@@ -201,6 +202,10 @@ function GM:Initialize()
 	sellBlacklist[5] = {"arccw_go_nade_frag"}
 	sellBlacklist[6] = {"arccw_go_nade_smoke"}
 	sellBlacklist[7] = {"arccw_go_nade_incendiary"}
+
+	-- Any weapon in this array cannot be seen or put into the stash. Put shit here idk.
+
+	inventoryBlacklist = {"fas2_ifak", "arccw_bo1_sog_knife", "weaponholster"}
 
 	--Temporary array created. This next section will sort the guns by cost, so guns higher to the top will hopefully be better. This is convenient.
 	--The sort function takes the fourth value of all tempWeaponsArray indexes (the rouble count) and sorts by them from greatest to lowest.

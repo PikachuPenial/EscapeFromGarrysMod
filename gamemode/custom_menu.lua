@@ -1588,43 +1588,33 @@ function MenuInit()
 
 				local isWeaponValid = true
 
-				for l, b in pairs( inventoryBlacklist ) do
-					
-					if b == v:GetClass() then isWeaponValid = false end
-				if weapons.Get(v:GetClass()) == nil then return end
+				for l, b in pairs(inventoryBlacklist) do
 
-				local weaponInfo = weapons.Get(v:GetClass())
+					if b == v:GetClass() then isWeaponValid = false end
 
 				end
 
 				if isWeaponValid == true then
-					
-					if weapons.Get( v:GetClass() ) == nil then return end
 
-					local weaponInfo = weapons.Get( v:GetClass() )
+					if weapons.Get(v:GetClass()) == nil then return end
+
+					local weaponInfo = weapons.Get(v:GetClass())
 
 					-- PrintTable(stashClient:GetWeapons())
-				local icon = vgui.Create("SpawnIcon", stashIconLayout)
-				icon:SetModel(weaponInfo["WorldModel"])
-				icon:SetTooltip(wepName)
-				icon:SetSize(96, 96)
 
 					local wepName
 
 					if weaponInfo["TrueName"] == nil then wepName = weaponInfo["PrintName"] else wepName = weaponInfo["TrueName"] end
-					draw.RoundedBox(0, 0, 0, w, h, Color(80, 80, 80, 255))
-					draw.RoundedBox(0, 0, 75, w, h - 75, Color(40, 40, 40, 255))
-					draw.SimpleText(wepName, "DermaDefault", w / 2, 80, Color(255, 255, 255, 255), 1)
 
 					local icon = vgui.Create("SpawnIcon", stashIconLayout)
 					icon:SetModel(weaponInfo["WorldModel"])
-					icon:SetToolTip(wepName)
+					icon:SetTooltip(wepName)
 					icon:SetSize(96, 96)
 
 					function icon:Paint(w, h)
 
-						draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
-						draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
+						draw.RoundedBox(0, 0, 0, w, h, Color(80, 80, 80, 255))
+						draw.RoundedBox(0, 0, 75, w, h - 75, Color(40, 40, 40, 255 ))
 						draw.SimpleText(wepName, "DermaDefault", w / 2, 80, Color(255, 255, 255, 255), 1)
 
 						local currentItemPrice = nil
@@ -1686,10 +1676,9 @@ function MenuInit()
 						net.WriteString(v:GetClass())
 						net.SendToServer()
 
-						surface.PlaySound( "UI/buttonclick.wav" )
+						surface.PlaySound("UI/buttonclick.wav")
 
 						-- icon:Remove()
-					surface.PlaySound("UI/buttonclick.wav")
 
 					end
 
@@ -1743,7 +1732,7 @@ function MenuInit()
 					if v["ItemOwner"] != LocalPlayer():SteamID64() then	print(LocalPlayer():SteamID64() .. " does not equal " .. v["ItemOwner"])	return end
 					if v["ItemType"] != "wep" then						print("ammo bad")															return end
 
-					local weaponInfo = weapons.Get(v["ItemName"])
+					local weaponInfo = weapons.Get( v["ItemName"] )
 
 					local wepName
 
@@ -1757,8 +1746,8 @@ function MenuInit()
 					function icon:Paint(w, h)
 
 						-- Weapon Name
-						draw.RoundedBox( 0, 0, 0, w, h, Color(80, 80, 80, 255))
-						draw.RoundedBox( 0, 0, 75, w, h - 75, Color(40, 40, 40, 255))
+						draw.RoundedBox(0, 0, 0, w, h, Color(80, 80, 80, 255))
+						draw.RoundedBox(0, 0, 75, w, h - 75, Color(40, 40, 40, 255))
 						draw.SimpleText(wepName, "DermaDefault", w / 2, 80, Color(255, 255, 255, 255), 1)
 
 						local currentItemPrice = nil
@@ -1824,7 +1813,7 @@ function MenuInit()
 
 						else
 
-							surface.PlaySound("common/wpn_denyselect.wav")
+							surface.PlaySound( "common/wpn_denyselect.wav" )
 
 						end
 
@@ -2426,7 +2415,7 @@ function EnterRaidMenu()
 		enterRaidButton:DockMargin(margin, margin, margin, margin)
 		enterRaidButton:SetSize(0, 70)
 		enterRaidButton:SetText("Enter the Raid")
-	
+
 	elseif client:GetNWBool("teamLeader") == false then
 
 		enterRaidButton:Dock(BOTTOM)

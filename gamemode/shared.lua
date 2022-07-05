@@ -195,7 +195,7 @@ function GM:Initialize()
 
 	--Any weapon in this array cannot be sold. Put any starting equipment here.
 
-	sellBlacklist[1] = {"arccw_go_knife_m9bayonet"}
+	sellBlacklist[1] = {"arccw_bo1_sog_knife"}
 	sellBlacklist[2] = {"arccw_eft_1911"}
 	sellBlacklist[3] = {"arccw_waw_p38"}
 	sellBlacklist[4] = {"arccw_waw_tt33"}
@@ -205,7 +205,7 @@ function GM:Initialize()
 
 	-- Any weapon in this array cannot be seen or put into the stash. Put shit here idk.
 
-	inventoryBlacklist = {"fas2_ifak", "arccw_bo1_sog_knife", "weaponholster"}
+	inventoryBlacklist = {"fas2_ifak", "arccw_bo1_sog_knife", "weaponholster", "arccw_eft_1911", "arccw_waw_p38", "arccw_waw_tt33", "arccw_go_nade_frag", "arccw_go_nade_smoke", "arccw_go_nade_incendiary"}
 
 	--Temporary array created. This next section will sort the guns by cost, so guns higher to the top will hopefully be better. This is convenient.
 	--The sort function takes the fourth value of all tempWeaponsArray indexes (the rouble count) and sorts by them from greatest to lowest.
@@ -223,6 +223,65 @@ function GM:Initialize()
 end
 
 if !ConVarExists("efgm_hidebinds") then CreateConVar( "efgm_hidebinds", "0", FCVAR_ARCHIVE, "Show or hide binds, while you are not in Raid",0,1 ) end
+
+--Disable the context menu.
+function GM:ContextMenuOpen()
+	return false
+end
+
+-- Disable Spawn Menu and show the extract list when the bind is pressed.
+function GM:SpawnMenuEnabled()
+	return false
+end
+
+function GM:SpawnMenuOpen()
+	RunConsoleCommand("efgm_extract_list")
+	return false
+end
+
+-- Disabling console commands that allow prop/entity abuse.
+hook.Add("PlayerGiveSWEP", "BlockPlayerSWEPs", function(ply, class, swep)
+	if (!ply:IsAdmin()) then
+		return false
+	end
+end)
+
+function GM:PlayerSpawnEffect(ply)
+	return false
+end
+
+function GM:PlayerSpawnNPC(ply)
+	return false
+end
+
+function GM:PlayerSpawnObject(ply)
+	return false
+end
+
+function GM:PlayerSpawnProp(ply)
+	return false
+end
+
+function GM:PlayerSpawnRagdoll(ply)
+	return false
+end
+
+function GM:PlayerSpawnSENT(ply)
+	return false
+end
+
+function GM:PlayerSpawnSWEP(ply)
+	return false
+end
+
+function GM:PlayerSpawnVehicle(ply)
+	return false
+end
+
+-- Removing problematic console commmands.
+
+concommand.Remove("ent_create")
+concommand.Remove("gmod_spawnnpc")
 
 --This is where the console commands are ran when a client joins a game running the gamemode.
 
@@ -296,9 +355,6 @@ RunConsoleCommand("dsp_off", "1")
 RunConsoleCommand("sv_autorespawn_enabled", "1")
 RunConsoleCommand("sv_respawntime", "15")
 RunConsoleCommand("cl_drawownshadow", "1")
-
---Death Screen Settings
-RunConsoleCommand("cl_pomer_text", "[You Died]")
 
 --Loot Rings/Attachment Menu Configuration
 RunConsoleCommand("cl_vmanip_pickups_halo", "1")

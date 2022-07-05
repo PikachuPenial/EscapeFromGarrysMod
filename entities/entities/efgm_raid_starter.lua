@@ -577,7 +577,7 @@ function ENT:AcceptInput(name, ply, caller, data)
 		end
 
 		if self.RaidStarted == true then
- 
+
 			net.Start("EnterRaidMenu")
 			net.Send(ply)
 

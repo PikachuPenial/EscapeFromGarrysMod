@@ -3,7 +3,7 @@ local timerRed = false
 
 local hudInRaid = false
 
-local spawnMenuBind = input.LookupBinding("+menu")
+local checkExtractsBind = "o"
 local contextMenuBind = input.LookupBinding("+menu_context")
 local leanLeftBind = input.LookupBinding("+alt1")
 local leanRightBind = input.LookupBinding("+alt2")
@@ -128,9 +128,9 @@ function HUD()
 	-- Control hints while in lobby
 	if CLIENT and GetConVar("efgm_hidebinds"):GetInt() == 0 then
 	if (hudInRaid == false) then
-		if (spawnMenuBind == nil) then
-			spawnMenuBind = "#"
-			spawnMenuColor = red
+		if (checkExtractsBind == nil) then
+			checkExtractsBind = "#"
+			checkExtractsBind = red
 		end
 		if (contextMenuBind == nil) then
 			contextMenuBind = "#"
@@ -186,9 +186,8 @@ function HUD()
 				draw.SimpleText("# = Not Binded", "DermaLarge", 135, 50, red, 0)
 				draw.SimpleText("Use the developer console to set binds", "Trebuchet24", 325, 54, red, 0)
 			
-				draw.SimpleText("[" .. spawnMenuBind .. "]", "Trebuchet24", 135, 80, spawnMenuColor, 0)
+				draw.SimpleText("[" .. checkExtractsBind .. "]", "Trebuchet24", 135, 80, spawnMenuColor, 0)
 				draw.SimpleText("Check Extracts", "Trebuchet24", 165, 80, white, 0)
-				draw.SimpleText("bind key +menu", "DermaDefaultBold", 310, 86, white, 0)
 
 				draw.SimpleText("[" .. contextMenuBind .. "]", "Trebuchet24", 135, 105, contextMenuColor, 0)
 				draw.SimpleText("Change Attachments", "Trebuchet24", 160, 105, white, 0)

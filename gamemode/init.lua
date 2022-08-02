@@ -7,6 +7,7 @@ AddCSLuaFile("raid_summary_menu.lua")
 AddCSLuaFile("tutorial_menu.lua")
 AddCSLuaFile("cl_scoreboard.lua")
 AddCSLuaFile("sh_party_system.lua")
+AddCSLuaFile("cl_bindings.lua")
 
 include("shared.lua")
 include("concommands.lua")
@@ -258,6 +259,12 @@ function GM:PlayerInitialSpawn(ply)
 	end
 
 	--Streaks
+	if (ply:GetPData("killsPerRaid") == nil) then
+		ply:SetNWInt("killsPerRaid", 0)
+	else
+		ply:SetNWInt("killsPerRaid", tonumber(ply:GetPData("killsPerRaid")))
+	end
+
 	if (ply:GetPData("killStreak") == nil) then
 		ply:SetNWInt("killStreak", 0)
 	else
@@ -287,6 +294,12 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetNWInt("expMulti", 1)
 	else
 		ply:SetNWInt("expMulti", tonumber(ply:GetPData("expMulti")))
+	end
+
+	if (ply:GetPData("survivalRate") == nil) then
+		ply:SetNWInt("survivalRate", 0)
+	else
+		ply:SetNWInt("survivalRate", tonumber(ply:GetPData("survivalRate")))
 	end
 
 	if (ply:GetPData("raidsPlayed") == nil) then
@@ -516,6 +529,7 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 		victim:SetNWInt("raidSuccess", 0)
 
 		attacker:SetNWInt("killStreak", attacker:GetNWInt("killStreak") + 1)
+		attacker:SetNWInt("killsPerRaid", attacker:GetNWInt("playerKills") / attacker:GetNWInt("raidsPlayed"))
 
 		if attacker:GetNWInt("killStreak") >= attacker:GetNWInt("highestKillStreak") then
 			attacker:SetNWInt("highestKillStreak", attacker:GetNWInt("killStreak"))
@@ -666,6 +680,7 @@ function GM:PlayerDisconnected(ply)
 	ply:SetPData("covertEffect", ply:GetNWInt("covertEffect"))
 
 	--Streaks
+	ply:SetPData("killsPerRaid", ply:GetNWInt("killsPerRaid"))
 	ply:SetPData("killStreak", ply:GetNWInt("killStreak"))
 	ply:SetPData("extractionStreak", ply:GetNWInt("extractionStreak"))
 	ply:SetPData("highestKillStreak", ply:GetNWInt("highestKillStreak"))
@@ -684,6 +699,7 @@ function GM:PlayerDisconnected(ply)
 	ply:SetPData("weeklyAddictComplete", ply:GetNWInt("weeklyAddictComplete"))
 
 	--Raids
+	ply:SetPData("survivalRate", ply:GetNWInt("survivalRate"))
 	ply:SetPData("raidsPlayed", ply:GetNWInt("raidsPlayed"))
 	ply:SetPData("raidsExtracted", ply:GetNWInt("raidsExtracted"))
 	ply:SetPData("raidsRanThrough", ply:GetNWInt("raidsRanThrough"))
@@ -737,6 +753,7 @@ function GM:ShutDown()
 		v:SetPData("covertEffect", v:GetNWInt("covertEffect"))
 
 		--Streaks
+		v:SetPData("killsPerRaid", v:GetNWInt("killsPerRaid"))
 		v:SetPData("killStreak", v:GetNWInt("killStreak"))
 		v:SetPData("extractionStreak", v:GetNWInt("extractionStreak"))
 		v:SetPData("highestKillStreak", v:GetNWInt("highestKillStreak"))
@@ -755,6 +772,7 @@ function GM:ShutDown()
 		v:SetPData("weeklyAddictComplete", v:GetNWInt("weeklyAddictComplete"))
 
 		--Raids
+		v:SetPData("survivalRate", v:GetNWInt("survivalRate"))
 		v:SetPData("raidsPlayed", v:GetNWInt("raidsPlayed"))
 		v:SetPData("raidsExtracted", v:GetNWInt("raidsExtracted"))
 		v:SetPData("raidsRanThrough", v:GetNWInt("raidsRanThrough"))

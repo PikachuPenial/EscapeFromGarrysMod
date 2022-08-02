@@ -3,8 +3,6 @@ GM.Author = "Penial & Porty"
 GM.Email = "pissoff"
 GM.Website = "https://github.com/PikachuPenial"
 
-DeriveGamemode("sandbox")
-
 sellPriceMultiplier = 0.30
 
 inPlayerMenu = false

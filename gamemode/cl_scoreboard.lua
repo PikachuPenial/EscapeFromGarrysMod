@@ -36,6 +36,9 @@ function GM:ScoreboardShow()
 
 				draw.SimpleText(v:GetName() .. " - " .. v:Ping() .. "ms", "DermaDefault", 25, 10, Color(255, 255, 255))
 
+				draw.SimpleText("K/D: " .. math.Round(v:GetNWInt("playerKDR"), 2), "DermaDefault", 130, 10, Color(255, 0, 0))
+				draw.SimpleText("SR: " .. math.Round(v:GetNWInt("survivalRate"), 0) .. "%", "DermaDefault", 130, 25, Color(0, 255, 0))
+
 				if (v:GetNWInt("playerPrestige") >= 1) then
 					draw.SimpleText("Prestige: " .. v:GetNWInt("playerPrestige") .. "    " .. "Level: " .. v:GetNWInt("playerLvl"), "DermaDefault", 25, 25, Color(255, 195, 0))
 				else

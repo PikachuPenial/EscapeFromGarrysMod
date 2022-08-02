@@ -88,6 +88,9 @@ function SpawnPlayer(player, spawnGroup, status, pos, angles)
 
 	player:SetNWInt("raidsPlayed", player:GetNWInt("raidsPlayed") + 1)
 
+	player:SetNWInt("survivalRate", ((player:GetNWInt("raidsExtracted") + player:GetNWInt("raidsRanThrough")) / player:GetNWInt("raidsPlayed")) * 100)
+	player:SetNWInt("killsPerRaid", player:GetNWInt("playerKills") / player:GetNWInt("raidsPlayed"))
+
 	player:SetPos(pos)
 	player:SetAngles(angles)
 

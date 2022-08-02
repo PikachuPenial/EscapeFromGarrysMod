@@ -132,6 +132,8 @@ function ENT:CheckForPlayers()
 									ply:SetNWInt("raidsRanThrough", ply:GetNWInt("raidsRanThrough") + 1)
 								end
 
+								ply:SetNWInt("survivalRate", ((ply:GetNWInt("raidsExtracted") + ply:GetNWInt("raidsRanThrough")) / ply:GetNWInt("raidsPlayed")) * 100)
+
 								ply:SetNWInt("raidSuccess", 1)
 
 								if (ply:GetNWInt("extractionStreak") == 1) then

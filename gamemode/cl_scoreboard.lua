@@ -5,7 +5,7 @@ function GM:ScoreboardShow()
 
 	if !IsValid(ScoreboardDerma) then
 		ScoreboardDerma = vgui.Create("DFrame")
-		ScoreboardDerma:SetSize(180, 420)
+		ScoreboardDerma:SetSize(210, 420)
 		ScoreboardDerma:SetPos(ScrW() / 2 - 90, ScrH() / 2 - 210)
 		ScoreboardDerma:SetTitle("Escape From Garry's Mod", Color(85, 0, 255, 255))
 		ScoreboardDerma:SetDraggable(false)
@@ -34,15 +34,15 @@ function GM:ScoreboardShow()
 				draw.RoundedBox(0, 0, 0, PlayerPanel:GetWide(), PlayerPanel:GetTall(), Color(35, 35, 35, 255))
 				draw.RoundedBox(0, 0, 49, PlayerPanel:GetWide(), 1, Color(35, 35, 35, 255))
 
-				draw.SimpleText(v:GetName() .. " - " .. v:Ping() .. "ms", "DermaDefault", 25, 10, Color(255, 255, 255))
+				draw.SimpleText(v:GetName() .. " - " .. v:Ping() .. "ms", "DermaDefault", 15, 10, Color(255, 255, 255))
 
-				draw.SimpleText("K/D: " .. math.Round(v:GetNWInt("playerKDR"), 2), "DermaDefault", 130, 10, Color(255, 0, 0))
-				draw.SimpleText("SR: " .. math.Round(v:GetNWInt("survivalRate"), 0) .. "%", "DermaDefault", 130, 25, Color(0, 255, 0))
+				draw.SimpleText("K/D: " .. math.Round(v:GetNWInt("playerKDR"), 1), "DermaDefault", 104, 25, Color(255, 0, 0))
+				draw.SimpleText("SR: " .. math.Round(v:GetNWInt("survivalRate"), 0) .. "%", "DermaDefault", 148, 25, Color(0, 255, 0))
 
 				if (v:GetNWInt("playerPrestige") >= 1) then
-					draw.SimpleText("Prestige: " .. v:GetNWInt("playerPrestige") .. "    " .. "Level: " .. v:GetNWInt("playerLvl"), "DermaDefault", 25, 25, Color(255, 195, 0))
+					draw.SimpleText("Prestige: " .. v:GetNWInt("playerPrestige") .. "    " .. "Level: " .. v:GetNWInt("playerLvl"), "DermaDefault", 15, 25, Color(255, 195, 0))
 				else
-					draw.SimpleText("Level " .. v:GetNWInt("playerLvl"), "DermaDefault", 25, 25, Color(255, 195, 0))
+					draw.SimpleText("Level " .. v:GetNWInt("playerLvl"), "DermaDefault", 15, 25, Color(255, 195, 0))
 				end
 			end
 		end

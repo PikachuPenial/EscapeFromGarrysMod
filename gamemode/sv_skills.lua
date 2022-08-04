@@ -69,12 +69,12 @@ function checkForCovert(ply)
 end
 
 function checkForLoyalty(ply)
-	local loyaltyExpToLevel = (ply:GetNWInt("loyaltyLevel"))
+	local loyaltyExpToLevel = (ply:GetNWInt("loyaltyLevel") * 1)
 	local loyaltyCurExp = ply:GetNWInt("loyaltyExperience")
 	local loyaltyCurLvl = ply:GetNWInt("loyaltyLevel")
 
 	if (loyaltyCurExp >= loyaltyExpToLevel) then
-		loyaltyCurLvl = loyaltyCurLvl - loyaltyExpToLevel
+		loyaltyCurExp = loyaltyCurLvl - loyaltyExpToLevel
 
 		ply:SetNWInt("loyaltyExperience", loyaltyCurLvl)
 		ply:SetNWInt("loyaltyLevel", loyaltyCurLvl + 1)

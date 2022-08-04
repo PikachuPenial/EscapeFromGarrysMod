@@ -150,188 +150,174 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		surface.DrawRect(99, 0, 1, playerButton:GetTall())
 
 		--Draw/write text
-		draw.DrawText(LocalPlayer():GetName(), "CloseCaption_Normal", playerButton:GetWide() / 2.1, 10, Color(255, 255, 255, 255), 1)
+		draw.DrawText("STATS", "DermaLarge", playerButton:GetWide() / 2.1, 10, Color(255, 255, 255, 255), 1)
 	end
+
 	playerButton.DoClick = function()
 		local playerPanel = Menu:Add("PlayerPanel")
 
-		playerPanel.Paint = function()
-			surface.SetDrawColor(50, 50, 50, 255)
-			surface.DrawRect(0, 0, playerPanel:GetWide(), playerPanel:GetTall())
-			surface.SetTextColor(255, 255, 255)
+		local whiteColor = 		Color(250, 250, 250, 255)
+		local primaryColor =	Color(30, 30, 30, 255)
+		local secondaryColor =	Color(100, 100, 100, 255)
 
-			-- Player Name
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(285, 25)
-			surface.DrawText(LocalPlayer():GetName())
+		local margin = 			math.Round( ScrH() * 0.01 )
 
-			-- Player EXP and level
+		local kdResetText = 0
+
+		playerPanel.Paint = function(self, w, h)
+			draw.RoundedBox(0, 0, 0, w, h, primaryColor)
+		end
+
+		local scrollPanel = vgui.Create("DScrollPanel", playerPanel)
+		scrollPanel:Dock(FILL)
+
+		local namePanel = vgui.Create("DPanel", scrollPanel)
+		namePanel:Dock(TOP)
+		namePanel:DockMargin(margin, margin, margin, margin)
+		namePanel:SetSize(0, 90)
+
+		namePanel.Paint = function(self, w, h)
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 			local expToLevel = (LocalPlayer():GetNWInt("playerLvl") * 140) * 5.15
 
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(25, 125)
-			surface.SetTextColor(228, 255, 0, 255)
-			surface.DrawText("Level: " .. LocalPlayer():GetNWInt("playerLvl"))
+			draw.SimpleText(LocalPlayer():GetName(), "CloseCaption_Bold", w / 2, 15, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
-			surface.SetTextPos(150, 125)
-			surface.SetTextColor(0, 255, 209 , 255)
-			surface.DrawText("Experience: " .. math.Round(LocalPlayer():GetNWInt("playerExp")) .. "/" .. expToLevel)
-
-			-- Balance
-			surface.SetTextPos(475, 125)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Roubles: " .. math.Round(LocalPlayer():GetNWInt("playerMoney")))
-
-			surface.SetFont("CloseCaption_Bold")
-
-			-- Stats (Kills)
-			surface.SetTextPos(25, 200)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Kills: " .. LocalPlayer():GetNWInt("playerKills"))
-
-			-- Stats (Deaths)
-			surface.SetTextPos(25, 225)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Deaths: " .. LocalPlayer():GetNWInt("playerDeaths"))
-
-			-- Stats (KDR)
-			surface.SetTextPos(25, 250)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("K/D Ratio: " .. math.Round(LocalPlayer():GetNWInt("playerKDR"), 2))
-
-			-- Stats (Total Earned)
-			surface.SetTextPos(25, 275)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Roubles Earned: " .. LocalPlayer():GetNWInt("playerTotalEarned"))
-
-			-- Stats (Total Roubles From Kills)
-			surface.SetTextPos(25, 300)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Roubles Earned From Kills: " .. LocalPlayer():GetNWInt("playerTotalEarnedKill"))
-
-			-- Stats (Total Roubles From Selling)
-			surface.SetTextPos(25, 325)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Roubles Earned From Selling: " .. LocalPlayer():GetNWInt("playerTotalEarnedSell"))
-
-			-- Stats (Total Experience Gained)
-			surface.SetTextPos(25, 350)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total EXP Gained: " .. math.Round(LocalPlayer():GetNWInt("playerTotalXpEarned"), 0))
-
-			-- Stats (Total Experience Gained From Killing)
-			surface.SetTextPos(25, 375)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("EXP Gained From Kills: " .. math.Round(LocalPlayer():GetNWInt("playerTotalXpEarnedKill"), 0))
-
-			-- Stats (Total Experience Gained From Exploration)
-			surface.SetTextPos(25, 400)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("EXP Gained From Extracting: " .. math.Round(LocalPlayer():GetNWInt("playerTotalXpEarnedExplore"), 0))
-
-			-- Stats (Total Money Spent)
-			surface.SetTextPos(25, 425)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Total Money Spent: " .. LocalPlayer():GetNWInt("playerTotalMoneySpent"))
-
-			-- Stats (Total Money Spent On Weapons)
-			surface.SetTextPos(25, 450)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Money Spent On Weapons: " .. LocalPlayer():GetNWInt("playerTotalMoneySpentWep"))
-
-			-- Stats (Total Money Spent On Ammo/Armor)
-			surface.SetTextPos(25, 475)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Money Spent On Ammo/Armor: " .. LocalPlayer():GetNWInt("playerTotalMoneySpentItem"))
-
-			-- Stats (Deaths By Suicide)
-			surface.SetTextPos(25, 500)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Deaths By Suicide: " .. LocalPlayer():GetNWInt("playerDeathsSuicide"))
-
-			-- Stats (Damage Given)
-			surface.SetTextPos(25, 525)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Damage Inflicted: " .. LocalPlayer():GetNWInt("playerDamageGiven"))
-
-			-- Stats (Damage Recieved)
-			surface.SetTextPos(25, 550)
-			surface.SetTextColor(255, 0, 220, 255)
-			surface.DrawText("Damage Received: " .. LocalPlayer():GetNWInt("playerDamageRecieved"))
-
-			-- Stats (Survival Rate)
-			surface.SetTextPos(25, 600)
-			surface.SetTextColor(50, 255, 0)
-			surface.DrawText("Survival Rate: " .. math.Round(LocalPlayer():GetNWInt("survivalRate"), 0) .. "%")
-
-			-- Stats (Raids Player)
-			surface.SetTextPos(25, 625)
-			surface.SetTextColor(50, 255, 0)
-			surface.DrawText("Raids Played: " .. LocalPlayer():GetNWInt("raidsPlayed"))
-
-			-- Stats (Extractions)
-			surface.SetTextPos(25, 650)
-			surface.SetTextColor(50, 255, 0)
-			surface.DrawText("Extractions: " .. LocalPlayer():GetNWInt("raidsExtracted"))
-
-			-- Stats (Run Throughs)
-			surface.SetTextPos(25, 675)
-			surface.SetTextColor(50, 255, 0)
-			surface.DrawText("Run Throughs: " .. LocalPlayer():GetNWInt("raidsRanThrough"))
-
-			-- Stats (MIA's)
-			surface.SetTextPos(25, 700)
-			surface.SetTextColor(50, 255, 0)
-			surface.DrawText("Killed In Actions: " .. LocalPlayer():GetNWInt("raidsDied"))
-
-			-- Stats (Raids Player)
-			surface.SetTextPos(375, 600)
-			surface.SetTextColor(255, 159, 0)
-			surface.DrawText("AVG Kills Per Raid: " .. math.Round(LocalPlayer():GetNWInt("killsPerRaid"), 2))
-
-			-- Stats (Current Kill Streak)
-			surface.SetTextPos(375, 625)
-			surface.SetTextColor(255, 159, 0)
-			surface.DrawText("Current Kill Streak: " .. LocalPlayer():GetNWInt("killStreak"))
-
-			-- Stats (Current Extract Streak)
-			surface.SetTextPos(375, 650)
-			surface.SetTextColor(255, 159, 0)
-			surface.DrawText("Current Extract Streak: " .. LocalPlayer():GetNWInt("extractionStreak"))
-
-			-- Stats (Highest Kill Streak)
-			surface.SetTextPos(375, 675)
-			surface.SetTextColor(255, 159, 0)
-			surface.DrawText("Highest Kill Streak: " .. LocalPlayer():GetNWInt("highestKillStreak"))
-
-			-- Stats (Highest Extract Streak)
-			surface.SetTextPos(375, 700)
-			surface.SetTextColor(255, 159, 0)
-			surface.DrawText("Highest Extract Streak: " .. LocalPlayer():GetNWInt("highestExtractionStreak"))
+			draw.SimpleText("Prestige " .. LocalPlayer():GetNWInt("playerPrestige") .. ", " .. "Level " .. LocalPlayer():GetNWInt("playerLvl"), "CloseCaption_Bold", w / 2, 35, Color(228, 255, 0, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Experience: " .. math.Round(LocalPlayer():GetNWInt("playerExp")) .. "/" .. expToLevel, "CloseCaption_Bold", w / 2, 55, Color(0, 255, 209 , 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Roubles: ₽" .. math.Round(LocalPlayer():GetNWInt("playerMoney")), "CloseCaption_Bold", w / 2, 75, Color(255, 0, 95), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
-		local exportButton = vgui.Create("DButton")
-		exportButton:SetParent(Menu)
-		exportButton:SetText("")
-		exportButton:SetSize(225, 50)
-		exportButton:SetPos(315, 90)
-		exportButton.Paint = function()
+		local personalStatsPanel = vgui.Create("DPanel", scrollPanel)
+		personalStatsPanel:Dock(TOP)
+		personalStatsPanel:DockMargin(margin, margin, margin, margin)
+		personalStatsPanel:SetSize(0, 355)
+
+		personalStatsPanel.Paint = function(self, w, h)
+
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+			draw.SimpleText("General Statistics", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+			draw.SimpleText("Total Kills: " .. LocalPlayer():GetNWInt("playerKills"), "CloseCaption_Bold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Total Deaths: " .. LocalPlayer():GetNWInt("playerDeaths"), "CloseCaption_Bold", w / 2, 60, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("K/D Ratio: " .. math.Round(LocalPlayer():GetNWInt("playerKDR"), 2), "CloseCaption_Bold", w / 2, 80, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Total Roubles Earned: ₽" .. LocalPlayer():GetNWInt("playerTotalEarned"), "CloseCaption_Bold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Roubles Earned From Kills: ₽" .. LocalPlayer():GetNWInt("playerTotalEarnedKill"), "CloseCaption_Bold", w / 2, 120, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Roubles Earned From Selling: ₽" .. LocalPlayer():GetNWInt("playerTotalEarnedSell"), "CloseCaption_Bold", w / 2, 140, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Total EXP Gained: " .. math.Round(LocalPlayer():GetNWInt("playerTotalXpEarned"), 0), "CloseCaption_Bold", w / 2, 160, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("EXP Gained From Kills: " .. math.Round(LocalPlayer():GetNWInt("playerTotalXpEarnedKill"), 0), "CloseCaption_Bold", w / 2, 180, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("EXP Gained From Extracting: " .. math.Round(LocalPlayer():GetNWInt("playerTotalXpEarnedExplore"), 0), "CloseCaption_Bold", w / 2, 200, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Total Money Spent: ₽" .. LocalPlayer():GetNWInt("playerTotalMoneySpent"), "CloseCaption_Bold", w / 2, 220, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Money Spent On Weapons: ₽" .. LocalPlayer():GetNWInt("playerTotalMoneySpentWep"), "CloseCaption_Bold", w / 2, 240, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Money Spent On Ammo & Armor: ₽" .. LocalPlayer():GetNWInt("playerTotalMoneySpentItem"), "CloseCaption_Bold", w / 2, 260, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Deaths By Suicide: " .. LocalPlayer():GetNWInt("playerDeathsSuicide"), "CloseCaption_Bold", w / 2, 280, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Damage Inflicted: " .. LocalPlayer():GetNWInt("playerDamageGiven"), "CloseCaption_Bold", w / 2, 300, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Damage Received: " .. LocalPlayer():GetNWInt("playerDamageRecieved"), "CloseCaption_Bold", w / 2, 320, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+		end
+
+		local raidingStatsPanel = vgui.Create("DPanel", scrollPanel)
+		raidingStatsPanel:Dock(TOP)
+		raidingStatsPanel:DockMargin(margin, margin, margin, margin)
+		raidingStatsPanel:SetSize(0, 160)
+
+		raidingStatsPanel.Paint = function(self, w, h)
+
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+			draw.SimpleText("Raiding Statistics", "DermaLarge", w / 2, 10, Color(50, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+			draw.SimpleText("Survival Rate: " .. math.Round(LocalPlayer():GetNWInt("survivalRate"), 0) .. "%", "CloseCaption_Bold", w / 2, 40, Color(50, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Raids Played: " .. LocalPlayer():GetNWInt("raidsPlayed"), "CloseCaption_Bold", w / 2, 60, Color(50, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Extractions: " .. LocalPlayer():GetNWInt("raidsExtracted"), "CloseCaption_Bold", w / 2, 80, Color(50, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Run Throughs: " .. LocalPlayer():GetNWInt("raidsRanThrough"), "CloseCaption_Bold", w / 2, 100, Color(50, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Killed In Actions: " .. LocalPlayer():GetNWInt("raidsDied"), "CloseCaption_Bold", w / 2, 120, Color(50, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+		end
+
+		local pvpStatsPanel = vgui.Create("DPanel", scrollPanel)
+		pvpStatsPanel:Dock(TOP)
+		pvpStatsPanel:DockMargin(margin, margin, margin, margin)
+		pvpStatsPanel:SetSize(0, 160)
+
+		pvpStatsPanel.Paint = function(self, w, h)
+
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+			draw.SimpleText("PvP Statistics", "DermaLarge", w / 2, 10, Color(255, 160, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+			draw.SimpleText("AVG Kills Per Raid: " .. math.Round(LocalPlayer():GetNWInt("killsPerRaid"), 2), "CloseCaption_Bold", w / 2, 40, Color(255, 160, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Current Kill Streak: " .. LocalPlayer():GetNWInt("killStreak"), "CloseCaption_Bold", w / 2, 60, Color(255, 160, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Current Extract Streak: " .. LocalPlayer():GetNWInt("extractionStreak"), "CloseCaption_Bold", w / 2, 80, Color(255, 160, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Highest Kill Streak: " .. LocalPlayer():GetNWInt("highestKillStreak"), "CloseCaption_Bold", w / 2, 100, Color(255, 160, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Highest Extract Streak: " .. LocalPlayer():GetNWInt("highestExtractionStreak"), "CloseCaption_Bold", w / 2, 120, Color(255, 160, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+		end
+
+		local taskingStatsPanel = vgui.Create("DPanel", scrollPanel)
+		taskingStatsPanel:Dock(TOP)
+		taskingStatsPanel:DockMargin(margin, margin, margin, margin)
+		taskingStatsPanel:SetSize(0, 120)
+
+		taskingStatsPanel.Paint = function(self, w, h)
+
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+			draw.SimpleText("Tasking Statistics", "DermaLarge", w / 2, 10, Color(255, 0, 95), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+			draw.SimpleText("Total Tasks Finished: " .. LocalPlayer():GetNWInt("dailiesCompleted") + LocalPlayer():GetNWInt("specialsCompleted"), "CloseCaption_Bold", w / 2, 40, Color(255, 0, 95), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Daily Tasks Finished: " .. LocalPlayer():GetNWInt("dailiesCompleted"), "CloseCaption_Bold", w / 2, 60, Color(255, 0, 95), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Special Tasks Finished: " .. LocalPlayer():GetNWInt("specialsCompleted"), "CloseCaption_Bold", w / 2, 80, Color(255, 0, 95), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+		end
+
+		local playerExportStats = vgui.Create("DButton", scrollPanel)
+		playerExportStats:Dock(TOP)
+		playerExportStats:DockMargin(margin, margin, margin, margin)
+		playerExportStats:SetSize(250, 50)
+		playerExportStats:SetText("")
+
+		playerExportStats.Paint = function()
 			--Color of entire button
-			surface.SetDrawColor(45, 45, 45, 255)
-			surface.DrawRect(0, 0, exportButton:GetWide(), exportButton:GetTall())
-	
-			--Draw bottom and Right borders
-			surface.SetDrawColor(40, 40, 40, 255)
-			surface.DrawRect(0, 49, exportButton:GetWide(), 1)
-			surface.DrawRect(224, 0, 1, exportButton:GetTall())
-	
+			surface.SetDrawColor(100, 100, 100, 255)
+			surface.DrawRect(0, 0, playerExportStats:GetWide(), playerExportStats:GetTall())
+
 			--Draw/write text
-			draw.DrawText("Export Stats", "Trebuchet24", exportButton:GetWide() / 2, 10, Color(255, 255, 0), 1)
+			draw.DrawText("Export Player Stats to clipboard", "Trebuchet24", playerExportStats:GetWide() / 2, 12.5, Color(255, 255, 0), 1)
 		end
 
-		exportButton.DoClick = function(exportButton)
+		playerExportStats.DoClick = function()
 			ply = LocalPlayer()
 			SetClipboardText("Player " .. ply:GetName() .. " | " .. "Total Kills: " .. ply:GetNWInt("playerKills") .. " | " .. "Total Deaths: " .. ply:GetNWInt("playerDeaths") .. " | " .. "K/D Ratio: " .. ply:GetNWInt("playerKDR") .. " | " .. "Total Roubles Earned: " .. ply:GetNWInt("playerTotalEarned") .. " | " .. "Roubles Earned From Kills: " .. ply:GetNWInt("playerTotalEarnedKill") .. " | " .. "Roubles Earned From Selling: " .. ply:GetNWInt("playerTotalEarnedSell") .. " | " .. "Total EXP Gained: " .. ply:GetNWInt("playerTotalXpEarned") .. " | " .. "Total EXP From Kills: " .. ply:GetNWInt("playerTotalXpEarnedKill") .. " | " .. "Total EXP From Extracting: " .. ply:GetNWInt("playerTotalXpEarnedExplore") .. " | " .. "Total Money Spent: " .. ply:GetNWInt("playerTotalMoneySpent") .. " | " .. "Total Money Spent On Weapons: " .. ply:GetNWInt("playerTotalMoneySpentWep") .. " | " .. "Total Money Spent On Ammo/Armor: " .. ply:GetNWInt("playerTotalMoneySpentItem") .. " | " .. "Deaths By Suicide: " .. ply:GetNWInt("playerDeathsSuicide") .. " | " .. "Damage Inflicted: " .. ply:GetNWInt("playerDamageGiven") .. " | " .. "Damage Received: " .. ply:GetNWInt("playerDamageRecieved") .. " | " .. "Raids Played: " .. ply:GetNWInt("raidsPlayed") .. " | " .. "Extractions: " .. ply:GetNWInt("raidsExtracted") .. " | " .. "Run Throughs: " .. ply:GetNWInt("raidsRanThrough") .. " | " .. "Killed In Actions: " .. ply:GetNWInt("raidsDied") .. " | " .. "Current Kill Streak: " .. ply:GetNWInt("killStreak") .. " | " .. "Current Extract Streak: " .. ply:GetNWInt("extractionStreak") .. " | " .. "Highest Kill Streak: " .. ply:GetNWInt("highestKillStreak") .. " | " .. "Highest Extract Streak: " .. ply:GetNWInt("highestExtractionStreak"))
+		end
+
+		local resetKDButton = vgui.Create("DButton", scrollPanel)
+		resetKDButton:Dock(TOP)
+		resetKDButton:DockMargin(margin, margin, margin, margin)
+		resetKDButton:SetSize(250, 50)
+		resetKDButton:SetText("")
+
+		resetKDButton.Paint = function()
+			--Color of entire button
+			surface.SetDrawColor(100, 100, 100, 255)
+			surface.DrawRect(0, 0, resetKDButton:GetWide(), resetKDButton:GetTall())
+
+			--Draw/write text
+			if (kdResetText == 0) then
+				draw.DrawText("Reset K/D Ratio | " .. math.Round(LocalPlayer():GetNWInt("playerKDR"), 2) .. " > " .. "1.00", "Trebuchet24", resetKDButton:GetWide() / 2, 12.5, Color(255, 0, 0, 255), 1)
+			else
+				draw.DrawText("Are you sure? This can not be reverted.", "Trebuchet24", resetKDButton:GetWide() / 2, 12.5, Color(255, 0, 0, 255), 1)
+			end
+		end
+
+		resetKDButton.DoClick = function()
+			if (kdResetText == 0) then
+				kdResetText = 1
+			else
+				RunConsoleCommand("efgm_reset_kd")
+				kdResetText = 0
+			end
+		end
+
+		local endPanel = vgui.Create("DPanel", scrollPanel)
+		endPanel:Dock(TOP)
+		endPanel:DockMargin(margin, margin, margin, margin)
+		endPanel:SetSize(0, 60)
+
+		endPanel.Paint = function(self, w, h)
+			draw.SimpleText("(reset stats cannot currently be reverted by any admin)", "CloseCaption_Bold", w / 2, h / 5, Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 	end
 
@@ -341,154 +327,189 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	skillButton:SetSize(100, 50)
 	skillButton:SetPos(0, 125)
 	skillButton.Paint = function()
-		--Color of entire button
-		surface.SetDrawColor(50, 50, 50, 255)
-		surface.DrawRect(0, 0, skillButton:GetWide(), skillButton:GetTall())
+			--Color of entire button
+			surface.SetDrawColor(50, 50, 50, 255)
+			surface.DrawRect(0, 0, skillButton:GetWide(), skillButton:GetTall())
 
-		--Draw bottom and Right borders
-		surface.SetDrawColor(40, 40, 40, 255)
-		surface.DrawRect(0, 49, skillButton:GetWide(), 1)
-		surface.DrawRect(99, 0, 1, skillButton:GetTall())
+			--Draw bottom and Right borders
+			surface.SetDrawColor(40, 40, 40, 255)
+			surface.DrawRect(0, 49, skillButton:GetWide(), 1)
+			surface.DrawRect(99, 0, 1, skillButton:GetTall())
 
-		--Draw/write text
-
-		draw.DrawText("SKILLS", "DermaLarge", skillButton:GetWide() / 2.1, 10, Color(0, 165, 255, 255), 1)
-
+			--Draw/write text
+			draw.DrawText("SKILLS", "DermaLarge", skillButton:GetWide() / 2, 10, Color(35, 255, 255, 255), 1)
 	end
 
 	skillButton.DoClick = function()
-
 		local skillPanel = Menu:Add("SkillPanel")
 
-		skillPanel.Paint = function()
-			local enduranceExpToLevel = (LocalPlayer():GetNWInt("enduranceLevel") * 3)
-			local strengthExpToLevel = (LocalPlayer():GetNWInt("strengthLevel") * 2)
-			local charismaExpToLevel = (LocalPlayer():GetNWInt("charismaLevel") * 5)
-			local covertExpToLevel = (LocalPlayer():GetNWInt("covertLevel") * 2)
-			local loyaltyExpToLevel = (LocalPlayer():GetNWInt("loyaltyLevel"))
+		local whiteColor = 		Color(250, 250, 250, 255)
+		local primaryColor =	Color(30, 30, 30, 255)
+		local secondaryColor =	Color(100, 100, 100, 255)
+
+		local margin = 			math.Round( ScrH() * 0.01 )
+
+		local enduranceExpToLevel = (LocalPlayer():GetNWInt("enduranceLevel") * 3)
+		local strengthExpToLevel = (LocalPlayer():GetNWInt("strengthLevel") * 2)
+		local charismaExpToLevel = (LocalPlayer():GetNWInt("charismaLevel") * 5)
+		local covertExpToLevel = (LocalPlayer():GetNWInt("covertLevel") * 2)
+		local loyaltyExpToLevel = (LocalPlayer():GetNWInt("loyaltyLevel"))
+
+		skillPanel.Paint = function(self, w, h)
+			draw.RoundedBox(0, 0, 0, w, h, primaryColor)
+		end
+
+		local scrollPanel = vgui.Create("DScrollPanel", skillPanel)
+		scrollPanel:Dock(FILL)
+
+		local skillInfoPanel = vgui.Create("DPanel", scrollPanel)
+		skillInfoPanel:Dock(TOP)
+		skillInfoPanel:DockMargin(margin, margin, margin, margin)
+		skillInfoPanel:SetSize(0, 50)
+
+		skillInfoPanel.Paint = function(self, w, h)
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+			draw.SimpleText("SKILLS", "CloseCaption_BoldItalic", w / 2, h / 2, Color(35, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 			if (LocalPlayer():GetNWInt("enduranceLevel") == 40) then
 				enduranceProgressText = "Maxed"
 			else
 				enduranceProgressText = math.Round(LocalPlayer():GetNWInt("enduranceExperience"), 2) .. " / " .. enduranceExpToLevel
 			end
-
+	
 			if (LocalPlayer():GetNWInt("strengthLevel") == 30) then
 				strengthProgressText = "Maxed"
 			else
 				strengthProgressText = math.Round(LocalPlayer():GetNWInt("strengthExperience"), 2) .. " / " .. strengthExpToLevel
 			end
-
+	
 			if (LocalPlayer():GetNWInt("charismaLevel") == 40) then
 				charismaProgressText = "Maxed"
 			else
 				charismaProgressText = math.Round(LocalPlayer():GetNWInt("charismaExperience"), 2) .. " / " .. charismaExpToLevel
 			end
-
+	
 			if (LocalPlayer():GetNWInt("covertLevel") == 20) then
 				covertProgressText = "Maxed"
 			else
 				covertProgressText = math.Round(LocalPlayer():GetNWInt("covertExperience"), 2) .. " / " .. covertExpToLevel
 			end
-
+	
 			if (LocalPlayer():GetNWInt("loyaltyLevel") == 25) then
 				loyaltyProgressText = "Maxed"
 			else
 				loyaltyProgressText = math.Round(LocalPlayer():GetNWInt("loyaltyExperience"), 2) .. " / " .. loyaltyExpToLevel
 			end
+		end
+
+		local endurancePanel = vgui.Create("DPanel", scrollPanel)
+		endurancePanel:Dock(TOP)
+		endurancePanel:DockMargin(margin, margin, margin, margin)
+		endurancePanel:SetSize(0, 130)
+
+		endurancePanel.Paint = function(self, w, h)
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+			draw.SimpleText("Endurance : " .. "Level " .. LocalPlayer():GetNWInt("enduranceLevel"), "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
 			surface.SetDrawColor(50, 50, 50, 255)
-			surface.DrawRect(0, 0, skillPanel:GetWide(), skillPanel:GetTall())
-			surface.SetTextColor(255, 255, 255, 255)
-
-			--Endurance
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(50, 50)
-			surface.DrawText("Endurance : " .. " Level " .. LocalPlayer():GetNWInt("enduranceLevel"))
-
-			surface.SetDrawColor(100, 100, 100, 255)
-			surface.DrawRect(50, 100, 500, 30)
+			surface.DrawRect(40, 50, 600, 30)
 
 			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(51, 102.5, 498.5 * (LocalPlayer():GetNWInt("enduranceExperience") / enduranceExpToLevel), 25)
+			surface.DrawRect(41, 52.5, 598.5 * (LocalPlayer():GetNWInt("enduranceExperience") / enduranceExpToLevel), 25)
 
-			surface.SetTextPos(260, 100)
-			surface.DrawText(enduranceProgressText)
+			draw.SimpleText("Increases your walking and running speed.", "DermaLarge", w / 2, 90, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText(enduranceProgressText, "DermaLarge", w / 2, 50, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+		end
 
-			--Strength
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(50, 200)
-			surface.DrawText("Strength : " .. " Level " .. LocalPlayer():GetNWInt("strengthLevel"))
+		local strengthPanel = vgui.Create("DPanel", scrollPanel)
+		strengthPanel:Dock(TOP)
+		strengthPanel:DockMargin(margin, margin, margin, margin)
+		strengthPanel:SetSize(0, 130)
 
-			surface.SetDrawColor(100, 100, 100, 255)
-			surface.DrawRect(50, 250, 500, 30)
+		strengthPanel.Paint = function(self, w, h)
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
-			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(51, 252.5, 498.5 * (LocalPlayer():GetNWInt("strengthExperience") / strengthExpToLevel), 25)
+			draw.SimpleText("Strength : " .. "Level " .. LocalPlayer():GetNWInt("strengthLevel"), "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
-			surface.SetTextPos(260, 250)
-			surface.DrawText(strengthProgressText)
-
-			--Charisma
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(50, 350)
-			surface.DrawText("Charisma : " .. "  Level " .. LocalPlayer():GetNWInt("charismaLevel"))
-
-			surface.SetDrawColor(100, 100, 100, 255)
-			surface.DrawRect(50, 400, 500, 30)
+			surface.SetDrawColor(50, 50, 50, 255)
+			surface.DrawRect(40, 50, 600, 30)
 
 			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(51, 402.5, 498.5 * (LocalPlayer():GetNWInt("charismaExperience") / charismaExpToLevel), 25)
+			surface.DrawRect(41, 52.5, 598.5 * (LocalPlayer():GetNWInt("strengthExperience") / strengthExpToLevel), 25)
 
-			surface.SetTextPos(260, 400)
-			surface.DrawText(charismaProgressText)
+			draw.SimpleText("Increases your jump height.", "DermaLarge", w / 2, 90, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText(strengthProgressText, "DermaLarge", w / 2, 50, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+		end
 
-			--Covert Movement
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(50, 500)
-			surface.DrawText("Covert Movement : " .. "  Level " .. LocalPlayer():GetNWInt("covertLevel"))
+		local charismaPanel = vgui.Create("DPanel", scrollPanel)
+		charismaPanel:Dock(TOP)
+		charismaPanel:DockMargin(margin, margin, margin, margin)
+		charismaPanel:SetSize(0, 130)
 
-			surface.SetDrawColor(100, 100, 100, 255)
-			surface.DrawRect(50, 550, 500, 30)
+		charismaPanel.Paint = function(self, w, h)
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
-			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(51, 552.5, 498.5 * (LocalPlayer():GetNWInt("covertExperience") / covertExpToLevel), 25)
+			draw.SimpleText("Charisma : " .. "Level " .. LocalPlayer():GetNWInt("charismaLevel"), "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
-			surface.SetTextPos(260, 550)
-			surface.DrawText(covertProgressText)
-
-			--Loyalty
-			surface.SetFont("DermaLarge")
-			surface.SetTextPos(50, 650)
-			surface.DrawText("Loyalty : " .. "  Level " .. LocalPlayer():GetNWInt("loyaltyLevel"))
-
-			surface.SetDrawColor(100, 100, 100, 255)
-			surface.DrawRect(50, 700, 500, 30)
+			surface.SetDrawColor(50, 50, 50, 255)
+			surface.DrawRect(40, 50, 600, 30)
 
 			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(51, 702.5, 498.5 * (LocalPlayer():GetNWInt("loyaltyExperience") / loyaltyExpToLevel), 25)
+			surface.DrawRect(41, 52.5, 598.5 * (LocalPlayer():GetNWInt("charismaExperience") / charismaExpToLevel), 25)
 
-			surface.SetTextPos(260, 700)
-			surface.DrawText(loyaltyProgressText)
+			draw.SimpleText("Decreases the prices of items in the shop.", "DermaLarge", w / 2, 90, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText(charismaProgressText, "DermaLarge", w / 2, 50, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+		end
 
-			--Text below the skill progression stuffs
+		local covertPanel = vgui.Create("DPanel", scrollPanel)
+		covertPanel:Dock(TOP)
+		covertPanel:DockMargin(margin, margin, margin, margin)
+		covertPanel:SetSize(0, 130)
 
-			surface.SetTextColor(255, 255, 255, 255)
+		covertPanel.Paint = function(self, w, h)
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
-			surface.SetTextPos(50, 140)
-			surface.DrawText("Increases your walking and running speed.")
+			draw.SimpleText("Covert Movement : " .. "Level " .. LocalPlayer():GetNWInt("covertLevel"), "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
-			surface.SetTextPos(50, 290)
-			surface.DrawText("Increases your jump height.")
+			surface.SetDrawColor(50, 50, 50, 255)
+			surface.DrawRect(40, 50, 600, 30)
 
-			surface.SetTextPos(50, 440)
-			surface.DrawText("Decreases the prices of items in the shop.")
+			surface.SetDrawColor(0, 255, 50, 255)
+			surface.DrawRect(41, 52.5, 598.5 * (LocalPlayer():GetNWInt("covertExperience") / covertExpToLevel), 25)
 
-			surface.SetTextPos(50, 590)
-			surface.DrawText("Increases your crouch walking speed.")
+			draw.SimpleText("Increases your crouch walking speed.", "DermaLarge", w / 2, 90, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText(covertProgressText, "DermaLarge", w / 2, 50, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+		end
 
-			surface.SetTextPos(50, 740)
-			surface.DrawText("Increases rewards from daily/special tasks.")
+		local loyaltyPanel = vgui.Create("DPanel", scrollPanel)
+		loyaltyPanel:Dock(TOP)
+		loyaltyPanel:DockMargin(margin, margin, margin, margin)
+		loyaltyPanel:SetSize(0, 130)
+
+		loyaltyPanel.Paint = function(self, w, h)
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+			draw.SimpleText("Loyalty : " .. "Level " .. LocalPlayer():GetNWInt("loyaltyLevel"), "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+			surface.SetDrawColor(50, 50, 50, 255)
+			surface.DrawRect(40, 50, 600, 30)
+
+			surface.SetDrawColor(0, 255, 50, 255)
+			surface.DrawRect(41, 52.5, 598.5 * (LocalPlayer():GetNWInt("loyaltyExperience") / loyaltyExpToLevel), 25)
+
+			draw.SimpleText("Increases rewards from daily/special tasks.", "DermaLarge", w / 2, 90, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText(loyaltyProgressText, "DermaLarge", w / 2, 50, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+		end
+
+		local endPanel = vgui.Create("DPanel", scrollPanel)
+		endPanel:Dock(TOP)
+		endPanel:DockMargin(margin, margin, margin, margin)
+		endPanel:SetSize(0, 60)
+
+		endPanel.Paint = function(self, w, h)
+			draw.SimpleText("(leveling a skill too much in a raid will slow down the xp gain)", "CloseCaption_Bold", w / 2, h / 5, Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 	end
 
@@ -629,7 +650,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		local eliminationText = LocalPlayer():GetNWInt("mapKills") .. " / " .. "6"
 		local extractText = LocalPlayer():GetNWInt("mapExtracts") .. " / " .. "2"
 
-		local dailyPayment = ("₽ " .. math.Round(2500 * LocalPlayer():GetNWInt("loyaltyEffect")))
+		local dailyPayment = ("₽ " .. math.Round(5000 * LocalPlayer():GetNWInt("loyaltyEffect")))
 
 		local distancePayment = ("₽ " .. math.Round(50000 * LocalPlayer():GetNWInt("loyaltyEffect")))
 		local securedPerimeterPayment = ("₽ " .. math.Round(35000 * LocalPlayer():GetNWInt("loyaltyEffect")))
@@ -642,7 +663,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		local distanceText = math.Round(LocalPlayer():GetNWInt("weeklyDistance"), 2) .. " / " .. "3000m"
 		local securedPerimeterText = LocalPlayer():GetNWInt("secPerimeter") .. " / " .. "8"
-		local weeklyExtractText = LocalPlayer():GetNWInt("weeklyExtracts") .. " / " .. "15"
+		local weeklyExtractText = LocalPlayer():GetNWInt("weeklyExtracts") .. " / " .. "10"
 		local shooterBornText = LocalPlayer():GetNWInt("shooterBorn") .. " / " .. "2"
 		local deadeyeText = LocalPlayer():GetNWInt("deadeyeProgress") .. " / " .. "1"
 		local nuclearText = LocalPlayer():GetNWInt("raidKill") .. " / " .. "12"
@@ -666,7 +687,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		dailyTaskPanel.Paint = function(self, w, h)
 			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
-			draw.SimpleText("Dailies : Reset at the beginning of each map.", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Dailies : Reset at the beginning of each map.", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
 		--DAILY TASKS
@@ -713,7 +734,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 			draw.SimpleText("Successful Operations : Extract from raids", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
-			draw.SimpleText("Rewards: " .. dailyRewardXP .. " EXP, " .. "₽ 2500", "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Rewards: " .. dailyRewardXP .. " EXP, " .. dailyPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
 			surface.SetDrawColor(65, 65, 65)
 			surface.DrawRect(w / 2 - 250, 60, 500, 30)
@@ -737,7 +758,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		weeklyTaskPanel.Paint = function(self, w, h)
 			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
-			draw.SimpleText("Specials : Reset at the beginning of each wipe.", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Specials : Reset at the beginning of each wipe.", "CloseCaption_BoldItalic", w / 2, h / 2, Color(0, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
 		--SPECIAL TASKS
@@ -819,7 +840,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.DrawRect(w / 2 - 250, 60, 500, 30)
 
 			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("weeklyExtracts") / "15"), 25)
+			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("weeklyExtracts") / "10"), 25)
 
 			if LocalPlayer():GetNWInt("weeklyExtractsComplete") == 0 then
 				draw.SimpleText(weeklyExtractText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
@@ -1321,44 +1342,65 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		stashMenuButton.DoClick = function(stashMenuButton)
 			local stashMenuPanel = Menu:Add("StashMenuPanel")
-
-			stashMenuPanel.Paint = function()
-				surface.SetDrawColor(50, 50, 50, 255)
-				surface.DrawRect(0, 0, stashMenuPanel:GetWide(), stashMenuPanel:GetTall())
-				surface.SetTextColor(255, 255, 255, 255)
-
-				surface.SetFont("DermaLarge")
-				surface.SetTextPos(245, 150)
-				surface.DrawText("Upgrade Stash")
-
-				surface.SetTextPos(10, 250)
-				surface.DrawText("For each level, you gain an addition 6 slots in your stash!")
-
-				surface.SetTextPos(210, 350)
-				surface.DrawText("Current stash level: " .. LocalPlayer():GetNWInt("playerStashLevel"))
-
-				surface.SetTextPos(210, 390)
-				surface.DrawText("Current ₽ Count: " .. math.Round(LocalPlayer():GetNWInt("playerMoney")))
+	
+			local whiteColor = 		Color(250, 250, 250, 255)
+			local primaryColor =	Color(30, 30, 30, 255)
+			local secondaryColor =	Color(100, 100, 100, 255)
+	
+			local margin = 			math.Round( ScrH() * 0.01 )
+	
+			stashMenuPanel.Paint = function(self, w, h)
+				draw.RoundedBox(0, 0, 0, w, h, primaryColor)
+			end
+	
+			local scrollPanel = vgui.Create("DScrollPanel", stashMenuPanel)
+			scrollPanel:Dock(FILL)
+	
+			local stashInfoPanel = vgui.Create("DPanel", scrollPanel)
+			stashInfoPanel:Dock(TOP)
+			stashInfoPanel:DockMargin(margin, margin, margin, margin)
+			stashInfoPanel:SetSize(0, 50)
+	
+			stashInfoPanel.Paint = function(self, w, h)
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+	
+				draw.SimpleText("STASH", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			end
+	
+			local StashInfoPanel = vgui.Create("DPanel", scrollPanel)
+			StashInfoPanel:Dock(TOP)
+			StashInfoPanel:DockMargin(margin, margin, margin, margin)
+			StashInfoPanel:SetSize(0, 210)
+	
+			StashInfoPanel.Paint = function(self, w, h)
+	
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+	
+				draw.SimpleText("For each stash level, you gain an addition", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				draw.SimpleText(" 6 slots for your stash!", "DermaLarge", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				draw.SimpleText("Current Stash Level: " .. LocalPlayer():GetNWInt("playerStashLevel") .. "/10", "DermaLarge", w / 2, 80, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				draw.SimpleText("Current ₽ Count: " .. math.Round(LocalPlayer():GetNWInt("playerMoney")), "DermaLarge", w / 2, 110, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				draw.SimpleText("Current Stash Limt: " .. LocalPlayer():GetNWInt("playerStashLimit") .. "/" .. "60", "DermaLarge", w / 2, 140, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
 				if (LocalPlayer():GetNWInt("stashMaxed") == 0) then
-					surface.SetTextPos(190, 525)
-					surface.DrawText("Required ₽ to upgrade: " .. LocalPlayer():GetNWInt("playerRoubleForStashUpgrade"))
+					draw.SimpleText("Required ₽ to upgrade: " .. LocalPlayer():GetNWInt("playerRoubleForStashUpgrade"), "DermaLarge", w / 2, 170, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 				end
-
-				surface.SetTextPos(200, 565)
-				surface.DrawText("Current stash limt : " .. LocalPlayer():GetNWInt("playerStashLimit") .. " / " .. "60")
-
 			end
+
+			local StashButtonHolder = vgui.Create("DPanel", scrollPanel)
+			StashButtonHolder:Dock(TOP)
+			StashButtonHolder:DockMargin(margin, margin, margin, margin)
+			StashButtonHolder:SetSize(0, 70)
 
 			if (LocalPlayer():GetNWInt("stashMaxed") == 0) then
 				local doStashUpgrade = vgui.Create("DButton")
 				doStashUpgrade:SetParent(Menu)
 				doStashUpgrade:SetText("")
 				doStashUpgrade:SetSize(225, 50)
-				doStashUpgrade:SetPos(330, 475)
+				doStashUpgrade:SetPos(340, 350)
 				doStashUpgrade.Paint = function()
 					--Color of entire button
-					surface.SetDrawColor(150, 150, 150, 10)
+					surface.SetDrawColor(30, 30, 30, 255)
 					surface.DrawRect(0, 0, doStashUpgrade:GetWide(), doStashUpgrade:GetTall())
 
 					--Draw bottom and Right borders
@@ -1372,6 +1414,10 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 				doStashUpgrade.DoClick = function()
 					RunConsoleCommand("efgm_stash_upgrade")
+				end
+
+				StashButtonHolder.Paint = function(self, w, h)
+					draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 				end
 			end
 		end
@@ -1399,49 +1445,60 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		prestigeButton.DoClick = function(prestigeButton)
 			local prestigePanel = Menu:Add("PrestigePanel")
-
-			prestigePanel.Paint = function()
-				surface.SetDrawColor(50, 50, 50, 255)
-				surface.DrawRect(0, 0, prestigePanel:GetWide(), prestigePanel:GetTall())
-
-				surface.SetTextColor(255, 0, 0, 255)
-
-				surface.SetFont("DermaLarge")
-				surface.SetTextPos(275, 150)
-				surface.DrawText("PRESTIGE")
-
-				surface.SetTextColor(255, 255, 255, 255)
-
-				surface.SetFont("DermaLarge")
-				surface.SetTextPos(90, 230)
-				surface.DrawText("Once you hit level 26, you can prestige, which")
-
-				surface.SetTextPos(65, 270)
-				surface.DrawText("resets your level to get a permanent rouble boost.")
-
-				surface.SetTextPos(205, 450)
-				surface.DrawText("Current ₽ Multiplier:")
-
-				surface.SetTextColor(255, 255, 0, 255)
-				surface.SetTextPos(450, 450)
-				surface.DrawText(LocalPlayer():GetNWInt("playerRoubleMulti") .. "x")
-
-				surface.SetTextColor(255, 255, 255, 255)
-				surface.SetTextPos(205, 500)
-				surface.DrawText("Current Prestige: " .. (LocalPlayer():GetNWInt("playerPrestige")))
-
-				surface.SetTextPos(205, 550)
-				surface.DrawText("Current Level: " .. (LocalPlayer():GetNWInt("playerLvl")))
+	
+			local whiteColor = 		Color(250, 250, 250, 255)
+			local primaryColor =	Color(30, 30, 30, 255)
+			local secondaryColor =	Color(100, 100, 100, 255)
+	
+			local margin = 			math.Round( ScrH() * 0.01 )
+	
+			prestigePanel.Paint = function(self, w, h)
+				draw.RoundedBox(0, 0, 0, w, h, primaryColor)
 			end
+	
+			local scrollPanel = vgui.Create("DScrollPanel", prestigePanel)
+			scrollPanel:Dock(FILL)
+	
+			local prestigeInfoPanel = vgui.Create("DPanel", scrollPanel)
+			prestigeInfoPanel:Dock(TOP)
+			prestigeInfoPanel:DockMargin(margin, margin, margin, margin)
+			prestigeInfoPanel:SetSize(0, 50)
+	
+			prestigeInfoPanel.Paint = function(self, w, h)
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+	
+				draw.SimpleText("PRESTIGE", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 0, 0, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			end
+	
+			local PrestigeInfoPanel = vgui.Create("DPanel", scrollPanel)
+			PrestigeInfoPanel:Dock(TOP)
+			PrestigeInfoPanel:DockMargin(margin, margin, margin, margin)
+			PrestigeInfoPanel:SetSize(0, 180)
+	
+			PrestigeInfoPanel.Paint = function(self, w, h)
+	
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+	
+				draw.SimpleText("Prestiging resets your level to get a permanent", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				draw.SimpleText(" rouble boost and to reset your special tasks", "DermaLarge", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				draw.SimpleText("Current ₽ Multiplier: " .. LocalPlayer():GetNWInt("playerRoubleMulti") .. "x", "DermaLarge", w / 2, 80, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				draw.SimpleText("Current Prestige: " .. LocalPlayer():GetNWInt("playerPrestige"), "DermaLarge", w / 2, 110, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				draw.SimpleText("Current Level: " .. LocalPlayer():GetNWInt("playerLvl"), "DermaLarge", w / 2, 140, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			end
+
+			local PrestigeButtonHolder = vgui.Create("DPanel", scrollPanel)
+			PrestigeButtonHolder:Dock(TOP)
+			PrestigeButtonHolder:DockMargin(margin, margin, margin, margin)
+			PrestigeButtonHolder:SetSize(0, 70)
 
 			local doPrestigeButton = vgui.Create("DButton")
 			doPrestigeButton:SetParent(Menu)
 			doPrestigeButton:SetText("")
 			doPrestigeButton:SetSize(225, 50)
-			doPrestigeButton:SetPos(340, 375)
+			doPrestigeButton:SetPos(340, 320)
 			doPrestigeButton.Paint = function()
 				--Color of entire button
-				surface.SetDrawColor(150, 150, 150, 10)
+				surface.SetDrawColor(30, 30, 30, 255)
 				surface.DrawRect(0, 0, doPrestigeButton:GetWide(), doPrestigeButton:GetTall())
 
 				--Draw bottom and Right borders
@@ -1456,11 +1513,23 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			doPrestigeButton.DoClick = function()
 				RunConsoleCommand("efgm_prestige")
 			end
+	
+			PrestigeButtonHolder.Paint = function(self, w, h)
+	
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
+			end
+
+			local endPanel = vgui.Create("DPanel", scrollPanel)
+			endPanel:Dock(TOP)
+			endPanel:DockMargin(margin, margin, margin, margin)
+			endPanel:SetSize(0, 60)
+	
+			endPanel.Paint = function(self, w, h)
+				draw.SimpleText("(the rouble boost does not persits between server wipes)", "CloseCaption_Bold", w / 2, h / 5, Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			end
 		end
 	end
-
-
 end
 
 --Player Panel

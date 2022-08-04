@@ -453,6 +453,18 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetNWInt("consistencyComplete", tonumber(ply:GetPData("consistencyComplete")))
 	end
 
+	if (ply:GetPData("dailiesCompleted") == nil) then
+		ply:SetNWInt("dailiesCompleted", 0)
+	else
+		ply:SetNWInt("dailiesCompleted", tonumber(ply:GetPData("dailiesCompleted")))
+	end
+
+	if (ply:GetPData("specialsCompleted") == nil) then
+		ply:SetNWInt("specialsCompleted", 0)
+	else
+		ply:SetNWInt("specialsCompleted", tonumber(ply:GetPData("specialsCompleted")))
+	end
+
 	--Skills
 
 	--Endurance
@@ -799,6 +811,9 @@ function GM:PlayerDisconnected(ply)
 	ply:SetPData("secPerimeterComplete", ply:GetNWInt("secPerimeterComplete"))
 	ply:SetPData("deadeyeComplete", ply:GetNWInt("deadeyeComplete"))
 	ply:SetPData("consistencyComplete", ply:GetNWInt("consistencyComplete"))
+
+	ply:SetPData("dailiesCompleted", ply:GetNWInt("dailiesCompleted"))
+	ply:SetPData("specialsCompleted", ply:GetNWInt("specialsCompleted"))
 
 	--Raids
 	ply:SetPData("survivalRate", ply:GetNWInt("survivalRate"))

@@ -12,7 +12,7 @@ midHelmets	= {"helmet_6b47", "helmet_6b47_2", "helmet_kiver", "helmet_lzsh", "he
 
 -- High TierSpawns
 
-highWeps	= {"arccw_waw_dp28", "arccw_eft_t5000", "arccw_eap_aek", "arccw_eap_usas", "midnights_gso_xm8", "arccw_midnightwolf_type20", "arccw_ud_m79", "arccw_mifl_fas2_m24", "arccw_mifl_fas2_m82", "arccw_fml_fas2_custom_mass26", "arccw_mifl_fas2_minimi", "arccw_mifl_fas2_ak47", "arccw_eft_scarh", "arccw_bo1_law", "arccw_bo1_fal", "arccw_bo1_hk21", "arccw_waw_ptrs41", "arccw_waw_fg42", "arccw_bo1_m60", "arccw_waw_mg42", "arccw_bo2_vector", "arccw_bo1_dragunov", "arccw_bo1_rpk", "arccw_bo2_smr", "arccw_mw3e_rsass"}
+highWeps	= {"arccw_waw_dp28", "arccw_eft_t5000", "arccw_eap_aek", "arccw_eap_usas", "midnights_gso_xm8", "arccw_midnightwolf_type20", "arccw_ud_m79", "arccw_mifl_fas2_m24", "arccw_mifl_fas2_m82", "arccw_fml_fas2_custom_mass26", "arccw_mifl_fas2_minimi", "arccw_mifl_fas2_ak47", "arccw_eft_scarh", "arccw_bo1_law", "arccw_bo1_fal", "arccw_bo1_hk21", "arccw_waw_ptrs41", "arccw_waw_fg42", "arccw_bo1_m60", "arccw_waw_mg42", "arccw_bo2_vector", "arccw_bo1_dragunov", "arccw_bo1_rpk", "arccw_bo2_smr", "arccw_mw3e_rsass", "arccw_bo2_an94", "arccw_bo2_mtar", "arccw_bo2_mg08", "arccw_bo2_scorpion"}
 highVests	= {"vest_6b13_1", "vest_6b13_2", "vest_6b13_m", "vest_6b23_2", "vest_6b43", "vest_a18", "vest_bnti_gzhel_k", "vest_iotv_gen4_full", "vest_m2", "vest_trooper", "vest_wartech_tv110", "vest_zhuk6"}
 highHelmets	= {"helmet_achhc_black", "helmet_achhc_green","helmet_maska_1sch", "helmet_maska_1sch_killa", "helmet_opscore", "helmet_opscore_visor", "helmet_ulach", "helmet_zsh1_2m"}
 

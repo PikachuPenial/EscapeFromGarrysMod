@@ -204,6 +204,10 @@ function buyGun(ply, cmd, args)
 	weaponPrices[98] = {"arccw_bo1_crossbow", "20000", "12"}
 	weaponPrices[99] = {"arccw_cod4e_r700", "14995", "13"}
 	weaponPrices[100] = {"arccw_bo1_ak47", "14500", "12"}
+	weaponPrices[101] = {"arccw_bo2_an94", "18200", "14"}
+	weaponPrices[102] = {"arccw_bo2_mtar", "19400", "15"}
+	weaponPrices[103] = {"arccw_bo2_mg08", "39999", "23"}
+	weaponPrices[104] = {"arccw_bo2_scorpion", "27499", "19"}
 
 	for k, v in pairs(weaponPrices) do
 		if (args[1] == v[1]) then
@@ -280,11 +284,36 @@ function PlayerPrestige(ply, cmd, args)
 
 		ply:SetNWInt("playerLvl", levelReset)
 		ply:SetNWInt("playerExp", expReset)
+
+		ply:SetNWInt("weeklyDistance", 0)
+		ply:SetNWInt("weeklyExtracts", 0)
+		ply:SetNWInt("weeklyNuclear", 0)
+		ply:SetNWInt("weeklyAddict", 0)
+		ply:SetNWInt("shooterBorn", 0)
+		ply:SetNWInt("secPerimeter", 0)
+		ply:SetNWInt("deadeyeProgress", 0)
+		ply:SetNWInt("consistencyProgress", 0)
+
+		ply:SetNWInt("weeklyDistanceComplete", 0)
+		ply:SetNWInt("weeklyExtractsComplete", 0)
+		ply:SetNWInt("weeklyNuclearComplete", 0)
+		ply:SetNWInt("weeklyAddictComplete", 0)
+		ply:SetNWInt("shooterBornComplete", 0)
+		ply:SetNWInt("secPerimeterComplete", 0)
+		ply:SetNWInt("deadeyeComplete", 0)
+		ply:SetNWInt("consistencyComplete", 0)
 	else
 		ply:PrintMessage(3, "Sorry, " .. ply:GetName() .. ". " .. "I can't give credit. Come back when you're a little... mmmmm... higher leveled!")
 	end
 end
 concommand.Add("efgm_prestige", PlayerPrestige)
+
+function PlayerKDReset(ply, cmd, args)
+	ply:SetNWInt("playerKDR", 1)
+	ply:SetNWInt("playerKills", 0)
+	ply:SetNWInt("playerDeaths", 0)
+end
+concommand.Add("efgm_reset_kd", PlayerKDReset)
 
 function StashUpgrade(ply, cmd, args)
 

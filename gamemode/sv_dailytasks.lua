@@ -8,10 +8,12 @@ function checkForElimination(ply)
 	if (curKills >= 6) and (ply:GetNWInt("eliminationComplete") == 0) then
 		if (ply:GetNWInt("playerLvl") < 26) then
 			ply:SetNWInt("playerExp", (ply:GetNWInt("playerExp") + expReward) * (ply:GetNWInt("loyaltyEffect")))
-			ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 2500) * (ply:GetNWInt("loyaltyEffect")))
+			ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 5000) * (ply:GetNWInt("loyaltyEffect")))
+			ply:SetNWInt("dailiesCompleted", ply:GetNWInt("dailiesCompleted") + 1)
 			ply:SetNWInt("eliminationComplete", 1)
 		else
-			ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 2500) * (ply:GetNWInt("loyaltyEffect")))
+			ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 5000) * (ply:GetNWInt("loyaltyEffect")))
+			ply:SetNWInt("dailiesCompleted", ply:GetNWInt("dailiesCompleted") + 1)
 			ply:SetNWInt("eliminationComplete", 1)
 		end
 
@@ -29,10 +31,12 @@ function checkForSuccessfulOperations(ply)
 	if (curExtracts >= 2) and (ply:GetNWInt("successfulOperationsComplete") == 0) then
 		if (ply:GetNWInt("playerLvl") < 26) then
 			ply:SetNWInt("playerExp", (ply:GetNWInt("playerExp") + expReward) * (ply:GetNWInt("loyaltyEffect")))
-			ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 2500) * (ply:GetNWInt("loyaltyEffect")))
+			ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 5000) * (ply:GetNWInt("loyaltyEffect")))
+			ply:SetNWInt("dailiesCompleted", ply:GetNWInt("dailiesCompleted") + 1)
 			ply:SetNWInt("successfulOperationsComplete", 1)
 		else
-			ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 2500) * (ply:GetNWInt("loyaltyEffect")))
+			ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 5000) * (ply:GetNWInt("loyaltyEffect")))
+			ply:SetNWInt("dailiesCompleted", ply:GetNWInt("dailiesCompleted") + 1)
 			ply:SetNWInt("successfulOperationsComplete", 1)
 		end
 
@@ -48,6 +52,7 @@ function checkForWeekly(ply)
 	if (curWeekly >= 3000) and (ply:GetNWInt("weeklyDistanceComplete") == 0) then
 		ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 50000) * ply:GetNWInt("loyaltyEffect"))
 		ply:SetNWInt("weeklyDistanceComplete", 1)
+		ply:SetNWInt("specialsCompleted", ply:GetNWInt("specialsCompleted") + 1)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)
@@ -58,9 +63,10 @@ end
 function checkForWeeklyTwo(ply)
 	local curWeeklyTwo = ply:GetNWInt("weeklyExtracts")
 
-	if (curWeeklyTwo >= 15) and (ply:GetNWInt("weeklyExtractsComplete") == 0) then
+	if (curWeeklyTwo >= 10) and (ply:GetNWInt("weeklyExtractsComplete") == 0) then
 		ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 60000) * ply:GetNWInt("loyaltyEffect"))
 		ply:SetNWInt("weeklyExtractsComplete", 1)
+		ply:SetNWInt("specialsCompleted", ply:GetNWInt("specialsCompleted") + 1)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)
@@ -74,6 +80,7 @@ function checkForWeeklyThree(ply)
 	if (curWeeklyThree >= 1) and (ply:GetNWInt("weeklyNuclearComplete") == 0) then
 		ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 70000) * ply:GetNWInt("loyaltyEffect"))
 		ply:SetNWInt("weeklyNuclearComplete", 1)
+		ply:SetNWInt("specialsCompleted", ply:GetNWInt("specialsCompleted") + 1)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)
@@ -87,6 +94,7 @@ function checkForWeeklyFour(ply)
 	if (curWeeklyFour >= 10) and (ply:GetNWInt("weeklyAddictComplete") == 0) then
 		ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 40000) * ply:GetNWInt("loyaltyEffect"))
 		ply:SetNWInt("weeklyAddictComplete", 1)
+		ply:SetNWInt("specialsCompleted", ply:GetNWInt("specialsCompleted") + 1)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)
@@ -100,6 +108,7 @@ function checkForWeeklyFive(ply)
 	if (curWeeklyFive >= 2) and (ply:GetNWInt("shooterBornComplete") == 0) then
 		ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 70000) * ply:GetNWInt("loyaltyEffect"))
 		ply:SetNWInt("shooterBornComplete", 1)
+		ply:SetNWInt("specialsCompleted", ply:GetNWInt("specialsCompleted") + 1)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)
@@ -113,6 +122,7 @@ function checkForWeeklySix(ply)
 	if (curWeeklySix >= 8) and (ply:GetNWInt("secPerimeterComplete") == 0) then
 		ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 35000) * ply:GetNWInt("loyaltyEffect"))
 		ply:SetNWInt("secPerimeterComplete", 1)
+		ply:SetNWInt("specialsCompleted", ply:GetNWInt("specialsCompleted") + 1)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)
@@ -126,6 +136,7 @@ function checkForWeeklySeven(ply)
 	if (curWeeklySeven >= 1) and (ply:GetNWInt("deadeyeComplete") == 0) then
 		ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 60000) * ply:GetNWInt("loyaltyEffect"))
 		ply:SetNWInt("deadeyeComplete", 1)
+		ply:SetNWInt("specialsCompleted", ply:GetNWInt("specialsCompleted") + 1)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)
@@ -139,6 +150,7 @@ function checkForWeeklyEight(ply)
 	if (curWeeklyEight >= 4) and (ply:GetNWInt("consistencyComplete") == 0) then
 		ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 50000) * ply:GetNWInt("loyaltyEffect"))
 		ply:SetNWInt("consistencyComplete", 1)
+		ply:SetNWInt("specialsCompleted", ply:GetNWInt("specialsCompleted") + 1)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)

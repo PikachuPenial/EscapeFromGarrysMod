@@ -126,6 +126,10 @@ function GM:Initialize()
 	tempWeaponsArray[98] = {"models/weapons/arccw/c_bo1_crossbow.mdl", "arccw_bo1_crossbow", "Crossbow", 20000, "12", "MID", "Heavy"}
 	tempWeaponsArray[99] = {"models/weapons/arccw/c_cod4_r700.mdl", "arccw_cod4e_r700", "Remington 700", 14995, "13", "MID", "Sniper"}
 	tempWeaponsArray[100] = {"models/weapons/arccw/c_bo1_ak47.mdl", "arccw_bo1_ak47", "AK-47", 14500, "12", "MID", "Rifle"}
+	tempWeaponsArray[101] = {"models/weapons/arccw/c_bo2_an94.mdl", "arccw_bo2_an94", "AN-94", 18200, "14", "HIGH", "Rifle"}
+	tempWeaponsArray[102] = {"models/weapons/arccw/c_bo2_mtar.mdl", "arccw_bo2_mtar", "MTAR-21", 19400, "15", "HIGH", "Rifle"}
+	tempWeaponsArray[103] = {"models/weapons/arccw/c_bo2_mg08.mdl", "arccw_bo2_mg08", "MG-08/15", 39999, "23", "HIGH", "Heavy"}
+	tempWeaponsArray[104] = {"models/weapons/arccw/c_bo2_scorpion.mdl", "arccw_bo2_scorpion", "Scorpion Evo 3 A1", 27499, "19", "HIGH", "SMG"}
 
 	local tempEntityArray = {}
 
@@ -221,6 +225,7 @@ function GM:Initialize()
 end
 
 if !ConVarExists("efgm_hidebinds") then CreateConVar( "efgm_hidebinds", "0", FCVAR_ARCHIVE, "Show or hide binds, while you are not in Raid",0,1 ) end
+if !ConVarExists("efgm_hideui") then CreateConVar( "efgm_hideui", "0", FCVAR_ARCHIVE, "Completely hide any custom UI elements created by the gamemode",0,1 ) end
 
 --Disable the context menu.
 function GM:ContextMenuOpen()

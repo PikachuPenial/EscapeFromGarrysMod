@@ -2,8 +2,6 @@ bind = {}
 
 local Bindings = {}
 
-ply = LocalPlayer()
-
 --[[---------------------------------------------------------
     GetTable()
     Returns a table of all the bindings.
@@ -53,7 +51,7 @@ hook.Add( "Think", "CallBindings", function()
 end )
 
 bind.Add(KEY_O, "CheckExtracts", function()
-	if (!ply:IsTyping()) then
+	if (!LocalPlayer():IsTyping()) then
     	RunConsoleCommand("efgm_extract_list")
 	end
 end )

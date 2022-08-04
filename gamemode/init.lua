@@ -20,6 +20,10 @@ include("sv_pdata.lua")
 include("sv_dailytasks.lua")
 include("sh_party_system.lua")
 
+function GM:Initialize()
+	print("Gamemode Initialized")
+end
+
 --Player setup
 function GM:PlayerSpawn(ply)
 	local walkSpeed = ply:GetNWInt("enduranceEffect") / 2.10
@@ -61,6 +65,8 @@ function GM:PlayerSpawn(ply)
 
 	ArcCW:PlayerGiveAtt(ply, lights[math.random(#lights)], 1)
 	ArcCW:PlayerSendAttInv(ply)
+
+	ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
 
 	if (ply:GetNWInt("firstSpawn") == 0) then
 		ply:ConCommand("open_raid_summary_menu")
@@ -375,6 +381,30 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetNWInt("weeklyAddict", tonumber(ply:GetPData("weeklyAddict")))
 	end
 
+	if (ply:GetPData("shooterBorn") == nil) then
+		ply:SetNWInt("shooterBorn", 0)
+	else
+		ply:SetNWInt("shooterBorn", tonumber(ply:GetPData("shooterBorn")))
+	end
+
+	if (ply:GetPData("secPerimeter") == nil) then
+		ply:SetNWInt("secPerimeter", 0)
+	else
+		ply:SetNWInt("secPerimeter", tonumber(ply:GetPData("secPerimeter")))
+	end
+
+	if (ply:GetPData("deadeyeProgress") == nil) then
+		ply:SetNWInt("deadeyeProgress", 0)
+	else
+		ply:SetNWInt("deadeyeProgress", tonumber(ply:GetPData("deadeyeProgress")))
+	end
+
+	if (ply:GetPData("consistencyProgress") == nil) then
+		ply:SetNWInt("consistencyProgress", 0)
+	else
+		ply:SetNWInt("consistencyProgress", tonumber(ply:GetPData("consistencyProgress")))
+	end
+
 	if (ply:GetPData("weeklyDistanceComplete") == nil) then
 		ply:SetNWInt("weeklyDistanceComplete", 0)
 	else
@@ -397,6 +427,30 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetNWInt("weeklyAddictComplete", 0)
 	else
 		ply:SetNWInt("weeklyAddictComplete", tonumber(ply:GetPData("weeklyAddictComplete")))
+	end
+
+	if (ply:GetPData("shooterBornComplete") == nil) then
+		ply:SetNWInt("shooterBornComplete", 0)
+	else
+		ply:SetNWInt("shooterBornComplete", tonumber(ply:GetPData("shooterBornComplete")))
+	end
+
+	if (ply:GetPData("secPerimeterComplete") == nil) then
+		ply:SetNWInt("secPerimeterComplete", 0)
+	else
+		ply:SetNWInt("secPerimeterComplete", tonumber(ply:GetPData("secPerimeterComplete")))
+	end
+
+	if (ply:GetPData("deadeyeComplete") == nil) then
+		ply:SetNWInt("deadeyeComplete", 0)
+	else
+		ply:SetNWInt("deadeyeComplete", tonumber(ply:GetPData("deadeyeComplete")))
+	end
+
+	if (ply:GetPData("consistencyComplete") == nil) then
+		ply:SetNWInt("consistencyComplete", 0)
+	else
+		ply:SetNWInt("consistencyComplete", tonumber(ply:GetPData("consistencyComplete")))
 	end
 
 	--Skills
@@ -476,6 +530,25 @@ function GM:PlayerInitialSpawn(ply)
 	else
 		ply:SetNWInt("covertEffect", tonumber(ply:GetPData("covertEffect")))
 	end
+
+	--Loyalty
+	if (ply:GetPData("loyaltyLevel") == nil) then
+		ply:SetNWInt("loyaltyLevel", 1)
+	else
+		ply:SetNWInt("loyaltyLevel", tonumber(ply:GetPData("loyaltyLevel")))
+	end
+
+	if (ply:GetPData("loyaltyExperience") == nil) then
+		ply:SetNWInt("loyaltyExperience", 0)
+	else
+		ply:SetNWInt("loyaltyExperience", tonumber(ply:GetPData("loyaltyExperience")))
+	end
+
+	if (ply:GetPData("loyaltyEffect") == nil) then
+		ply:SetNWInt("loyaltyEffect", 1)
+	else
+		ply:SetNWInt("loyaltyEffect", tonumber(ply:GetPData("loyaltyEffect")))
+	end
 end
 
 function GM:PlayerDeath(victim, inflictor, attacker)
@@ -545,6 +618,8 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 end
 
 hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
+	currentMap = game.GetMap()
+
 	if victim == attacker or attacker == nil or victim == nil then
 		victim:PrintMessage(HUD_PRINTCENTER, "You committed suicide.")
 	else
@@ -559,7 +634,23 @@ hook.Add("PlayerDeath", "DeathMessage", function(victim, inflictor, attacker)
 		print(victim:LastHitGroup())
 
 		attacker:SetNWInt("weeklyDistance", attacker:GetNWInt("weeklyDistance") + distance)
+
+		if distance >= 140 then
+			attacker:SetNWInt("deadeyeProgress", attacker:GetNWInt("deadeyeProgress") + 1)
+		end
+
+		if distance >= 100 and currentMap == "efgm_customs" then
+			attacker:SetNWInt("shooterBorn", attacker:GetNWInt("shooterBorn") + 1)
+		end
+
+		if distance <= 8 and currentMap == "efgm_factory" then
+			attacker:SetNWInt("secPerimeter", attacker:GetNWInt("secPerimeter") + 1)
+		end
+
 		checkForWeekly(attacker)
+		checkForWeeklyFive(attacker)
+		checkForWeeklySix(attacker)
+		checkForWeeklySeven(attacker)
 	end
 end)
 
@@ -678,6 +769,9 @@ function GM:PlayerDisconnected(ply)
 	ply:SetPData("covertLevel", ply:GetNWInt("covertLevel"))
 	ply:SetPData("covertExperience", ply:GetNWInt("covertExperience"))
 	ply:SetPData("covertEffect", ply:GetNWInt("covertEffect"))
+	ply:SetPData("loyaltyLevel", ply:GetNWInt("loyaltyLevel"))
+	ply:SetPData("loyaltyExperience", ply:GetNWInt("loyaltyExperience"))
+	ply:SetPData("loyaltyEffect", ply:GetNWInt("loyaltyEffect"))
 
 	--Streaks
 	ply:SetPData("killsPerRaid", ply:GetNWInt("killsPerRaid"))
@@ -692,11 +786,19 @@ function GM:PlayerDisconnected(ply)
 	ply:SetPData("weeklyExtracts", ply:GetNWInt("weeklyExtracts"))
 	ply:SetPData("weeklyNuclear", ply:GetNWInt("weeklyNuclear"))
 	ply:SetPData("weeklyAddict", ply:GetNWInt("weeklyAddict"))
+	ply:SetPData("shooterBorn", ply:GetNWInt("shooterBorn"))
+	ply:SetPData("secPerimeter", ply:GetNWInt("secPerimeter"))
+	ply:SetPData("deadeyeProgress", ply:GetNWInt("deadeyeProgress"))
+	ply:SetPData("consistencyProgress", ply:GetNWInt("consistencyProgress"))
 
 	ply:SetPData("weeklyDistanceComplete", ply:GetNWInt("weeklyDistanceComplete"))
 	ply:SetPData("weeklyExtractsComplete", ply:GetNWInt("weeklyExtractsComplete"))
 	ply:SetPData("weeklyNuclearComplete", ply:GetNWInt("weeklyNuclearComplete"))
 	ply:SetPData("weeklyAddictComplete", ply:GetNWInt("weeklyAddictComplete"))
+	ply:SetPData("shooterBornComplete", ply:GetNWInt("shooterBornComplete"))
+	ply:SetPData("secPerimeterComplete", ply:GetNWInt("secPerimeterComplete"))
+	ply:SetPData("deadeyeComplete", ply:GetNWInt("deadeyeComplete"))
+	ply:SetPData("consistencyComplete", ply:GetNWInt("consistencyComplete"))
 
 	--Raids
 	ply:SetPData("survivalRate", ply:GetNWInt("survivalRate"))
@@ -751,6 +853,9 @@ function GM:ShutDown()
 		v:SetPData("covertLevel", v:GetNWInt("covertLevel"))
 		v:SetPData("covertExperience", v:GetNWInt("covertExperience"))
 		v:SetPData("covertEffect", v:GetNWInt("covertEffect"))
+		v:SetPData("loyaltyLevel", v:GetNWInt("loyaltyLevel"))
+		v:SetPData("loyaltyExperience", v:GetNWInt("loyaltyExperience"))
+		v:SetPData("loyaltyEffect", v:GetNWInt("loyaltyEffect"))
 
 		--Streaks
 		v:SetPData("killsPerRaid", v:GetNWInt("killsPerRaid"))
@@ -765,11 +870,19 @@ function GM:ShutDown()
 		v:SetPData("weeklyExtracts", v:GetNWInt("weeklyExtracts"))
 		v:SetPData("weeklyNuclear", v:GetNWInt("weeklyNuclear"))
 		v:SetPData("weeklyAddict", v:GetNWInt("weeklyAddict"))
+		v:SetPData("shooterBorn", v:GetNWInt("shooterBorn"))
+		v:SetPData("secPerimeter", v:GetNWInt("secPerimeter"))
+		v:SetPData("deadeyeProgress", v:GetNWInt("deadeyeProgress"))
+		v:SetPData("consistencyProgress", v:GetNWInt("consistencyProgress"))
 
 		v:SetPData("weeklyDistanceComplete", v:GetNWInt("weeklyDistanceComplete"))
 		v:SetPData("weeklyExtractsComplete", v:GetNWInt("weeklyExtractsComplete"))
 		v:SetPData("weeklyNuclearComplete", v:GetNWInt("weeklyNuclearComplete"))
 		v:SetPData("weeklyAddictComplete", v:GetNWInt("weeklyAddictComplete"))
+		v:SetPData("shooterBornComplete", v:GetNWInt("shooterBornComplete"))
+		v:SetPData("secPerimeterComplete", v:GetNWInt("secPerimeterComplete"))
+		v:SetPData("deadeyeComplete", v:GetNWInt("deadeyeComplete"))
+		v:SetPData("consistencyComplete", v:GetNWInt("consistencyComplete"))
 
 		--Raids
 		v:SetPData("survivalRate", v:GetNWInt("survivalRate"))

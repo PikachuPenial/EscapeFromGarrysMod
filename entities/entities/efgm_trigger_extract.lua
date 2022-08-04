@@ -156,6 +156,9 @@ function ENT:CheckForPlayers()
 									end
 								end
 
+								ply:SetNWInt("consistencyProgress", (ply:GetNWInt("extractionStreak")))
+								checkForWeeklyEight(ply)
+
 								ply:ConCommand("open_raid_summary_menu")
 
 								ply:SetPos(chosenSpawn:GetPos())

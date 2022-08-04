@@ -68,6 +68,23 @@ function checkForCovert(ply)
 	end
 end
 
+function checkForLoyalty(ply)
+	local loyaltyExpToLevel = (ply:GetNWInt("loyaltyLevel"))
+	local loyaltyCurExp = ply:GetNWInt("loyaltyExperience")
+	local loyaltyCurLvl = ply:GetNWInt("loyaltyLevel")
+
+	if (loyaltyCurExp >= loyaltyExpToLevel) then
+		loyaltyCurLvl = loyaltyCurLvl - loyaltyExpToLevel
+
+		ply:SetNWInt("loyaltyExperience", loyaltyCurLvl)
+		ply:SetNWInt("loyaltyLevel", loyaltyCurLvl + 1)
+
+		ply:SetNWInt("loyaltyEffect", ply:GetNWInt("loyaltyEffect") + 0.01)
+
+		ply:PrintMessage(HUD_PRINTCENTER, "You have increased your Loyalty skill to level " .. (loyaltyCurLvl + 1) .. ".", Color(85, 0, 255, 255), 0)
+	end
+end
+
 --Endurance Tracking
 hook.Add("Initialize", "EnduranceLoop", function()
 	timer.Create("EnduranceSkillLoop", 1, 0, function()

@@ -90,12 +90,12 @@ function HUD()
 	draw.SimpleText("Level " .. client:GetNWInt("playerLvl"), "DermaDefaultBold", 50, ScrH() - 38, white, 0)
 
 	if (client:GetNWInt("playerLvl") < 26) then
-		draw.SimpleText("EXP: " .. client:GetNWInt("playerExp") .. "/" .. expToLevel, "DermaDefaultBold", 50, ScrH() - 22, Color(255, 255, 255), 0)
+		draw.SimpleText("EXP: " .. math.Round(client:GetNWInt("playerExp")) .. "/" .. expToLevel, "DermaDefaultBold", 50, ScrH() - 22, Color(255, 255, 255), 0)
 	else
 		draw.SimpleText("Max Leveled", "DermaDefaultBold", 50, ScrH() - 22, Color(255, 255, 255), 0)
 	end
 
-	draw.SimpleText("₽ " .. client:GetNWInt("playerMoney"), "DermaDefaultBold", 100, ScrH() - 38, white, 0)
+	draw.SimpleText("₽ " .. math.Round(client:GetNWInt("playerMoney")), "DermaDefaultBold", 100, ScrH() - 38, white, 0)
 	draw.SimpleText("JOIN OUR DISCORD - discord.gg/Wb9cVUwvTV", "DermaDefaultBold", 375, ScrH() - 22, Color(58, 235, 52, 255), 0)
 	draw.SimpleText("Press " .. "I" .. " to access your inventory", "DermaDefaultBold", 170, ScrH() - 38, Color(255, 166, 0, 255), 0)
 	draw.SimpleText("Press " .. shopBind .. " for shop, stats, and help", "DermaDefaultBold", 170, ScrH() - 22, Color(255, 166, 0, 255), 0)

@@ -578,7 +578,7 @@ function GM:PlayerDeath(victim, inflictor, attacker)
 		victim:SetNWInt("extractionStreak", 0)
 	else
 		local moneyGained = math.random(1000, 2500)
-		local expGained = math.random(425, 675)
+		local expGained = math.random(475, 725)
 		local killGained = 1
 		local deathGained = 1
 

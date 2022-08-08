@@ -9,14 +9,14 @@ end
 
 -- This prepares a message to be sent to whatever gui script you have to open the sell menu
 
-util.AddNetworkString("SellMenuTable")
+util.AddNetworkString("OpenSellMenu")
 util.AddNetworkString("SellItem")
 
 net.Receive("SellItem",function (len, ply)
 
 	tempTable = net.ReadTable()
 
-	ItemSell(tempTable[1], tempTable[2], tempTable[3], tempTable[4])
+	ItemSell(ply, tempTable[1], tempTable[2], tempTable[3])
 
 end)
 
@@ -32,15 +32,14 @@ function ENT:OpenMenu(ply)
 	-- Your GUI script should recieve the message, take this entity, compare it to the client, and if this player matches the client, it opens the gui.
 	-- I could've messaged all that, but comments last longer.
 
-	local sellTable = {ply, self}
+	-- What in the actual fuck did I not realize that net.Send was a feature lmao, going through the old code is one hell of a drug
 
-	ply:SetNWBool("inRaid", false)
-
-	net.Start("SellMenuTable")
-	net.WriteTable(sellTable)
+	net.Start("OpenSellMenu")
 	net.Send(ply)
 
-	ply:ConCommand("open_game_menu")
+	-- This previously sent the player entity to the menu, this is why people could just delete other people's money lol
+
+	-- ply:ConCommand("open_game_menu")
 
 end
 

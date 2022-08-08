@@ -28,12 +28,9 @@ net.Receive("MenuInRaid",function (len, ply)
 
 end)
 
-net.Receive("SellMenuTable",function (len, ply)
+net.Receive("OpenSellMenu",function(len, ply)
 
-	tempTable = net.ReadTable()
-
-	clientPlayer = tempTable[1]
-	seller = tempTable[2]
+	OpenSellMenu()
 
 end)
 
@@ -71,11 +68,6 @@ function gameShopMenu(ply, cmd, args)
 	local client = LocalPlayer()
 
 	if not client:Alive() then return end
-
-	if clientPlayer != nil then
-		isSellMenu = true
-		--print (clientPlayer:GetName().." is not nil")
-	end
 
 	-- Moving on
 
@@ -1652,7 +1644,176 @@ vgui.Register("StashMenuPanel", PANEL, "Panel")
 --End stash meun panel
 
 -- wow this is why i had to merge the fucking stash menu into this jesus christ im dumb
--- actually maybe not idk, im autistic im not a rocket scientist
+-- actually maybe not idk, im autistic not a rocket scientist
+
+function OpenSellMenu()
+
+	-- Constants for easy use
+
+	clientPlayer = LocalPlayer()
+
+	local blackColor = 		Color(10, 10, 10, 255)
+	local whiteColor = 		Color(250, 250, 250, 255)
+	local offWhiteColor = 	Color(200, 200, 200, 255)
+
+	local primaryColor =	Color(30, 30, 30, 255)
+	local secondaryColor =	Color(100, 100, 100, 255)
+
+	local inRaidColor = 	Color(50, 255, 50, 255)		-- Red
+	local outRaidColor = 	Color(255, 255, 255, 255)		-- Green
+	local deadColor = 		Color(255, 50, 50, 255)	-- Gray
+
+	local width =			math.Round( ScrW() * 0.5 )	-- Around 960 for 1920 width res
+	local height =			math.Round( ScrH() * 0.9 )	-- Around 980 for 1080 height res
+
+	local margin = 			math.Round( ScrH() * 0.01 )
+
+	-- Basic menu shit
+
+	sellMenuFrame = vgui.Create( "DFrame" )
+	sellMenuFrame:SetSize( width, height )
+	sellMenuFrame:Center()
+	sellMenuFrame:SetTitle("Sell Menu")
+	sellMenuFrame:SetVisible( true )
+	sellMenuFrame:SetDraggable( false )
+	sellMenuFrame:ShowCloseButton( true )
+	sellMenuFrame:MakePopup()
+
+	-- Other shit
+
+	sellMenuFrame.Paint = function(self, w, h)
+		draw.RoundedBox( 0, 0, 0, w, h, blackColor )
+	end
+
+	local menuPanel = vgui.Create( "DPanel", sellMenuFrame )
+	menuPanel:Dock( FILL )
+	menuPanel:DockMargin(5, 5, 5, 5)
+
+	local totalSellValue = 0
+
+	local sellPanel = vgui.Create( "DPanel", menuPanel )
+	sellPanel:Dock( FILL )
+	sellPanel:DockMargin(20, 120, 20, 20)
+
+	sellPanel.Paint = function(self, w, h)
+
+		draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
+
+	end
+
+	-- TODO:
+	-- Create icon layout
+	-- Each icon should clearly show the gun model, name, price, and rarity
+	-- "Sell all" button
+
+	local sellIconLayout = vgui.Create( "DIconLayout", sellPanel)
+	sellIconLayout:Dock(FILL)
+	sellIconLayout:DockMargin(10, 10, 10, 10)
+	sellIconLayout:SetSpaceY(10)
+	sellIconLayout:SetSpaceX(10)
+
+	local allPlayerWeapons = clientPlayer:GetWeapons()
+
+	for k, v in pairs( allPlayerWeapons ) do
+
+		local isWeaponValid = false
+		local weaponSellInfo = {}
+
+		for l, b in pairs(weaponsArr) do
+
+			if b[2] == v:GetClass() then
+
+				isWeaponValid = true
+				weaponSellInfo = b
+
+			end
+
+		end
+
+		for l, b in pairs(sellBlacklist) do
+			
+			if b[1] == v:GetClass() then
+
+				isWeaponValid = false
+
+			end
+
+		end
+
+		if isWeaponValid == true then
+
+			if weapons.Get(v:GetClass()) == nil then return end
+
+			local weaponInfo = weapons.Get(v:GetClass())
+
+			local wepName
+
+			if weaponInfo["TrueName"] == nil then wepName = weaponInfo["PrintName"] else wepName = weaponInfo["TrueName"] end
+
+			local sellPrice = math.Round( weaponSellInfo[4] * sellPriceMultiplier )
+
+			local icon = vgui.Create("SpawnIcon", stashIconLayout)
+			icon:SetModel(weaponInfo["WorldModel"])
+			icon:SetTooltip("Sell " .. wepName .. " for " .. sellPrice .. "₽?")
+			icon:SetSize(200, 200)
+
+			icon.Paint = function(self, w, h)
+
+				surface.SetDrawColor(whiteColor)
+				surface.DrawRect(0, 0, w, h)
+
+				surface.SetDrawColor(offWhiteColor)
+				surface.DrawRect(0, 0, w, 30)
+				surface.DrawRect(0, h - 30, w, 30)
+				
+				draw.SimpleText(wepName, "DermaLarge", w / 2, 15, blackColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+				draw.SimpleText(sellPrice .. "₽", "DermaLarge", w / 2, h - 15, blackColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+				
+			end
+
+			icon.DoClick = function(self)
+
+				local tempTable = {v:GetClass(), sellPrice, wepName}
+
+				net.Start("SellItem")
+				net.WriteTable(tempTable)
+				net.SendToServer()
+
+				surface.PlaySound("common/wpn_select.wav")
+				surface.PlaySound("items/ammo_pickup.wav")
+
+				-- draws the icon black after selling
+
+				icon:SetSize(0, 0)
+
+				totalSellValue = totalSellValue - sellPrice
+
+				DrawTotalSellValue()
+
+			end
+
+			totalSellValue = totalSellValue + sellPrice
+
+			sellIconLayout:Add(icon)
+
+		end
+
+	end
+
+	function DrawTotalSellValue()
+
+		menuPanel.Paint = function(self, w, h)
+
+			draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
+			draw.SimpleText("TOTAL INVENTORY VALUE: " .. totalSellValue .. "₽", "DermaLarge", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER)
+	
+		end
+
+	end
+
+	DrawTotalSellValue()
+
+end
 
 function MenuInit()
 

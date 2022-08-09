@@ -48,7 +48,7 @@ function GM:PlayerSpawn(ply)
 	local playerModels = {"models/player/eft/pmc/eft_bear/models/eft_bear_pm_summer.mdl", "models/player/eft/pmc/eft_bear/models/eft_bear_pm_redux.mdl", "models/player/eft/pmc/eft_usec/models/eft_usec_pm_hoody.mdl"}
 	local playerFaces = {0, 1, 2, 3}
 	local spawningWeapon = {"arccw_eft_1911", "arccw_waw_p38", "arccw_waw_tt33"}
-	local spawningGrenade = {"arccw_go_nade_frag", "arccw_go_nade_smoke", "arccw_go_nade_incendiary"}
+	local spawningGrenade = {"arccw_go_nade_frag", "arccw_go_nade_smoke"}
 	local spawningMelee = {"arccw_bo1_sog_knife"}
 
 	local lights = {"go_flashlight", "uc_tac_flashlight3"}

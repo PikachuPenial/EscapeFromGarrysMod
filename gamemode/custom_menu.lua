@@ -9,6 +9,12 @@ local stashClient
 
 local stashTable
 
+if ScrH() <= 720 then
+	below720 = true
+else
+	below720 = false
+end
+
 net.Receive("SendTaskInfo",function (len, ply)
 
 	local taskInfo = net.ReadTable()
@@ -73,12 +79,19 @@ function gameShopMenu(ply, cmd, args)
 
 	if (inPlayerMenu == false) then
 		Menu = vgui.Create("DFrame")
-		Menu:SetSize(800, 768)
+
+		if below720 == true then
+			Menu:SetSize(800, 720)
+		else
+			Menu:SetSize(800, 768)
+		end
+
 		Menu:Center()
 		Menu:SetTitle("Escape From Garry's Mod")
 		Menu:SetDraggable(false)
 		Menu:ShowCloseButton(true)
 		Menu:SetDeleteOnClose(false)
+		Menu:MakePopup()
 		Menu.Paint = function()
 			surface.SetDrawColor(90, 90, 90, 50)
 			surface.DrawRect(0, 0, Menu:GetWide(), Menu:GetTall())
@@ -155,6 +168,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		local margin = 			math.Round( ScrH() * 0.01 )
 
 		local kdResetText = 0
+		local srResetText = 0
 
 		playerPanel.Paint = function(self, w, h)
 			draw.RoundedBox(0, 0, 0, w, h, primaryColor)
@@ -204,7 +218,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			draw.SimpleText("Deaths By Suicide: " .. LocalPlayer():GetNWInt("playerDeathsSuicide"), "CloseCaption_Bold", w / 2, 280, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			draw.SimpleText("Damage Inflicted: " .. LocalPlayer():GetNWInt("playerDamageGiven"), "CloseCaption_Bold", w / 2, 300, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			draw.SimpleText("Damage Received: " .. LocalPlayer():GetNWInt("playerDamageRecieved"), "CloseCaption_Bold", w / 2, 320, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-		end
+	end
 
 		local raidingStatsPanel = vgui.Create("DPanel", scrollPanel)
 		raidingStatsPanel:Dock(TOP)
@@ -303,6 +317,34 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			end
 		end
 
+		local resetSRButton = vgui.Create("DButton", scrollPanel)
+		resetSRButton:Dock(TOP)
+		resetSRButton:DockMargin(margin, margin, margin, margin)
+		resetSRButton:SetSize(250, 50)
+		resetSRButton:SetText("")
+
+		resetSRButton.Paint = function()
+			--Color of entire button
+			surface.SetDrawColor(100, 100, 100, 255)
+			surface.DrawRect(0, 0, resetSRButton:GetWide(), resetSRButton:GetTall())
+
+			--Draw/write text
+			if (srResetText == 0) then
+				draw.DrawText("Reset SR% | " .. math.Round(LocalPlayer():GetNWInt("survivalRate"), 0) .. "%" .. " > " .. "0%", "Trebuchet24", resetSRButton:GetWide() / 2, 12.5, Color(0, 255, 0, 255), 1)
+			else
+				draw.DrawText("Are you sure? This can not be reverted.", "Trebuchet24", resetSRButton:GetWide() / 2, 12.5, Color(0, 255, 0, 255), 1)
+			end
+		end
+
+		resetSRButton.DoClick = function()
+			if (srResetText == 0) then
+				srResetText = 1
+			else
+				RunConsoleCommand("efgm_reset_sr")
+				srResetText = 0
+			end
+		end
+
 		local endPanel = vgui.Create("DPanel", scrollPanel)
 		endPanel:Dock(TOP)
 		endPanel:DockMargin(margin, margin, margin, margin)
@@ -369,25 +411,25 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			else
 				enduranceProgressText = math.Round(LocalPlayer():GetNWInt("enduranceExperience"), 2) .. " / " .. enduranceExpToLevel
 			end
-	
+
 			if (LocalPlayer():GetNWInt("strengthLevel") == 30) then
 				strengthProgressText = "Maxed"
 			else
 				strengthProgressText = math.Round(LocalPlayer():GetNWInt("strengthExperience"), 2) .. " / " .. strengthExpToLevel
 			end
-	
+
 			if (LocalPlayer():GetNWInt("charismaLevel") == 40) then
 				charismaProgressText = "Maxed"
 			else
 				charismaProgressText = math.Round(LocalPlayer():GetNWInt("charismaExperience"), 2) .. " / " .. charismaExpToLevel
 			end
-	
+
 			if (LocalPlayer():GetNWInt("covertLevel") == 20) then
 				covertProgressText = "Maxed"
 			else
 				covertProgressText = math.Round(LocalPlayer():GetNWInt("covertExperience"), 2) .. " / " .. covertExpToLevel
 			end
-	
+
 			if (LocalPlayer():GetNWInt("loyaltyLevel") == 25) then
 				loyaltyProgressText = "Maxed"
 			else
@@ -398,7 +440,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		local endurancePanel = vgui.Create("DPanel", scrollPanel)
 		endurancePanel:Dock(TOP)
 		endurancePanel:DockMargin(margin, margin, margin, margin)
-		endurancePanel:SetSize(0, 130)
+		endurancePanel:SetSize(0, 150)
 
 		endurancePanel.Paint = function(self, w, h)
 			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
@@ -412,13 +454,14 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.DrawRect(41, 52.5, 598.5 * (LocalPlayer():GetNWInt("enduranceExperience") / enduranceExpToLevel), 25)
 
 			draw.SimpleText("Increases your walking and running speed.", "DermaLarge", w / 2, 90, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Level up by sprinting.", "CloseCaption_Normal", w / 2, 120, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			draw.SimpleText(enduranceProgressText, "DermaLarge", w / 2, 50, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 		end
 
 		local strengthPanel = vgui.Create("DPanel", scrollPanel)
 		strengthPanel:Dock(TOP)
 		strengthPanel:DockMargin(margin, margin, margin, margin)
-		strengthPanel:SetSize(0, 130)
+		strengthPanel:SetSize(0, 150)
 
 		strengthPanel.Paint = function(self, w, h)
 			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
@@ -432,13 +475,14 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.DrawRect(41, 52.5, 598.5 * (LocalPlayer():GetNWInt("strengthExperience") / strengthExpToLevel), 25)
 
 			draw.SimpleText("Increases your jump height.", "DermaLarge", w / 2, 90, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Level up by jumping or being mid-air.", "CloseCaption_Normal", w / 2, 120, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			draw.SimpleText(strengthProgressText, "DermaLarge", w / 2, 50, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 		end
 
 		local charismaPanel = vgui.Create("DPanel", scrollPanel)
 		charismaPanel:Dock(TOP)
 		charismaPanel:DockMargin(margin, margin, margin, margin)
-		charismaPanel:SetSize(0, 130)
+		charismaPanel:SetSize(0, 150)
 
 		charismaPanel.Paint = function(self, w, h)
 			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
@@ -452,13 +496,14 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.DrawRect(41, 52.5, 598.5 * (LocalPlayer():GetNWInt("charismaExperience") / charismaExpToLevel), 25)
 
 			draw.SimpleText("Decreases the prices of items in the shop.", "DermaLarge", w / 2, 90, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Level up by buying items in the shop.", "CloseCaption_Normal", w / 2, 120, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			draw.SimpleText(charismaProgressText, "DermaLarge", w / 2, 50, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 		end
 
 		local covertPanel = vgui.Create("DPanel", scrollPanel)
 		covertPanel:Dock(TOP)
 		covertPanel:DockMargin(margin, margin, margin, margin)
-		covertPanel:SetSize(0, 130)
+		covertPanel:SetSize(0, 150)
 
 		covertPanel.Paint = function(self, w, h)
 			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
@@ -472,13 +517,14 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.DrawRect(41, 52.5, 598.5 * (LocalPlayer():GetNWInt("covertExperience") / covertExpToLevel), 25)
 
 			draw.SimpleText("Increases your crouch walking speed.", "DermaLarge", w / 2, 90, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Level up by crouching.", "CloseCaption_Normal", w / 2, 120, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			draw.SimpleText(covertProgressText, "DermaLarge", w / 2, 50, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 		end
 
 		local loyaltyPanel = vgui.Create("DPanel", scrollPanel)
 		loyaltyPanel:Dock(TOP)
 		loyaltyPanel:DockMargin(margin, margin, margin, margin)
-		loyaltyPanel:SetSize(0, 130)
+		loyaltyPanel:SetSize(0, 150)
 
 		loyaltyPanel.Paint = function(self, w, h)
 			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
@@ -492,6 +538,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			surface.DrawRect(41, 52.5, 598.5 * (LocalPlayer():GetNWInt("loyaltyExperience") / loyaltyExpToLevel), 25)
 
 			draw.SimpleText("Increases rewards from daily/special tasks.", "DermaLarge", w / 2, 90, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Level up by completing tasks.", "CloseCaption_Normal", w / 2, 120, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			draw.SimpleText(loyaltyProgressText, "DermaLarge", w / 2, 50, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 		end
 
@@ -509,7 +556,14 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	extractsButton:SetParent(Menu)
 	extractsButton:SetText("")
 	extractsButton:SetSize(100, 100)
-	extractsButton:SetPos(0, 518)
+	extractsButton:SetPos(0, 520)
+
+	if below720 == true then
+		extractsButton:SetPos(0, 520)
+	else
+		extractsButton:SetPos(0, 568)
+	end
+
 	extractsButton.Paint = function()
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
@@ -534,7 +588,13 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	serverButton:SetParent(Menu)
 	serverButton:SetText("")
 	serverButton:SetSize(100, 50)
-	serverButton:SetPos(0, 618)
+
+	if below720 == true then
+		serverButton:SetPos(0, 620)
+	else
+		serverButton:SetPos(0, 668)
+	end
+
 	serverButton.Paint = function()
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
@@ -547,7 +607,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		--Draw/write text
 
-		draw.DrawText("DISCORD", "CloseCaption_Normal", serverButton:GetWide() / 2.1, 10, Color(140, 0, 255), 1)
+		draw.DrawText("DISCORD", "CloseCaption_Normal", serverButton:GetWide() / 2.1, 10, Color(90, 0, 255), 1)
 
 	end
 
@@ -559,7 +619,13 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	supportButton:SetParent(Menu)
 	supportButton:SetText("")
 	supportButton:SetSize(100, 50)
-	supportButton:SetPos(0, 668)
+
+	if below720 == true then
+		supportButton:SetPos(0, 670)
+	else
+		supportButton:SetPos(0, 718)
+	end
+
 	supportButton.Paint = function()
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
@@ -572,7 +638,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		--Draw/write text
 
-		draw.DrawText("SUPPORT", "CloseCaption_Normal", supportButton:GetWide() / 2.1, 10, Color(255, 0, 179), 1)
+		draw.DrawText("SUPPORT", "CloseCaption_Normal", supportButton:GetWide() / 2.1, 10, Color(0, 0, 0), 1)
 
 	end
 
@@ -584,7 +650,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 	settingsButton:SetParent(Menu)
 	settingsButton:SetText("")
 	settingsButton:SetSize(100, 50)
-	settingsButton:SetPos(0, 718)
+	settingsButton:SetPos(0, 325)
 	settingsButton.Paint = function()
 		--Color of entire button
 		surface.SetDrawColor(50, 50, 50, 255)
@@ -597,12 +663,121 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		--Draw/write text
 
-		draw.DrawText("SETTINGS", "CloseCaption_Normal", settingsButton:GetWide() / 2.1, 10, Color(100, 100, 100), 1)
+		draw.DrawText("SETTINGS", "CloseCaption_Normal", settingsButton:GetWide() / 2, 10, Color(255, 0, 255), 1)
 
 	end
 
 	settingsButton.DoClick = function()
-		--Not Ready
+		local settingsPanel = Menu:Add("SettingsPanel")
+
+		local whiteColor = 		Color(250, 250, 250, 255)
+		local primaryColor =	Color(30, 30, 30, 255)
+		local secondaryColor =	Color(100, 100, 100, 255)
+
+		local margin = 			math.Round( ScrH() * 0.01 )
+
+		settingsPanel.Paint = function(self, w, h)
+			draw.RoundedBox(0, 0, 0, w, h, primaryColor)
+		end
+
+		local scrollPanel = vgui.Create("DScrollPanel", settingsPanel)
+		scrollPanel:Dock(FILL)
+
+		local settingsTextPanel = vgui.Create("DPanel", scrollPanel)
+		settingsTextPanel:Dock(TOP)
+		settingsTextPanel:DockMargin(margin, margin, margin, margin)
+		settingsTextPanel:SetSize(0, 50)
+
+		settingsTextPanel.Paint = function(self, w, h)
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+			draw.SimpleText("SETTINGS", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 0, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+
+		local hudPanel = vgui.Create("DPanel", scrollPanel)
+		hudPanel:Dock(TOP)
+		hudPanel:DockMargin(margin, margin, margin, margin)
+		hudPanel:SetSize(0, 90)
+
+		hudPanel.Paint = function(self, w, h)
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+			draw.SimpleText("HUD and Menus", "CloseCaption_Bold", w / 2, 15, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+
+		local hideUIButton = hudPanel:Add("DCheckBoxLabel")
+		hideUIButton:SetPos(305, 40)
+		hideUIButton:SetText("Hide UI")
+		hideUIButton:SetConVar("efgm_hideui")
+		hideUIButton:SetValue(true)
+		hideUIButton:SizeToContents()
+
+		local hideControlHintsButton = hudPanel:Add("DCheckBoxLabel")
+		hideControlHintsButton:SetPos(257, 60)
+		hideControlHintsButton:SetText("Hide Control Hints In Lobby")
+		hideControlHintsButton:SetConVar("efgm_hidebinds")
+		hideControlHintsButton:SetValue(true)
+		hideControlHintsButton:SizeToContents()
+
+		local tasksPanel = vgui.Create("DPanel", scrollPanel)
+		tasksPanel:Dock(TOP)
+		tasksPanel:DockMargin(margin, margin, margin, margin)
+		tasksPanel:SetSize(0, 90)
+
+		tasksPanel.Paint = function(self, w, h)
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+			draw.SimpleText("Tasks", "CloseCaption_Bold", w / 2, 15, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+
+		local completedDailyTasksHidden = tasksPanel:Add("DCheckBoxLabel")
+		completedDailyTasksHidden:SetPos(260, 40)
+		completedDailyTasksHidden:SetText("Hide Completed Daily Tasks")
+		completedDailyTasksHidden:SetConVar("efgm_hide_daily_completed_tasks")
+		completedDailyTasksHidden:SetValue(true)
+		completedDailyTasksHidden:SizeToContents()
+
+		local completedSpecialTasksHidden = tasksPanel:Add("DCheckBoxLabel")
+		completedSpecialTasksHidden:SetPos(257, 60)
+		completedSpecialTasksHidden:SetText("Hide Completed Special Tasks")
+		completedSpecialTasksHidden:SetConVar("efgm_hide_special_completed_tasks")
+		completedSpecialTasksHidden:SetValue(true)
+		completedSpecialTasksHidden:SizeToContents()
+
+		local keybindsPanel = vgui.Create("DPanel", scrollPanel)
+		keybindsPanel:Dock(TOP)
+		keybindsPanel:DockMargin(margin, margin, margin, margin)
+		keybindsPanel:SetSize(0, 120)
+
+		keybindsPanel.Paint = function(self, w, h)
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+			draw.SimpleText("Keybinds", "CloseCaption_Bold", w / 2, 15, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Check Extracts", "CloseCaption_Normal", w / 2, 45, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+
+		local checkExtractsBindingButton = vgui.Create("DBinder", keybindsPanel)
+		checkExtractsBindingButton:SetSize(100, 50)
+		checkExtractsBindingButton:SetPos(290, 60)
+		checkExtractsBindingButton:SetSelectedNumber(GetConVar("efgm_check_extracts_bind"):GetInt())
+
+		function checkExtractsBindingButton:OnChange(num)
+			extractBinding = checkExtractsBindingButton:GetSelectedNumber()
+			RunConsoleCommand("efgm_check_extracts_bind", extractBinding)
+		end
+
+		function checkExtractsBindingButton:OnChange()
+
+		end
+
+		local endPanel = vgui.Create("DPanel", scrollPanel)
+		endPanel:Dock(TOP)
+		endPanel:DockMargin(margin, margin, margin, margin)
+		endPanel:SetSize(0, 60)
+
+		endPanel.Paint = function(self, w, h)
+			draw.SimpleText("(a rejoin is required to use updated keybinds)", "CloseCaption_Bold", w / 2, h / 5, Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
 	end
 
 	local dailyButton = vgui.Create("DButton")
@@ -626,8 +801,11 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 	end
 
-	dailyButton.DoClick = function()
+	dailyButton.DoClick = function(tasksButtonDoClick)
+		refreshTasks()
+	end
 
+	function refreshTasks()
 		local dailyPanel = Menu:Add("DailyPanel")
 
 		local whiteColor = 		Color(250, 250, 250, 255)
@@ -661,9 +839,6 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		local nuclearText = LocalPlayer():GetNWInt("raidKill") .. " / " .. "12"
 		local addictText = LocalPlayer():GetNWInt("weeklyAddict") .. " / " .. "10"
 		local consistencyText = LocalPlayer():GetNWInt("extractionStreak") .. " / " .. "4"
-
-		-- new method so scrolling works
-
 		dailyPanel.Paint = function(self, w, h)
 			draw.RoundedBox(0, 0, 0, w, h, primaryColor)
 		end
@@ -674,319 +849,633 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		local dailyTaskPanel = vgui.Create("DPanel", scrollPanel)
 		dailyTaskPanel:Dock(TOP)
 		dailyTaskPanel:DockMargin(margin, margin, margin, margin)
-		dailyTaskPanel:SetSize(0, 50)
+		dailyTaskPanel:SetSize(0, 60)
 
 		dailyTaskPanel.Paint = function(self, w, h)
 			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
-			draw.SimpleText("Dailies : Reset at the beginning of each map.", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Dailies : Reset at the beginning of each map.", "CloseCaption_BoldItalic", w / 2, h / 2.5, Color(255, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
 		--DAILY TASKS
 
-		local dailyKillPanel = vgui.Create("DPanel", scrollPanel)
-		dailyKillPanel:Dock(TOP)
-		dailyKillPanel:DockMargin(margin, margin, margin, margin)
-		dailyKillPanel:SetSize(0, 120)
-
-		dailyKillPanel.Paint = function(self, w, h)
-
-			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
-
-			--Elimination
-
-			draw.SimpleText("Elimination : Get kills on other players", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			draw.SimpleText("Rewards: " .. dailyRewardXP .. " EXP, " .. dailyPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			surface.SetDrawColor(65, 65, 65)
-			surface.DrawRect(w / 2 - 250, 60, 500, 30)
-
-			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("mapKills") / "6"), 25)
-
+		if CLIENT and GetConVar("efgm_hide_daily_completed_tasks"):GetInt() == 1 then
 			if LocalPlayer():GetNWInt("eliminationComplete") == 0 then
-				draw.SimpleText(eliminationText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			else
-				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			end
+				local dailyKillPanel = vgui.Create("DPanel", scrollPanel)
+				dailyKillPanel:Dock(TOP)
+				dailyKillPanel:DockMargin(margin, margin, margin, margin)
+				dailyKillPanel:SetSize(0, 120)
 
+				dailyKillPanel.Paint = function(self, w, h)
+
+					draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+					--Elimination
+
+					draw.SimpleText("Elimination : Get kills on other players", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					draw.SimpleText("Rewards: " .. dailyRewardXP .. " EXP, " .. dailyPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					surface.SetDrawColor(65, 65, 65)
+					surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+					surface.SetDrawColor(0, 255, 50, 255)
+					surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("mapKills") / "6"), 25)
+
+					if LocalPlayer():GetNWInt("eliminationComplete") == 0 then
+						draw.SimpleText(eliminationText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					else
+						draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					end
+
+				end
+			end
+		else
+			local dailyKillPanel = vgui.Create("DPanel", scrollPanel)
+			dailyKillPanel:Dock(TOP)
+			dailyKillPanel:DockMargin(margin, margin, margin, margin)
+			dailyKillPanel:SetSize(0, 120)
+
+			dailyKillPanel.Paint = function(self, w, h)
+
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+				--Elimination
+
+				draw.SimpleText("Elimination : Get kills on other players", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				draw.SimpleText("Rewards: " .. dailyRewardXP .. " EXP, " .. dailyPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				surface.SetDrawColor(65, 65, 65)
+				surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+				surface.SetDrawColor(0, 255, 50, 255)
+				surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("mapKills") / "6"), 25)
+
+				if LocalPlayer():GetNWInt("eliminationComplete") == 0 then
+					draw.SimpleText(eliminationText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				else
+					draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				end
+
+			end
 		end
 
-		local dailyExtractPanel = vgui.Create("DPanel", scrollPanel)
-		dailyExtractPanel:Dock(TOP)
-		dailyExtractPanel:DockMargin(margin, margin, margin, margin)
-		dailyExtractPanel:SetSize(0, 120)
-
-		dailyExtractPanel.Paint = function(self, w, h)
-
-			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
-
-			--Successful Operations
-
-			draw.SimpleText("Successful Operations : Extract from raids", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			draw.SimpleText("Rewards: " .. dailyRewardXP .. " EXP, " .. dailyPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			surface.SetDrawColor(65, 65, 65)
-			surface.DrawRect(w / 2 - 250, 60, 500, 30)
-
-			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("mapExtracts") / "2"), 25)
-
+		if CLIENT and GetConVar("efgm_hide_daily_completed_tasks"):GetInt() == 1 then
 			if LocalPlayer():GetNWInt("successfulOperationsComplete") == 0 then
-				draw.SimpleText(extractText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			else
-				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				local dailyExtractPanel = vgui.Create("DPanel", scrollPanel)
+				dailyExtractPanel:Dock(TOP)
+				dailyExtractPanel:DockMargin(margin, margin, margin, margin)
+				dailyExtractPanel:SetSize(0, 120)
+
+				dailyExtractPanel.Paint = function(self, w, h)
+
+					draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+					--Successful Operations
+
+					draw.SimpleText("Successful Operations : Extract from raids", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					draw.SimpleText("Rewards: " .. dailyRewardXP .. " EXP, " .. dailyPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					surface.SetDrawColor(65, 65, 65)
+					surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+					surface.SetDrawColor(0, 255, 50, 255)
+					surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("mapExtracts") / "2"), 25)
+
+					if LocalPlayer():GetNWInt("successfulOperationsComplete") == 0 then
+						draw.SimpleText(extractText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					else
+						draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					end
+				end
+			end
+		else
+			local dailyExtractPanel = vgui.Create("DPanel", scrollPanel)
+			dailyExtractPanel:Dock(TOP)
+			dailyExtractPanel:DockMargin(margin, margin, margin, margin)
+			dailyExtractPanel:SetSize(0, 120)
+
+			dailyExtractPanel.Paint = function(self, w, h)
+
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+				--Successful Operations
+
+				draw.SimpleText("Successful Operations : Extract from raids", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				draw.SimpleText("Rewards: " .. dailyRewardXP .. " EXP, " .. dailyPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				surface.SetDrawColor(65, 65, 65)
+				surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+				surface.SetDrawColor(0, 255, 50, 255)
+				surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("mapExtracts") / "2"), 25)
+
+				if LocalPlayer():GetNWInt("successfulOperationsComplete") == 0 then
+					draw.SimpleText(extractText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				else
+					draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				end
 			end
 		end
-
 
 		local weeklyTaskPanel = vgui.Create("DPanel", scrollPanel)
 		weeklyTaskPanel:Dock(TOP)
 		weeklyTaskPanel:DockMargin(margin, margin, margin, margin)
-		weeklyTaskPanel:SetSize(0, 50)
+		weeklyTaskPanel:SetSize(0, 60)
 
 		weeklyTaskPanel.Paint = function(self, w, h)
 			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
-			draw.SimpleText("Specials : Reset at the beginning of each wipe.", "CloseCaption_BoldItalic", w / 2, h / 2, Color(0, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Specials : Reset at the beginning of each wipe.", "CloseCaption_BoldItalic", w / 2, h / 2.5, Color(0, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
 		--SPECIAL TASKS
 
-		local weeklyKillPanel = vgui.Create("DPanel", scrollPanel)
-		weeklyKillPanel:Dock(TOP)
-		weeklyKillPanel:DockMargin(margin, margin, margin, margin)
-		weeklyKillPanel:SetSize(0, 120)
-
-		weeklyKillPanel.Paint = function(self, w, h)
-
-			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
-
-			--Rangefinder
-
-			draw.SimpleText("Rangefinder : Total kill distance in meters", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			draw.SimpleText("Rewards: " .. distancePayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			surface.SetDrawColor(65, 65, 65)
-			surface.DrawRect(w / 2 - 250, 60, 500, 30)
-
-			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("weeklyDistance") / "3000"), 25)
-
+		if CLIENT and GetConVar("efgm_hide_special_completed_tasks"):GetInt() == 1 then
 			if LocalPlayer():GetNWInt("weeklyDistanceComplete") == 0 then
-				draw.SimpleText(distanceText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			else
-				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			end
+				local weeklyKillPanel = vgui.Create("DPanel", scrollPanel)
+				weeklyKillPanel:Dock(TOP)
+				weeklyKillPanel:DockMargin(margin, margin, margin, margin)
+				weeklyKillPanel:SetSize(0, 120)
 
+				weeklyKillPanel.Paint = function(self, w, h)
+
+					draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+					--Rangefinder
+
+					draw.SimpleText("Rangefinder : Total kill distance in meters", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					draw.SimpleText("Rewards: " .. distancePayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					surface.SetDrawColor(65, 65, 65)
+					surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+					surface.SetDrawColor(0, 255, 50, 255)
+					surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("weeklyDistance") / "3000"), 25)
+
+					if LocalPlayer():GetNWInt("weeklyDistanceComplete") == 0 then
+						draw.SimpleText(distanceText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					else
+						draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					end
+				end
+			end
+		else
+			local weeklyKillPanel = vgui.Create("DPanel", scrollPanel)
+			weeklyKillPanel:Dock(TOP)
+			weeklyKillPanel:DockMargin(margin, margin, margin, margin)
+			weeklyKillPanel:SetSize(0, 120)
+
+			weeklyKillPanel.Paint = function(self, w, h)
+
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+				--Rangefinder
+
+				draw.SimpleText("Rangefinder : Total kill distance in meters", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				draw.SimpleText("Rewards: " .. distancePayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				surface.SetDrawColor(65, 65, 65)
+				surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+				surface.SetDrawColor(0, 255, 50, 255)
+				surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("weeklyDistance") / "3000"), 25)
+
+				if LocalPlayer():GetNWInt("weeklyDistanceComplete") == 0 then
+					draw.SimpleText(distanceText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				else
+					draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				end
+			end
 		end
 
-		local securedPerimeterPanel = vgui.Create("DPanel", scrollPanel)
-		securedPerimeterPanel:Dock(TOP)
-		securedPerimeterPanel:DockMargin(margin, margin, margin, margin)
-		securedPerimeterPanel:SetSize(0, 120)
-
-		securedPerimeterPanel.Paint = function(self, w, h)
-
-			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
-
-			--Secured Perimeter
-
-			draw.SimpleText("Secured Perimeter : Kill 8 players within 8m on Factory", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			draw.SimpleText("Rewards: " .. securedPerimeterPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			surface.SetDrawColor(65, 65, 65)
-			surface.DrawRect(w / 2 - 250, 60, 500, 30)
-
-			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("secPerimeter") / "8"), 25)
-
+		if CLIENT and GetConVar("efgm_hide_special_completed_tasks"):GetInt() == 1 then
 			if LocalPlayer():GetNWInt("secPerimeterComplete") == 0 then
-				draw.SimpleText(securedPerimeterText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			else
-				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			end
+				local securedPerimeterPanel = vgui.Create("DPanel", scrollPanel)
+				securedPerimeterPanel:Dock(TOP)
+				securedPerimeterPanel:DockMargin(margin, margin, margin, margin)
+				securedPerimeterPanel:SetSize(0, 120)
 
+				securedPerimeterPanel.Paint = function(self, w, h)
+
+					draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+					--Secured Perimeter
+
+					draw.SimpleText("Secured Perimeter : Kill 8 players within 8m on Factory", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					draw.SimpleText("Rewards: " .. securedPerimeterPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					surface.SetDrawColor(65, 65, 65)
+					surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+					surface.SetDrawColor(0, 255, 50, 255)
+					surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("secPerimeter") / "8"), 25)
+
+					if LocalPlayer():GetNWInt("secPerimeterComplete") == 0 then
+						draw.SimpleText(securedPerimeterText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					else
+						draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					end
+				end
+			end
+		else
+			local securedPerimeterPanel = vgui.Create("DPanel", scrollPanel)
+			securedPerimeterPanel:Dock(TOP)
+			securedPerimeterPanel:DockMargin(margin, margin, margin, margin)
+			securedPerimeterPanel:SetSize(0, 120)
+
+			securedPerimeterPanel.Paint = function(self, w, h)
+
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+				--Secured Perimeter
+
+				draw.SimpleText("Secured Perimeter : Kill 8 players within 8m on Factory", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				draw.SimpleText("Rewards: " .. securedPerimeterPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				surface.SetDrawColor(65, 65, 65)
+				surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+				surface.SetDrawColor(0, 255, 50, 255)
+				surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("secPerimeter") / "8"), 25)
+
+				if LocalPlayer():GetNWInt("secPerimeterComplete") == 0 then
+					draw.SimpleText(securedPerimeterText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				else
+					draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				end
+			end
 		end
 
-		local weeklyExtractPanel = vgui.Create("DPanel", scrollPanel)
-		weeklyExtractPanel:Dock(TOP)
-		weeklyExtractPanel:DockMargin(margin, margin, margin, margin)
-		weeklyExtractPanel:SetSize(0, 120)
-
-		weeklyExtractPanel.Paint = function(self, w, h)
-
-			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
-
-			--Wanted
-
-			draw.SimpleText("Wanted : Extract from raids with more than 3 kills", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			draw.SimpleText("Rewards: " .. weeklyExtractPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			surface.SetDrawColor(65, 65, 65)
-			surface.DrawRect(w / 2 - 250, 60, 500, 30)
-
-			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("weeklyExtracts") / "10"), 25)
-
+		if CLIENT and GetConVar("efgm_hide_special_completed_tasks"):GetInt() == 1 then
 			if LocalPlayer():GetNWInt("weeklyExtractsComplete") == 0 then
-				draw.SimpleText(weeklyExtractText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			else
-				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			end
+				local weeklyExtractPanel = vgui.Create("DPanel", scrollPanel)
+				weeklyExtractPanel:Dock(TOP)
+				weeklyExtractPanel:DockMargin(margin, margin, margin, margin)
+				weeklyExtractPanel:SetSize(0, 120)
 
+				weeklyExtractPanel.Paint = function(self, w, h)
+
+					draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+					--Wanted
+
+					draw.SimpleText("Wanted : Extract from raids with more than 3 kills", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					draw.SimpleText("Rewards: " .. weeklyExtractPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					surface.SetDrawColor(65, 65, 65)
+					surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+					surface.SetDrawColor(0, 255, 50, 255)
+					surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("weeklyExtracts") / "10"), 25)
+
+					if LocalPlayer():GetNWInt("weeklyExtractsComplete") == 0 then
+						draw.SimpleText(weeklyExtractText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					else
+						draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					end
+				end
+			end
+		else
+			local weeklyExtractPanel = vgui.Create("DPanel", scrollPanel)
+			weeklyExtractPanel:Dock(TOP)
+			weeklyExtractPanel:DockMargin(margin, margin, margin, margin)
+			weeklyExtractPanel:SetSize(0, 120)
+
+			weeklyExtractPanel.Paint = function(self, w, h)
+
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+				--Wanted
+
+				draw.SimpleText("Wanted : Extract from raids with more than 3 kills", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				draw.SimpleText("Rewards: " .. weeklyExtractPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				surface.SetDrawColor(65, 65, 65)
+				surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+				surface.SetDrawColor(0, 255, 50, 255)
+				surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("weeklyExtracts") / "10"), 25)
+
+				if LocalPlayer():GetNWInt("weeklyExtractsComplete") == 0 then
+					draw.SimpleText(weeklyExtractText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				else
+					draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				end
+			end
 		end
 
-		local shooterBornPanel = vgui.Create("DPanel", scrollPanel)
-		shooterBornPanel:Dock(TOP)
-		shooterBornPanel:DockMargin(margin, margin, margin, margin)
-		shooterBornPanel:SetSize(0, 120)
-
-		shooterBornPanel.Paint = function(self, w, h)
-
-			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
-
-			--Shooter Born
-
-			draw.SimpleText("Shooter Born : Kill 2 players past 100m on Customs", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			draw.SimpleText("Rewards: " .. shooterBornPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			surface.SetDrawColor(65, 65, 65)
-			surface.DrawRect(w / 2 - 250, 60, 500, 30)
-
-			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("shooterBorn") / "2"), 25)
-
+		if CLIENT and GetConVar("efgm_hide_special_completed_tasks"):GetInt() == 1 then
 			if LocalPlayer():GetNWInt("shooterBornComplete") == 0 then
-				draw.SimpleText(shooterBornText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			else
-				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			end
+				local shooterBornPanel = vgui.Create("DPanel", scrollPanel)
+				shooterBornPanel:Dock(TOP)
+				shooterBornPanel:DockMargin(margin, margin, margin, margin)
+				shooterBornPanel:SetSize(0, 120)
 
+				shooterBornPanel.Paint = function(self, w, h)
+
+					draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+					--Shooter Born
+
+					draw.SimpleText("Shooter Born : Kill 2 players past 100m on Customs", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					draw.SimpleText("Rewards: " .. shooterBornPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					surface.SetDrawColor(65, 65, 65)
+					surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+					surface.SetDrawColor(0, 255, 50, 255)
+					surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("shooterBorn") / "2"), 25)
+
+					if LocalPlayer():GetNWInt("shooterBornComplete") == 0 then
+						draw.SimpleText(shooterBornText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					else
+						draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					end
+				end
+			end
+		else
+			local shooterBornPanel = vgui.Create("DPanel", scrollPanel)
+			shooterBornPanel:Dock(TOP)
+			shooterBornPanel:DockMargin(margin, margin, margin, margin)
+			shooterBornPanel:SetSize(0, 120)
+
+			shooterBornPanel.Paint = function(self, w, h)
+
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+				--Shooter Born
+
+				draw.SimpleText("Shooter Born : Kill 2 players past 100m on Customs", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				draw.SimpleText("Rewards: " .. shooterBornPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				surface.SetDrawColor(65, 65, 65)
+				surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+				surface.SetDrawColor(0, 255, 50, 255)
+				surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("shooterBorn") / "2"), 25)
+
+				if LocalPlayer():GetNWInt("shooterBornComplete") == 0 then
+					draw.SimpleText(shooterBornText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				else
+					draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				end
+			end
 		end
 
-		local deadeyePanel = vgui.Create("DPanel", scrollPanel)
-		deadeyePanel:Dock(TOP)
-		deadeyePanel:DockMargin(margin, margin, margin, margin)
-		deadeyePanel:SetSize(0, 120)
-
-		deadeyePanel.Paint = function(self, w, h)
-
-			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
-
-			--Deadeye
-
-			draw.SimpleText("Deadeye : Kill a player past 140m", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			draw.SimpleText("Rewards: " .. deadeyePayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			surface.SetDrawColor(65, 65, 65)
-			surface.DrawRect(w / 2 - 250, 60, 500, 30)
-
-			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("deadeyeProgress") / "1"), 25)
-
+		if CLIENT and GetConVar("efgm_hide_special_completed_tasks"):GetInt() == 1 then
 			if LocalPlayer():GetNWInt("deadeyeComplete") == 0 then
-				draw.SimpleText(deadeyeText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			else
-				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			end
+				local deadeyePanel = vgui.Create("DPanel", scrollPanel)
+				deadeyePanel:Dock(TOP)
+				deadeyePanel:DockMargin(margin, margin, margin, margin)
+				deadeyePanel:SetSize(0, 120)
 
+				deadeyePanel.Paint = function(self, w, h)
+
+					draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+					--Deadeye
+
+					draw.SimpleText("Deadeye : Kill a player past 140m", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					draw.SimpleText("Rewards: " .. deadeyePayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					surface.SetDrawColor(65, 65, 65)
+					surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+					surface.SetDrawColor(0, 255, 50, 255)
+					surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("deadeyeProgress") / "1"), 25)
+
+					if LocalPlayer():GetNWInt("deadeyeComplete") == 0 then
+						draw.SimpleText(deadeyeText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					else
+						draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					end
+				end
+			end
+		else
+			local deadeyePanel = vgui.Create("DPanel", scrollPanel)
+			deadeyePanel:Dock(TOP)
+			deadeyePanel:DockMargin(margin, margin, margin, margin)
+			deadeyePanel:SetSize(0, 120)
+
+			deadeyePanel.Paint = function(self, w, h)
+
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+				--Deadeye
+
+				draw.SimpleText("Deadeye : Kill a player past 140m", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				draw.SimpleText("Rewards: " .. deadeyePayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				surface.SetDrawColor(65, 65, 65)
+				surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+				surface.SetDrawColor(0, 255, 50, 255)
+				surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("deadeyeProgress") / "1"), 25)
+
+				if LocalPlayer():GetNWInt("deadeyeComplete") == 0 then
+					draw.SimpleText(deadeyeText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				else
+					draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				end
+			end
 		end
 
-		local consistencyPanel = vgui.Create("DPanel", scrollPanel)
-		consistencyPanel:Dock(TOP)
-		consistencyPanel:DockMargin(margin, margin, margin, margin)
-		consistencyPanel:SetSize(0, 120)
-
-		consistencyPanel.Paint = function(self, w, h)
-
-			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
-
-			--Consistency
-
-			draw.SimpleText("Consistency : Survive and Extract from 4 raids in a row", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			draw.SimpleText("Rewards: " .. consistencyPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			surface.SetDrawColor(65, 65, 65)
-			surface.DrawRect(w / 2 - 250, 60, 500, 30)
-
-			surface.SetDrawColor(0, 255, 50, 255)
-
+		if CLIENT and GetConVar("efgm_hide_special_completed_tasks"):GetInt() == 1 then
 			if LocalPlayer():GetNWInt("consistencyComplete") == 0 then
-				surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("extractionStreak") / "4"), 25)
-				draw.SimpleText(consistencyText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			else
-				surface.DrawRect(w / 2 - 247.5, 62.5, 495, 25)
-				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			end
+				local consistencyPanel = vgui.Create("DPanel", scrollPanel)
+				consistencyPanel:Dock(TOP)
+				consistencyPanel:DockMargin(margin, margin, margin, margin)
+				consistencyPanel:SetSize(0, 120)
 
+				consistencyPanel.Paint = function(self, w, h)
+
+					draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+					--Consistency
+
+					draw.SimpleText("Consistency : Survive and Extract from 4 raids in a row", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					draw.SimpleText("Rewards: " .. consistencyPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					surface.SetDrawColor(65, 65, 65)
+					surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+					surface.SetDrawColor(0, 255, 50, 255)
+
+					if LocalPlayer():GetNWInt("consistencyComplete") == 0 then
+						surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("extractionStreak") / "4"), 25)
+						draw.SimpleText(consistencyText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					else
+						surface.DrawRect(w / 2 - 247.5, 62.5, 495, 25)
+						draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					end
+				end
+			end
+		else
+			local consistencyPanel = vgui.Create("DPanel", scrollPanel)
+			consistencyPanel:Dock(TOP)
+			consistencyPanel:DockMargin(margin, margin, margin, margin)
+			consistencyPanel:SetSize(0, 120)
+
+			consistencyPanel.Paint = function(self, w, h)
+
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+				--Consistency
+
+				draw.SimpleText("Consistency : Survive and Extract from 4 raids in a row", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				draw.SimpleText("Rewards: " .. consistencyPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				surface.SetDrawColor(65, 65, 65)
+				surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+				surface.SetDrawColor(0, 255, 50, 255)
+
+				if LocalPlayer():GetNWInt("consistencyComplete") == 0 then
+					surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("extractionStreak") / "4"), 25)
+					draw.SimpleText(consistencyText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				else
+					surface.DrawRect(w / 2 - 247.5, 62.5, 495, 25)
+					draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				end
+			end
 		end
 
-		local addictPanel = vgui.Create("DPanel", scrollPanel)
-		addictPanel:Dock(TOP)
-		addictPanel:DockMargin(margin, margin, margin, margin)
-		addictPanel:SetSize(0, 120)
-
-		addictPanel.Paint = function(self, w, h)
-
-			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
-
-			--Addiction
-
-			draw.SimpleText("Addiction : Play through 10 maps", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			draw.SimpleText("Rewards: " .. addictPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			surface.SetDrawColor(65, 65, 65)
-			surface.DrawRect(w / 2 - 250, 60, 500, 30)
-
-			surface.SetDrawColor(0, 255, 50, 255)
-			surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("weeklyAddict") / "10"), 25)
-
+		if CLIENT and GetConVar("efgm_hide_special_completed_tasks"):GetInt() == 1 then
 			if LocalPlayer():GetNWInt("weeklyAddictComplete") == 0 then
-				draw.SimpleText(addictText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			else
-				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			end
+				local addictPanel = vgui.Create("DPanel", scrollPanel)
+				addictPanel:Dock(TOP)
+				addictPanel:DockMargin(margin, margin, margin, margin)
+				addictPanel:SetSize(0, 120)
 
+				addictPanel.Paint = function(self, w, h)
+
+					draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+					--Addiction
+
+					draw.SimpleText("Addiction : Play through 10 maps", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					draw.SimpleText("Rewards: " .. addictPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					surface.SetDrawColor(65, 65, 65)
+					surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+					surface.SetDrawColor(0, 255, 50, 255)
+					surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("weeklyAddict") / "10"), 25)
+
+					if LocalPlayer():GetNWInt("weeklyAddictComplete") == 0 then
+						draw.SimpleText(addictText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					else
+						draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					end
+				end
+			end
+		else
+			local addictPanel = vgui.Create("DPanel", scrollPanel)
+			addictPanel:Dock(TOP)
+			addictPanel:DockMargin(margin, margin, margin, margin)
+			addictPanel:SetSize(0, 120)
+
+			addictPanel.Paint = function(self, w, h)
+
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+				--Addiction
+
+				draw.SimpleText("Addiction : Play through 10 maps", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				draw.SimpleText("Rewards: " .. addictPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				surface.SetDrawColor(65, 65, 65)
+				surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+				surface.SetDrawColor(0, 255, 50, 255)
+				surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("weeklyAddict") / "10"), 25)
+
+				if LocalPlayer():GetNWInt("weeklyAddictComplete") == 0 then
+					draw.SimpleText(addictText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				else
+					draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				end
+			end
 		end
 
-		local nuclearPanel = vgui.Create("DPanel", scrollPanel)
-		nuclearPanel:Dock(TOP)
-		nuclearPanel:DockMargin(margin, margin, margin, margin)
-		nuclearPanel:SetSize(0, 120)
-
-		nuclearPanel.Paint = function(self, w, h)
-
-			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
-
-			--Nuclear
-
-			draw.SimpleText("Nuclear : Extract from a raid with 12 or more kills", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			draw.SimpleText("Rewards: " .. nuclearPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-
-			surface.SetDrawColor(65, 65, 65)
-			surface.DrawRect(w / 2 - 250, 60, 500, 30)
-
-			surface.SetDrawColor(0, 255, 50, 255)
-
+		if CLIENT and GetConVar("efgm_hide_special_completed_tasks"):GetInt() == 1 then
 			if LocalPlayer():GetNWInt("weeklyNuclearComplete") == 0 then
-				surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("raidKill") / "12"), 25)
-				draw.SimpleText(nuclearText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			else
-				surface.DrawRect(w / 2 - 247.5, 62.5, 495, 25)
-				draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			end
+				local nuclearPanel = vgui.Create("DPanel", scrollPanel)
+				nuclearPanel:Dock(TOP)
+				nuclearPanel:DockMargin(margin, margin, margin, margin)
+				nuclearPanel:SetSize(0, 120)
 
+				nuclearPanel.Paint = function(self, w, h)
+
+					draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+					--Nuclear
+
+					draw.SimpleText("Nuclear : Extract from a raid with 12 or more kills", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					draw.SimpleText("Rewards: " .. nuclearPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+					surface.SetDrawColor(65, 65, 65)
+					surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+					surface.SetDrawColor(0, 255, 50, 255)
+
+					if LocalPlayer():GetNWInt("weeklyNuclearComplete") == 0 then
+						surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("raidKill") / "12"), 25)
+						draw.SimpleText(nuclearText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					else
+						surface.DrawRect(w / 2 - 247.5, 62.5, 495, 25)
+						draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+					end
+				end
+			end
+		else
+			local nuclearPanel = vgui.Create("DPanel", scrollPanel)
+			nuclearPanel:Dock(TOP)
+			nuclearPanel:DockMargin(margin, margin, margin, margin)
+			nuclearPanel:SetSize(0, 120)
+
+			nuclearPanel.Paint = function(self, w, h)
+
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+				--Nuclear
+
+				draw.SimpleText("Nuclear : Extract from a raid with 12 or more kills", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				draw.SimpleText("Rewards: " .. nuclearPayment, "DermaDefaultBold", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+				surface.SetDrawColor(65, 65, 65)
+				surface.DrawRect(w / 2 - 250, 60, 500, 30)
+
+				surface.SetDrawColor(0, 255, 50, 255)
+
+				if LocalPlayer():GetNWInt("weeklyNuclearComplete") == 0 then
+					surface.DrawRect(w / 2 - 247.5, 62.5, 495 * (LocalPlayer():GetNWInt("raidKill") / "12"), 25)
+					draw.SimpleText(nuclearText, "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				else
+					surface.DrawRect(w / 2 - 247.5, 62.5, 495, 25)
+					draw.SimpleText("Task Completed", "DermaDefaultBold", w / 2, 100, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				end
+			end
 		end
 
 		local endPanel = vgui.Create("DPanel", scrollPanel)
@@ -997,17 +1486,6 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		endPanel.Paint = function(self, w, h)
 			draw.SimpleText("(leaving the server will reset your current daily task progress!)", "CloseCaption_Bold", w / 2, h / 5, Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
-
-
-		-- local bottomMarginPanel = vgui.Create("DPanel", scrollPanel)
-		-- bottomMarginPanel:Dock(BOTTOM)
-		-- bottomMarginPanel:DockMargin(margin, margin, margin, margin)
-		-- bottomMarginPanel:SetSize(0, margin * 2)
-
-		-- bottomMarginPanel.Paint = function(self, w, h)
-		-- 	draw.RoundedBox( 0, 0, 0, w, h, secondaryColor )
-		-- end
-
 	end
 
 	local taskButton = vgui.Create("DButton")
@@ -1362,7 +1840,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			local StashInfoPanel = vgui.Create("DPanel", scrollPanel)
 			StashInfoPanel:Dock(TOP)
 			StashInfoPanel:DockMargin(margin, margin, margin, margin)
-			StashInfoPanel:SetSize(0, 210)
+			StashInfoPanel:SetSize(0, 180)
 	
 			StashInfoPanel.Paint = function(self, w, h)
 	
@@ -1379,10 +1857,12 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				end
 			end
 
-			local StashButtonHolder = vgui.Create("DPanel", scrollPanel)
-			StashButtonHolder:Dock(TOP)
-			StashButtonHolder:DockMargin(margin, margin, margin, margin)
-			StashButtonHolder:SetSize(0, 70)
+			if (LocalPlayer():GetNWInt("stashMaxed") == 0) then
+				local StashButtonHolder = vgui.Create("DPanel", scrollPanel)
+				StashButtonHolder:Dock(TOP)
+				StashButtonHolder:DockMargin(margin, margin, margin, margin)
+				StashButtonHolder:SetSize(0, 70)
+			end
 
 			if (LocalPlayer():GetNWInt("stashMaxed") == 0) then
 				local doStashUpgrade = vgui.Create("DButton")
@@ -1505,9 +1985,9 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			doPrestigeButton.DoClick = function()
 				RunConsoleCommand("efgm_prestige")
 			end
-	
+
 			PrestigeButtonHolder.Paint = function(self, w, h)
-	
+
 				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
 			end
@@ -1529,7 +2009,11 @@ end
 PANEL = {} --Creates empty panel
 
 function PANEL:Init() -- initializes the panel
-	self:SetSize(700, 768)
+	if below720 == true then
+		self:SetSize(700, 720)
+	else
+		self:SetSize(700, 768)
+	end
 	self:SetPos(100, 25)
 end
 
@@ -1547,7 +2031,11 @@ vgui.Register("PlayerPanel", PANEL, "Panel")
 PANEL = {} --Creates empty panel
 
 function PANEL:Init() -- initializes the panel
-	self:SetSize(700, 746)
+	if below720 == true then
+		self:SetSize(700, 694)
+	else
+		self:SetSize(700, 746)
+	end
 	self:SetPos(100, 25)
 end
 
@@ -1562,7 +2050,11 @@ vgui.Register("ShopPanel", PANEL, "Panel")
 PANEL = {} --Creates empty panel
 
 function PANEL:Init() -- initializes the panel
-	self:SetSize(700, 768)
+	if below720 == true then
+		self:SetSize(700, 720)
+	else
+		self:SetSize(700, 768)
+	end
 	self:SetPos(100, 25)
 end
 
@@ -1579,7 +2071,11 @@ vgui.Register("TaskPanel", PANEL, "Panel")
 PANEL = {} --Creates empty panel
 
 function PANEL:Init() -- initializes the panel
-	self:SetSize(700, 768)
+	if below720 == true then
+		self:SetSize(700, 720)
+	else
+		self:SetSize(700, 768)
+	end
 	self:SetPos(100, 25)
 end
 
@@ -1597,7 +2093,11 @@ vgui.Register("DailyPanel", PANEL, "DPanel")
 PANEL = {} --Creates empty panel
 
 function PANEL:Init() -- initializes the panel
-	self:SetSize(700, 768)
+	if below720 == true then
+		self:SetSize(700, 720)
+	else
+		self:SetSize(700, 768)
+	end
 	self:SetPos(100, 25)
 end
 
@@ -1614,7 +2114,11 @@ vgui.Register("SkillPanel", PANEL, "Panel")
 PANEL = {} --Creates empty panel
 
 function PANEL:Init() -- initializes the panel
-	self:SetSize(700, 768)
+	if below720 == true then
+		self:SetSize(700, 720)
+	else
+		self:SetSize(700, 768)
+	end
 	self:SetPos(100, 25)
 end
 
@@ -1631,7 +2135,11 @@ vgui.Register("PrestigePanel", PANEL, "Panel")
 PANEL = {} --Creates empty panel
 
 function PANEL:Init() -- initializes the panel
-	self:SetSize(700, 768)
+	if below720 == true then
+		self:SetSize(700, 720)
+	else
+		self:SetSize(700, 768)
+	end
 	self:SetPos(100, 25)
 end
 
@@ -1642,6 +2150,27 @@ end
 vgui.Register("StashMenuPanel", PANEL, "Panel")
 
 --End stash meun panel
+
+--Settings menu panel
+
+PANEL = {} --Creates empty panel
+
+function PANEL:Init() -- initializes the panel
+	if below720 == true then
+		self:SetSize(700, 720)
+	else
+		self:SetSize(700, 768)
+	end
+	self:SetPos(100, 25)
+end
+
+function PANEL:Paint(w, h)
+	draw.RoundedBox(0, 0, 0, w, h, Color(50, 50, 50))
+end
+
+vgui.Register("SettingsPanel", PANEL, "Panel")
+
+--End settings meun panel
 
 -- wow this is why i had to merge the fucking stash menu into this jesus christ im dumb
 -- actually maybe not idk, im autistic not a rocket scientist
@@ -1655,18 +2184,13 @@ function OpenSellMenu()
 	local blackColor = 		Color(10, 10, 10, 255)
 	local whiteColor = 		Color(250, 250, 250, 255)
 	local offWhiteColor = 	Color(200, 200, 200, 255)
+	local redColor = 	Color(255, 0, 0)
 
 	local primaryColor =	Color(30, 30, 30, 255)
 	local secondaryColor =	Color(100, 100, 100, 255)
 
-	local inRaidColor = 	Color(50, 255, 50, 255)		-- Red
-	local outRaidColor = 	Color(255, 255, 255, 255)		-- Green
-	local deadColor = 		Color(255, 50, 50, 255)	-- Gray
-
-	local width =			math.Round( ScrW() * 0.5 )	-- Around 960 for 1920 width res
-	local height =			math.Round( ScrH() * 0.9 )	-- Around 980 for 1080 height res
-
-	local margin = 			math.Round( ScrH() * 0.01 )
+	local width =			math.Round(912)
+	local height =			math.Round(972)
 
 	-- Basic menu shit
 
@@ -1731,7 +2255,7 @@ function OpenSellMenu()
 		end
 
 		for l, b in pairs(sellBlacklist) do
-			
+
 			if b[1] == v:GetClass() then
 
 				isWeaponValid = false
@@ -1765,10 +2289,10 @@ function OpenSellMenu()
 				surface.SetDrawColor(offWhiteColor)
 				surface.DrawRect(0, 0, w, 30)
 				surface.DrawRect(0, h - 30, w, 30)
-				
+
 				draw.SimpleText(wepName, "DermaLarge", w / 2, 15, blackColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-				draw.SimpleText(sellPrice .. "₽", "DermaLarge", w / 2, h - 15, blackColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-				
+				draw.SimpleText("₽ " .. sellPrice, "DermaLarge", w / 2, h - 15, blackColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+
 			end
 
 			icon.DoClick = function(self)
@@ -1805,8 +2329,9 @@ function OpenSellMenu()
 		menuPanel.Paint = function(self, w, h)
 
 			draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
-			draw.SimpleText("TOTAL INVENTORY VALUE: " .. totalSellValue .. "₽", "DermaLarge", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER)
-	
+			draw.SimpleText("TOTAL INVENTORY VALUE: ₽ " .. totalSellValue, "DermaLarge", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER)
+			draw.SimpleText("(if you can not see your items, check in your backpack by pressing [I])", "CloseCaption_Normal", w / 2, 75, redColor, TEXT_ALIGN_CENTER)
+
 		end
 
 	end
@@ -1851,7 +2376,7 @@ function MenuInit()
 		end
 
 		gui.EnableScreenClicker(true)
-		surface.PlaySound( "common/wpn_select.wav" )
+		surface.PlaySound("common/wpn_select.wav")
 
 		inStashMenu = true
 
@@ -2071,49 +2596,11 @@ function MenuInit()
 
 						surface.PlaySound("UI/buttonclick.wav")
 
-						-- icon:Remove()
-
 					end
 
 				end
 
 			end
-
-			-- PrintTable(LocalPlayer():GetAmmo())
-
-			-- for k, v in pairs(LocalPlayer():GetAmmo()) do
-			-- 	-- Creates buttons for the weapons
-
-			-- 	if v == nil then print("ammo is nil") return end
-
-			-- 	local ammoName = game.GetAmmoName(v)
-			-- 	local ammoAmount = LocalPlayer():GetAmmoCount(v)
-
-			-- 	if ammoName == nil then print("cannot find ammo name") return end
-
-			-- 	print("starting on ammo icon")
-
-			-- 	local icon = vgui.Create("SpawnIcon", ammoIconLayout)
-			-- 	icon:SetModel(ammoName["WorldModel"])
-			-- 	icon:SetToolTip(ammoName)
-			-- 	icon:SetSize(96, 96)
-
-			-- 	function icon:Paint(w, h)
-
-			-- 		draw.RoundedBox( 0, 0, 0, w, h, Color( 80, 80, 80, 255 ) )
-			-- 		draw.RoundedBox( 0, 0, 75, w, h - 75, Color( 40, 40, 40, 255 ) )
-			-- 		draw.SimpleText(ammoName.." x"..ammoAmount, "DermaDefault", w/2, 80, Color(255, 255, 255, 255), 1)
-
-			-- 	end
-
-			-- 	print("adding ammo to ammo icon layout")
-			-- 	ammoIconLayout:Add(icon)
-
-			-- icon.DoClick = function(icon)
-
-			-- end
-
-			-- end
 
 			net.Start("RequestStash")
 			net.SendToServer()
@@ -2715,10 +3202,6 @@ function EnterRaidMenu()
 	local primaryColor =	Color(30, 30, 30, 255)
 	local secondaryColor =	Color(100, 100, 100, 255)
 
-	local inRaidColor = 	Color(50, 255, 50, 255)	-- Green
-	local outRaidColor = 	Color(255, 255, 255)		-- White
-	local deadColor = 		Color(255, 50, 50, 255)	-- Red
-
 	local width =			600
 	local height =			600
 
@@ -2756,11 +3239,33 @@ function EnterRaidMenu()
 	topTextPanel:DockMargin(margin, margin, margin, margin)
 	topTextPanel:SetSize(0, 80)
 
+	currentMap = game.GetMap()
+
+	if currentMap == "efgm_factory" then
+		mapName = "Factory"
+	end
+
+	if currentMap == "efgm_concrete" then
+		mapName = "Concrete"
+	end
+
+	if currentMap == "efgm_customs" then
+		mapName = "Customs"
+	end
+
+	if currentMap == "efgm_belmont" then
+		mapName = "Belmont"
+	end
+
 	topTextPanel.Paint = function(self, w, h)
 
 		draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
-		draw.SimpleText("THE TIME HAS COME", "DermaLarge", w / 2, h / 2, primaryColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText("THE TIME HAS COME", "DermaLarge", w / 2, h / 2.8, primaryColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+
+		if mapName == "Factory" or mapName == "Concrete" or mapName == "Customs" or mapName == "Belmont" then
+			draw.SimpleText("Exfiltration into the " .. mapName .. " location.", "DermaLarge", w / 2, h / 1.4, primaryColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
 
 	end
 
@@ -2814,7 +3319,7 @@ function EnterRaidMenu()
 		enterRaidButton:Dock(BOTTOM)
 		enterRaidButton:DockMargin(margin, margin, margin, margin)
 		enterRaidButton:SetSize(0, 70)
-		enterRaidButton:SetText("Enter the Raid by Yourself")
+		enterRaidButton:SetText("Enter the Raid alone.")
 
 	end
 

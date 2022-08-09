@@ -145,7 +145,7 @@ function buyGun(ply, cmd, args)
 	weaponPrices[39] = {"arccw_mifl_fas2_ks23", "13005", "8"}
 	weaponPrices[40] = {"arccw_mifl_fas2_m24", "18900", "14"}
 	weaponPrices[41] = {"arccw_mifl_fas2_m3", "14505", "12"}
-	weaponPrices[42] = {"arccw_mifl_fas2_m82", "20999", "18"}
+	weaponPrices[42] = {"arccw_mifl_fas2_m82", "30099", "18"}
 	weaponPrices[43] = {"arccw_mifl_fas2_mac11", "8100", "5"}
 	weaponPrices[44] = {"arccw_fml_fas2_custom_mass26", "17550", "14"}
 	weaponPrices[45] = {"arccw_mifl_fas2_minimi", "19995", "16"}
@@ -314,6 +314,15 @@ function PlayerKDReset(ply, cmd, args)
 	ply:SetNWInt("playerDeaths", 0)
 end
 concommand.Add("efgm_reset_kd", PlayerKDReset)
+
+function PlayerSRReset(ply, cmd, args)
+	ply:SetNWInt("survivalRate", 0)
+	ply:SetNWInt("raidsPlayed", 0)
+	ply:SetNWInt("raidsExtracted", 0)
+	ply:SetNWInt("raidsRanThrough", 0)
+	ply:SetNWInt("raidsDied", 0)
+end
+concommand.Add("efgm_reset_SR", PlayerSRReset)
 
 function StashUpgrade(ply, cmd, args)
 

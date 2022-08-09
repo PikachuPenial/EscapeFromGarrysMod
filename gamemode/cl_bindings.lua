@@ -50,7 +50,7 @@ hook.Add( "Think", "CallBindings", function()
 	end
 end )
 
-bind.Add(KEY_O, "CheckExtracts", function()
+bind.Add(GetConVar("efgm_check_extracts_bind"):GetInt(), "CheckExtracts", function()
 	if (!LocalPlayer():IsTyping()) then
     	RunConsoleCommand("efgm_extract_list")
 	end

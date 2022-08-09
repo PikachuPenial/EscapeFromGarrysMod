@@ -1,0 +1,19 @@
+Improved Sell Menu, shows the following
+
+Settings Menu, allows you to change things like:
+    Toggling UI
+    Toggling Control Hints
+    Toggling Completed Tasks
+    Keybinds for various actioins
+    Optic Reticle Coloring
+    Weapon Bob Intensity
+
+Incendiary Grenade removed from starting loadout
+Increased M82 price to 30099 (was previously 20999)
+Improved Menu support for resolutions going below 720 in height
+Added button to reset a players Survival Rate / SR%
+Now explains how to level a specific skill in the Skills Menu
+Maxing your stash now disables the Stash Upgrade button
+Added additional info on the Exfiltration Menu
+Added a explanation of the inventory system in the stash menu to help newer/confused players
+Removed old code related to ammo stashing

@@ -67,7 +67,7 @@ function GM:Initialize()
 	tempWeaponsArray[39] = {"models/weapons/arccw/mifl/fas2/c_ks23.mdl", "arccw_mifl_fas2_ks23", "KS-23", 13005, "8", "MID", "Shotgun"}
 	tempWeaponsArray[40] = {"models/weapons/arccw/mifl/fas2/c_m24.mdl", "arccw_mifl_fas2_m24", "M24 SR", 18900, "14", "HIGH", "Sniper"}
 	tempWeaponsArray[41] = {"models/weapons/arccw/mifl/fas2/c_m3s90.mdl", "arccw_mifl_fas2_m3", "M3 Super 90", 14505, "12", "MID", "Shotgun"}
-	tempWeaponsArray[42] = {"models/weapons/arccw/mifl/fas2/c_m82.mdl", "arccw_mifl_fas2_m82", "M82 SR", 20999, "18", "HIGH", "Sniper"}
+	tempWeaponsArray[42] = {"models/weapons/arccw/mifl/fas2/c_m82.mdl", "arccw_mifl_fas2_m82", "M82 SR", 30099, "18", "HIGH", "Sniper"}
 	tempWeaponsArray[43] = {"models/weapons/arccw/mifl/fas2/c_mac11.mdl", "arccw_mifl_fas2_mac11", "MAC-11", 8100, "5", "LOW", "SMG"}
 	tempWeaponsArray[44] = {"models/weapons/arccw/mifl/fas2_custom/c_m26.mdl", "arccw_fml_fas2_custom_mass26", "MASS-26 SG", 17550, "14", "HIGH", "Shotgun"}
 	tempWeaponsArray[45] = {"models/weapons/arccw/mifl/fas2/c_minimi.mdl", "arccw_mifl_fas2_minimi", "Minimi", 19995, "16", "HIGH", "Heavy"}
@@ -203,7 +203,6 @@ function GM:Initialize()
 	sellBlacklist[4] = {"arccw_waw_tt33"}
 	sellBlacklist[5] = {"arccw_go_nade_frag"}
 	sellBlacklist[6] = {"arccw_go_nade_smoke"}
-	sellBlacklist[7] = {"arccw_go_nade_incendiary"}
 
 	-- Any weapon in this array cannot be seen or put into the stash. Put shit here idk.
 
@@ -224,8 +223,14 @@ function GM:Initialize()
 
 end
 
-if !ConVarExists("efgm_hidebinds") then CreateConVar( "efgm_hidebinds", "0", FCVAR_ARCHIVE, "Show or hide binds, while you are not in Raid",0,1 ) end
-if !ConVarExists("efgm_hideui") then CreateConVar( "efgm_hideui", "0", FCVAR_ARCHIVE, "Completely hide any custom UI elements created by the gamemode",0,1 ) end
+--Player Convars
+if !ConVarExists("efgm_hidebinds") then CreateConVar("efgm_hidebinds", "0", FCVAR_ARCHIVE, "Show or hide binds, while you are not in Raid",0,1) end
+if !ConVarExists("efgm_hideui") then CreateConVar("efgm_hideui", "0", FCVAR_ARCHIVE, "Completely hide any custom UI elements created by the gamemode",0,1) end
+if !ConVarExists("efgm_hide_daily_completed_tasks") then CreateConVar("efgm_hide_daily_completed_tasks", "1", FCVAR_ARCHIVE, "Hide any completed daily tasks in the TASKS menu",0,1) end
+if !ConVarExists("efgm_hide_special_completed_tasks") then CreateConVar("efgm_hide_special_completed_tasks", "1", FCVAR_ARCHIVE, "Hide any completed special tasks in the TASKS menu",0,1) end
+
+--Player Keybinds
+if !ConVarExists("efgm_check_extracts_bind") then CreateConVar("efgm_check_extracts_bind", "25", FCVAR_ARCHIVE, "Changes the key that shows a players list of available extracts",0,159) end
 
 --Disable the context menu.
 function GM:ContextMenuOpen()
@@ -428,7 +433,7 @@ RunConsoleCommand("arccw_mult_attchance", "1.00")
 RunConsoleCommand("arccw_mult_bottomlessclip", "0")
 RunConsoleCommand("arccw_mult_crouchdisp", "0.85")
 RunConsoleCommand("arccw_mult_crouchrecoil", "0.85")
-RunConsoleCommand("arccw_mult_damage", "0.90")
+RunConsoleCommand("arccw_mult_damage", "0.80")
 RunConsoleCommand("arccw_mult_defaultammo", "3")
 RunConsoleCommand("arccw_mult_heat", "1.00")
 RunConsoleCommand("arccw_mult_hipfire", "1.00")

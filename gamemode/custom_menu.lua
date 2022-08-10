@@ -2230,101 +2230,124 @@ function OpenSellMenu()
 	-- Each icon should clearly show the gun model, name, price, and rarity
 	-- "Sell all" button
 
-	local sellIconLayout = vgui.Create( "DIconLayout", sellPanel)
+	local scroller = vgui.Create( "DScrollPanel" , sellPanel)
+	scroller:Dock(FILL)
+
+	local sellIconLayout = vgui.Create( "DIconLayout", scroller)
 	sellIconLayout:Dock(FILL)
 	sellIconLayout:DockMargin(10, 10, 10, 10)
 	sellIconLayout:SetSpaceY(10)
 	sellIconLayout:SetSpaceX(10)
 
-	local allPlayerWeapons = clientPlayer:GetWeapons()
+	local soldGunTable = {}
 
-	for k, v in pairs( allPlayerWeapons ) do
+	function DrawSellMenu()
 
-		local isWeaponValid = false
-		local weaponSellInfo = {}
+		local allPlayerWeapons = clientPlayer:GetWeapons()
 
-		for l, b in pairs(weaponsArr) do
+		for k, v in pairs( allPlayerWeapons ) do
 
-			if b[2] == v:GetClass() then
+			local isWeaponValid = false
+			local weaponSellInfo = {}
 
-				isWeaponValid = true
-				weaponSellInfo = b
+			-- Checks for if a gun shouldnt be shown
+
+			for l, b in pairs(weaponsArr) do
+
+				if b[2] == v:GetClass() then
+
+					isWeaponValid = true
+					weaponSellInfo = b
+
+				end
+
+			end
+
+			if #soldGunTable > 0 then
+
+				for l, b in pairs(soldGunTable) do
+					
+					if b == v:GetClass() then
+
+						isWeaponValid = false
+
+					end
+
+				end
+
+			end
+
+			for l, b in pairs(sellBlacklist) do
+				
+				if b[1] == v:GetClass() then
+
+					isWeaponValid = false
+
+				end
+
+			end
+
+			if isWeaponValid == true then
+
+				if weapons.Get(v:GetClass()) == nil then return end
+
+				local weaponInfo = weapons.Get(v:GetClass())
+
+				local wepName
+
+				if weaponInfo["TrueName"] == nil then wepName = weaponInfo["PrintName"] else wepName = weaponInfo["TrueName"] end
+
+				local sellPrice = math.Round( weaponSellInfo[4] * sellPriceMultiplier )
+
+				local icon = vgui.Create("SpawnIcon", stashIconLayout)
+				icon:SetModel(weaponInfo["WorldModel"])
+				icon:SetTooltip("Sell " .. wepName .. " for " .. sellPrice .. "₽?")
+				icon:SetSize(200, 200)
+				
+				icon.Paint = function(self, w, h)
+
+					surface.SetDrawColor(whiteColor)
+					surface.DrawRect(0, 0, w, h)
+
+					surface.SetDrawColor(offWhiteColor)
+					surface.DrawRect(0, 0, w, 30)
+					surface.DrawRect(0, h - 30, w, 30)
+					
+					draw.SimpleText(wepName, "DermaLarge", w / 2, 15, blackColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+					draw.SimpleText(sellPrice .. "₽", "DermaLarge", w / 2, h - 15, blackColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+					
+				end
+
+				icon.DoClick = function(self)
+
+					table.insert( soldGunTable, v:GetClass() )
+
+					local tempTable = {v:GetClass(), sellPrice, wepName}
+
+					net.Start("SellItem")
+					net.WriteTable(tempTable)
+					net.SendToServer()
+
+					surface.PlaySound("common/wpn_select.wav")
+					surface.PlaySound("items/ammo_pickup.wav")
+
+					-- draws the icon black after selling
+
+					icon:SetSize(0, 0)
+
+					totalSellValue = totalSellValue - sellPrice
+
+					RedrawSellMenu()
+
+				end
+
+				totalSellValue = totalSellValue + sellPrice
+
+				sellIconLayout:Add(icon)
 
 			end
 
 		end
-
-		for l, b in pairs(sellBlacklist) do
-
-			if b[1] == v:GetClass() then
-
-				isWeaponValid = false
-
-			end
-
-		end
-
-		if isWeaponValid == true then
-
-			if weapons.Get(v:GetClass()) == nil then return end
-
-			local weaponInfo = weapons.Get(v:GetClass())
-
-			local wepName
-
-			if weaponInfo["TrueName"] == nil then wepName = weaponInfo["PrintName"] else wepName = weaponInfo["TrueName"] end
-
-			local sellPrice = math.Round( weaponSellInfo[4] * sellPriceMultiplier )
-
-			local icon = vgui.Create("SpawnIcon", stashIconLayout)
-			icon:SetModel(weaponInfo["WorldModel"])
-			icon:SetTooltip("Sell " .. wepName .. " for " .. sellPrice .. "₽?")
-			icon:SetSize(200, 200)
-
-			icon.Paint = function(self, w, h)
-
-				surface.SetDrawColor(whiteColor)
-				surface.DrawRect(0, 0, w, h)
-
-				surface.SetDrawColor(offWhiteColor)
-				surface.DrawRect(0, 0, w, 30)
-				surface.DrawRect(0, h - 30, w, 30)
-
-				draw.SimpleText(wepName, "DermaLarge", w / 2, 15, blackColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-				draw.SimpleText("₽ " .. sellPrice, "DermaLarge", w / 2, h - 15, blackColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-
-			end
-
-			icon.DoClick = function(self)
-
-				local tempTable = {v:GetClass(), sellPrice, wepName}
-
-				net.Start("SellItem")
-				net.WriteTable(tempTable)
-				net.SendToServer()
-
-				surface.PlaySound("common/wpn_select.wav")
-				surface.PlaySound("items/ammo_pickup.wav")
-
-				-- draws the icon black after selling
-
-				icon:SetSize(0, 0)
-
-				totalSellValue = totalSellValue - sellPrice
-
-				DrawTotalSellValue()
-
-			end
-
-			totalSellValue = totalSellValue + sellPrice
-
-			sellIconLayout:Add(icon)
-
-		end
-
-	end
-
-	function DrawTotalSellValue()
 
 		menuPanel.Paint = function(self, w, h)
 
@@ -2336,7 +2359,14 @@ function OpenSellMenu()
 
 	end
 
-	DrawTotalSellValue()
+	function RedrawSellMenu()
+
+		sellIconLayout:Clear()
+		DrawSellMenu()
+
+	end
+
+	DrawSellMenu()
 
 end
 

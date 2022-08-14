@@ -56,6 +56,7 @@ function checkForWeekly(ply)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)
+		checkForKappa(ply)
 		ply:PrintMessage(HUD_PRINTCENTER, "You have completed the Rangefinder task.", Color(85, 0, 255, 255), 0)
 	end
 end
@@ -67,9 +68,11 @@ function checkForWeeklyTwo(ply)
 		ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 60000) * ply:GetNWInt("loyaltyEffect"))
 		ply:SetNWInt("weeklyExtractsComplete", 1)
 		ply:SetNWInt("specialsCompleted", ply:GetNWInt("specialsCompleted") + 1)
+		ply:SetNWInt("kappaProgress", ply:GetNWInt("kappaProgress") + 1)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)
+		checkForKappa(ply)
 		ply:PrintMessage(HUD_PRINTCENTER, "You have completed the Wanted task.", Color(85, 0, 255, 255), 0)
 	end
 end
@@ -81,9 +84,11 @@ function checkForWeeklyThree(ply)
 		ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 70000) * ply:GetNWInt("loyaltyEffect"))
 		ply:SetNWInt("weeklyNuclearComplete", 1)
 		ply:SetNWInt("specialsCompleted", ply:GetNWInt("specialsCompleted") + 1)
+		ply:SetNWInt("kappaProgress", ply:GetNWInt("kappaProgress") + 1)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)
+		checkForKappa(ply)
 		ply:PrintMessage(HUD_PRINTCENTER, "You have completed the Nuclear task.", Color(85, 0, 255, 255), 0)
 	end
 end
@@ -95,9 +100,11 @@ function checkForWeeklyFour(ply)
 		ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 40000) * ply:GetNWInt("loyaltyEffect"))
 		ply:SetNWInt("weeklyAddictComplete", 1)
 		ply:SetNWInt("specialsCompleted", ply:GetNWInt("specialsCompleted") + 1)
+		ply:SetNWInt("kappaProgress", ply:GetNWInt("kappaProgress") + 1)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)
+		checkForKappa(ply)
 		ply:PrintMessage(HUD_PRINTCENTER, "You have completed the Addiction task.", Color(85, 0, 255, 255), 0)
 	end
 end
@@ -109,9 +116,11 @@ function checkForWeeklyFive(ply)
 		ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 70000) * ply:GetNWInt("loyaltyEffect"))
 		ply:SetNWInt("shooterBornComplete", 1)
 		ply:SetNWInt("specialsCompleted", ply:GetNWInt("specialsCompleted") + 1)
+		ply:SetNWInt("kappaProgress", ply:GetNWInt("kappaProgress") + 1)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)
+		checkForKappa(ply)
 		ply:PrintMessage(HUD_PRINTCENTER, "You have completed the Shooter Born task.", Color(85, 0, 255, 255), 0)
 	end
 end
@@ -123,9 +132,11 @@ function checkForWeeklySix(ply)
 		ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 35000) * ply:GetNWInt("loyaltyEffect"))
 		ply:SetNWInt("secPerimeterComplete", 1)
 		ply:SetNWInt("specialsCompleted", ply:GetNWInt("specialsCompleted") + 1)
+		ply:SetNWInt("kappaProgress", ply:GetNWInt("kappaProgress") + 1)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)
+		checkForKappa(ply)
 		ply:PrintMessage(HUD_PRINTCENTER, "You have completed the Secured Perimeter task.", Color(85, 0, 255, 255), 0)
 	end
 end
@@ -137,9 +148,11 @@ function checkForWeeklySeven(ply)
 		ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 60000) * ply:GetNWInt("loyaltyEffect"))
 		ply:SetNWInt("deadeyeComplete", 1)
 		ply:SetNWInt("specialsCompleted", ply:GetNWInt("specialsCompleted") + 1)
+		ply:SetNWInt("kappaProgress", ply:GetNWInt("kappaProgress") + 1)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)
+		checkForKappa(ply)
 		ply:PrintMessage(HUD_PRINTCENTER, "You have completed the Deadeye task.", Color(85, 0, 255, 255), 0)
 	end
 end
@@ -151,9 +164,11 @@ function checkForWeeklyEight(ply)
 		ply:SetNWInt("playerMoney", (ply:GetNWInt("playerMoney") + 50000) * ply:GetNWInt("loyaltyEffect"))
 		ply:SetNWInt("consistencyComplete", 1)
 		ply:SetNWInt("specialsCompleted", ply:GetNWInt("specialsCompleted") + 1)
+		ply:SetNWInt("kappaProgress", ply:GetNWInt("kappaProgress") + 1)
 
 		checkForLevel(ply)
 		weeklyLeveling(ply)
+		checkForKappa(ply)
 		ply:PrintMessage(HUD_PRINTCENTER, "You have completed the Consistency task.", Color(85, 0, 255, 255), 0)
 	end
 end
@@ -175,5 +190,11 @@ function weeklyLeveling(ply)
 	if (ply:GetNWInt("loyaltyLevel") < 25) then
 		ply:SetNWInt("loyaltyExperience", ply:GetNWInt("loyaltyExperience") + loyalExpGain)
 		checkForLoyalty(ply)
+	end
+end
+
+function checkForKappa(ply)
+	if (ply:GetNWInt("kappaProgress") >=  8) then
+		ply:SetNWInt("kappaComplete", 1)
 	end
 end

@@ -272,7 +272,7 @@ end
 concommand.Add("efgm_extract_list", CheckExtracts)
 
 function PlayerPrestige(ply, cmd, args)
-	if (ply:GetNWInt("playerLvl") >= 26) then
+	if (ply:GetNWInt("playerLvl") >= 26) or (ply:GetNWInt("kappaComplete") == 1) then
 
 		local prestigeGained = 1
 		local roubleMulti = 0.25
@@ -302,6 +302,9 @@ function PlayerPrestige(ply, cmd, args)
 		ply:SetNWInt("secPerimeterComplete", 0)
 		ply:SetNWInt("deadeyeComplete", 0)
 		ply:SetNWInt("consistencyComplete", 0)
+
+		ply:SetNWInt("kappaProgress", 0)
+		ply:SetNWInt("kappaComplete", 0)
 	else
 		ply:PrintMessage(3, "Sorry, " .. ply:GetName() .. ". " .. "I can't give credit. Come back when you're a little... mmmmm... higher leveled!")
 	end

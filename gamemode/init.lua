@@ -65,6 +65,7 @@ function GM:PlayerSpawn(ply)
 
 	ArcCW:PlayerGiveAtt(ply, lights[math.random(#lights)], 1)
 	ArcCW:PlayerSendAttInv(ply)
+	checkForKappa(ply)
 
 	ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
 
@@ -465,6 +466,18 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetNWInt("specialsCompleted", tonumber(ply:GetPData("specialsCompleted")))
 	end
 
+	if (ply:GetPData("kappaProgress") == nil) then
+		ply:SetNWInt("kappaProgress", 0)
+	else
+		ply:SetNWInt("kappaProgress", tonumber(ply:GetPData("kappaProgress")))
+	end
+
+	if (ply:GetPData("kappaComplete") == nil) then
+		ply:SetNWInt("kappaComplete", 0)
+	else
+		ply:SetNWInt("kappaComplete", tonumber(ply:GetPData("kappaComplete")))
+	end
+
 	--Skills
 
 	--Endurance
@@ -814,6 +827,8 @@ function GM:PlayerDisconnected(ply)
 
 	ply:SetPData("dailiesCompleted", ply:GetNWInt("dailiesCompleted"))
 	ply:SetPData("specialsCompleted", ply:GetNWInt("specialsCompleted"))
+	ply:SetPData("kappaProgress", ply:GetNWInt("kappaProgress"))
+	ply:SetPData("kappaComplete", ply:GetNWInt("kappaComplete"))
 
 	--Raids
 	ply:SetPData("survivalRate", ply:GetNWInt("survivalRate"))
@@ -898,6 +913,11 @@ function GM:ShutDown()
 		v:SetPData("secPerimeterComplete", v:GetNWInt("secPerimeterComplete"))
 		v:SetPData("deadeyeComplete", v:GetNWInt("deadeyeComplete"))
 		v:SetPData("consistencyComplete", v:GetNWInt("consistencyComplete"))
+
+		v:SetPData("dailiesCompleted", v:GetNWInt("dailiesCompleted"))
+		v:SetPData("specialsCompleted", v:GetNWInt("specialsCompleted"))
+		v:SetPData("kappaProgress", v:GetNWInt("kappaProgress"))
+		v:SetPData("kappaComplete", v:GetNWInt("kappaComplete"))
 
 		--Raids
 		v:SetPData("survivalRate", v:GetNWInt("survivalRate"))

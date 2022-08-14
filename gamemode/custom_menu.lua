@@ -576,7 +576,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		--Draw/write text
 
-		draw.DrawText("EXTRACTS", "CloseCaption_Normal", extractsButton:GetWide() / 2.1, 35, Color(0, 255, 76), 1)
+		draw.DrawText("EXTRACTS", "CloseCaption_Normal", extractsButton:GetWide() / 2.1, 35, Color(0, 255, 75), 1)
 
 	end
 
@@ -839,6 +839,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		local nuclearText = LocalPlayer():GetNWInt("raidKill") .. " / " .. "12"
 		local addictText = LocalPlayer():GetNWInt("weeklyAddict") .. " / " .. "10"
 		local consistencyText = LocalPlayer():GetNWInt("extractionStreak") .. " / " .. "4"
+
 		dailyPanel.Paint = function(self, w, h)
 			draw.RoundedBox(0, 0, 0, w, h, primaryColor)
 		end
@@ -849,12 +850,12 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		local dailyTaskPanel = vgui.Create("DPanel", scrollPanel)
 		dailyTaskPanel:Dock(TOP)
 		dailyTaskPanel:DockMargin(margin, margin, margin, margin)
-		dailyTaskPanel:SetSize(0, 60)
+		dailyTaskPanel:SetSize(0, 50)
 
 		dailyTaskPanel.Paint = function(self, w, h)
 			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
-			draw.SimpleText("Dailies : Reset at the beginning of each map.", "CloseCaption_BoldItalic", w / 2, h / 2.5, Color(255, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Dailies : Reset at the beginning of each map.", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
 		--DAILY TASKS
@@ -990,6 +991,24 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
 			draw.SimpleText("Specials : Reset at the beginning of each wipe.", "CloseCaption_BoldItalic", w / 2, h / 2.5, Color(0, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Kappa Progress: " .. LocalPlayer():GetNWInt("kappaProgress") .. " / " .. "8", "DermaDefaultBold", w / 2, h / 1.33, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+
+		--KAPPA CHECK
+		if LocalPlayer():GetNWInt("kappaComplete") == 1 then
+			local kappaCompletePanel = vgui.Create("DPanel", scrollPanel)
+			kappaCompletePanel:Dock(TOP)
+			kappaCompletePanel:DockMargin(margin, margin, margin, margin)
+			kappaCompletePanel:SetSize(0, 65)
+
+			kappaCompletePanel.Paint = function(self, w, h)
+
+				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+				draw.SimpleText("ALL SPECIAL TASKS COMPLETE!", "DermaLarge", w / 2, 10, Color(0, 255, 75, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				draw.SimpleText("You can now Prestige, and doing so will reset your Special Tasks, allowing them to be completed again!	", "DermaDefaultBold", w / 2, 40, Color(0, 255, 75, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+
+			end
 		end
 
 		--SPECIAL TASKS
@@ -1812,40 +1831,40 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		stashMenuButton.DoClick = function(stashMenuButton)
 			local stashMenuPanel = Menu:Add("StashMenuPanel")
-	
+
 			local whiteColor = 		Color(250, 250, 250, 255)
 			local primaryColor =	Color(30, 30, 30, 255)
 			local secondaryColor =	Color(100, 100, 100, 255)
-	
+
 			local margin = 			math.Round( ScrH() * 0.01 )
-	
+
 			stashMenuPanel.Paint = function(self, w, h)
 				draw.RoundedBox(0, 0, 0, w, h, primaryColor)
 			end
-	
+
 			local scrollPanel = vgui.Create("DScrollPanel", stashMenuPanel)
 			scrollPanel:Dock(FILL)
-	
+
 			local stashInfoPanel = vgui.Create("DPanel", scrollPanel)
 			stashInfoPanel:Dock(TOP)
 			stashInfoPanel:DockMargin(margin, margin, margin, margin)
 			stashInfoPanel:SetSize(0, 50)
-	
+
 			stashInfoPanel.Paint = function(self, w, h)
 				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
-	
+
 				draw.SimpleText("STASH", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 			end
-	
+
 			local StashInfoPanel = vgui.Create("DPanel", scrollPanel)
 			StashInfoPanel:Dock(TOP)
 			StashInfoPanel:DockMargin(margin, margin, margin, margin)
 			StashInfoPanel:SetSize(0, 180)
-	
+
 			StashInfoPanel.Paint = function(self, w, h)
-	
+
 				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
-	
+
 				draw.SimpleText("For each stash level, you gain an addition", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 				draw.SimpleText(" 6 slots for your stash!", "DermaLarge", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 				draw.SimpleText("Current Stash Level: " .. LocalPlayer():GetNWInt("playerStashLevel") .. "/10", "DermaLarge", w / 2, 80, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
@@ -1917,40 +1936,52 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		prestigeButton.DoClick = function(prestigeButton)
 			local prestigePanel = Menu:Add("PrestigePanel")
-	
+
 			local whiteColor = 		Color(250, 250, 250, 255)
 			local primaryColor =	Color(30, 30, 30, 255)
 			local secondaryColor =	Color(100, 100, 100, 255)
-	
+
 			local margin = 			math.Round( ScrH() * 0.01 )
-	
+
+			if LocalPlayer():GetNWInt("playerLvl") >= 26 then
+				requirmentOneColor =	Color(0, 255, 0)
+			else
+				requirmentOneColor =	Color(255, 0, 0)
+			end
+
+			if LocalPlayer():GetNWInt("kappaComplete") == 1 then
+				requirmentTwoColor =	Color(0, 255, 0)
+			else
+				requirmentTwoColor =	Color(255, 0, 0)
+			end
+
 			prestigePanel.Paint = function(self, w, h)
 				draw.RoundedBox(0, 0, 0, w, h, primaryColor)
 			end
-	
+
 			local scrollPanel = vgui.Create("DScrollPanel", prestigePanel)
 			scrollPanel:Dock(FILL)
-	
+
 			local prestigeInfoPanel = vgui.Create("DPanel", scrollPanel)
 			prestigeInfoPanel:Dock(TOP)
 			prestigeInfoPanel:DockMargin(margin, margin, margin, margin)
 			prestigeInfoPanel:SetSize(0, 50)
-	
+
 			prestigeInfoPanel.Paint = function(self, w, h)
 				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
-	
+
 				draw.SimpleText("PRESTIGE", "CloseCaption_BoldItalic", w / 2, h / 2, Color(255, 0, 0, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 			end
-	
+
 			local PrestigeInfoPanel = vgui.Create("DPanel", scrollPanel)
 			PrestigeInfoPanel:Dock(TOP)
 			PrestigeInfoPanel:DockMargin(margin, margin, margin, margin)
 			PrestigeInfoPanel:SetSize(0, 180)
-	
+
 			PrestigeInfoPanel.Paint = function(self, w, h)
-	
+
 				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
-	
+
 				draw.SimpleText("Prestiging resets your level to get a permanent", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 				draw.SimpleText(" rouble boost and to reset your special tasks", "DermaLarge", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 				draw.SimpleText("Current ₽ Multiplier: " .. LocalPlayer():GetNWInt("playerRoubleMulti") .. "x", "DermaLarge", w / 2, 80, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
@@ -1958,45 +1989,61 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				draw.SimpleText("Current Level: " .. LocalPlayer():GetNWInt("playerLvl"), "DermaLarge", w / 2, 140, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 			end
 
-			local PrestigeButtonHolder = vgui.Create("DPanel", scrollPanel)
-			PrestigeButtonHolder:Dock(TOP)
-			PrestigeButtonHolder:DockMargin(margin, margin, margin, margin)
-			PrestigeButtonHolder:SetSize(0, 70)
+			local PrestigeHelpPanel = vgui.Create("DPanel", scrollPanel)
+			PrestigeHelpPanel:Dock(TOP)
+			PrestigeHelpPanel:DockMargin(margin, margin, margin, margin)
+			PrestigeHelpPanel:SetSize(0, 130)
 
-			local doPrestigeButton = vgui.Create("DButton")
-			doPrestigeButton:SetParent(Menu)
-			doPrestigeButton:SetText("")
-			doPrestigeButton:SetSize(225, 50)
-			doPrestigeButton:SetPos(340, 320)
-			doPrestigeButton.Paint = function()
-				--Color of entire button
-				surface.SetDrawColor(30, 30, 30, 255)
-				surface.DrawRect(0, 0, doPrestigeButton:GetWide(), doPrestigeButton:GetTall())
-
-				--Draw bottom and Right borders
-				surface.SetDrawColor(40, 40, 40, 255)
-				surface.DrawRect(0, 49, doPrestigeButton:GetWide(), 1)
-				surface.DrawRect(224, 0, 1, doPrestigeButton:GetTall())
-
-				--Draw/write text
-				draw.DrawText("Prestige Now!", "Trebuchet24", doPrestigeButton:GetWide() / 2, 10, Color(0, 255, 0, 255), 1)
-			end
-
-			doPrestigeButton.DoClick = function()
-				RunConsoleCommand("efgm_prestige")
-			end
-
-			PrestigeButtonHolder.Paint = function(self, w, h)
+			PrestigeHelpPanel.Paint = function(self, w, h)
 
 				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
+				draw.SimpleText("You need to meet one of the requirments to Prestige:", "DermaLarge", w / 2, 10, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				draw.SimpleText("Reach Level 26", "DermaLarge", w / 2, 60, requirmentOneColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				draw.SimpleText("Complete all Special tasks", "DermaLarge", w / 2, 90, requirmentTwoColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			end
+
+			if LocalPlayer():GetNWInt("playerLvl") >= 26 or LocalPlayer():GetNWInt("kappaComplete") == 1 then
+				local PrestigeButtonHolder = vgui.Create("DPanel", scrollPanel)
+				PrestigeButtonHolder:Dock(TOP)
+				PrestigeButtonHolder:DockMargin(margin, margin, margin, margin)
+				PrestigeButtonHolder:SetSize(0, 70)
+
+				local doPrestigeButton = vgui.Create("DButton")
+				doPrestigeButton:SetParent(PrestigeButtonHolder)
+				doPrestigeButton:SetText("")
+				doPrestigeButton:SetSize(225, 50)
+				doPrestigeButton:SetPos(225, 10)
+				doPrestigeButton.Paint = function()
+					--Color of entire button
+					surface.SetDrawColor(30, 30, 30, 255)
+					surface.DrawRect(0, 0, doPrestigeButton:GetWide(), doPrestigeButton:GetTall())
+
+					--Draw bottom and Right borders
+					surface.SetDrawColor(40, 40, 40, 255)
+					surface.DrawRect(0, 49, doPrestigeButton:GetWide(), 1)
+					surface.DrawRect(224, 0, 1, doPrestigeButton:GetTall())
+
+					--Draw/write text
+					draw.DrawText("Prestige Now!", "Trebuchet24", doPrestigeButton:GetWide() / 2, 10, Color(0, 255, 0, 255), 1)
+				end
+
+				doPrestigeButton.DoClick = function()
+					RunConsoleCommand("efgm_prestige")
+				end
+
+				PrestigeButtonHolder.Paint = function(self, w, h)
+
+					draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+				end
 			end
 
 			local endPanel = vgui.Create("DPanel", scrollPanel)
 			endPanel:Dock(TOP)
 			endPanel:DockMargin(margin, margin, margin, margin)
 			endPanel:SetSize(0, 60)
-	
+
 			endPanel.Paint = function(self, w, h)
 				draw.SimpleText("(the rouble boost does not persits between server wipes)", "CloseCaption_Bold", w / 2, h / 5, Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 			end
@@ -3333,7 +3380,7 @@ function EnterRaidMenu()
 	local playerModelDisplay = vgui.Create("DModelPanel", raidInfoPanel)
 	playerModelDisplay:SetSize(350, 350)
 	playerModelDisplay:SetPos(120 - 180, -30)
-	playerModelDisplay:SetModel( client:GetModel() )
+	playerModelDisplay:SetModel(client:GetModel())
 
 	local enterRaidButton = vgui.Create("DButton", raidInfoPanel)
 

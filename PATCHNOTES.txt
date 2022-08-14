@@ -1,4 +1,6 @@
-Improved Sell Menu, shows the following
+Kappa has been added, you can now prestige before hitting Level 26 by completing every Special Task.
+
+Sell Menu has been redone and improved, making it much simpler for newer players
 
 Settings Menu, allows you to change things like:
     Toggling UI
@@ -9,11 +11,14 @@ Settings Menu, allows you to change things like:
     Weapon Bob Intensity
 
 Incendiary Grenade removed from starting loadout
+Removed Flash Grenade (did not work)
 Increased M82 price to 30099 (was previously 20999)
 Improved Menu support for resolutions going below 720 in height
 Added button to reset a players Survival Rate / SR%
 Now explains how to level a specific skill in the Skills Menu
 Maxing your stash now disables the Stash Upgrade button
+Prestige button no longer shows if you don't meet one of the two requirments
 Added additional info on the Exfiltration Menu
 Added a explanation of the inventory system in the stash menu to help newer/confused players
 Removed old code related to ammo stashing
+The Prestige and Stash Upgrade button now snap correctly to their holder

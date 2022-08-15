@@ -26,7 +26,7 @@ function GM:Initialize()
 
 	local tempWeaponsArray = {}
 
-	tempWeaponsArray[1] = {"models/weapons/arccw/dm1973/c_dmi_bm92f_auto.mdl", "arccw_dmi_b92f_auto", "92F Auto Pistol", 13005, "7", "MID", "Pistol"}
+	tempWeaponsArray[1] = {"models/weapons/arccw/dm1973/c_dmi_bm92f_auto.mdl", "arccw_dmi_b92f_auto", "92F Auto Pistol", 13005, "8", "MID", "Pistol"}
 	tempWeaponsArray[2] = {"models/weapons/arccw/w_zz_mg24_tp.mdl", "arccw_waw_dp28", "DP-28", 21370, "14", "HIGH", "Heavy"}
 	tempWeaponsArray[3] = {"models/weapons/arc_eft_aks74u/eft_aks74u/models/c_eft_aks74u.mdl", "arccw_eft_aks74u", "AKS-74u", 9980, "5", "LOW", "SMG"}
 	tempWeaponsArray[4] = {"models/weapons/arc_eft_1911/c_eft_1911/models/c_eft_1911.mdl", "arccw_eft_1911", "M1911", 4140, "1", "LOW", "Pistol"}
@@ -37,20 +37,20 @@ function GM:Initialize()
 	tempWeaponsArray[9] = {"models/weapons/arc_eft_t5000/eft_t5000/models/c_eft_t5000.mdl", "arccw_eft_t5000", "T-5000", 18050, "12", "HIGH", "Sniper"}
 	tempWeaponsArray[10] = {"models/weapons/arc_eft_ump/eft_ump/models/c_eft_ump.mdl", "arccw_eft_ump", "UMP-45", 10050, "6", "LOW", "SMG"}
 	tempWeaponsArray[11] = {"models/weapons/arccw/eap/c_aek971.mdl", "arccw_eap_aek", "AEK-971", 17120, "11", "HIGH", "Rifle"}
-	tempWeaponsArray[12] = {"models/weapons/arccw/eap/c_fmg9.mdl", "arccw_eap_fmg9", "FMG-9", 15555, "10", "MID", "SMG"}
+	tempWeaponsArray[12] = {"models/weapons/arccw/eap/c_fmg9.mdl", "arccw_eap_fmg9", "FMG-9", 15555, "11", "MID", "SMG"}
 	tempWeaponsArray[13] = {"models/weapons/arccw/eap/c_groza.mdl", "arccw_eap_groza", "OTs-14 Groza", 13580, "10", "MID", "Rifle"}
 	tempWeaponsArray[14] = {"models/weapons/arccw/eap/c_lebedev.mdl", "arccw_eap_lebedev", "PL-15 Lebedev Pistol", 4630, "1", "LOW", "Pistol"}
-	tempWeaponsArray[15] = {"models/weapons/arccw/eap/c_spectre.mdl", "arccw_eap_spectre", "Spectre M4", 11010, "7", "MID", "SMG"}
+	tempWeaponsArray[15] = {"models/weapons/arccw/eap/c_spectre.mdl", "arccw_eap_spectre", "Spectre M4", 12010, "7", "MID", "SMG"}
 	tempWeaponsArray[16] = {"models/weapons/arccw/eap/c_stg44.mdl", "arccw_eap_stg44", "StG-44", 13100, "9", "MID", "Rifle"}
 	tempWeaponsArray[17] = {"models/weapons/arccw/eap/c_usas.mdl", "arccw_eap_usas", "USAS-12", 27510, "16", "HIGH", "Shotgun"}
-	tempWeaponsArray[18] = {"models/weapons/arccw/slogkot/c_altor.mdl", "arccw_slog_altor", "Altor Pistol", 5005, "2", "LOW", "Pistol"}
+	tempWeaponsArray[18] = {"models/weapons/arccw/slogkot/c_altor.mdl", "arccw_slog_altor", "Altor Pistol", 4000, "2", "LOW", "Pistol"}
 	tempWeaponsArray[19] = {"models/weapons/arccw_go/v_eq_incendiarygrenade.mdl", "arccw_go_nade_incendiary", "AN/M14 Thermite Grenade", 2500, "2", "UTIL", "Grenade"}
 	tempWeaponsArray[20] = {"models/weapons/arccw_go/v_eq_fraggrenade.mdl", "arccw_go_nade_frag", "M67 Frag Grenade", 2500, "2", "UTIL", "Grenade"}
 	tempWeaponsArray[21] = {"models/weapons/arccw_go/v_eq_flashbang.mdl", "arccw_go_nade_flash", "M84 Stun Grenade", 2500, "2", "UTIL", "Grenade"}
 	tempWeaponsArray[22] = {"models/weapons/arccw_go/v_eq_smokegrenade.mdl", "arccw_go_nade_smoke", "M5210 Smoke Grenade", 2500, "2", "UTIL", "Grenade"}
 	tempWeaponsArray[23] = {"models/weapons/arccw_go/v_eq_molotov.mdl", "arccw_go_nade_molotov", "Molotov Cocktail", 2500, "2", "UTIL", "Grenade"}
 	tempWeaponsArray[24] = {"models/weapons/arccw_go/v_eq_throwingknife.mdl", "arccw_go_nade_knife", "Throwing Knife", 2500, "2", "UTIL", "Grenade"}
-	tempWeaponsArray[25] = {"models/weapons/arccw_go/v_pist_deagle.mdl", "arccw_ur_deagle", "Desert Eagle", 6005, "4", "LOW", "Pistol"}
+	tempWeaponsArray[25] = {"models/weapons/arccw_go/v_pist_deagle.mdl", "arccw_ur_deagle", "Desert Eagle", 7005, "5", "LOW", "Pistol"}
 	tempWeaponsArray[26] = {"models/weapons/arccw/c_xm8.mdl", "midnights_gso_xm8", "HK XM8", 18920, "14", "HIGH", "Rifle"}
 	tempWeaponsArray[27] = {"models/weapons/arccw/midnightwolf/type20.mdl", "arccw_midnightwolf_type20", "Type 20", 17880, "13", "HIGH", "-=Rifle"}
 	tempWeaponsArray[28] = {"models/weapons/arccw/c_ud_glock.mdl", "arccw_ud_glock", "Glock 17", 6005, "3", "LOW", "Pistol"}
@@ -59,7 +59,7 @@ function GM:Initialize()
 	tempWeaponsArray[31] = {"models/weapons/arccw/c_ud_m79.mdl", "arccw_ud_m79", "M79 Grenade Launcher", 22555, "18", "HIGH", "Heavy"}
 	tempWeaponsArray[32] = {"models/weapons/arccw/c_ud_mini14.mdl", "arccw_ud_mini14", "Mini-14", 16420, "12", "MID", "Rifle"}
 	tempWeaponsArray[33] = {"models/weapons/arccw/c_ud_870.mdl", "arccw_ud_870", "Remington 870", 10240, "6", "MID", "Shotgun"}
-	tempWeaponsArray[34] = {"models/weapons/arccw/c_ud_uzi.mdl", "arccw_ud_uzi", "Uzi", 11040, "6", "LOW", "SMG"}
+	tempWeaponsArray[34] = {"models/weapons/arccw/c_ud_uzi.mdl", "arccw_ud_uzi", "Uzi", 12000, "7", "LOW", "SMG"}
 	tempWeaponsArray[35] = {"models/weapons/arccw/mifl/fas2/c_ak47.mdl", "arccw_mifl_fas2_ak47", "AKM", 17005, "13", "HIGH", "Rifle"}
 	tempWeaponsArray[36] = {"models/weapons/arccw/mifl/fas2/c_famas.mdl", "arccw_mifl_fas2_famas", "FAMAS", 16990, "12", "MID", "Rifle"}
 	tempWeaponsArray[37] = {"models/weapons/arccw/mifl/fas2/c_g36c.mdl", "arccw_mifl_fas2_g36c", "G36c", 14445, "11", "MID", "Rifle"}
@@ -68,10 +68,10 @@ function GM:Initialize()
 	tempWeaponsArray[40] = {"models/weapons/arccw/mifl/fas2/c_m24.mdl", "arccw_mifl_fas2_m24", "M24 SR", 18900, "14", "HIGH", "Sniper"}
 	tempWeaponsArray[41] = {"models/weapons/arccw/mifl/fas2/c_m3s90.mdl", "arccw_mifl_fas2_m3", "M3 Super 90", 14505, "12", "MID", "Shotgun"}
 	tempWeaponsArray[42] = {"models/weapons/arccw/mifl/fas2/c_m82.mdl", "arccw_mifl_fas2_m82", "M82 SR", 30099, "18", "HIGH", "Sniper"}
-	tempWeaponsArray[43] = {"models/weapons/arccw/mifl/fas2/c_mac11.mdl", "arccw_mifl_fas2_mac11", "MAC-11", 8100, "5", "LOW", "SMG"}
+	tempWeaponsArray[43] = {"models/weapons/arccw/mifl/fas2/c_mac11.mdl", "arccw_mifl_fas2_mac11", "MAC-11", 8810, "5", "LOW", "SMG"}
 	tempWeaponsArray[44] = {"models/weapons/arccw/mifl/fas2_custom/c_m26.mdl", "arccw_fml_fas2_custom_mass26", "MASS-26 SG", 17550, "14", "HIGH", "Shotgun"}
 	tempWeaponsArray[45] = {"models/weapons/arccw/mifl/fas2/c_minimi.mdl", "arccw_mifl_fas2_minimi", "Minimi", 19995, "16", "HIGH", "Heavy"}
-	tempWeaponsArray[46] = {"models/weapons/arccw/mifl/fas2/c_ragingbull.mdl", "arccw_mifl_fas2_ragingbull", "Raging Bull Revolver", 7020, "4", "LOW", "Pistol"}
+	tempWeaponsArray[46] = {"models/weapons/arccw/mifl/fas2/c_ragingbull.mdl", "arccw_mifl_fas2_ragingbull", "Raging Bull Revolver", 7020, "5", "LOW", "Pistol"}
 	tempWeaponsArray[47] = {"models/weapons/arccw/mifl/fas2/c_rpk.mdl", "arccw_mifl_fas2_rpk", "RPK47", 14765, "10", "MID", "Heavy"}
 	tempWeaponsArray[48] = {"models/weapons/arccw/mifl/fas2/c_sg552.mdl", "arccw_mifl_fas2_sg55x", "SG552", 15490, "12", "MID", "Rifle"}
 	tempWeaponsArray[49] = {"models/weapons/arccw/c_claymorelungemine.mdl", "arccw_claymorelungemine", "Claymore Lunge Mine", 5555, "5", "UTIL", "Heavy"}
@@ -90,7 +90,7 @@ function GM:Initialize()
 	tempWeaponsArray[62] = {"models/weapons/arccw/c_bo1_pm63.mdl", "arccw_bo1_pm63", "PM-63 RAK", 8995, "5", "LOW", "Pistol"}
 	tempWeaponsArray[63] = {"models/weapons/arccw/c_bo1_g11.mdl", "arccw_bo1_g11", "HK G11", 15900, "11", "MID", "Rifle"}
 	tempWeaponsArray[64] = {"models/weapons/arccw/c_bo1_law.mdl", "arccw_bo1_law", "M72 LAW RL", 33333, "20", "HIGH", "Heavy"}
-	tempWeaponsArray[65] = {"models/weapons/arccw/c_bo1_aug.mdl", "arccw_bo1_aug", "AUG", 14250, "10", "MID", "Rifle"}
+	tempWeaponsArray[65] = {"models/weapons/arccw/c_bo1_aug.mdl", "arccw_bo1_aug", "AUG", 13250, "10", "MID", "Rifle"}
 	tempWeaponsArray[66] = {"models/weapons/arccw/c_bo1_xl60.mdl", "arccw_bo1_xl60", "XL64ES", 13905, "10", "MID", "Rifle"}
 	tempWeaponsArray[67] = {"models/weapons/arccw/c_bo1_famas.mdl", "arccw_bo1_famas", "FAMAS Valorise", 14505, "10", "MID", "Rifle"}
 	tempWeaponsArray[68] = {"models/weapons/arccw/c_bo1_fal.mdl", "arccw_bo1_fal", "FN Fal", 17050, "12", "HIGH", "Rifle"}

@@ -2433,6 +2433,7 @@ function MenuInit()
 		StashMenu:Center()
 		StashMenu:SetTitle("")
 		StashMenu:SetDraggable(false)
+		StashMenu:MakePopup()
 		StashMenu:ShowCloseButton(true)
 		StashMenu:SetDeleteOnClose(false)
 		StashMenu.Paint = function()
@@ -2504,7 +2505,7 @@ function MenuInit()
 			draw.DrawText(client:GetName(), "DermaLarge", 0, 200, Color(255, 255, 255, 255))
 
 			if (client:GetNWInt("playerPrestige") >= 1) then
-				draw.DrawText("Prestige: " .. client:GetNWInt("playerPrestige"), "DermaLarge", 0, 300, Color(255, 255, 255, 255))
+				draw.DrawText("Prestige: " .. client:GetNWInt("playerPrestige"), "DermaLarge", 0, 260, Color(255, 255, 255, 255))
 			end
 
 			draw.DrawText("Level: " .. client:GetNWInt("playerLvl"), "DermaLarge", 0, 300, Color(255, 255, 255, 255))
@@ -2512,7 +2513,7 @@ function MenuInit()
 			draw.DrawText("₽ " .. math.Round(client:GetNWInt("playerMoney")), "DermaLarge", 0, 420, Color(255, 255, 255, 255))
 
 			draw.DrawText("Kills: " .. client:GetNWInt("playerKills"), "DermaLarge", 0, 460, Color(255, 255, 255, 255))
-			draw.DrawText("Deaths:" .. client:GetNWInt("playerDeaths"),"DermaLarge", 0, 500, Color(255, 255, 255, 255))
+			draw.DrawText("Deaths: " .. client:GetNWInt("playerDeaths"),"DermaLarge", 0, 500, Color(255, 255, 255, 255))
 			draw.DrawText("KDR: " .. math.Round(client:GetNWInt("playerKDR"), 2), "DermaLarge", 0, 540, Color(255, 255, 255, 255))
 
 			draw.DrawText("Stash Level " .. client:GetNWInt("playerStashLevel"), "Trebuchet24", 0, 610, Color(255, 255, 255, 255))
@@ -3341,7 +3342,7 @@ function EnterRaidMenu()
 		draw.SimpleText("THE TIME HAS COME", "DermaLarge", w / 2, h / 2.8, primaryColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 		if mapName == "Factory" or mapName == "Concrete" or mapName == "Customs" or mapName == "Belmont" then
-			draw.SimpleText("Exfiltration into the " .. mapName .. " location.", "DermaLarge", w / 2, h / 1.4, primaryColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Infiltration into the " .. mapName .. " location.", "DermaLarge", w / 2, h / 1.4, primaryColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
 	end

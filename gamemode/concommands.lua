@@ -104,7 +104,7 @@ concommand.Add("buy_entity", buyEntity)
 
 function buyGun(ply, cmd, args)
 	local weaponPrices = {}
-	weaponPrices[1] = {"arccw_dmi_b92f_auto", "13005", "7"}
+	weaponPrices[1] = {"arccw_dmi_b92f_auto", "13005", "8"}
 	weaponPrices[2] = {"arccw_waw_dp28", "21370", "14"}
 	weaponPrices[3] = {"arccw_eft_aks74u", "9980", "5"}
 	weaponPrices[4] = {"arccw_eft_1911", "4140", "1"}
@@ -115,20 +115,20 @@ function buyGun(ply, cmd, args)
 	weaponPrices[9] = {"arccw_eft_t5000", "18050", "12"}
 	weaponPrices[10] = {"arccw_eft_ump", "10050", "6"}
 	weaponPrices[11] = {"arccw_eap_aek", "17120", "11"}
-	weaponPrices[12] = {"arccw_eap_fmg9", "15555", "10"}
+	weaponPrices[12] = {"arccw_eap_fmg9", "15555", "11"}
 	weaponPrices[13] = {"arccw_eap_groza", "13580", "10"}
 	weaponPrices[14] = {"arccw_eap_lebedev", "4630", "1"}
-	weaponPrices[15] = {"arccw_eap_spectre", "11010", "7"}
+	weaponPrices[15] = {"arccw_eap_spectre", "12010", "7"}
 	weaponPrices[16] = {"arccw_eap_stg44", "13100", "9"}
 	weaponPrices[17] = {"arccw_eap_usas", "27510", "16"}
-	weaponPrices[18] = {"arccw_slog_altor", "5005", "2"}
+	weaponPrices[18] = {"arccw_slog_altor", "4000", "2"}
 	weaponPrices[19] = {"arccw_go_nade_incendiary", "2500", "2"}
 	weaponPrices[20] = {"arccw_go_nade_frag", "2500", "2"}
 	weaponPrices[21] = {"arccw_go_nade_flash", "2500", "2"}
 	weaponPrices[22] = {"arccw_go_nade_smoke", "2500", "2"}
 	weaponPrices[23] = {"arccw_go_nade_molotov", "2500", "2"}
 	weaponPrices[24] = {"arccw_go_nade_knife", "2500", "2"}
-	weaponPrices[25] = {"arccw_ur_deagle", "6005", "4"}
+	weaponPrices[25] = {"arccw_ur_deagle", "7005", "5"}
 	weaponPrices[26] = {"midnights_gso_xm8", "18920", "14"}
 	weaponPrices[27] = {"arccw_midnightwolf_type20", "17880", "13"}
 	weaponPrices[28] = {"arccw_ud_glock", "6005", "3"}
@@ -137,7 +137,7 @@ function buyGun(ply, cmd, args)
 	weaponPrices[31] = {"arccw_ud_m79", "22555", "18"}
 	weaponPrices[32] = {"arccw_ud_mini14", "16420", "12"}
 	weaponPrices[33] = {"arccw_ud_870", "10240", "6"}
-	weaponPrices[34] = {"arccw_ud_uzi", "11040", "6"}
+	weaponPrices[34] = {"arccw_ud_uzi", "12000", "7"}
 	weaponPrices[35] = {"arccw_ur_ak", "17005", "13"}
 	weaponPrices[36] = {"arccw_mifl_fas2_famas", "16990", "12"}
 	weaponPrices[37] = {"arccw_mifl_fas2_g36c", "14445", "11"}
@@ -146,10 +146,10 @@ function buyGun(ply, cmd, args)
 	weaponPrices[40] = {"arccw_mifl_fas2_m24", "18900", "14"}
 	weaponPrices[41] = {"arccw_mifl_fas2_m3", "14505", "12"}
 	weaponPrices[42] = {"arccw_mifl_fas2_m82", "30099", "18"}
-	weaponPrices[43] = {"arccw_mifl_fas2_mac11", "8100", "5"}
+	weaponPrices[43] = {"arccw_mifl_fas2_mac11", "8810", "5"}
 	weaponPrices[44] = {"arccw_fml_fas2_custom_mass26", "17550", "14"}
 	weaponPrices[45] = {"arccw_mifl_fas2_minimi", "19995", "16"}
-	weaponPrices[46] = {"arccw_mifl_fas2_ragingbull", "7020", "4"}
+	weaponPrices[46] = {"arccw_mifl_fas2_ragingbull", "7020", "5"}
 	weaponPrices[47] = {"arccw_mifl_fas2_rpk", "14765", "10"}
 	weaponPrices[48] = {"arccw_mifl_fas2_sg55x", "15490", "12"}
 	weaponPrices[49] = {"arccw_claymorelungemine", "5555", "5"}
@@ -168,7 +168,7 @@ function buyGun(ply, cmd, args)
 	weaponPrices[62] = {"arccw_bo1_pm63", "8995", "5"}
 	weaponPrices[63] = {"arccw_bo1_g11", "15900", "11"}
 	weaponPrices[64] = {"arccw_bo1_law", "33333", "20"}
-	weaponPrices[65] = {"arccw_bo1_aug", "14250", "10"}
+	weaponPrices[65] = {"arccw_bo1_aug", "13250", "10"}
 	weaponPrices[66] = {"arccw_bo1_xl60", "13905", "10"}
 	weaponPrices[67] = {"arccw_bo1_famas", "14505", "10"}
 	weaponPrices[68] = {"arccw_bo1_fal", "17050", "12"}

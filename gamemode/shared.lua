@@ -130,6 +130,8 @@ function GM:Initialize()
 	tempWeaponsArray[102] = {"models/weapons/arccw/c_bo2_mtar.mdl", "arccw_bo2_mtar", "MTAR-21", 19400, "15", "HIGH", "Rifle"}
 	tempWeaponsArray[103] = {"models/weapons/arccw/c_bo2_mg08.mdl", "arccw_bo2_mg08", "MG-08/15", 39999, "23", "HIGH", "Heavy"}
 	tempWeaponsArray[104] = {"models/weapons/arccw/c_bo2_scorpion.mdl", "arccw_bo2_scorpion", "Scorpion Evo 3 A1", 27499, "19", "HIGH", "SMG"}
+	tempWeaponsArray[105] = {"models/weapons/arccw_go/v_rif_fnfal.mdl", "arccw_go_fnfal", "FAL BR", 13995, "12", "MID", "Rifle"}
+	tempWeaponsArray[106] = {"models/weapons/arccw/c_waw_g43.mdl", "arccw_waw_g43", "Gewehr 43", 21000, "17", "HIGH", "Rifle"}
 
 	local tempEntityArray = {}
 

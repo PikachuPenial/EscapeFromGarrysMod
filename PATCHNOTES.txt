@@ -9,7 +9,6 @@ New Content/Mechanics:
         Toggling Completed Tasks
         Keybinds for various actioins
         Optic Reticle Coloring
-        Weapon Bob Intensity
 
     Scoreboard refresh:
         Includes player profile pictures
@@ -17,14 +16,18 @@ New Content/Mechanics:
         Allows easy copying of a players name or SteamID64 (useful for reporting cheaters)
         Now shows the amount of completed tasks
 
+    Two new guns:
+        FN FAL, ₽13995 buying price, Locked behind Level 12
+        Gewehr 43, ₽21000 buying price, Locked behind Level 17
+
 Gun Rebalancing:
-    Decreased "AUG" buy price to 13250 (was previously 14250)
-    Decreased "Altor Pistol" buy price to 4000 (was previously 5005)
-    Increased "Desert Eagle" buy price to 7005 (was previously 6005)
-    Increased "M82" buy price to 30099 (was previously 20999)
-    Increased "MAC-11" buy price to 8810 (was previously 8100)
-    Increased "Spectre M4" buy price to 12010 (was previously 11010)
-    Increased "Uzi" buy price to 12000 (was previously 11040)
+    Decreased "AUG" buy price to ₽13250 (was previously ₽14250)
+    Decreased "Altor Pistol" buy price to ₽4000 (was previously ₽5005)
+    Increased "Desert Eagle" buy price to ₽7005 (was previously ₽6005)
+    Increased "M82" buy price to ₽30099 (was previously ₽20999)
+    Increased "MAC-11" buy price to ₽8810 (was previously ₽8100)
+    Increased "Spectre M4" buy price to ₽12010 (was previously ₽11010)
+    Increased "Uzi" buy price to ₽12000 (was previously ₽11040)
 
     Decreased "92F Auto Pistol" level requirment to 8 (was previously 7)
     Decreased "Desert Eagle" level requirment to 5 (was previously 4)
@@ -33,6 +36,7 @@ Gun Rebalancing:
     Decreased "Uzi" level requirment to 7 (was previously 6)
 
 Changes/Bug Fixes:
+    Decreased damage around 5-10%
     Incendiary Grenade has been removed from the starting loadout
     Removed Flash Grenade (did not work)
     Improved Menu support for resolutions going below 720 in height

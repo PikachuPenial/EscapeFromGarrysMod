@@ -758,7 +758,7 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 
 		local checkExtractsBindingButton = vgui.Create("DBinder", keybindsPanel)
 		checkExtractsBindingButton:SetSize(100, 50)
-		checkExtractsBindingButton:SetPos(290, 60)
+		checkExtractsBindingButton:SetPos(280, 60)
 		checkExtractsBindingButton:SetSelectedNumber(GetConVar("efgm_check_extracts_bind"):GetInt())
 
 		function checkExtractsBindingButton:OnChange(num)
@@ -766,9 +766,26 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 			RunConsoleCommand("efgm_check_extracts_bind", extractBinding)
 		end
 
-		function checkExtractsBindingButton:OnChange()
+		local reticlePanel = vgui.Create("DPanel", scrollPanel)
+		reticlePanel:Dock(TOP)
+		reticlePanel:DockMargin(margin, margin, margin, margin)
+		reticlePanel:SetSize(0, 300)
 
+		reticlePanel.Paint = function(self, w, h)
+			draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
+
+			draw.SimpleText("Weaponary", "CloseCaption_Bold", w / 2, 15, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText("Optic Recitle Color", "CloseCaption_Normal", w / 2, 45, whiteColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
+
+		local reticleMixer = vgui.Create("DColorMixer", reticlePanel)
+		reticleMixer:SetPos(215, 65)
+		reticleMixer:SetConVarR("arccw_scope_r")
+		reticleMixer:SetConVarG("arccw_scope_g")
+		reticleMixer:SetConVarB("arccw_scope_b")
+		reticleMixer:SetAlphaBar(false)
+		reticleMixer:SetPalette(true)
+		reticleMixer:SetWangs(true)
 
 		local endPanel = vgui.Create("DPanel", scrollPanel)
 		endPanel:Dock(TOP)

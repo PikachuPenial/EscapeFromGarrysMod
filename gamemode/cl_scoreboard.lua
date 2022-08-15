@@ -38,7 +38,7 @@ function GM:ScoreboardShow()
 
 				draw.SimpleText("K/D: " .. math.Round(v:GetNWInt("playerKDR"), 1), "DermaDefault", 50, 35, Color(255, 0, 0))
 				draw.SimpleText("SR: " .. math.Round(v:GetNWInt("survivalRate"), 0) .. "%", "DermaDefault", 105, 35, Color(0, 255, 0))
-				draw.SimpleText("TC: " .. LocalPlayer():GetNWInt("dailiesCompleted") + LocalPlayer():GetNWInt("specialsCompleted"), "DermaDefault", 160, 35, Color(255, 165, 0))
+				draw.SimpleText("TC: " .. v:GetNWInt("dailiesCompleted") + v:GetNWInt("specialsCompleted"), "DermaDefault", 160, 35, Color(255, 165, 0))
 
 				if (v:GetNWInt("playerPrestige") >= 1) then
 					draw.SimpleText("Prestige: " .. v:GetNWInt("playerPrestige") .. "  |  " .. "Level: " .. v:GetNWInt("playerLvl"), "DermaDefault", 50, 20, Color(255, 195, 0))

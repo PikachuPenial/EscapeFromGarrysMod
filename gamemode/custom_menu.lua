@@ -2277,10 +2277,10 @@ function OpenSellMenu()
 	-- Each icon should clearly show the gun model, name, price, and rarity
 	-- "Sell all" button
 
-	local scroller = vgui.Create( "DScrollPanel" , sellPanel)
+	local scroller = vgui.Create("DScrollPanel" , sellPanel)
 	scroller:Dock(FILL)
 
-	local sellIconLayout = vgui.Create( "DIconLayout", scroller)
+	local sellIconLayout = vgui.Create("DIconLayout", scroller)
 	sellIconLayout:Dock(FILL)
 	sellIconLayout:DockMargin(10, 10, 10, 10)
 	sellIconLayout:SetSpaceY(10)
@@ -2313,7 +2313,7 @@ function OpenSellMenu()
 			if #soldGunTable > 0 then
 
 				for l, b in pairs(soldGunTable) do
-					
+
 					if b == v:GetClass() then
 
 						isWeaponValid = false
@@ -2325,7 +2325,7 @@ function OpenSellMenu()
 			end
 
 			for l, b in pairs(sellBlacklist) do
-				
+
 				if b[1] == v:GetClass() then
 
 					isWeaponValid = false
@@ -2350,19 +2350,16 @@ function OpenSellMenu()
 				icon:SetModel(weaponInfo["WorldModel"])
 				icon:SetTooltip("Sell " .. wepName .. " for " .. sellPrice .. "₽?")
 				icon:SetSize(200, 200)
-				
-				icon.Paint = function(self, w, h)
 
+				icon.Paint = function(self, w, h)
 					surface.SetDrawColor(whiteColor)
 					surface.DrawRect(0, 0, w, h)
 
 					surface.SetDrawColor(offWhiteColor)
 					surface.DrawRect(0, 0, w, 30)
-					surface.DrawRect(0, h - 30, w, 30)
-					
-					draw.SimpleText(wepName, "DermaLarge", w / 2, 15, blackColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-					draw.SimpleText(sellPrice .. "₽", "DermaLarge", w / 2, h - 15, blackColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-					
+
+					draw.SimpleText(wepName, "CloseCaption_Bold", w / 2, 15, blackColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+					draw.SimpleText("₽" .. sellPrice, "CloseCaption_Bold", w / 2, 40, blackColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 				end
 
 				icon.DoClick = function(self)
@@ -2399,7 +2396,7 @@ function OpenSellMenu()
 		menuPanel.Paint = function(self, w, h)
 
 			draw.RoundedBox( 0, 0, 0, w, h, primaryColor )
-			draw.SimpleText("TOTAL INVENTORY VALUE: ₽ " .. totalSellValue, "DermaLarge", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER)
+			draw.SimpleText("TOTAL INVENTORY VALUE: ₽" .. totalSellValue, "DermaLarge", w / 2, 40, whiteColor, TEXT_ALIGN_CENTER)
 			draw.SimpleText("(if you can not see your items, check in your backpack by pressing [I])", "CloseCaption_Normal", w / 2, 75, redColor, TEXT_ALIGN_CENTER)
 
 		end
@@ -2495,34 +2492,33 @@ function MenuInit()
 
 			draw.RoundedBox(0, 0, 0, w, 150, Color(120, 120, 120, 255))
 
-
-			local Avatar = vgui.Create("AvatarImage", optionsPanel)
-			Avatar:SetSize(140, 140)
-			Avatar:SetPos(5, 5)
-			Avatar:SetPlayer(LocalPlayer(), 140)
-
-
 			draw.DrawText(client:GetName(), "DermaLarge", 0, 200, Color(255, 255, 255, 255))
 
 			if (client:GetNWInt("playerPrestige") >= 1) then
-				draw.DrawText("Prestige: " .. client:GetNWInt("playerPrestige"), "DermaLarge", 0, 260, Color(255, 255, 255, 255))
+				draw.DrawText("Prestige " .. client:GetNWInt("playerPrestige"), "DermaLarge", 0, 260, Color(255, 255, 255, 255))
 			end
 
-			draw.DrawText("Level: " .. client:GetNWInt("playerLvl"), "DermaLarge", 0, 300, Color(255, 255, 255, 255))
-			draw.DrawText("EXP: \n" .. math.Round(client:GetNWInt("playerExp")) .. "/" .. expToLevel, "DermaLarge", 0, 340, Color(255, 255, 255, 255))
-			draw.DrawText("₽ " .. math.Round(client:GetNWInt("playerMoney")), "DermaLarge", 0, 420, Color(255, 255, 255, 255))
+			draw.DrawText("Level " .. client:GetNWInt("playerLvl"), "DermaLarge", 0, 300, Color(255, 255, 255, 255))
+			draw.DrawText("EXP:\n" .. math.Round(client:GetNWInt("playerExp")) .. "/" .. expToLevel, "DermaLarge", 0, 340, Color(255, 255, 255, 255))
+			draw.DrawText("₽:\n" .. math.Round(client:GetNWInt("playerMoney")), "DermaLarge", 0, 420, Color(255, 255, 255, 255))
 
-			draw.DrawText("Kills: " .. client:GetNWInt("playerKills"), "DermaLarge", 0, 460, Color(255, 255, 255, 255))
-			draw.DrawText("Deaths: " .. client:GetNWInt("playerDeaths"),"DermaLarge", 0, 500, Color(255, 255, 255, 255))
-			draw.DrawText("KDR: " .. math.Round(client:GetNWInt("playerKDR"), 2), "DermaLarge", 0, 540, Color(255, 255, 255, 255))
+			draw.DrawText("Kills: " .. client:GetNWInt("playerKills"), "DermaLarge", 0, 490, Color(255, 255, 255, 255))
+			draw.DrawText("Deaths: " .. client:GetNWInt("playerDeaths"),"DermaLarge", 0, 530, Color(255, 255, 255, 255))
+			draw.DrawText("KDR: " .. math.Round(client:GetNWInt("playerKDR"), 2), "DermaLarge", 0, 570, Color(255, 255, 255, 255))
 
-			draw.DrawText("Stash Level " .. client:GetNWInt("playerStashLevel"), "Trebuchet24", 0, 610, Color(255, 255, 255, 255))
+			draw.DrawText("Stash Level ", "Trebuchet24", 0, 615, Color(255, 255, 255, 255))
+			draw.DrawText(client:GetNWInt("playerStashLevel"), "Trebuchet24", 110, 615, Color(255, 255, 0))
 			draw.DrawText(" Upgrade your \n stash in the F4 \n menu!", "Trebuchet24", -5, 650, Color(255, 255, 255, 255))
 
 			draw.RoundedBox(0, 0, 750, w, 350, Color(120, 120, 120, 255))
 			draw.RoundedBox(0, 145, 150, 5, 650, Color(120, 120, 120, 255))
 
 		end
+
+		local Avatar = vgui.Create("AvatarImage", optionsPanel)
+		Avatar:SetSize(140, 140)
+		Avatar:SetPos(5, 5)
+		Avatar:SetPlayer(LocalPlayer(), 140)
 
 		local separatePanel = vgui.Create("DPanel", StashMenu)
 		separatePanel:Dock(LEFT)

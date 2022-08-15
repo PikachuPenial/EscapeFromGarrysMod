@@ -49,11 +49,6 @@ function raidSummaryMenu(ply, cmd, args)
 			surface.SetTextPos(95, 50)
 			surface.DrawText(LocalPlayer():GetName())
 
-			local Avatar = vgui.Create("AvatarImage", SummaryMenu)
-			Avatar:SetSize(100, 100)
-			Avatar:SetPos(75, 75)
-			Avatar:SetPlayer(LocalPlayer(), 64)
-
 			-- Stats for the raid
 
 			surface.SetTextColor(255, 255, 255, 255)
@@ -127,6 +122,11 @@ function raidSummaryMenu(ply, cmd, args)
 			end
 		end
 
+		local Avatar = vgui.Create("AvatarImage", SummaryMenu)
+		Avatar:SetSize(100, 100)
+		Avatar:SetPos(75, 75)
+		Avatar:SetPlayer(LocalPlayer(), 64)
+
 		gui.EnableScreenClicker(true)
 
 		inRaidSummaryMenu = true
@@ -135,12 +135,12 @@ function raidSummaryMenu(ply, cmd, args)
 			if (inPlayerMenu == false) and (inMapVoteMenu == false) and (inStashMenu == false) then
 
 				gui.EnableScreenClicker(false)
-				surface.PlaySound( "common/wpn_select.wav" )
+				surface.PlaySound("common/wpn_select.wav")
 				inRaidSummaryMenu = false
 
 			else
 
-				surface.PlaySound( "common/wpn_select.wav" )
+				surface.PlaySound("common/wpn_select.wav")
 				inRaidSummaryMenu = false
 
 			end

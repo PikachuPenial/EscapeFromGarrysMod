@@ -59,7 +59,7 @@ net.Receive("PutWepInStash",function (len, ply)
 
     local stashItemLimit = ply:GetNWInt("playerStashLimit")
 
-    if tonumber( numberOfWeps ) == tonumber( stashItemLimit ) then print("You have too much shit in your stash, clear it out! Your limit is " .. stashItemLimit .. " by the way.") return end
+    if tonumber( numberOfWeps ) == tonumber( stashItemLimit ) then ply:PrintMessage(HUD_PRINTTALK("You have too much stuff in your stash, clear it out! Your limit is " .. stashItemLimit .. " by the way.")) return end
 
     local item = net.ReadString()
     local count = 1

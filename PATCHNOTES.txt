@@ -1,5 +1,6 @@
 New Content/Mechanics:
     Kappa has been added, you can now prestige before hitting Level 26 by completing every Special Task.
+
     Sell Menu has been redone and improved, making it much simpler for newer players.
 
     Settings Menu, allows you to change things like:
@@ -10,7 +11,7 @@ New Content/Mechanics:
         Optic Reticle Coloring
         Weapon Bob Intensity
 
-    Scoreboard refresh
+    Scoreboard refresh:
         Includes player profile pictures
         Allows viewing of any players stats while not in raid
         Allows easy copying of a players name or SteamID64 (useful for reporting cheaters)
@@ -25,17 +26,17 @@ Gun Rebalancing:
     Increased "Spectre M4" buy price to 12010 (was previously 11010)
     Increased "Uzi" buy price to 12000 (was previously 11040)
 
-    Increased "92F Auto Pistol" level requirment to 8 (was previously 7)
-    Increased "Desert Eagle" level requirment to 5 (was previously 4)
-    Increased "FMG" level requirment to 11 (was previously 10)
-    Increased "Raging Bull Revolver" level requirment to 5 (was previously 4)
-    Increased "Uzi" level requirment to 7 (was previously 6)
+    Decreased "92F Auto Pistol" level requirment to 8 (was previously 7)
+    Decreased "Desert Eagle" level requirment to 5 (was previously 4)
+    Decreased "FMG" level requirment to 11 (was previously 10)
+    Decreased "Raging Bull Revolver" level requirment to 5 (was previously 4)
+    Decreased "Uzi" level requirment to 7 (was previously 6)
 
 Changes/Bug Fixes:
-    Incendiary Grenade removed from starting loadout
+    Incendiary Grenade has been removed from the starting loadout
     Removed Flash Grenade (did not work)
     Improved Menu support for resolutions going below 720 in height
-    Added button to reset a players Survival Rate / SR%
+    Added a button to reset a players Survival Rate / SR%
     Now explains how to level a specific skill in the Skills Menu
     Maxing your stash now disables the Stash Upgrade button
     Prestige button no longer shows if you don't meet one of the two requirments
@@ -44,7 +45,8 @@ Changes/Bug Fixes:
     Removed old code related to ammo stashing
     The Prestige and Stash Upgrade button now snap correctly to their holder
     Fixed Prestige text while in the stash menu
-    Fixed FPS progressively getting worse while in the stash menu
+    Fixed FPS progressively getting worse while in the stash or raid summary menu
     Players can no longer move while in the stash or the help menu
     Fixed misalligned text in the stash menu
     Scoreboard text no longer overlaps if you have a 100% Survival Rate
+    The full stash warning is now shown in chat, instead of being output into the developer console

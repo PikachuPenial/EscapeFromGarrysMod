@@ -1,4 +1,4 @@
--- Used mostly for shared functions, I could use this for other stuff but I won't. Okay, maybe for globals but thats it. On god.
+--Used mostly for shared functions, I could use this for other stuff but I won't. Okay, maybe for globals but thats it. On god.
 
 maxTeamSize = 5
 

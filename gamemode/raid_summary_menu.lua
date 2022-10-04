@@ -49,8 +49,7 @@ function raidSummaryMenu(ply, cmd, args)
 			surface.SetTextPos(95, 50)
 			surface.DrawText(LocalPlayer():GetName())
 
-			-- Stats for the raid
-
+			--Stats for the raid
 			surface.SetTextColor(255, 255, 255, 255)
 			surface.SetFont("Trebuchet24")
 			surface.SetTextPos(20, 220)

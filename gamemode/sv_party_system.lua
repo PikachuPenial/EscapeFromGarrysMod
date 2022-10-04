@@ -58,7 +58,6 @@ function JoinParty(ply, cmd, args)
 	elseif teamPassword != password then
 
 		--This used to be very yikes
-
 		ply:PrintMessage(3, "You have the wrong password!")
 
 	end

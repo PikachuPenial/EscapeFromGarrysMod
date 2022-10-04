@@ -21,11 +21,9 @@ function GM:Initialize()
 	clientPlayer = nil
 
 	--Creating a temporary array to sort through for the actual array seen in the shop
-
-	--Array Formatting (Model, Item Name, Shop Print Name, Cost, Level, Rarity/Tier, Category)
-
 	local tempWeaponsArray = {}
 
+	--Array Formatting (Model, Item Name, Shop Print Name, Cost, Level, Rarity/Tier, Category)
 	tempWeaponsArray[1] = {"models/weapons/arccw/dm1973/c_dmi_bm92f_auto.mdl", "arccw_dmi_b92f_auto", "92F Auto Pistol", 13005, "8", "MID", "Pistol"}
 	tempWeaponsArray[2] = {"models/weapons/arccw/w_zz_mg24_tp.mdl", "arccw_waw_dp28", "DP-28", 21370, "14", "HIGH", "Heavy"}
 	tempWeaponsArray[3] = {"models/weapons/arc_eft_aks74u/eft_aks74u/models/c_eft_aks74u.mdl", "arccw_eft_aks74u", "AKS-74u", 9980, "5", "LOW", "SMG"}

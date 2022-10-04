@@ -7,8 +7,7 @@ end)
 
 function SetPData64(player, key, dataValue)
 
-    -- Create / update entry in BetterPlayerData table with key
-
+    --Create / update entry in BetterPlayerData table with key
     print("Player steam id = " .. player:SteamID64())
     print("Key = " .. SQLStr( key ))
 
@@ -16,16 +15,14 @@ function SetPData64(player, key, dataValue)
 
     if value == nil then
 
-        -- If we need to make a new PData entry
-
+        --If we need to make a new PData entry
         sql.Query( "INSERT INTO BetterPlayerData ( PlayerID, Key, Value ) VALUES( " .. player:SteamID64() .. ", " .. SQLStr( key ) .. ", " .. SQLStr( dataValue ) .. ")" )
 
     end
 
     if value != nil then
 
-        -- If we need to update an existing entry
-
+        --If we need to update an existing entry
         sql.Query( "UPDATE BetterPlayerData SET Value = " .. SQLStr( dataValue ) .. " WHERE PlayerID = " .. player:SteamID64() .. " AND Key = " .. SQLStr( key ) .. ";" )
 
     end

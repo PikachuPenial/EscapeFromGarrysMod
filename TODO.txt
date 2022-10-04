@@ -11,7 +11,7 @@ Concrete Rework
 Addition of the woods map
 Improve how player bodybags/loot is handled
 Streamer Mode (hides player names)
-Audio and visual cues when the raid timer is about to end
+Audio and visual cues when the raid is close to ending
 Not allowing infiltration before the raid ends (30 seconds to 1 minute)
 Save players weapons and armor between map switching
 Quick sell from the stash menu
@@ -26,6 +26,7 @@ Lower gamemode disk space requirment
 "Developer" and "Moderator" name tags in chat/player list
 Raid leaderboards
 Wipe leaderboards with rewards
+Dynamic map voting system (random choice of maps to vote for instead of every map)
 
 Bugs
     Fix team spawning

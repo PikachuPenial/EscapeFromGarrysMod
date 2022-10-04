@@ -18,15 +18,13 @@ local shopBind = input.LookupBinding("gm_showspare2")
 local walkBind = input.LookupBinding("+walk")
 local interactBind = input.LookupBinding("+use")
 
---color array, saving space
+--Color array, saving space
 local white = Color(255, 255, 255, 255)
 local red = Color(255, 0, 0, 255)
 
 net.Receive("RaidTimeLeft",function (len, ply)
-
 	raidTimeLeft = net.ReadString()
 	timerRed = net.ReadBool()
-
 end)
 
 function HUD()
@@ -39,8 +37,7 @@ function HUD()
 
 		hudInRaid = client:GetNWBool("inRaid")
 
-	--Team Hud
-
+		--Team Hud
 		if client:GetNWString("playerTeam") != "" then
 
 			local playerColor
@@ -73,14 +70,12 @@ function HUD()
 
 		end
 
-	--Gun Hud
-
+		--Gun Hud
 		if (client:GetActiveWeapon():IsValid()) and (client:GetActiveWeapon():GetPrintName() != nil) then
 			draw.SimpleText("Holding: " .. client:GetActiveWeapon():GetPrintName(), "DermaDefaultBold", 205, ScrH() - 58, white, 0, 0)
 		end
 
-	--Money And Or XP Hud	
-
+		--Money And Or XP Hud	
 		local expToLevel = (client:GetNWInt("playerLvl") * 140) * 5.15
 
 		draw.SimpleText("Level " .. client:GetNWInt("playerLvl"), "DermaDefaultBold", 50, ScrH() - 38, white, 0)
@@ -97,7 +92,6 @@ function HUD()
 		draw.SimpleText("Press " .. shopBind .. " for shop, stats, and help", "DermaDefaultBold", 170, ScrH() - 22, Color(255, 166, 0, 255), 0)
 
 		--Timer
-
 		local colorBlack = Color(255, 255, 255, 255)
 		local colorRed = Color(255, 0, 0, 255)
 
@@ -115,7 +109,7 @@ function HUD()
 		if timerRed == true then
 			timeText = mapSwitchText
 
-			draw.SimpleText("MAP IS RESETING: TRANSFER ANYTHING YOU WANT TO KEEP INTO YOUR STASH, OR YOU WILL LOSE YOUR ITEMS.", "DermaLarge", ScrW() / 2, 775, colorRed, 1)
+			draw.SimpleText("MAP IS CHANGING: TRANSFER ANYTHING YOU WANT TO KEEP INTO YOUR STASH, OR YOU WILL LOSE YOUR ITEMS.", "DermaLarge", ScrW() / 2, 775, colorRed, 1)
 		end
 
 		draw.SimpleText(raidTimeLeft, "DermaLarge", 28, ScrH() - 305, timerColor, 0)

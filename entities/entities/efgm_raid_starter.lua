@@ -71,7 +71,6 @@ function RemoveFromTable(ply)
 end
 
 function SpawnPlayer(player, spawnGroup, status, pos, angles)
-
 	player:SetNWBool("inRaid", true)
 
 	player:SetNWInt("raidKill", 0)
@@ -95,7 +94,6 @@ function SpawnPlayer(player, spawnGroup, status, pos, angles)
 	player:SetAngles(angles)
 
 	SetPlayerStatus(player, spawnGroup, status)
-
 end
 
 function PrintStatus(ply, cmd, args)
@@ -299,38 +297,11 @@ end
 concommand.Add("vote", VoteForMap)
 
 function ENT:InitializeRaid()
-
-	-- local baseSpawnTable = ents.FindByClass( "efgm_raid_spawn" )
-
-	-- for k, v in pairs(baseSpawnTable) do
-	-- 	if v.SpawnType != 2 then
-
-	-- 		table.insert(raidStartSpawnTable, v)
-
-	-- 	end
-	-- end
-
-	-- for k, v in pairs( player.GetHumans() ) do
-
-	-- 	local randomSpawnInt = math.random(#raidStartSpawnTable)
-
-	-- 	v:SetPos(raidStartSpawnTable[randomSpawnInt]:GetPos())
-	-- 	v:SetAngles(raidStartSpawnTable[randomSpawnInt]:GetAngles())
-
-	-- 	SetPlayerStatus(v, raidStartSpawnTable[randomSpawnInt].SpawnGroup, pmcClass)
-
-	-- 	table.remove(raidStartSpawnTable, randomSpawnInt)
-
-	-- end
-
 	self.RaidStarted = true
 
 	timer.Create("RaidTimer", self.RaidTime, 1, function() self:EndRaid() end)
 
 	knownRaidTime = self.RaidTime
-
-	print("A new raid has started, good luck!")
-
 end
 
 local function DoSmartSpawnStuff(spawns, minimumDistance)
@@ -344,8 +315,6 @@ local function DoSmartSpawnStuff(spawns, minimumDistance)
 		for l, b in pairs(player.GetHumans()) do
 
 			if b:GetNWBool("inRaid") == true then
-
-				-- print(tostring( "Distance between player and spawn is:" .. v:GetPos():Distance( b:GetPos() ) ))
 
 				if v:GetPos():Distance(b:GetPos()) < minimumDistance then
 

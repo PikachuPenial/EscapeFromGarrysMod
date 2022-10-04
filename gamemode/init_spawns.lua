@@ -26,8 +26,8 @@ random      = {"fas2_ammo_bandages", "fas2_ammo_quikclots", "fas2_ammo_hemostats
 bandages    = {"fas2_ammo_bandages"}
 quikclots   = {"fas2_ammo_quikclots"}
 hemostats   = {"fas2_ammo_hemostats"}
---Attachments Spawns
 
+--Attachments Spawns
 all         = {"acwatt_go_optic_barska", "acwatt_go_supp_osprey", "acwatt_go_foregrip_stubby"}
 optics      = {"acwatt_go_optic_barska"}
 barrels     = {"acwatt_go_supp_osprey"}

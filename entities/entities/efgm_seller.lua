@@ -38,9 +38,6 @@ function ENT:OpenMenu(ply)
 	net.Send(ply)
 
 	-- This previously sent the player entity to the menu, this is why people could just delete other people's money lol
-
-	-- ply:ConCommand("open_game_menu")
-
 end
 
 function ENT:AcceptInput(name, ply, caller)
@@ -56,10 +53,8 @@ function ItemSell(ply, weapon, value, weaponName)
 
 	if not ply:HasWeapon(weapon) then
 
-
-
 		return
-
+		
 	elseif ply:HasWeapon(weapon) then
 		local charExpGain = (ply:GetNWInt("charismaExperience") + value)
 		local charExp = charExpGain / 1750

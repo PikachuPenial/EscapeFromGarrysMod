@@ -253,12 +253,6 @@ function GM:PlayerInitialSpawn(ply)
 		ply:SetNWInt("playerDamageHealed", tonumber(ply:GetPData("playerDamageHealed")))
 	end
 
-	if (ply:GetPData("playerItemsPickedUp") == nil) then
-		ply:SetNWInt("playerItemsPickedUp", 0)
-	else
-		ply:SetNWInt("playerItemsPickedUp", tonumber(ply:GetPData("playerItemsPickedUp")))
-	end
-
 	if (ply:GetPData("playerDistance") == nil) then
 		ply:SetNWInt("playerDistance", 0)
 	else
@@ -339,7 +333,6 @@ function GM:PlayerInitialSpawn(ply)
 	ply:SetNWInt("raidMoney", 0)
 	ply:SetNWInt("raidDamageGiven", 0)
 	ply:SetNWInt("raidDamageTaken", 0)
-	ply:SetNWInt("raidItemsPicked", 0)
 
 	ply:SetNWInt("raidSuccess", 1)
 	ply:SetNWInt("firstSpawn", 1)
@@ -695,11 +688,6 @@ hook.Add("PlayerHurt", "playerDamage", function(victim, attacker, remainingHealt
 	victim:SetNWInt("runThrough", 0)
 end)
 
-hook.Add("HUDWeaponPickedUp", "WeaponPickedUp", function(weapon)
-	ply:SetNWInt("playerItemsPickedUp", ply:GetNWInt("playerItemsPickedUp") + 1)
-	ply:SetNWInt("raidItemsPicked", ply:GetNWInt("raidItemsPicked") + 1)
-end)
-
 hook.Add("KeyPress", "disableSprint", function(ply, key)
 	local runSpeed = ply:GetNWInt("enduranceEffect") / 1.38
 
@@ -775,7 +763,6 @@ function GM:PlayerDisconnected(ply)
 	ply:SetPData("playerDamageGiven", ply:GetNWInt("playerDamageGiven"))
 	ply:SetPData("playerDamageRecieved", ply:GetNWInt("playerDamageRecieved"))
 	ply:SetPData("playerDamageHealed", ply:GetNWInt("playerDamageHealed"))
-	ply:SetPData("playerItemsPickedUp", ply:GetNWInt("playerItemsPickedUp"))
 	ply:SetPData("playerDistance", ply:GetNWInt("playerDistance"))
 	ply:SetPData("playerStashLevel", ply:GetNWInt("playerStashLevel"))
 	ply:SetPData("playerRoubleForStashUpgrade", ply:GetNWInt("playerRoubleForStashUpgrade"))
@@ -864,7 +851,6 @@ function GM:ShutDown()
 		v:SetPData("playerDamageGiven", v:GetNWInt("playerDamageGiven"))
 		v:SetPData("playerDamageRecieved", v:GetNWInt("playerDamageRecieved"))
 		v:SetPData("playerDamageHealed", v:GetNWInt("playerDamageHealed"))
-		v:SetPData("playerItemsPickedUp", v:GetNWInt("playerItemsPickedUp"))
 		v:SetPData("playerDistance", v:GetNWInt("playerDistance"))
 		v:SetPData("playerStashLevel", v:GetNWInt("playerStashLevel"))
 		v:SetPData("playerRoubleForStashUpgrade", v:GetNWInt("playerRoubleForStashUpgrade"))
@@ -928,10 +914,6 @@ function GM:ShutDown()
 		v:SetPData("raidsRanThrough", v:GetNWInt("raidsRanThrough"))
 		v:SetPData("raidsDied", v:GetNWInt("raidsDied"))
 	end
-end
-
-function GM:GravGunPunt(player, entity)
-	return false
 end
 
 --What da dog doin?

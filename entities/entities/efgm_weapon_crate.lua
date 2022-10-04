@@ -9,7 +9,6 @@ ENT.RespawnTime = 0
 
 ENT.SpawnedEnt = nil
 
--- MAKE THE GAME MODE EFGM YOU DUMBAS
 function ENT:KeyValue(key, value)
 	-- This is the chance the crate will spawn in the first place.
 	if key == "spawn_chance" then
@@ -36,8 +35,6 @@ function ENT:KeyValue(key, value)
 		self.RespawnTime = tonumber(value)
 	end
 end
-
--- MAKE THE GAME MODE EFGM YOU DUMBASS
 
 function ENT:SpawnItem()
 
@@ -67,20 +64,14 @@ function ENT:SpawnItem()
 	self:TriggerOutput("OnSpawn", nil, nil)
 end
 
--- MAKE THE GAME MODE EFGM YOU DUMBASS
-
 function ENT:Initialize()
 	if self.StartDisabled == 0 then
 		self:SpawnItem()
 	end
 end
 
--- MAKE THE GAME MODE EFGM YOU DUMBASS
-
 function ENT:AcceptInput(name, activator, caller, data)
 	if name == "Respawn" then
 		self:SpawnItem()
 	end
 end
-
--- MAKE THE GAME MODE EFGM YOU DUMBASS

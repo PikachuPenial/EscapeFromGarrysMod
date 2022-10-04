@@ -93,7 +93,7 @@ function ENT:CheckForPlayers()
 
 								local lobbySpawns = ents.FindByName("lobby_spawns")
 								local chosenSpawn = lobbySpawns[math.random(#lobbySpawns)]
-								local expGained = math.random(350, 700)
+								local expGained = math.random(500, 850)
 
 								if (ply:GetNWInt("runThrough") == 0) then
 									ply:SetNWInt("raidsExtracted", ply:GetNWInt("raidsExtracted") + 1)

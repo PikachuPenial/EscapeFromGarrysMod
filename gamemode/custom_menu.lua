@@ -69,13 +69,13 @@ net.Receive("StashMenuReload", function (len, ply) ResetMenu() end)
 
 function gameShopMenu(ply, cmd, args)
 
-	-- This part just makes sure the client is the one viewing the hud. This is so some logic can work, it's complicated.
+	--This part just makes sure the client is the one viewing the hud. This is so some logic can work, it's complicated.
 
 	local client = LocalPlayer()
 
 	if not client:Alive() then return end
 
-	-- Moving on
+	--Moving on
 
 	if (inPlayerMenu == false) then
 		Menu = vgui.Create("DFrame")
@@ -134,10 +134,7 @@ function gameShopMenu(ply, cmd, args)
 end
 concommand.Add("open_game_menu", gameShopMenu)
 
---Button Code
 function addButtons(Menu, sellMenuBool, menuInRaid, ply)
-
-	--print("isSellMenu is "..tostring(isSellMenu))
 
 	local playerButton = vgui.Create("DButton")
 	playerButton:SetParent(Menu)
@@ -876,7 +873,6 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 		end
 
 		--DAILY TASKS
-
 		if CLIENT and GetConVar("efgm_hide_daily_completed_tasks"):GetInt() == 1 then
 			if LocalPlayer():GetNWInt("eliminationComplete") == 0 then
 				local dailyKillPanel = vgui.Create("DPanel", scrollPanel)
@@ -1023,13 +1019,12 @@ function addButtons(Menu, sellMenuBool, menuInRaid, ply)
 				draw.RoundedBox(0, 0, 0, w, h, secondaryColor)
 
 				draw.SimpleText("ALL SPECIAL TASKS COMPLETE!", "DermaLarge", w / 2, 10, Color(0, 255, 75, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-				draw.SimpleText("You can now Prestige, and doing so will reset your Special Tasks, allowing them to be completed again!	", "DermaDefaultBold", w / 2, 40, Color(0, 255, 75, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+				draw.SimpleText("You can now Prestige, and doing so will reset your Special Tasks, allowing them to be completed again!", "DermaDefaultBold", w / 2, 40, Color(0, 255, 75, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
 			end
 		end
 
 		--SPECIAL TASKS
-
 		if CLIENT and GetConVar("efgm_hide_special_completed_tasks"):GetInt() == 1 then
 			if LocalPlayer():GetNWInt("weeklyDistanceComplete") == 0 then
 				local weeklyKillPanel = vgui.Create("DPanel", scrollPanel)

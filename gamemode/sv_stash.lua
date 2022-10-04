@@ -15,7 +15,7 @@ local function UpdateWeaponsInStash(ply)
 
     local weaponsInStash = sql.Query( "SELECT ItemName FROM stash_table WHERE ItemOwner = " .. ply:SteamID64() .. ";" )
 
-    -- table.IsEmpty(weaponsInStash) == true or
+    --table.IsEmpty(weaponsInStash) == true or
 
     if weaponsInStash == nil then
 
@@ -112,8 +112,7 @@ net.Receive("TakeFromStash",function (len, ply)
 
 end)
 
--- Debug Console Commands
-
+--Debug Console Commands
 local function CreateTable()
 
     sql.Query( "CREATE TABLE IF NOT EXISTS stash_table ( ItemName TEXT, ItemCount INTEGER, ItemType TEXT, ItemOwner INTEGER )" )

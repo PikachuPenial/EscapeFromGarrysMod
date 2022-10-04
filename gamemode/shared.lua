@@ -198,7 +198,6 @@ function GM:Initialize()
 	tempEntityArray[50] = {"models/helmet_maska_1sh_shield_killa/maska_shield_killa.mdl", "ent_jack_gmod_ezarmor_shlemmaskkilla", "Maska-1SCh Face Shield", 29995, "24", "HIGH", "Face Shield"}
 
 	--Any weapon in this array cannot be sold. Put any starting equipment here.
-
 	sellBlacklist[1] = {"arccw_bo1_sog_knife"}
 	sellBlacklist[2] = {"arccw_eft_1911"}
 	sellBlacklist[3] = {"arccw_waw_p38"}
@@ -206,8 +205,7 @@ function GM:Initialize()
 	sellBlacklist[5] = {"arccw_go_nade_frag"}
 	sellBlacklist[6] = {"arccw_go_nade_smoke"}
 
-	-- Any weapon in this array cannot be seen or put into the stash. Put shit here idk.
-
+	--Any weapon in this array cannot be seen or put into the stash. Put shit here idk.
 	inventoryBlacklist = {"fas2_ifak", "arccw_bo1_sog_knife", "weaponholster", "arccw_eft_1911", "arccw_waw_p38", "arccw_waw_tt33", "arccw_go_nade_frag", "arccw_go_nade_smoke", "arccw_go_nade_incendiary"}
 
 	--Temporary array created. This next section will sort the guns by cost, so guns higher to the top will hopefully be better. This is convenient.
@@ -215,10 +213,7 @@ function GM:Initialize()
 
 	--If you want it in descending order instead of ascending, change the > to a <. If you want it to sort by level requirement, change the [4] to [5].
 	--Do you want it sorted alphabetically? Too bad!
-
 	table.sort(tempWeaponsArray, function(a, b) return a[4] > b[4] end)
-
-	--I think thats it
 
 	weaponsArr = tempWeaponsArray
 	entsArr = tempEntityArray
@@ -239,7 +234,7 @@ function GM:ContextMenuOpen()
 	return false
 end
 
--- Disable Spawn Menu and show the extract list when the bind is pressed.
+--Disable Spawn Menu and show the extract list when the bind is pressed.
 function GM:SpawnMenuEnabled()
 	return false
 end
@@ -249,7 +244,7 @@ function GM:SpawnMenuOpen()
 	return false
 end
 
--- Disabling console commands that allow prop/entity abuse.
+--Disabling console commands that allow prop/entity abuse.
 hook.Add("PlayerGiveSWEP", "BlockPlayerSWEPs", function(ply, class, swep)
 	if (!ply:IsAdmin()) then
 		return false
@@ -288,8 +283,7 @@ function GM:PlayerSpawnVehicle(ply)
 	return false
 end
 
--- Removing problematic console commmands.
-
+--Removing problematic console commmands.
 concommand.Remove("ent_create")
 concommand.Remove("gmod_spawnnpc")
 
@@ -324,7 +318,6 @@ RunConsoleCommand("mp_falldamage", "1")
 RunConsoleCommand("hud_deathnotice_time", "0")
 
 --Free Look
-
 RunConsoleCommand("altlook", "1")
 RunConsoleCommand("altlook_block_ads", "1")
 RunConsoleCommand("altlook_block_fire", "0")
@@ -375,7 +368,6 @@ RunConsoleCommand("sv_ec2_dynamicheight_min", "42")
 RunConsoleCommand("sv_ec2_dynamicheight_max", "64")
 
 --GWS Config
-
 RunConsoleCommand("sv_drop_loot_on_death", "1")
 RunConsoleCommand("sv_gws_needinv", "1")
 

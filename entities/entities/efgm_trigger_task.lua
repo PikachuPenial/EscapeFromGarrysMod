@@ -52,8 +52,6 @@ function ENT:CheckForPlayers()
 
 				CompleteSubtask(ply, self.TaskID, self.TaskObjective)
 
-				print("sent to server to complete task")
-
 			end
 
 		end

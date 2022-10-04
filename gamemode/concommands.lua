@@ -327,7 +327,7 @@ function PlayerSRReset(ply, cmd, args)
 	ply:SetNWInt("raidsRanThrough", 0)
 	ply:SetNWInt("raidsDied", 0)
 end
-concommand.Add("efgm_reset_SR", PlayerSRReset)
+concommand.Add("efgm_reset_sr", PlayerSRReset)
 
 function StashUpgrade(ply, cmd, args)
 
@@ -385,7 +385,7 @@ function StashUpgrade(ply, cmd, args)
 		ply:PrintMessage(HUD_PRINTTALK, "You do not have enough roubles to upgrade your stash!")
 	end
 
-	--And this statement is making this little fucking peice of shit update correctly i hate lua so goddamn much
+	--And this statement is making this little peice of shit update correctly i hate lua so goddamn much
 	if (ply:GetNWInt("playerStashLevel") == 1) then
 		ply:SetNWInt("playerRoubleForStashUpgrade", 10000)
 	else

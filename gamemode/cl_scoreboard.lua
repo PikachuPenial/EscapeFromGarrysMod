@@ -2,6 +2,7 @@ local ScoreboardDerma = nil
 local PlayerList = nil
 
 function GM:ScoreboardShow()
+	if not client:Alive() then return end
 
 	if !IsValid(ScoreboardDerma) then
 		ScoreboardDerma = vgui.Create("DFrame")

@@ -1,1 +1,2 @@
-General code cleanup and optimization
+General code cleanup and optimization.
+Scoreboard can no longer be opened while a player is dead.

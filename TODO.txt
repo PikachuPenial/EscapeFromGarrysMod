@@ -1,14 +1,35 @@
-Improved player list with personal statistics and player model beside scoreboard.
-More shop balancing.
-Code cleanup (removing unused features.)
-Closet for playermodel customization and progression.
-Improved death screen with more information about the killer and how they killed you.
-Tutorial Menu popup on a players first spawn on the wipe.
+Improved player list with personal statistics and player model beside scoreboard
+More shop balancing
+Code cleanup (removing unused features)
+Closet for playermodel customization and progression
+Improved death screen with more information about the killer and how they killed you
+Tutorial Menu popup on a players first spawn on the wipe
 Disable item dropping in lobby (used to crash servers)
 Stash Rewrite
 GUI Rewrite
 Concrete Rework
-Improve how player bodybags/loot is handled.
+Addition of the woods map
+Improve how player bodybags/loot is handled
+Streamer Mode (hides player names)
+Audio and visual cues when the raid timer is about to end
+Not allowing infiltration before the raid ends (30 seconds to 1 minute)
+Save players weapons and armor between map switching
+Quick sell from the stash menu
+Team system rewrite (will take advantage of the GMod teams system)
+Team text chat
+Player trading
+Flea market
+Queue spawn system (limits amount of players in-raid at the same time to reduce the chaos of high player counts)
+New gamemode logo and backgrounds
+New server convars for admins
+Lower gamemode disk space requirment
+"Developer" and "Moderator" name tags in chat/player list
+Raid leaderboards
+Wipe leaderboards with rewards
+
+Bugs
+    Fix team spawning
+    Fix ghost bodybags (occures when the player has no weapon other than a starting pistol)
 
 Exploits
     Stealing loot from every corpse
@@ -19,6 +40,7 @@ Exploits
 Settings Menu
     Disable Raid Summary
     Disable Death screen
+    Hide stats from being viewed by other players
     Aim Down Sights FOV
     Aim Down Sights Sensetivity
     Weapon Bobbing

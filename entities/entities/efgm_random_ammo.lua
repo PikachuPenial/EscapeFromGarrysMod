@@ -1,4 +1,4 @@
----- Dummy ent that just spawns a random ArcCW ammo entity and kills itself
+--Dummy ent that just spawns a random ammo entity and kills itself
 
 ENT.Type = "point"
 ENT.Base = "base_point"

@@ -1,4 +1,4 @@
----- Dummy ent that just spawns a random EFT Helmet and kills itself
+--Dummy ent that just spawns a random helmet and kills itself
 
 ENT.Type = "point"
 ENT.Base = "base_point"

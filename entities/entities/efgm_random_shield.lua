@@ -1,4 +1,4 @@
----- Dummy ent that just spawns a random EFT face shield and kills itself
+--Dummy ent that just spawns a random face shield entity and kills itself
 
 ENT.Type = "point"
 ENT.Base = "base_point"

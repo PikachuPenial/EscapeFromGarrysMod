@@ -1,0 +1,24 @@
+Improved player list with personal statistics and player model beside scoreboard.
+More shop balancing.
+Code cleanup (removing unused features.)
+Closet for playermodel customization and progression.
+Improved death screen with more information about the killer and how they killed you.
+Tutorial Menu popup on a players first spawn on the wipe.
+Disable item dropping in lobby (used to crash servers)
+Stash Rewrite
+GUI Rewrite
+Concrete Rework
+Improve how player bodybags/loot is handled.
+
+Exploits
+    Stealing loot from every corpse
+    Sell items for infinite money
+    Crate duplication
+    Server crashing (due to attachment dropping and entity spam)
+
+Settings Menu
+    Disable Raid Summary
+    Disable Death screen
+    Aim Down Sights FOV
+    Aim Down Sights Sensetivity
+    Weapon Bobbing

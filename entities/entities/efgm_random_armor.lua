@@ -1,4 +1,4 @@
----- Dummy ent that just spawns a random EFT Armor and kills itself
+--Dummy ent that just spawns a random armor entity and kills itself
 
 ENT.Type = "point"
 ENT.Base = "base_point"

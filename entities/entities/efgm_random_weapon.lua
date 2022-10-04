@@ -1,3 +1,5 @@
+--Dummy ent that just spawns a random weapon entity and kills itself
+
 ENT.Type = "point"
 ENT.Base = "base_point"
 
